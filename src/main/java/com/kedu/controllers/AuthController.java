@@ -47,14 +47,13 @@ public class AuthController {
 			//db에 저장
 			dao.saveAuth(new AuthDTO(email,authCode,auth_type,0,"0"));
 			
-			
-			return "sucess";
+			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "";
+			return "fail";
 		}
 	}
-	
+		//인증번호 확인
 	@RequestMapping(value="/verify" ,method=RequestMethod.POST)
 	@ResponseBody
 	public String verify(@RequestParam("email")String email,@RequestParam("auth_code") String auth_code) {

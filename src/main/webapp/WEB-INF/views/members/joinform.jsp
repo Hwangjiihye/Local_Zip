@@ -181,7 +181,7 @@
 	            <div class="form-row">
 	                <label>· EMAIL : </label>
 	                <input name="mem_email" class="email" type="text" placeholder="이메일 주소를 입력해주세요.">
-	                <a href="/auth/mailCheck"><input class="authCheck" type="button" value="인증번호 전송"></a>
+	                <input class="authCheck" type="button" value="인증번호 전송">
 	            </div>
 	            <div>
 	                <input class="code" type="text" placeholder="인증번호를 입력해주세요.">
@@ -243,6 +243,22 @@
 		    idChecked = false;
 		    $(".use").hide();
 		    $(".notUse").hide();
+		});
+		
+		
+		//인증번호 전송
+		$(".authCheck").on("click",function(){
+			$.ajax({
+				url : "/auth/mailCheck";
+				data : {email : $(".email").val(),
+						auth_type : 1}
+			}).done(function(resp){
+				if(resp.equals("success")){
+					alert("이메일로 인증번호를 발송했습니다.");
+				}else{
+					alert("인증번호 발송 실패했습니다.");
+				}
+			})
 		});
 		
         // 주소(찾기)
