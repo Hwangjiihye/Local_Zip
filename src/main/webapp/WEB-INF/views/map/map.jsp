@@ -86,7 +86,8 @@ body {
 	margin-top: 13px;
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	gap: 10px;    
+	border: none;
 }
 
 .categoryBtnAll {
@@ -158,21 +159,24 @@ body {
 	width: 200px;
 	height: 40px;
 	margin-top: 20px;
-	line-height: 40px;
+	line-height: 45px;
 	padding-left: 10px;
-	background-color: #fbe5c0;
+	background-color: #F2D3A2;
 	box-sizing: border-box;
+	border-radius: 10px;
+	border:none;
 }
 
 .facility {
-	border: 1px solid #A66A3F;
+	border: 2px solid #A66A3F;
 	margin: 14px 0 0 14px;
 	width: 98%;
 	padding: 12px;
-	line-height: 1.6;
+	line-height: 1.9;
 	background-color: #fbe5c0;
 	color: black;
 	box-sizing: border-box;
+	border-radius: 10px;
 }
 
 .bottomBar {
@@ -217,7 +221,7 @@ body {
 				class="fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i>
 			<i class="fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i>
 			<i class="fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i>
-			<i class="fa-regular fa-user fa-2xl" style="color: #A66A3F"></i>
+			<i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i>
 		</div>
 	</div>
 
