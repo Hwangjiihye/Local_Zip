@@ -21,10 +21,10 @@ public class AuthDAO {
 	                                 dto.getEmail(), dto.getAuth_code(), dto.getAuth_type(),dto.getIs_verified());
 	    }
 	 
-	 // 인증번호 일치 확인 1이면 성공
-	 public int checkAuth(String email, String code) {
-	        String sql = "SELECT COUNT(*) FROM email_auth WHERE email = ? AND auth_code = ?";
-	        return jdbc.queryForObject(sql, Integer.class, email, code);
+	 // 인증번호 일치 확인(5분이내) 1이면 성공
+	 public int checkAuth(String email, String auth_code) {
+	        String sql = "SELECT COUNT(*) FROM email_auth WHERE email = ? AND auth_code = ? AND auth_create_date >= SYSDATE - (5 / 1440)";
+	        return jdbc.queryForObject(sql, Integer.class, email, auth_code);
 	 }
 	 
 	 // 인증 성공시 상태 변경 0->1
