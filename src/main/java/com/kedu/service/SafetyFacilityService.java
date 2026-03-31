@@ -112,16 +112,13 @@ public class SafetyFacilityService {
 			RestTemplate restTemplate = new RestTemplate();
 
 
-			while(true) {
-				String url = "https://api.odcloud.kr/api/15076962/v1/uddi:8ba698ca-b192-4fb7-99f7-e60903af03d0"
-						+ "?serviceKey=" + SERVICE_KEY
-						+ "&page=" + pageNo
-						+ "&perPage=" + numOfRows;
+			while (true) {
+	            String url = "https://api.odcloud.kr/api/15076962/v1/uddi:8ba698ca-b192-4fb7-99f7-e60903af03d0"
+	                    + "?serviceKey=" + SERVICE_KEY
+	                    + "&page=" + pageNo
+	                    + "&perPage=" + numOfRows;
 
-				Map<String, Object> response = restTemplate.getForObject(url, Map.class);
-	            System.out.println(response);
-	            
-
+	            Map<String, Object> response = restTemplate.getForObject(url, Map.class);
 	            if (response == null) break;
 
 	            Object totalCountObj = response.get("totalCount");
@@ -131,34 +128,22 @@ public class SafetyFacilityService {
 
 	            List<Map<String, Object>> itemList = (List<Map<String, Object>>) response.get("data");
 	            if (itemList == null || itemList.isEmpty()) break;
-	            System.out.println(itemList.get(0));
 
 	            for (Map<String, Object> item : itemList) {
-	                // 여기 필드명은 실제 response 보고 바꿔야 함
-	                String roadAddr = clean(item.get("도로명주소"));
-	                String numAddr = clean(item.get("지번주소"));
 	                String facName = clean(item.get("치안센터명"));
-	                String latStr = clean(item.get("위도"));
-	                String lngStr = clean(item.get("경도"));
-
-	                String addr = !roadAddr.isEmpty() ? roadAddr : numAddr;
+	                String addr = clean(item.get("주소"));
+	                String officeName = clean(item.get("관서명"));
 
 	                if (!addr.contains("서울")) continue;
-	                if (latStr.isEmpty() || lngStr.isEmpty()) continue;
 
 	                SafetyFacilityDTO dto = new SafetyFacilityDTO();
 	                dto.setFac_type("치안시설");
-	                dto.setFac_name(facName);
-	                dto.setFac_address(roadAddr);
-	                dto.setFac_numaddress(numAddr);
+	                dto.setFac_name(!facName.isEmpty() ? facName : officeName);
+	                dto.setFac_address(addr);
+	                dto.setFac_numaddress("");
 	                dto.setFac_gu(extractGu(addr));
-
-	                try {
-	                    dto.setFac_lat(Double.parseDouble(latStr));
-	                    dto.setFac_lng(Double.parseDouble(lngStr));
-	                } catch (Exception e) {
-	                    continue;
-	                }
+	                dto.setFac_lat(0);
+	                dto.setFac_lng(0);
 
 	                dao.insert(dto);
 	                count++;
