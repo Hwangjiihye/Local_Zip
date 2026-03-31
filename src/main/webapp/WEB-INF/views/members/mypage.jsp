@@ -79,7 +79,7 @@
         }
         
         .userBar {
-            width: 1860px;
+            width: 1879px;
             height: 100px;
             margin-top: 20px;
             margin-left: 20px;
@@ -106,6 +106,31 @@
             margin-top: 30px;
             margin-left: 20px;
         }
+        
+        hr{
+        	margin-top: 20px;
+        	width: 97%;
+        	border-color: #A66A3F;
+    	}
+    	
+        .loginBtn:hover,
+        .logoutBtn:hover,
+        .joinBtn:hover,
+        .navicon:hover,  
+        .categoryBtn button:hover{
+            transform: translateY(-3px); /* 살짝 위로 뜸 */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .loginBtn:active,
+        .logoutBtn:active,
+        .joinBtn:active,
+        .navicon:active,
+        .categoryBtn button:active{
+            transform: translateY(2px); /* 아래로 눌림 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    	
 </style>
 </head>
 <body>
@@ -114,6 +139,7 @@
     	<img class="profile" src="/resources/images/birdprofile.png">
         <div class="id">${loginId }</div>
     </div>
+    <hr>
     <div class="bottomBar" style="box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <!-- 하단바 -->
     	<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
         <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
