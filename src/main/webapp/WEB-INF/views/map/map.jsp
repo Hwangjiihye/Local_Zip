@@ -75,6 +75,7 @@ body {
 	height: 100px;
 	line-height: 100px;
 	display: flex;
+	padding-left: 20px;
 }
 
 .categoryDiv {
@@ -98,6 +99,18 @@ body {
 	height: 30px;
 	padding: 0 15px;
 	cursor: pointer;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	transition: all 0.2s ease;
+}
+
+.categoryBtnAll:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.categoryBtnAll:active {
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .categoryBtnAll:first-child {
@@ -141,28 +154,28 @@ body {
 
 .facilityAll {
 	border: 1px solid #A66A3F;
-    margin-left: 14px;
-    width: 200px;
-    height: 40px;
-    margin-top: 20px;
-    line-height: 40px;
-    padding-left: 10px;
-    background-color : #fbe5c0;
-    box-sizing: border-box;
+	margin-left: 14px;
+	width: 200px;
+	height: 40px;
+	margin-top: 20px;
+	line-height: 40px;
+	padding-left: 10px;
+	background-color: #fbe5c0;
+	box-sizing: border-box;
 }
 
 .facility {
-	 border: 1px solid #A66A3F;
-    margin: 14px 0 0 14px;
-    width: 98%;
-    padding: 12px;
-    line-height: 1.6;
-    background-color : #fbe5c0;
-    color: black;
-    box-sizing: border-box;
+	border: 1px solid #A66A3F;
+	margin: 14px 0 0 14px;
+	width: 98%;
+	padding: 12px;
+	line-height: 1.6;
+	background-color: #fbe5c0;
+	color: black;
+	box-sizing: border-box;
 }
 
-.bottomBar{
+.bottomBar {
 	gap: 200px;
 }
 </style>
@@ -195,21 +208,19 @@ body {
 			<div class="facilityAll">
 				주변 시설 (<span id="facilityCount">0</span>)
 			</div>
-			<div id="facilityList">
-				
-			</div>
+			<div id="facilityList"></div>
 		</div>
 
 
 		<div class="bottomBar">
-			<i class="fa-solid fa-house fa-2xl" style="color: #A66A3F"></i>
-            <i class="fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i> 
-            <i class="fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i> 
-            <i class="fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i>
-            <i class="fa-regular fa-user fa-2xl" style="color: #A66A3F"></i> 
+			<i class="fa-solid fa-house fa-2xl" style="color: #A66A3F"></i> <i
+				class="fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i>
+			<i class="fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i>
+			<i class="fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i>
+			<i class="fa-regular fa-user fa-2xl" style="color: #A66A3F"></i>
 		</div>
 	</div>
-	
+
 	<script>
 			
 		    let mapContainer = document.getElementById("map");
