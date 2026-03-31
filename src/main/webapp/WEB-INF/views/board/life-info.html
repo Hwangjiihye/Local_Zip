@@ -99,9 +99,6 @@
             /* 수정: 고정 800px 대신 화면의 90%만 차지하게 */
             width: 90%;
             max-width: 800px;
-            /* 하지만 너무 넓어지진 않게 최대치 제한 */
-
-            border: 1px solid orange;
         }
 
         .allBtn {
@@ -127,7 +124,12 @@
             transition: 0.3s;
         }
 
-        .topBtn:hover {
+        .categoryBtn{   
+            margin-right: 10px;
+            height: 30px;
+        }
+
+        .categoryBtn:hover {
             background-color: #fecc56;
             color: #A66A3F;
         }
@@ -189,11 +191,10 @@
         .postUpBox {
             width: 100%;
             height: 95px;
+            display: flex;
 
             border: 1px solid red;
         }
-
-
 
 
         .postProfile {
@@ -211,11 +212,6 @@
         .profile {
             margin-top: -10px;
             margin-left: 2px;
-        }
-
-
-        .postUpBox {
-            display: flex;
         }
 
         .postInfoBox {
@@ -258,7 +254,7 @@
             margin: auto;
 
             width: 95%;
-            min-height: 40px;
+            height: 40px;
 
 
 
@@ -272,8 +268,16 @@
             min-height: 40px;
             height: auto;
 
-
             border: 1px solid gray;
+        }
+
+
+        .postDownBox {
+            width: 100%;
+            min-height: 40px;
+            display: flex;
+
+            border: 1px solid red;
         }
     </style>
 
@@ -287,11 +291,11 @@
 
         <div class="categoryBtnBox">
             <div class="categoryBtns">
-                <button class="catagoryBtn topBtn allBtn">전체</button>
-                <button class="catagoryBtn topBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button>
-                <button class="catagoryBtn topBtn"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
-                <button class="catagoryBtn topBtn"><i class="fa-regular fa-comment fa-lg"></i> 고민/이야기</button>
-                <button class="catagoryBtn topBtn"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
+                <button class="categoryBtn topBtn"><i class="fa-solid fa-house fa-lg"></i> 전체</button>
+                <button class="categoryBtn topBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button>
+                <button class="categoryBtn topBtn"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
+                <button class="categoryBtn topBtn"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button>
+                <button class="categoryBtn topBtn"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
             </div>
         </div>
 
@@ -313,8 +317,9 @@
                         <div class="postInfoUp">
                             <div class="profileName profileInfo">홍길동</div>
                             <div class="profileLocal profileInfo">지역(동)</div>
-                            <div class="profileCatagory profileInfo"><button
-                                    class="catagoryBtn topBtn allBtn">카테고리</button></div>
+                            <div class="profileCatagory profileInfo">
+                                <button class="topBtn">카테고리</button>
+                                </div>
                         </div>
 
                         <div class="postInfoDown">
@@ -327,17 +332,7 @@
                 <div class="postMidBox">
 
                     <div class="postTitle">제목</div>
-                    <div class="postContent">
-                        내용
-                    <div>dddd</div>
-                    <div>dddd</div>
-                    <div>dddd</div>
-                    <div>dddd</div>
-                    <div>dddd</div>
-
-                    <div>dddd</div>
-
-                    </div>
+                    <div class="postContent">내용</div>
 
                 </div>
 
