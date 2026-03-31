@@ -65,5 +65,15 @@ public class AuthController {
 		
 		return "fail";
 	}
-
+	
+		//최종 가입전에 인증확인
+	@RequestMapping(value="/isVerified" ,method=RequestMethod.POST)
+	@ResponseBody
+	public String isVerified(@RequestParam("email") String email) {
+		
+		int result = dao.isVerified(email);
+		
+		return result+"";
+	}
+	
 }
