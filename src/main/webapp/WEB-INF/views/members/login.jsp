@@ -72,7 +72,7 @@
 	        width: 120px;
 	        text-align: right;
 	        margin-right: 10px;
-	        margin-left: 230px;
+	        margin-left: 100px;
 	        font-weight: bold;
 	    }
 	    .id {
@@ -89,11 +89,6 @@
 	    
 	    .readonly{
 	        background-color: rgb(232, 190, 127);
-	    }
-	    .agreeBtn{
-	        width: 15px;
-	        height: 15px;
-	        margin-top: 20px;
 	    }
 	    hr{
 	        margin-top: 20px;
@@ -114,14 +109,18 @@
 	        height: 40px;
 	        width: 90px;
 	    }
-	    .agreeDiv{
-	        font-size: small;
-	    }
 	    .use, .notUse, .correct, .incorrect, .ok, .no{
 	    	display: none;
 	    	font-size: small;
 	    	margin-top:-15px;
 	    }
+	    .loginBtn, .JoinBtn{
+        background-color: #ffb300;
+        color: #5e361a;
+        border: 1px solid #ffb300;
+        border-radius: 10px;
+        font-weight: bold;
+    	}
 	</style>
 </head>
 <body>
@@ -143,8 +142,8 @@
 	            <div class="signUpDiv"><button class="JoinBtn">Join</button></div>
 	            <hr>
 	            
-	            <div class="agreeDiv">
-	                <input class="agreeBtn" type="checkbox">I agree to the Terms of Use and Privacy Policy (필수)
+	            <div class="linkDiv">
+	                Forgot Id?    Forgot password?
 	            </div>
 	            
 	            
