@@ -36,7 +36,7 @@
 
         button, body {
             font-family: 'GMarketSans', sans-serif;
-            font-weight: bold;
+            color: #5e361a;
         }
 
         body,html {
@@ -116,8 +116,8 @@
         .loginBtn:hover,
         .logoutBtn:hover,
         .joinBtn:hover,
-        .navicon:hover,  
-        .categoryBtn button:hover{
+        .navicon:hover,
+        .adminPage:hover{
             transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
@@ -126,11 +126,92 @@
         .logoutBtn:active,
         .joinBtn:active,
         .navicon:active,
-        .categoryBtn button:active{
+        .adminPage:hover{
             transform: translateY(2px); /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
+        
+        .myInfoBtn, .adminPage{
+	        background-color: #ffb300;
+	        color: #5e361a;
+	        border: 1px solid #ffb300;
+	        border-radius: 10px;
+	        font-weight: bold;
+    	}
     	
+    	.adminPageDiv{
+    		width: 600px;
+    		height: 50px;
+    	}
+
+    	.adminPage{
+    		width: 100%;
+    		height: 100%;
+    		font-size: large;
+    		line-height: 50px;
+    	}
+    	
+    	.divContainer{
+    		width: 1650px;
+    		height: 600px;
+    		background-color: #F2D3A2;
+    		margin-left: 140px;
+    		margin-top: 25px;
+    		border-radius: 20px;
+    		padding-top: 10px;
+    	}
+    	
+    	.myInfoDiv{
+    		position: relative;
+    		left: 1650px;
+    	}
+    	
+    	.myActiveTitle{
+    		height: 60px;
+    		font-size: x-large;
+    		font-weight: bold;
+    		margin-top: 30px;
+    		margin-left: 30px;
+    	}
+    	.myActiveDiv{
+    		border: 1px solid black;
+    		display: flex;
+    		gap: 40px;
+    		width: 90%;
+    		height: 125px;
+    		margin-left: 30px;
+    	}
+    	.myWrite, .myLike, .myClub{
+    		border: 1px solid black;
+    		width: 30%;
+    		height: 100%;
+    	}
+    	.myWriteIcon, .myLikeIcon, .myClubIcon{
+    		width: 30%;
+    		height: 100%;
+    	}
+    	.myWriteContents, .myLikeContents, .myClubContents{
+    		width: 70%;
+    		height: 100%;
+    	}
+    	.myWriteIcon, .myWriteContents, .myLikeIcon, .myLikeContents, .myClubIcon, .myClubContents{
+     		border: 1px solid black;
+    		float: left;
+    	}
+    	.myWriteTitle, .myWriteNum, .myLikeTitle, .myLikeNum, .myClubTitle, .myClubNum{
+     		border: 1px solid black;
+    		height: 50%;
+    		font-size: x-large;
+    		font-weight: bold;
+    		line-height: 60px;
+    	}
+    	.myWriteTitle, .myLikeTitle, .myClubTitle{
+    		font-size: x-large;
+    	}
+    	.myWriteNum, .myLikeNum, .myClubNum{
+    		font-size: x-large;
+    		color: #286708;
+    	}
 </style>
 </head>
 <body>
@@ -138,8 +219,49 @@
 	<div class="userBar">
     	<img class="profile" src="/resources/images/birdprofile.png">
         <div class="id">${loginId }</div>
+        <div class="myInfoDiv">
+        	<a href="/members/myInfo">
+        		<button class="myInfoBtn"><i class="fa-solid fa-user-gear"></i> 내 정보.zip</button>
+        	</a>
+        </div>
     </div>
     <hr>
+    <div class="divContainer">
+	    <div class="myActiveTitle">· 나의 활동</div>
+	    <div class="myActiveDiv">
+	    	<div class="myWrite">
+	    		<div class="myWriteIcon"></div>
+	    		<div class="myWriteContents">
+	    			<div class="myWriteTitle">작성글</div>
+	    			<div class="myWriteNum">10</div>
+	    		</div>
+	    	</div>
+	    	<div class="myLike">
+	    		<div class="myLikeIcon"></div>
+	    		<div class="myLikeContents">
+		    		<div class="myLikeTitle">관심 게시글</div>
+		    		<div class="myLikeNum">15</div>
+		    	</div>
+	    	</div>
+	    	<div class="myClub">
+	    		<div class="myClubIcon"></div>
+	    		<div class="myClubContents">
+		    		<div class="myClubTitle">모임</div>
+		    		<div class="myClubNum">3</div>
+		    	</div>
+	    	</div>
+	    </div>
+	    
+	    <div class="FAQTitle">고객센터</div>
+	    <div class="FAQDiv">
+	    	<div>고객지원 ></div>
+	    	<div>공지사항 ></div>
+	    </div>
+	    
+	    <div class="adminPageDiv">
+	    	<input class="adminPage" type="button" value="관리자 페이지">
+	    </div>
+    </div>
     <div class="bottomBar" style="box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <!-- 하단바 -->
     	<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
         <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
