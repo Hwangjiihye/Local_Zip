@@ -223,7 +223,7 @@
 				$.ajax({
 					url:"/members/duplCheck",
 					dataType:"json",
-					data:{id:$(".id").val()}
+					data:{mem_id:$(".id").val()}
 				}).done(function(resp){
 					if(resp == "0"){
 						$(".use").show();
@@ -413,10 +413,10 @@
 			
 			// agreeBtn
 			let agreeBtn = document.getElementsByClassName("agreeBtn")[0];
-			if(agreeBtn.value == ""){
-				alert("약관 동의는 필수입니다.");
-				agreeBtn.focus();
-				return false;
+			if (!agreeBtn.checked) {
+			    alert("약관 동의는 필수입니다.");
+			    agreeBtn.focus();
+			    return false;
 			}
 		}
     </script>
