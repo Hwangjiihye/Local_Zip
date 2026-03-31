@@ -57,8 +57,8 @@
 	        border: 2px solid #A66A3F;
 	        margin: auto;
 	        margin-top: 20px;
-	        width: 1000px;
-	        height: 750px;
+	        width: 700px;
+	        height: 300px;
 	        text-align: center;
 	        border-radius: 60px;
 	        background-color: #F2D3A2;

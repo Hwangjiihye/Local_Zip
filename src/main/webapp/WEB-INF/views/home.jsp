@@ -131,7 +131,7 @@
         }
 
         .userBar {
-            width: 1860px;
+            width: 1865px;
             height: 100px;
             margin-top: 20px;
             margin-left: 20px;
