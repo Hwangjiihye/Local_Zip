@@ -23,9 +23,9 @@ public class SafetyFacilityController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/getAllFacility") // 지도 출력
-	public List<SafetyFacilityDTO> getAllFacility(){
-		return service.getAllFacility();
+	@RequestMapping("/getFacilities") // 지도 출력
+	public List<SafetyFacilityDTO> getFacilities(){
+		return service.getAllFacilities();
 	}
 	
 	@RequestMapping("/saveToiletData") // 공중화장실 DB 저장

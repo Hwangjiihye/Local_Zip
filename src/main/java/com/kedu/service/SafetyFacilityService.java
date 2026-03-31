@@ -311,7 +311,7 @@ public class SafetyFacilityService {
 	    return count;
 	}
 	
-	public List<SafetyFacilityDTO> getAllFacility(){
+	public List<SafetyFacilityDTO> getAllFacilities(){
 		return dao.selectAll();
 	}
 
