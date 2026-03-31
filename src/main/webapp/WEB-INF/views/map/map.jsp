@@ -104,12 +104,12 @@ body {
 	transition: all 0.2s ease;
 }
 
-.categoryBtnAll:hover {
+.categoryBtnAll:hover, .navicon:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.categoryBtnAll:active {
+.categoryBtnAll:active, .navicon:active{
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -182,6 +182,53 @@ body {
 .bottomBar {
 	gap: 200px;
 }
+
+.mapDiv {
+	position: relative;
+}
+
+.legendBox {
+	position: absolute;
+	top: 138px;
+	left: 30px;
+	z-index: 20;
+	background-color: rgba(255, 255, 255, 0.95);
+	border: 2px solid #A66A3F;
+	border-radius: 10px;
+	padding: 10px 14px;
+	font-size: 14px;
+	line-height: 1.8;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.legendItem {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.legendDot {
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	display: inline-block;
+	border: 2px solid white;
+	box-shadow: 0 0 4px rgba(0,0,0,0.25);
+}
+
+.legendToliet {
+	background-color: rgba(255, 120, 219, 1.00);
+}
+
+.legendShelter {
+	background-color: rgba(3, 192, 0, 1.00);
+}
+
+.legendPolice {
+	background-color: rgba(133, 161, 249, 1.00);
+}
+
+
 </style>
 </head>
 
@@ -205,7 +252,19 @@ body {
 				</button>
 			</div>
 
-			<div class="mapDiv" id="map"></div>
+			<div class="mapDiv" id="map">
+				<div class="legendBox">
+			<div class="legendItem">
+				<span class="legendDot legendToliet"></span> 화장실
+			</div>
+			<div class="legendItem">
+				<span class="legendDot legendShelter"></span> 대피소
+			</div>
+			<div class="legendItem">
+				<span class="legendDot legendPolice"></span> 치안
+		</div>
+	</div>
+			</div>
 		</div>
 
 		<div class="facilityDiv">
@@ -217,11 +276,11 @@ body {
 
 
 		<div class="bottomBar">
-			<i class="fa-solid fa-house fa-2xl" style="color: #A66A3F"></i> <i
-				class="fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i>
-			<i class="fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i>
-			<i class="fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i>
-			<i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i>
+			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
+			<a><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+			<a><i class="navicon fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 	</div>
 
@@ -238,12 +297,16 @@ body {
 		    let markers = [];
 		    let allFacilities = [];
 		    
+		    let infoWindow = new kakao.maps.InfoWindow({
+		        removable: true
+		    });
+		    
 		    let clusterer = new kakao.maps.MarkerClusterer({
 		    	map : map,
 		    	averageCenter : true,
 		    	minLevel : 6
 		    })
-		
+		    
 		    function clearMarkers() {
 		        for (let marker of markers) {
 		            marker.setMap(null);
@@ -263,6 +326,10 @@ body {
 		        if (type !== "전체") {
 		            filtered = allFacilities.filter(item => item.fac_type === type);
 		        }
+		        
+		        filtered = filtered.filter(dto =>
+		        	dto.fac_lat && dto.fac_lng && dto.fac_address && dto.fac_address.trim() !== ""		
+		        );
 			
 		        $("#facilityCount").text(filtered.length);
 		        let bounds = new kakao.maps.LatLngBounds();
@@ -270,8 +337,9 @@ body {
 		        for (let dto of filtered) {
 		            let lat = dto.fac_lat;
 		            let lng = dto.fac_lng;
+		            let address = dto.fac_address;
 			
-		            if(!lat || !lng) continue;
+		            if(!lat || !lng || !address || !address.trim() === "") continue;
 		            
 		            let markerPosition = new kakao.maps.LatLng(lat, lng);
 		            let markerImage = getMarkerImage(dto.fac_type);
@@ -280,6 +348,8 @@ body {
 		                position: markerPosition,
 		                image: markerImage
 		            });
+		            
+		            marker.dto = dto;
 		
 		            markers.push(marker);
 		            bounds.extend(markerPosition);
@@ -292,20 +362,16 @@ body {
 		            	    + "</div>"
 		            	);
 		            
-		            let infoContent = `
-		                <div style="padding:6px; font-size:12px;">
-		                    <b>${dto.fac_name}</b><br>
-		                    ${dto.fac_type}<br>
-		                    ${dto.fac_address}
-		                </div>
-		            `;
-		
-		            let infowindow = new kakao.maps.InfoWindow({
-		                content: infoContent
-		            });
-		
+		            let infoContent =
+		                '<div style="padding:10px; font-size:13px; line-height:1.6; color:#222; display:inline-block; white-space:nowrap; z-index:20">'
+		                + '<div style="font-weight:bold; margin-bottom:4px;">' + dto.fac_name + '</div>'
+		                + '<div>구분 : ' + dto.fac_type + '</div>'
+		                + '<div>주소 : ' + dto.fac_address + '</div>'
+		                + '</div>';
+
 		            kakao.maps.event.addListener(marker, "click", function () {
-		                infowindow.open(map, marker);
+		                infoWindow.setContent(infoContent);
+		                infoWindow.open(map, marker);
 		            });
 		        }
 		        clusterer.addMarkers(markers);
@@ -348,11 +414,11 @@ body {
 		        let imageSrc = "";
 		        
 		        if (fac_type === "치안시설") {
-		            imageSrc = "/resources/images/free-icon-police-2542262.png";
+		            imageSrc = "/resources/images/location-dot-solid_2.png";
 		        } else if (fac_type === "대피소") {
-		            imageSrc = "/resources/images/free-icon-shelter-14036088.png";
+		            imageSrc = "/resources/images/location-dot-solid_Shelter.png";
 		        } else if (fac_type === "공중화장실") {
-		            imageSrc = "/resources/images/free-icon-bathroom-6543661.png";
+		            imageSrc = "/resources/images/location-dot-solid_Toliet.png";
 		        }
 
 		        if (!imageSrc) return null;
