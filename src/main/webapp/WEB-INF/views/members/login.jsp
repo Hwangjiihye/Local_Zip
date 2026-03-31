@@ -110,7 +110,7 @@
 	        border-radius: 10px;
 	        font-weight: bold;
 	    }
-	    .signUpDiv{
+	    .signUpBtn{
 	        height: 40px;
 	        width: 90px;
 	    }
