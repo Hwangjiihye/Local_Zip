@@ -335,7 +335,10 @@ hr {
 
 		// 정규표현식 검사
 		let frm = document.getElementsByClassName("frm")[0];
-		frm.onsubmit = function() {
+		frm.onsubmit = function(e) {
+			//기본 제출 막기
+			e.preventDefault();
+			
 			// id
 			let id = document.getElementsByClassName("id")[0];
 
@@ -497,8 +500,8 @@ hr {
 			}
 			
 			//이메일 인증 최종확인(회원가입 버튼 눌렀을 때)
-		$(".signUpBtn").on("click",function(e){
-			e.preventDefault();
+		
+			
 			
 			$.ajax({
 				url : "/auth/isVerified",
@@ -506,12 +509,13 @@ hr {
 				data : {email : $(".email").val()}
 			}).done(function(resp){
 				if(resp=="1"){
-					$(".frm").submit();
+					alert("회원가입을 축하드립니다.");
+					frm.submit();
 				}else{
-					alert("이메일 인증을 부탁드립니다.");
+					alert("이메일 인증이 완료되지 않았거나 만료되었습니다. 다시 인증해주세요.");
 				}
 			});
-		});
+			return false;
 		}
 		
 		

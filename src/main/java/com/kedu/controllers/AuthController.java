@@ -31,6 +31,8 @@ public class AuthController {
 	@ResponseBody
 	public String mailCheck(@RequestParam("email") String email,@RequestParam("auth_type") int auth_type) {
 
+		
+		
 		// 6자리 랜덤번호 생성
 		String authCode = String.valueOf(new Random().nextInt(888888) + 111111);
 
@@ -43,7 +45,7 @@ public class AuthController {
 			helper.setSubject("[게시판] 인증번호 안내");
 			helper.setText("인증번호: " + authCode, true);
 			mailSender.send(mail);
-
+			System.out.println(authCode);
 			//db에 저장
 			dao.saveAuth(new AuthDTO(email,authCode,auth_type,0,"0"));
 			
@@ -62,7 +64,6 @@ public class AuthController {
 			dao.updateVerified(email);
 			return "success";
 		}
-		
 		return "fail";
 	}
 	
