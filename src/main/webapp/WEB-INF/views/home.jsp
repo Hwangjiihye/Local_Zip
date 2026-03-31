@@ -209,6 +209,15 @@
         .popular{
             display: none;
         }
+        
+        .orderBtn{
+        	border: none;
+        	background-color: transparent;
+        }
+        
+        .orderBtn:hover{
+        	 background-color: #fecc56;
+        }
 
         .localBanner { /* 이 범위안에서만 사용할 수 있게 고정 */
             position: relative;
@@ -281,6 +290,8 @@
             background-color: #fbe5c0;
             text-align: center;
         }
+        
+        .new
 
 
     </style>
@@ -291,8 +302,8 @@
         <div class="topBar">
                 <div class="logo" style="font-size: 50px; background-color: #F2D3A2; color: #A66A3F">우리 동네.zip</div> <!-- 상단바 -->
             <div class="loginBox">
-                    <input type="button"  value="로그인" class="loginBtn" style="border: 0px; font-weight: bold;  background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;">
-                    <input type="button"  value="회원가입" class="joinBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;">
+                    <a><input type="button"  value="로그인" class="loginBtn" style="border: 0px; font-weight: bold;  background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
+                    <a href="/members/join"><input type="button"  value="회원가입" class="joinBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
 
                 <span class="logoutArea" style="display:none;">
                     <input type="button"  value="로그아웃" class="logoutBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease; ">
@@ -310,17 +321,17 @@
                 <button
                     style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">전체</button>
                 <button
-                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;"><i
-                        class="fa-regular fa-lightbulb fa-sm" style="color: #3e5e40;"></i></i>생활정보</button>
+                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
+                    <i class="fa-regular fa-lightbulb fa-sm" style="color: #3e5e40;"></i> 생활정보</button>
                 <button
-                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;"><i
-                        class="fa-solid fa-utensils fa-sm" style="color: #3e5e40;"></i>맛집/카페</button>
+                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
+                    <i class="fa-solid fa-utensils fa-sm" style="color: #3e5e40;"></i> 맛집/카페</button>
                 <button
-                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;"><i
-                        class="fa-regular fa-comment-dots fa-sm" style="color: #3e5e40;"></i>고민/이야기</button>
+                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
+                    <i class="fa-regular fa-comment-dots fa-sm" style="color: #3e5e40;"></i> 고민/이야기</button>
                 <button
-                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px;"><i
-                        class="fa-solid fa-shirt fa-sm" style="color: #3e5e40;"></i>미용/패션</button>
+                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px;">
+                    <i class="fa-solid fa-shirt fa-sm" style="color: #3e5e40;"></i> 미용/패션</button>
             </div>
 
             <div class="subBox">
@@ -331,14 +342,11 @@
                         </div>
                     </div>
                     <div class="orderBy">
-                        <div class="newest" style="font-size: 10px; color: #A66A3F">최신순</div>
-                        <div class="popular" style="font-size: 10px; color: #A66A3F">인기순</div>
+                    	<button class="newest orderBtn" style="font-size: 15px; color: #A66A3F">최신순</button>
+                    	<button class="popular orderBtn" style="font-size: 15px; color: #A66A3F">인기순</button>
                     </div>
                     <div class="postBox">게시글 영역
                         
-
-
-
                     </div>
                     <div class="postBox">게시글 영역</div>
                     <div class="postBox">게시글 영역</div>
@@ -357,7 +365,7 @@
 
         <div class="bottomBar" style="box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <!-- 하단바 -->
             <i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 홈 이모지-->
-            <i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 지도 이모지-->
+            <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
             <i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i> <!-- 하단바 모임 이모지-->
             <i class="navicon fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 건의사항 이모지-->
             <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 마이페이지 이모지-->
