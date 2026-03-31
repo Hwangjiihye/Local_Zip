@@ -35,7 +35,7 @@
    }
     body{
         margin: 0;
-        background-color: #F2D3A2;
+        background-color: #fbe5c0;
     }
     .container{
         width: 100%;
@@ -47,7 +47,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        background-color: #F2D3A2;
+        background-color: #fbe5c0;
         z-index: 1000;
         border-bottom: 2px solid #A66A3F;
     }
@@ -58,6 +58,7 @@
         font-size: 50px;
         color: #A66A3F;
         border-bottom: 2px solid #A66A3F;
+        background-color: #F2D3A2;
         height: 100px;
         line-height: 100px;
         display: flex;
@@ -111,6 +112,7 @@
         justify-content: center;
         z-index: 1000;
         border-top: 2px solid #A66A3F;
+        background-color: #F2D3A2;
     }
 
     .facilityDiv{
@@ -123,7 +125,7 @@
 
     .facilityAll{
         border: 1px solid #A66A3F;
-        margin-left: 10px;
+        margin-left: 14px;
         width: 200px;
         height: 40px;
         margin-top: 20px;
@@ -131,8 +133,8 @@
     }
 
     .facility{
-         border: 1px solid #A66A3F;
-        margin-left: 10px;
+        border: 1px solid #A66A3F;
+        margin-left: 14px;
         width: 98%;
         margin-top: 20px;
         line-height: 48px;

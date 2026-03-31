@@ -50,7 +50,7 @@ public class SafetyFacilityService {
 
 				Object totalCountObj = body.get("totalCount");
 				if (totalCountObj != null) {
-					totalCount = Integer.parseInt(String.valueOf(totalCountObj));
+					totalCount = (int)Double.parseDouble(String.valueOf(totalCountObj));
 				}
 
 				Map<String, Object> items = (Map<String, Object>) body.get("items");
@@ -76,9 +76,12 @@ public class SafetyFacilityService {
 					dto.setFac_address(roadAddr);
 					dto.setFac_numaddress(numAddr);
 					dto.setFac_gu(extractGu(addr));
-					dto.setFac_lat(Double.parseDouble(latStr));
-					dto.setFac_lng(Double.parseDouble(lngStr));
-
+					try {
+						dto.setFac_lat(Double.parseDouble(latStr));
+						dto.setFac_lng(Double.parseDouble(lngStr));
+					}catch(Exception e) {
+						continue;
+					}
 					dao.insert(dto);
 					count++;
 				}
@@ -95,6 +98,89 @@ public class SafetyFacilityService {
 		}
 		return count;
 	}
+	
+	public int savePoliceData() {
+		int count = 0;
+
+		try {
+			dao.deleteByType("치안시설");
+
+			int pageNo = 1;
+			int numOfRows = 1000;
+			int totalCount = 0;
+
+			RestTemplate restTemplate = new RestTemplate();
+
+
+			while(true) {
+				String url = "https://api.odcloud.kr/api/15076962/v1/uddi:8ba698ca-b192-4fb7-99f7-e60903af03d0"
+						+ "?serviceKey=" + SERVICE_KEY
+						+ "&page=" + pageNo
+						+ "&perPage=" + numOfRows;
+
+				Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+	            System.out.println(response);
+	            
+
+	            if (response == null) break;
+
+	            Object totalCountObj = response.get("totalCount");
+	            if (totalCountObj != null) {
+	                totalCount = (int) Double.parseDouble(String.valueOf(totalCountObj));
+	            }
+
+	            List<Map<String, Object>> itemList = (List<Map<String, Object>>) response.get("data");
+	            if (itemList == null || itemList.isEmpty()) break;
+	            System.out.println(itemList.get(0));
+
+	            for (Map<String, Object> item : itemList) {
+	                // 여기 필드명은 실제 response 보고 바꿔야 함
+	                String roadAddr = clean(item.get("도로명주소"));
+	                String numAddr = clean(item.get("지번주소"));
+	                String facName = clean(item.get("치안센터명"));
+	                String latStr = clean(item.get("위도"));
+	                String lngStr = clean(item.get("경도"));
+
+	                String addr = !roadAddr.isEmpty() ? roadAddr : numAddr;
+
+	                if (!addr.contains("서울")) continue;
+	                if (latStr.isEmpty() || lngStr.isEmpty()) continue;
+
+	                SafetyFacilityDTO dto = new SafetyFacilityDTO();
+	                dto.setFac_type("치안시설");
+	                dto.setFac_name(facName);
+	                dto.setFac_address(roadAddr);
+	                dto.setFac_numaddress(numAddr);
+	                dto.setFac_gu(extractGu(addr));
+
+	                try {
+	                    dto.setFac_lat(Double.parseDouble(latStr));
+	                    dto.setFac_lng(Double.parseDouble(lngStr));
+	                } catch (Exception e) {
+	                    continue;
+	                }
+
+	                dao.insert(dto);
+	                count++;
+	            }
+
+	            if (pageNo * numOfRows >= totalCount) {
+	                break;
+	            }
+
+	            pageNo++;
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return count;
+	}
+	
+//	public int saveShelterData() {
+//		
+//	}
 
 	private String clean(Object obj) {
 		if (obj == null) return "";
@@ -111,4 +197,6 @@ public class SafetyFacilityService {
 		}
 		return "";
 	}
+	
+	
 }

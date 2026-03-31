@@ -21,8 +21,24 @@ public class SafetyFacilityController {
 	@RequestMapping("/saveToiletData")
 	public String saveToiletData() {
 		int result = service.saveToiletData();
-		System.out.println(result + "개 저장 완료");
+		System.out.println("Toilet " + result + "개 저장 완료");
 		
 		return "map/map";
 	}
+	
+	@RequestMapping("/savePoliceData")
+	public String savePoliceData() {
+		int result = service.savePoliceData();
+		System.out.println("Poilce " + result + "개 저장 완료");
+		
+		return "map/map";
+	}
+	
+//	@RequestMapping("/saveShelterData")
+//	public String saveShelterData() {
+//		int result = service.saveShelterData();
+//		System.out.println("Shelter " + result + "개 저장 완료");
+//		
+//		return "map/map";
+//	}
 }
