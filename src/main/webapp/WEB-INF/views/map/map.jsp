@@ -173,6 +173,7 @@ body {
 	<div class="container">
 		<div class="top-section">
 			<div class="mainTitle">우리 동네 지도.zip</div>
+			<img src="${pageContext.request.contextPath}/resources/images/free-icon-police-2542262.png" width="50">
 			<div class="categoryDiv">
 				<button class="categoryBtnAll">
 					<i class="fa-solid fa-house"> 전체</i>
@@ -209,8 +210,9 @@ body {
             <i class="fa-regular fa-user fa-2xl" style="color: #A66A3F"></i> 
 		</div>
 	</div>
-
+	
 	<script>
+			
 		    let mapContainer = document.getElementById("map");
 		    let mapOption = {
 		        center: new kakao.maps.LatLng(37.5665, 126.9780),
@@ -258,9 +260,11 @@ body {
 		            if(!lat || !lng) continue;
 		            
 		            let markerPosition = new kakao.maps.LatLng(lat, lng);
-		
+		            let markerImage = getMarkerImage(dto.fac_type);
+		            
 		            let marker = new kakao.maps.Marker({
-		                position: markerPosition
+		                position: markerPosition,
+		                image: markerImage
 		            });
 		
 		            markers.push(marker);
@@ -325,6 +329,25 @@ body {
 		            renderFacilities("공중화장실");
 		        });
 		    });
+		    
+		    function getMarkerImage(fac_type) {
+		        let imageSrc = "";
+		        
+		        if (fac_type === "치안시설") {
+		            imageSrc = "${pageContext.request.contextPath}/resources/images/free-icon-police-2542262.png";
+		        } else if (fac_type === "대피소") {
+		            imageSrc = "${pageContext.request.contextPath}/resources/images/free-icon-shelter-14036088.png";
+		        } else if (fac_type === "공중화장실") {
+		            imageSrc = "${pageContext.request.contextPath}/resources/images/free-icon-bathroom-6543661.png";
+		        }
+
+		        if (!imageSrc) return null;
+
+		        let imageSize = new kakao.maps.Size(36, 40);
+		        let imageOption = { offset: new kakao.maps.Point(18, 40) };
+
+		        return new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+		    }
 	</script>
 </body>
 </html>
