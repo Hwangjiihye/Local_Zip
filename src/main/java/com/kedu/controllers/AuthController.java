@@ -44,13 +44,27 @@ public class AuthController {
 			helper.setText("인증번호: " + authCode, true);
 			mailSender.send(mail);
 
+			//db에 저장
 			dao.saveAuth(new AuthDTO(email,authCode,auth_type,0,"0"));
+			
 			
 			return "sucess";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
 		}
+	}
+	
+	@RequestMapping(value="/verify" ,method=RequestMethod.POST)
+	@ResponseBody
+	public String verify(@RequestParam("email")String email,@RequestParam("auth_code") String auth_code) {
+		
+		if(dao.checkAuth(email, auth_code) > 0) {
+			dao.updateVerified(email);
+			return "ok";
+		}
+		
+		return "fail";
 	}
 
 }

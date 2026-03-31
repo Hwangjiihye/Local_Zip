@@ -44,6 +44,7 @@
         background-color: #fbe5c0;
     }
     .mainTitle{
+    	padding-left : 20px;
         font-weight: bold;
         font-size: 50px;
         color: #A66A3F;
@@ -180,7 +181,7 @@
 	            <div class="form-row">
 	                <label>· EMAIL : </label>
 	                <input name="mem_email" class="email" type="text" placeholder="이메일 주소를 입력해주세요.">
-	                <input class="authCheck" type="button" value="인증번호 전송">
+	                <a href="/auth/mailCheck"><input class="authCheck" type="button" value="인증번호 전송"></a>
 	            </div>
 	            <div>
 	                <input class="code" type="text" placeholder="인증번호를 입력해주세요.">
