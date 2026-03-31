@@ -1,0 +1,43 @@
+package com.kedu.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.kedu.dto.AuthDTO;
+
+@Repository
+public class AuthDAO {
+	@Autowired
+	private JdbcTemplate jdbc;
+	
+	
+	// 인증번호 저장
+	 public void saveAuth(AuthDTO dto) {
+	        String sql = "MERGE INTO email_auth USING DUAL ON (email = ?) " +
+	                     "WHEN MATCHED THEN UPDATE SET auth_code = ?, auth_type = ?, is_verified = ?, auth_create_date = SYSDATE " +
+	                     "WHEN NOT MATCHED THEN INSERT (email, auth_code, auth_type,is_verified,auth_create_date) VALUES (?, ?, ?, ?, sysdate)";
+	        jdbc.update(sql, dto.getEmail(), dto.getAuth_code(), dto.getAuth_type(),dto.getIs_verified(), 
+	                                 dto.getEmail(), dto.getAuth_code(), dto.getAuth_type(),dto.getIs_verified());
+	    }
+	 
+	 // 인증번호 일치 확인 1이면 성공
+	 public int checkAuth(String email, String code) {
+	        String sql = "SELECT COUNT(*) FROM email_auth WHERE email = ? AND auth_code = ?";
+	        return jdbc.queryForObject(sql, Integer.class, email, code);
+	 }
+	 
+	 // 인증 성공시 상태 변경 0->1
+	 public void updateVerified(String email) {
+		 	String sql = "update email_auth set is_verified=1 where email=?";
+		 	jdbc.update(sql,email);
+	 }
+	 
+	 // 회원가입 최종 가입전에 인증 확인
+	 public int isVerified(String email) {
+		 	String sql = "select count(*) from email_auth where email=? and is_verified=1";
+		 	return jdbc.queryForObject(sql, Integer.class,email);
+	 }
+	 
+	 
+}
