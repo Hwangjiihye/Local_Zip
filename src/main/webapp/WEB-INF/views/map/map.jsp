@@ -326,6 +326,10 @@ body {
 		        if (type !== "전체") {
 		            filtered = allFacilities.filter(item => item.fac_type === type);
 		        }
+		        
+		        filtered = filtered.filter(dto =>
+		        	dto.fac_lat && dto.fac_lng && dto.fac_address && dto.fac_address.trim() !== ""		
+		        );
 			
 		        $("#facilityCount").text(filtered.length);
 		        let bounds = new kakao.maps.LatLngBounds();
@@ -333,8 +337,9 @@ body {
 		        for (let dto of filtered) {
 		            let lat = dto.fac_lat;
 		            let lng = dto.fac_lng;
+		            let address = dto.fac_address;
 			
-		            if(!lat || !lng) continue;
+		            if(!lat || !lng || !address || !address.trim() === "") continue;
 		            
 		            let markerPosition = new kakao.maps.LatLng(lat, lng);
 		            let markerImage = getMarkerImage(dto.fac_type);
@@ -358,7 +363,7 @@ body {
 		            	);
 		            
 		            let infoContent =
-		                '<div style="padding:10px; font-size:13px; line-height:1.6; color:#222; display:inline-block; white-space:nowrap;">'
+		                '<div style="padding:10px; font-size:13px; line-height:1.6; color:#222; display:inline-block; white-space:nowrap; z-index:20">'
 		                + '<div style="font-weight:bold; margin-bottom:4px;">' + dto.fac_name + '</div>'
 		                + '<div>구분 : ' + dto.fac_type + '</div>'
 		                + '<div>주소 : ' + dto.fac_address + '</div>'
@@ -423,9 +428,6 @@ body {
 
 		        return new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 		    }
-		    
-		    
-		    
 	</script>
 </body>
 </html>
