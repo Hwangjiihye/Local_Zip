@@ -70,10 +70,12 @@
             width: 100%;
             height: 100px;
 
+            padding-left: 20px;
+
             font-weight: bold;
             font-size: 50px;
             color: #A66A3F;
-            background-color: #fbe5c0;
+            background-color: #F2D3A2;
             border-bottom: 2px solid #A66A3F;
             /* 아래쪽만 줄 그음 */
 
@@ -86,8 +88,6 @@
 
             width: 100%;
             height: 70px;
-
-            border: 1px solid red;
         }
 
         .categoryBtns {
@@ -99,10 +99,6 @@
             /* 수정: 고정 800px 대신 화면의 90%만 차지하게 */
             width: 90%;
             max-width: 800px;
-        }
-
-        .allBtn {
-            padding-top: 4px;
         }
 
 
@@ -124,24 +120,38 @@
             transition: 0.3s;
         }
 
-        .categoryBtn{   
+        .categoryBtn {
             margin-right: 10px;
             height: 30px;
+
+            /* 그림자 효과 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+            /* 애니메이션 부드럽게 */
+            transition: all 0.2s ease;
         }
 
         .categoryBtn:hover {
             background-color: #fecc56;
             color: #A66A3F;
+
+            transform: translateY(-3px);
+            /* 살짝 위로 뜸 */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
+        .categoryBtn:active {
+            transform: translateY(2px);
+            /* 아래로 눌림 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
 
         .bodyBox {
-
             width: 100%;
             min-height: 100vh;
             /* 최소 높이 지정 : 브라우저 */
 
-            border: 3px solid green;
+            margin-top: -40px;
         }
 
 
@@ -160,10 +170,18 @@
             border-radius: 10px;
         }
 
+        .orderNew {
+            display: none;
+        }
+
         .orderBtn {
             border: none;
             border-radius: 30%;
             background-color: transparent;
+
+            font-size: 15px;
+
+            color: #A66A3F;
         }
 
         .orderBtn:hover {
@@ -184,7 +202,7 @@
             margin-top: 30px;
 
             border-radius: 10px;
-            border: 1px solid black;
+            border: 2px solid #A66A3F;
 
         }
 
@@ -192,8 +210,6 @@
             width: 100%;
             height: 95px;
             display: flex;
-
-            border: 1px solid red;
         }
 
 
@@ -246,8 +262,6 @@
         .postMidBox {
             width: 100%;
             height: auto;
-
-            border: 1px solid blue;
         }
 
         .postTitle {
@@ -256,9 +270,8 @@
             width: 95%;
             height: 40px;
 
-
-
-            border: 1px solid pink;
+            font-size: 25px;
+            margin-bottom: 10px;
         }
 
         .postContent {
@@ -268,16 +281,54 @@
             min-height: 40px;
             height: auto;
 
-            border: 1px solid gray;
+            font-size: 18px;
+
+            background-color: #f0d8af;
+            border-radius: 5px;
         }
 
 
         .postDownBox {
-            width: 100%;
+            width: 95%;
+            margin: auto;
+
             min-height: 40px;
             display: flex;
+        }
 
-            border: 1px solid red;
+        .postLikeBox,
+        .postCommentBox {
+            display: flex;
+            align-items: center;
+
+            min-width: 80px;
+            width: auto;
+
+            gap: 10px;
+
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+
+        .beforeHeart:hover,
+        .afterHeart:hover,
+        .comment:hover {
+            color: #cdaa69;
+        }
+
+        .afterHeart {
+            display: none;
+        }
+
+        /* active 클래스가 붙었을 때의 제어 */
+        .postLikeBox.active .beforeHeart {
+            display: none;
+        }
+
+        .postLikeBox.active .afterHeart {
+            display: inline;
+            color: red;
         }
     </style>
 
@@ -292,7 +343,7 @@
         <div class="categoryBtnBox">
             <div class="categoryBtns">
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-house fa-lg"></i> 전체</button>
-                <button class="categoryBtn topBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button>
+                <button class="categoryBtn topBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> "생활정보"</button>
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
                 <button class="categoryBtn topBtn"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button>
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
@@ -302,7 +353,8 @@
         <div class="bodyBox">
 
             <div class="orderBox">
-                <button class="orderBtn">최신순</button>/<button class="orderBtn">인기순</button>
+                <button class="orderNew orderBtn">최신순</button>
+                <button class="orderPopular orderBtn">인기순</button>
             </div>
 
             <div class="postBox">
@@ -319,7 +371,7 @@
                             <div class="profileLocal profileInfo">지역(동)</div>
                             <div class="profileCatagory profileInfo">
                                 <button class="topBtn">카테고리</button>
-                                </div>
+                            </div>
                         </div>
 
                         <div class="postInfoDown">
@@ -331,13 +383,25 @@
 
                 <div class="postMidBox">
 
-                    <div class="postTitle">제목</div>
+                    <div class="postTitle">제목이 들어가는 곳</div>
                     <div class="postContent">내용</div>
 
                 </div>
 
-
                 <div class="postDownBox">
+
+                    <div class="postLikeBox">
+                        <i class="fa-regular fa-heart fa-xl beforeHeart"></i>
+                        <i class="fa-solid fa-heart fa-xl afterHeart"></i>
+
+                        <div>갯수</div>
+                    </div>
+
+                    <div class="postCommentBox">
+                        <i class="fa-regular fa-comment fa-xl comment"></i>
+
+                        <div>갯수</div>
+                    </div>
 
                 </div>
 
@@ -345,7 +409,7 @@
 
         </div>
 
-        <div class="pageBox"></div>
+        <div class="pageBox">1 2 3</div>
 
 
         <div class="bottomBox">
@@ -354,6 +418,29 @@
         </div>
 
     </div>
+
+
+    <script>
+
+        // 최신순, 인기순 버튼
+        $(".orderNew").on("click", function () {
+            $(".orderNew").css({ "display": "none" });
+            $(".orderPopular").css({ "display": "inline" });
+        })
+
+        $(".orderPopular").on("click", function () {
+            $(".orderNew").css({ "display": "inline" });
+            $(".orderPopular").css({ "display": "none" });
+        })
+
+
+        // 좋아요 버튼
+        $(".postLikeBox").on("click", function () {
+            $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
+        });
+
+
+    </script>
 
 </body>
 
