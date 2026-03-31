@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kedu.dao.MembersDAO;
@@ -24,6 +25,15 @@ public class MembersController {
 	@RequestMapping("/join")
 	public String join() {
 		return "members/joinform";
+	}
+	
+	// 아이디 중복체크
+	@ResponseBody
+	@RequestMapping("/duplCheck")
+	public String duplCheck(String mem_id) {
+		int duplCheck = dao.duplCheck(mem_id);
+		String result = gson.toJson(duplCheck);
+		return result;
 	}
 	
 	// 회원가입 완료 버튼 클릭 시

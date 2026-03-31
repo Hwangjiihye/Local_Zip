@@ -53,12 +53,12 @@
         background-color: #F2D3A2;
     }
     .divTotal{
-        padding-top: 50px;
+        padding-top: 30px;
         border: 2px solid #A66A3F;
         margin: auto;
-        margin-top: 50px;
+        margin-top: 20px;
         width: 1000px;
-        height: 700px;
+        height: 750px;
         text-align: center;
         border-radius: 60px;
         background-color: #F2D3A2;
@@ -112,7 +112,7 @@
     .signUpDiv{
         margin-top: 30px;
     }
-    .checkIdBtn, .signUpBtn, .authCheck, .confirmBtn, .searchBtn{
+    .duplCheck, .signUpBtn, .authCheck, .confirmBtn, .searchBtn{
         background-color: #ffb300;
         color: #5e361a;
         border: 1px solid #ffb300;
@@ -126,17 +126,28 @@
     .agreeDiv{
         font-size: small;
     }
+    .use, .notUse, .correct, .incorrect, .ok, .no{
+    	display: none;
+    	font-size: small;
+    	margin-top:-15px;
+    }
+    .use, .correct, .ok{
+    	color: #286708;
+    }
+    .notUse, .incorrect, .no{
+    	color: #de4f28;
+    }
 </style>
 </head>
 <body>
     <div class="container">
 	    <div class="mainTitle">우리 동네.zip 회원가입</div>
-	    <form>
+	    <form action="/members/signup" class="frm">
 	        <div class="divTotal">
 	            <div class="form-row">
 	                <label>· ID : </label>
 	                <input name="mem_id" class="id" type="text" placeholder="아이디를 입력해주세요.">
-	                <input class="checkIdBtn" type="button" value="중복확인">
+	                <input class="duplCheck" type="button" value="중복확인">
 	            </div>
 	            <div class="use">사용 가능한 아이디입니다.</div>
 	            <div class="notUse">이미 사용 중인 아이디입니다.</div>
@@ -174,8 +185,8 @@
 	            <div>
 	                <input class="code" type="text" placeholder="인증번호를 입력해주세요.">
 	                <input class="confirmBtn" type="button" value="인증">
-	                <div>인증되었습니다.</div>
-	                <div>인증번호가 맞지 않습니다.</div>
+	                <div class="ok">인증되었습니다.</div>
+	                <div class="no">인증번호가 맞지 않습니다.</div>
 	            </div>
 	            <div class="form-row">
 	                <label class="zonecodeLabel">·ZONECODE:</label>
@@ -202,26 +213,198 @@
     <script>
 
         // id 중복체크 기능
-		$(".checkIdBtn").on("click",function() {
+		$(".duplCheck").on("click",function() {
 			if ($(".id").val() == "") {
 				alert("아이디를 먼저 입력해주세요.");
+				return false;
 			}else {
 				$.ajax({
 					url:"/members/duplCheck",
 					dataType:"json",
-					data:{id:$("#id").val()}
+					data:{id:$(".id").val()}
 				}).done(function(resp){
 					if(resp == "0"){
-						$(".ok").show();
-						$(".no").hide();
+						$(".use").show();
+						$(".notUse").hide();
 					}else{
-						$(".no").show();
-						$(".ok").hide();
+						$(".notUse").show();
+						$(".use").hide();
 						return false;
 					}
 				});
 			}
 		});
+        
+        // 주소(찾기)
+		let searchBtn = document.getElementsByClassName("searchBtn")[0];
+		searchBtn.onclick = function() {
+			new kakao.Postcode(
+					{
+						oncomplete : function(data) {
+							document.getElementById("zonecode").value = data.zonecode;
+							document.getElementById("address1").value = data.roadAddress;
+						}
+					}).open();
+		}
+		
+		// 정규표현식 검사
+		let frm = document.getElementsByClassName("frm")[0];
+		frm.onsubmit = function() {
+			// id
+			let id = document.getElementsByClassName("id")[0];
+
+			if (id.value == "") {
+				alert("아이디를 입력해주세요.");
+				id.focus();
+				return false;
+			}else {
+				let regex = /^[a-z\d_]{4,12}$/;
+				let idResult = regex.test(id.value);
+				if (!idResult) {
+					alert("아이디를 다시 설정해주세요.\n4~12자의 영문 소문자, 숫자, 언더바만 사용 가능");
+					id.value = "";
+					id.focus();
+					return false;
+				}
+			}
+			
+			// pw
+			let pw1 = document.getElementsByClassName("pw1")[0];
+			let pw2 = document.getElementsByClassName("pw2")[0];
+			let correct = document.getElementsByClassName("correct")[0];
+			let incorrect = document.getElementsByClassName("incorrect")[0];
+
+			if (pw1.value == "" || pw2.value == "") {
+				alert("비밀번호를 입력해주세요.");
+				return false;
+			} else {
+				let regex = /^[A-Za-z\d!@#$%^&*]{8,16}$/;
+				let pwResult = regex.test(pw1.value);
+				if (!pwResult) {
+					alert("비밀번호를 다시 설정해주세요.\n8~16자의 영문 대소문자,숫자,특수문자(!@#$%^&*) 사용 가능");
+					pw1.value = "";
+					pw1.focus();
+					return false;
+				}else if (pw1.value != pw2.value) {
+					incorrect.style.display = "block";
+					correct.style.display = "none";
+					return false;
+				}else{
+					correct.style.display = "block";
+					incorrect.style.display = "none";
+				}
+			}
+			
+			// name
+			let name = document.getElementsByClassName("name")[0];
+			if (name.value == "") {
+				alert("이름을 입력해주세요.");
+				name.focus();
+				return false;
+			}else {
+				let regex = /^[가-힣]{2,10}$|^[a-z]{2,10}$/;
+				nameResult = regex.test(name.value);
+				if (!nameResult) {
+					alert("2~10글자의 이름만 등록 가능합니다.");
+					name.value = "";
+					name.focus();
+					return false;
+				}
+			}
+			
+			// nickname
+			let nickname = document.getElementsByClassName("nickname")[0];
+			if (nickname.value == "") {
+				alert("닉네임을 입력해주세요.");
+				name.focus();
+				return false;
+			}else {
+				let regex = /^[가-힣]{2,30}$|^[a-z]{2,30}$/;
+				nicknameResult = regex.test(nickname.value);
+				if (!nicknameResult) {
+					alert("2~30글자의 닉네임만 등록 가능합니다.");
+					nickname.value = "";
+					nickname.focus();
+					return false;
+				}
+			}
+			
+			// phone
+			let phone = document.getElementsByClassName("phone")[0];
+			if (phone.value == "") {
+				alert("전화번호를 입력해주세요.");
+				phone.focus();
+				return false;
+			} else {
+				let regex = /^010[\d]{8}$/;
+				let phoneResult = regex.test(phone.value);
+				if (!phoneResult) {
+					alert("연락처 형식은 010********(8자) 입니다.");
+					phone.value = "";
+					phone.focus();
+					return false;
+				}
+			}
+			
+			// ssn
+			let ssn = document.getElementsByClassName("id_num")[0];
+			if (ssn.value == "") {
+				alert("주민등록번호를 입력해주세요.");
+				ssn.focus();
+				return false;
+			} else {
+				let regex = /^[\d]{6}-[1234]{1}[\d]{5}$/;
+				let ssnResult = regex.test(ssn.value);
+				if (!ssnResult) {
+					alert("주민등록번호는 생년월일(6글자)-(뒷자리7글자)로 입력바랍니다.");
+					ssn.value = "";
+					ssn.focus();
+					return false;
+				}
+			}
+			
+			// email
+			let email = document.getElementsByClassName("email")[0];
+			
+			if (email.value == "") {
+				alert("이메일을 입력해주세요.");
+				email.focus();
+				return false;
+			}else {
+				let regex = /^[a-z\d_]+@[a-z]+\.[a-z]+\.?[a-z]+?$/;
+				let emailResult = regex.test(email.value);
+				if (!emailResult) {
+					alert("잘못된 이메일 형식입니다.");
+					email.value = "";
+					email.focus();
+					return false;
+				}
+			}
+			
+			// code
+			let code = document.getElementsByClassName("code")[0];
+			if(code.value == ""){
+				alert("인증코드를 입력해주세요.");
+				code.focus();
+				return false;
+			}
+			
+			// zonecode
+			let zonecode = document.getElementsByClassName("zonecode")[0];
+			if(zonecode.value == ""){
+				alert("우편번호 찾기를 눌러주세요.");
+				zonecode.focus();
+				return false;
+			}
+			
+			// agreeBtn
+			let agreeBtn = document.getElementsByClassName("agreeBtn")[0];
+			if(agreeBtn.value == ""){
+				alert("약관 동의는 필수입니다.");
+				agreeBtn.focus();
+				return false;
+			}
+		}
     </script>
 </body>
 </html>

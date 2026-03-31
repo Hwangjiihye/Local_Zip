@@ -23,7 +23,7 @@ public class MembersDAO {
 	}
 	
 	// 아이디 중복체크
-	public int checkId(String mem_id) {
+	public int duplCheck(String mem_id) {
 		String sql = "select count(*) from members where mem_id = ?";
 		return jdbc.queryForObject(sql, Integer.class, mem_id);
 	}
