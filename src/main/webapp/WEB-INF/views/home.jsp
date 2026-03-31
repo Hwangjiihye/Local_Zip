@@ -302,11 +302,11 @@
         <div class="topBar">
                 <div class="logo" style="font-size: 50px; background-color: #F2D3A2; color: #A66A3F">우리 동네.zip</div> <!-- 상단바 -->
             <div class="loginBox">
-                    <a><input type="button"  value="로그인" class="loginBtn" style="border: 0px; font-weight: bold;  background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
+                    <a href="/members/login"><input type="button"  value="로그인" class="loginBtn" style="border: 0px; font-weight: bold;  background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
                     <a href="/members/join"><input type="button"  value="회원가입" class="joinBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
 
                 <span class="logoutArea" style="display:none;">
-                    <input type="button"  value="로그아웃" class="logoutBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease; ">
+                    <a href="/members/logout"><input type="button"  value="로그아웃" class="logoutBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
                 </span>
             </div>
         </div>
@@ -364,7 +364,7 @@
         </div>
 
         <div class="bottomBar" style="box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <!-- 하단바 -->
-            <i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 홈 이모지-->
+            <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
             <i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i> <!-- 하단바 모임 이모지-->
             <i class="navicon fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 건의사항 이모지-->

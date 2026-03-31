@@ -14,6 +14,8 @@ public class MembersDAO {
 	@Autowired
 	private JdbcTemplate jdbc;
 	
+	EncryptionUtils eu = new EncryptionUtils();
+	
 	// 회원가입
 	public int insert(MembersDTO dto) {
 		String sql = "insert into members values(?,?,?,?,?,?,?,?,?,?,?,?,sysdate,?)";
@@ -32,5 +34,11 @@ public class MembersDAO {
 	public MembersDTO selectAll(String mem_id) {
 		String sql = "select * from members where mem_id = ?";
 		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<MembersDTO>(MembersDTO.class),mem_id);
+	}
+	
+	// 로그인
+	public boolean login(String mem_id, String mem_password) {
+		String sql = "select count(*) from members where mem_id = ? and mem_password = ?";
+		return jdbc.queryForObject(sql, Integer.class, mem_id, eu.getSha512(mem_password)) > 0;
 	}
 }

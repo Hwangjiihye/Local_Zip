@@ -68,4 +68,18 @@ public class MembersController {
 		model.addAttribute("list",list);
 		return "members/myInfo";
 	}
+	
+	// 로그아웃 버튼 > 홈으로 이동
+//	@RequestMapping("/logout")
+//	public String logout(HttpSession session) throws Exception {
+//		
+//		
+//	}
+	
+	// 로그인
+	@RequestMapping("/login")
+	public String login(HttpSession session, String mem_id, String mem_password) throws Exception {
+		
+		return "/members/login";
+	}
 }
