@@ -149,7 +149,7 @@
 	                <input name="mem_id" class="id" type="text" placeholder="아이디를 입력해주세요.">
 	                <input class="duplCheck" type="button" value="중복확인">
 	            </div>
-	            <div class="use">사용 가능한 아이디입니다.</div>
+	            <div class="use">중복되지 않은 아이디입니다.</div>
 	            <div class="notUse">이미 사용 중인 아이디입니다.</div>
 	            <div class="form-row">
 	                <label>· PW : </label>
@@ -211,8 +211,10 @@
     </div>
     
     <script>
-
+		
         // id 중복체크 기능
+        let idChecked = false;
+        
 		$(".duplCheck").on("click",function() {
 			if ($(".id").val() == "") {
 				alert("아이디를 먼저 입력해주세요.");
@@ -226,23 +228,30 @@
 					if(resp == "0"){
 						$(".use").show();
 						$(".notUse").hide();
+						idChecked = true;
 					}else{
 						$(".notUse").show();
 						$(".use").hide();
-						return false;
+						idChecked = false;
 					}
 				});
 			}
 		});
-        
+		
+		$(".id").on("input", function() {
+		    idChecked = false;
+		    $(".use").hide();
+		    $(".notUse").hide();
+		});
+		
         // 주소(찾기)
 		let searchBtn = document.getElementsByClassName("searchBtn")[0];
 		searchBtn.onclick = function() {
 			new kakao.Postcode(
 					{
 						oncomplete : function(data) {
-							document.getElementById("zonecode").value = data.zonecode;
-							document.getElementById("address1").value = data.roadAddress;
+							document.getElementsByClassName("zonecode")[0].value = data.zonecode;
+							document.getElementsByClassName("address1")[0].value = data.roadAddress;
 						}
 					}).open();
 		}
@@ -267,6 +276,11 @@
 					return false;
 				}
 			}
+			
+			if (!idChecked) {
+		        alert("아이디 중복확인을 해주세요.");
+		        return false;
+		    }
 			
 			// pw
 			let pw1 = document.getElementsByClassName("pw1")[0];
@@ -353,7 +367,7 @@
 				ssn.focus();
 				return false;
 			} else {
-				let regex = /^[\d]{6}-[1234]{1}[\d]{5}$/;
+				let regex = /^[\d]{6}-[1234]{1}[\d]{6}$/;
 				let ssnResult = regex.test(ssn.value);
 				if (!ssnResult) {
 					alert("주민등록번호는 생년월일(6글자)-(뒷자리7글자)로 입력바랍니다.");

@@ -50,7 +50,7 @@ public class MembersController {
 	    }
 
 	    dao.insert(dto);
-	    return "redirect:/"; // 나중에 로그인 창으로 이동하는 것으로 바꾸기
+	    return "redirect:/members/mypage"; // 나중에 로그인 창으로 이동하는 것으로 바꾸기
 	}
 	
 	// 마이페이지 아이콘 클릭 시
