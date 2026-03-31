@@ -80,6 +80,15 @@ public class MembersController {
 	@RequestMapping("/login")
 	public String login(HttpSession session, String mem_id, String mem_password) throws Exception {
 		
-		return "/members/login";
+		System.out.println("mem_id = " + mem_id);
+		System.out.println("mem_password = " + mem_password);
+		System.out.println("dao = " + dao);
+		
+		boolean result = dao.login(mem_id, mem_password);
+		
+		if(result) {
+			session.setAttribute("loginId", mem_id);
+		}
+		return "/";
 	}
 }
