@@ -173,7 +173,6 @@ body {
 	<div class="container">
 		<div class="top-section">
 			<div class="mainTitle">우리 동네 지도.zip</div>
-			<img src="${pageContext.request.contextPath}/resources/images/free-icon-police-2542262.png" width="50">
 			<div class="categoryDiv">
 				<button class="categoryBtnAll">
 					<i class="fa-solid fa-house"> 전체</i>
@@ -334,11 +333,11 @@ body {
 		        let imageSrc = "";
 		        
 		        if (fac_type === "치안시설") {
-		            imageSrc = "${pageContext.request.contextPath}/resources/images/free-icon-police-2542262.png";
+		            imageSrc = "/resources/images/free-icon-police-2542262.png";
 		        } else if (fac_type === "대피소") {
-		            imageSrc = "${pageContext.request.contextPath}/resources/images/free-icon-shelter-14036088.png";
+		            imageSrc = "/resources/images/free-icon-shelter-14036088.png";
 		        } else if (fac_type === "공중화장실") {
-		            imageSrc = "${pageContext.request.contextPath}/resources/images/free-icon-bathroom-6543661.png";
+		            imageSrc = "/resources/images/free-icon-bathroom-6543661.png";
 		        }
 
 		        if (!imageSrc) return null;
