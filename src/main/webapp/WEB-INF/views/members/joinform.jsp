@@ -249,7 +249,7 @@
 		//인증번호 전송
 		$(".authCheck").on("click",function(){
 			$.ajax({
-				url : "/auth/mailCheck";
+				url : "/auth/mailCheck",
 				data : {email : $(".email").val(),
 						auth_type : 1}
 			}).done(function(resp){
@@ -258,6 +258,15 @@
 				}else{
 					alert("인증번호 발송 실패했습니다.");
 				}
+			})
+		});
+		
+		//인증번호 확인
+		$(".confirmBtn").on("click",function(){
+			$.ajax({
+				url : "/auth/verify",
+				data : {email : $(".email").val(),
+						auth_code : $(".code").val()}
 			})
 		});
 		

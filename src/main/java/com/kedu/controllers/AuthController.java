@@ -60,7 +60,7 @@ public class AuthController {
 		
 		if(dao.checkAuth(email, auth_code) > 0) {
 			dao.updateVerified(email);
-			return "ok";
+			return "success";
 		}
 		
 		return "fail";
