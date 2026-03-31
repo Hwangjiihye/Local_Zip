@@ -1,9 +1,16 @@
 package com.kedu.service;
 
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -163,9 +170,150 @@ public class SafetyFacilityService {
 	    return count;
 	}
 	
-//	public int saveShelterData() {
-//		
-//	}
+	private final String KAKAO_REST_API_KEY = "9b13c2ea8c18a1379ea7c45013873362";
+
+    public int updatePoliceLatLng() {
+        int count = 0;
+
+        try {
+            List<SafetyFacilityDTO> list = dao.selectPoliceWithoutCoords();
+            RestTemplate restTemplate = new RestTemplate();
+
+            for (SafetyFacilityDTO dto : list) {
+                String address = dto.getFac_address();
+
+                if (address == null || address.isBlank()) {
+                    continue;
+                }
+
+                String encodedAddress = URLEncoder.encode(address, StandardCharsets.UTF_8);
+                String url = "https://dapi.kakao.com/v2/local/search/address.json?query=" + encodedAddress;
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.set("Authorization", "KakaoAK " + KAKAO_REST_API_KEY);
+
+                HttpEntity<String> entity = new HttpEntity<>(headers);
+
+                ResponseEntity<Map> response = restTemplate.exchange(
+                        URI.create(url),
+                        HttpMethod.GET,
+                        entity,
+                        Map.class
+                );
+
+                Map<String, Object> body = response.getBody();
+                if (body == null) {
+                    continue;
+                }
+
+                List<Map<String, Object>> documents = (List<Map<String, Object>>) body.get("documents");
+                if (documents == null || documents.isEmpty()) {
+                    System.out.println("좌표 못 찾음: " + address);
+                    continue;
+                }
+
+                Map<String, Object> first = documents.get(0);
+
+                String x = String.valueOf(first.get("x")); // 경도
+                String y = String.valueOf(first.get("y")); // 위도
+
+                double lng = Double.parseDouble(x);
+                double lat = Double.parseDouble(y);
+
+                int result = dao.updateLatLngBySeq(lat, lng, dto.getFac_seq());
+                if (result > 0) {
+                    count++;
+                    System.out.println("업데이트 성공: " + dto.getFac_name() + " / " + lat + ", " + lng);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+    private final String SERVICE_KEY_SHELTER = "515452634f776a643735444c725564";
+	public int saveShelterData() {
+		int count = 0;
+
+		try {
+			dao.deleteByType("대피소");
+
+			int start = 1;
+			int end = 1000;
+			int totalCount = 0;
+
+			RestTemplate restTemplate = new RestTemplate();
+
+
+			while (true) {
+
+	            String url = "http://openapi.seoul.go.kr:8088/"
+	                    + SERVICE_KEY_SHELTER
+	                    + "/json/TlEtqkP/"
+	                    + start + "/" + end;
+
+	            Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+	            if (response == null) break;
+
+	            Map<String, Object> data = (Map<String, Object>) response.get("TlEtqkP");
+	            if (data == null) break;
+
+	            Object totalCountObj = data.get("list_total_count");
+	            if (totalCountObj != null) {
+	            	totalCount = (int) Double.parseDouble(String.valueOf(totalCountObj));
+	            }
+
+	            List<Map<String, Object>> itemList = (List<Map<String, Object>>) data.get("row");
+	            if (itemList == null || itemList.isEmpty()) break;
+
+	            for (Map<String, Object> item : itemList) {
+	                String facName = clean(item.get("ACTC_FCLT_NM")); // 시설명
+	                String addr = clean(item.get("DADDR"));           // 주소
+	                String nm = clean(item.get("SGG_NM")); // 구
+	                String latStr = clean(item.get("LAT"));           // 위도
+	                String lngStr = clean(item.get("LOT"));           // 경도
+
+	                if (!addr.contains("서울")) continue;
+	                if (facName.isEmpty()) continue;
+	                if (latStr.isEmpty() || lngStr.isEmpty()) continue;
+
+	                SafetyFacilityDTO dto = new SafetyFacilityDTO();
+	                dto.setFac_type("대피소");
+	                dto.setFac_name(facName);
+	                dto.setFac_address(addr);
+	                dto.setFac_gu(nm);
+	                dto.setFac_numaddress("");
+
+	                try {
+	                    dto.setFac_lat(Double.parseDouble(latStr));
+	                    dto.setFac_lng(Double.parseDouble(lngStr));
+	                } catch (Exception e) {
+	                    continue;
+	                }
+
+	                dao.insert(dto);
+	                count++;
+	            }
+
+	            if (end >= totalCount) break;
+
+	            start += 1000;
+	            end += 1000;
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return count;
+	}
+	
+	public List<SafetyFacilityDTO> getAllFacility(){
+		return dao.selectAll();
+	}
 
 	private String clean(Object obj) {
 		if (obj == null) return "";
@@ -182,6 +330,4 @@ public class SafetyFacilityService {
 		}
 		return "";
 	}
-	
-	
 }
