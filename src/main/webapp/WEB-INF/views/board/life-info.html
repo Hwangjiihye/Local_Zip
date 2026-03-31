@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+    <style>
+        /* 폰트 */
+        @font-face {
+            font-family: 'GMarketSans';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+            font-weight: 300;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'GMarketSans';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: 500;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'GMarketSans';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+            font-weight: 700;
+            font-display: swap;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 폰트 지정 */
+        button,
+        body {
+            font-family: 'GMarketSans', sans-serif;
+        }
+
+        .container {
+            position: relative;
+            top: 100px;
+
+            width: 100%;
+            min-height: 100vh;
+            /* 최소 높이 지정 : 브라우저 */
+
+            border: 1px solid black;
+            background-color: #fbe5c0;
+        }
+
+
+        .headBox {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100px;
+
+            font-weight: bold;
+            font-size: 50px;
+            color: #A66A3F;
+            background-color: #fbe5c0;
+            border-bottom: 2px solid #A66A3F;
+            /* 아래쪽만 줄 그음 */
+
+            line-height: 100px;
+            z-index: 1000;
+
+        }
+
+        .categoryBtnBox {
+
+            width: 100%;
+            height: 70px;
+
+            border: 1px solid red;
+        }
+
+        .categoryBtns {
+
+            position: relative;
+            top: 20px;
+            left: 20px;
+
+            /* 수정: 고정 800px 대신 화면의 90%만 차지하게 */
+            width: 90%;
+            max-width: 800px;
+            /* 하지만 너무 넓어지진 않게 최대치 제한 */
+
+            border: 1px solid orange;
+        }
+
+        .allBtn {
+            padding-top: 4px;
+        }
+
+
+        .topBtn {
+            height: 25px;
+
+            background-color: #FFB300;
+            border-radius: 10px;
+            border: 1px solid #FFB300;
+            color: #3e5e40;
+
+            align-items: center;
+            /* 수직 중앙 정렬 */
+
+            vertical-align: middle;
+            /* 버튼들끼리 줄이 안 맞을 때를 대비 */
+
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .topBtn:hover {
+            background-color: #fecc56;
+            color: #A66A3F;
+        }
+
+
+        .bodyBox {
+
+            width: 100%;
+            min-height: 100vh;
+            /* 최소 높이 지정 : 브라우저 */
+
+            border: 3px solid green;
+        }
+
+
+        .orderBox {
+            width: 120px;
+            margin-right: 2.5%;
+            margin-left: auto;
+
+            text-align: right;
+            font-size: 14px;
+
+            position: relative;
+            top: 30px;
+        }
+
+        .orderBtn {
+            border: none;
+            border-radius: 30%;
+            background-color: transparent;
+        }
+
+        .orderBtn:hover {
+            background-color: #fecc56;
+        }
+
+
+        .postBox {
+            /* 수정: 고정 1500px 제거 */
+            width: 95%;
+            max-width: 1500px;
+            /* 적당히 보기 좋은 최대 너비 설정 */
+
+            min-height: 200px;
+
+            margin: auto;
+            margin-top: 30px;
+
+            border-radius: 10px;
+            border: 1px solid black;
+
+        }
+
+        .postUpBox {
+            width: 100%;
+            height: 95px;
+
+            border: 1px solid red;
+        }
+
+
+
+
+        .postProfile {
+            width: 75px;
+            height: 75px;
+            border: 4px solid #A66A3F;
+            border-radius: 50%;
+
+            position: relative;
+            top: 10px;
+            left: 10px;
+
+        }
+
+        .profile {
+            margin-top: -10px;
+            margin-left: 2px;
+        }
+
+
+        .postUpBox {
+            display: flex;
+        }
+
+        .postInfoBox {
+            width: 300px;
+            min-height: 50px;
+
+            position: relative;
+            left: 20px;
+            top: 23px;
+        }
+
+        .postInfoUp,
+        .postInfoDown {
+            display: flex;
+        }
+
+
+        .profileInfo {
+            width: auto;
+            margin-right: 15px;
+            /* 정보 사이의 간격 일정하게 부여 */
+
+            /*수직 정렬*/
+            display: flex;
+            align-items: center;
+
+            font-size: 14px;
+            color: #333;
+        }
+
+
+        .postMidBox{
+            width: 100%;
+            height: auto;
+
+            border: 1px solid blue;
+        }
+
+        .postTitle{
+            margin: auto;
+
+            width: 95%;
+            min-height: 40px;
+
+            
+
+            border: 1px solid pink;
+        }
+
+        .postContent{
+            margin: auto;
+
+            width: 95%;
+            min-height: 40px;
+            height: auto;
+            
+
+            border: 1px solid gray;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="headBox">우리 동네.zip</div>
+
+        <div class="categoryBtnBox">
+            <div class="categoryBtns">
+                <button class="catagoryBtn topBtn allBtn">전체</button>
+                <button class="catagoryBtn topBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button>
+                <button class="catagoryBtn topBtn"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
+                <button class="catagoryBtn topBtn"><i class="fa-regular fa-comment fa-lg"></i> 고민/이야기</button>
+                <button class="catagoryBtn topBtn"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
+            </div>
+        </div>
+
+        <div class="bodyBox">
+
+            <div class="orderBox">
+                <button class="orderBtn">최신순</button>/<button class="orderBtn">인기순</button>
+            </div>
+
+            <div class="postBox">
+
+                <div class="postUpBox">
+
+                    <div class="postProfile">
+                        <img class="profile" src="Profile.png" width="60px">
+                    </div>
+
+                    <div class="postInfoBox">
+                        <div class="postInfoUp">
+                            <div class="profileName profileInfo">홍길동</div>
+                            <div class="profileLocal profileInfo">지역(동)</div>
+                            <div class="profileCatagory profileInfo"><button
+                                    class="catagoryBtn topBtn allBtn">카테고리</button></div>
+                        </div>
+
+                        <div class="postInfoDown">
+                            <div class="profileTime profileInfo">00시간 전</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="postMidBox">
+
+                    <div class="postTitle">제목</div>
+                    <div class="postContent">내용
+                        <div>dgfsdagfgd</div>
+                        <div>dgfsdagfgd</div>
+                        
+
+                    </div>
+
+                </div>
+
+
+                <div class="postDownBox">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="pageBox"></div>
+
+
+        <div class="bottomBox">
+
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
