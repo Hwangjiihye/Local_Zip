@@ -102,9 +102,10 @@
             margin-left: 10px;
         }
 
-        .id {
+        .nickname {
             margin-top: 30px;
             margin-left: 20px;
+            font-weight: bold;
         }
         
         hr{
@@ -117,7 +118,8 @@
         .logoutBtn:hover,
         .joinBtn:hover,
         .navicon:hover,
-        .adminPage:hover{
+        .adminPage:hover,
+        .myInfoBtn:hover{
             transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
@@ -126,7 +128,8 @@
         .logoutBtn:active,
         .joinBtn:active,
         .navicon:active,
-        .adminPage:hover{
+        .adminPage:hover,
+        .myInfoBtn:hover{
             transform: translateY(2px); /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
@@ -137,6 +140,9 @@
 	        border: 1px solid #ffb300;
 	        border-radius: 10px;
 	        font-weight: bold;
+    	}
+    	.myInfoBtn{
+    		
     	}
     	
     	.adminPageDiv{
@@ -163,28 +169,32 @@
     	
     	.myInfoDiv{
     		position: relative;
-    		left: 1650px;
+    		left: 1550px;
     	}
     	
-    	.myActiveTitle{
+    	.myActiveTitle, .FAQTitle{
     		height: 60px;
     		font-size: x-large;
     		font-weight: bold;
-    		margin-top: 30px;
-    		margin-left: 30px;
+    		margin-top: 50px;
+    		margin-left: 110px;
     	}
-    	.myActiveDiv{
-    		border: 1px solid black;
+    	.FAQTitle{
+    		margin-top: 60px;
+    	}
+    	.myActiveDiv, .FAQDiv{
     		display: flex;
     		gap: 40px;
     		width: 90%;
     		height: 125px;
-    		margin-left: 30px;
+    		margin-left: 115px;
     	}
+    	
     	.myWrite, .myLike, .myClub{
-    		border: 1px solid black;
     		width: 30%;
     		height: 100%;
+    		background-color: #fbe5c0;
+    		border-radius: 30px;
     	}
     	.myWriteIcon, .myLikeIcon, .myClubIcon{
     		width: 30%;
@@ -195,15 +205,13 @@
     		height: 100%;
     	}
     	.myWriteIcon, .myWriteContents, .myLikeIcon, .myLikeContents, .myClubIcon, .myClubContents{
-     		border: 1px solid black;
     		float: left;
     	}
     	.myWriteTitle, .myWriteNum, .myLikeTitle, .myLikeNum, .myClubTitle, .myClubNum{
-     		border: 1px solid black;
     		height: 50%;
     		font-size: x-large;
     		font-weight: bold;
-    		line-height: 60px;
+    		line-height: 87px;
     	}
     	.myWriteTitle, .myLikeTitle, .myClubTitle{
     		font-size: x-large;
@@ -211,14 +219,36 @@
     	.myWriteNum, .myLikeNum, .myClubNum{
     		font-size: x-large;
     		color: #286708;
+    		line-height: 45px;
     	}
+    	.icon{
+    		width: 60px;
+    		height: 60px;
+    		margin-left: 30px;
+    		margin-top: 30px;
+    	}
+    	
+    	.CS, .notice{
+    		width: 688px;
+    		height: 60px;
+    		background-color: #fbe5c0;
+    		border-radius: 15px;
+    		font-size: x-large;
+    		font-weight: bold;
+    		padding-left: 30px;
+    		padding-top: 10px;
+    	}
+
+     	.adminPage{
+     		margin-left: 520px;
+     	}
 </style>
 </head>
 <body>
 	<div class="topBar">내.zip</div>
 	<div class="userBar">
     	<img class="profile" src="/resources/images/birdprofile.png">
-        <div class="id">${loginId }</div>
+        <div class="nickname">닉네임</div>
         <div class="myInfoDiv">
         	<a href="/members/myInfo">
         		<button class="myInfoBtn"><i class="fa-solid fa-user-gear"></i> 내 정보.zip</button>
@@ -230,21 +260,21 @@
 	    <div class="myActiveTitle">· 나의 활동</div>
 	    <div class="myActiveDiv">
 	    	<div class="myWrite">
-	    		<div class="myWriteIcon"></div>
+	    		<div class="myWriteIcon"><img src="/resources/images/text1.png" class="icon"></div>
 	    		<div class="myWriteContents">
 	    			<div class="myWriteTitle">작성글</div>
 	    			<div class="myWriteNum">10</div>
 	    		</div>
 	    	</div>
 	    	<div class="myLike">
-	    		<div class="myLikeIcon"></div>
+	    		<div class="myLikeIcon"><img src="/resources/images/love.png" class="icon"></div>
 	    		<div class="myLikeContents">
 		    		<div class="myLikeTitle">관심 게시글</div>
 		    		<div class="myLikeNum">15</div>
 		    	</div>
 	    	</div>
 	    	<div class="myClub">
-	    		<div class="myClubIcon"></div>
+	    		<div class="myClubIcon"><img src="/resources/images/people.png" class="icon"></div>
 	    		<div class="myClubContents">
 		    		<div class="myClubTitle">모임</div>
 		    		<div class="myClubNum">3</div>
@@ -252,10 +282,10 @@
 	    	</div>
 	    </div>
 	    
-	    <div class="FAQTitle">고객센터</div>
+	    <div class="FAQTitle">· 고객센터</div>
 	    <div class="FAQDiv">
-	    	<div>고객지원 ></div>
-	    	<div>공지사항 ></div>
+	    	<div class="CS">고객지원 ></div>
+	    	<div class="notice">공지사항 ></div>
 	    </div>
 	    
 	    <div class="adminPageDiv">
@@ -265,7 +295,7 @@
     <div class="bottomBar" style="box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <!-- 하단바 -->
     	<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
         <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
-        <i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i> <!-- 하단바 모임 이모지-->
+        <a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i></a> <!-- 하단바 모임 이모지-->
         <i class="navicon fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 건의사항 이모지-->
         <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 마이페이지 이모지-->
     </div>
