@@ -79,6 +79,8 @@ body {
 	border-radius: 60px;
 	background-color: #F2D3A2;
 	box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+	position: relative;
+    z-index: 1;
 }
 
 .form-row {
@@ -194,6 +196,20 @@ hr {
 	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+.leftImg, .rightImg{
+	position: absolute;
+	width: 400px;
+	height: 155px;
+	z-index: 10;
+	bottom: 0;
+}
+.leftImg{
+    left: 0;
+}
+.rightImg{
+	right: 0;
+}
+
 </style>
 </head>
 <body>
@@ -271,6 +287,9 @@ hr {
 				</div>
 			</div>
 		</form>
+		
+		<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 	</div>
 
 	<script>

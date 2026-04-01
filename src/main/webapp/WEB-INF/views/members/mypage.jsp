@@ -164,6 +164,8 @@
     		border-radius: 20px;
     		box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     		padding-top: 5px;
+    		position: relative;
+    		z-index: 1;
     	}
     	
     	.myInfoDiv{
@@ -249,7 +251,7 @@
     	}
 		
 		.adminPageDiv{
-			margin-top: -40px;
+			margin-top: -35px;
 		}
      	.adminPage{
      		margin-left: 520px;
@@ -258,7 +260,9 @@
      	.leftImg, .rightImg{
      		position: absolute;
      		width: 300px;
-     		height: 100px;
+     		height: 150px;
+     		z-index: 10;
+     		bottom: 50px;
      	}
      	.leftImg{
      		left: 0;
@@ -329,7 +333,7 @@
     	<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
         <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
         <a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i></a> <!-- 하단바 모임 이모지-->
-        <i class="navicon fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 건의사항 이모지-->
+        <i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 건의사항 이모지-->
         <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 마이페이지 이모지-->
     </div>
 </body>
