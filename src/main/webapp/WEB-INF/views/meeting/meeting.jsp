@@ -281,7 +281,7 @@ body {
 		<div class="top-section">
 			<div class="mainTitle">
 			<span>동네 모임.zip</span>
-			<button class="topBtn" type="button">+ 모임 만들기</button>
+			<a href=""><button class="topBtn" type="button">+ 모임 만들기</button></a>
 			</div>
 			
 			<div class="categoryDiv">
