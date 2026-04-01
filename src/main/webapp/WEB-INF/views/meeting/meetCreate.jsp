@@ -48,11 +48,302 @@
 			background-color: #fbe5c0;
 		}
 		
+		.container {
+			width: 100%;
+		}
 		
-	
+		.mainTitle {
+			width: 100%;
+			font-weight: bold;
+			font-size: 50px;
+			color: #A66A3F;
+			border-bottom: 2px solid #A66A3F;
+			background-color: #F2D3A2;
+			height: 100px;
+			line-height: 100px;
+			display: flex;
+			padding: 0 20px;
+			justify-content: space-between; 
+			align-items: center;
+			box-sizing: border-box;
+		}
+		
+		.meetingDetail {
+			margin: auto;
+		    width: 80%;
+		    border-radius: 10px;
+		    background-color: #fbe5c0;
+		    padding: 35px;
+		 	margin-top: 30px;
+		    background-color: #F2D3A2;
+		    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+		}
+		
+		.card-header {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    font-weight: bold;
+		    font-size:20px;
+		    color: #5e361a;
+		}
+		
+		.titleDiv, .categoryDiv, .descDiv, .locationDiv, .descTextDiv{
+			padding:10px;
+			border-bottom: 1px dotted #A66A3F;
+		}
+		
+		.openChatLinkDiv, .openChatPwDiv{
+			padding:10px;
+		}
+		
+		.descText{
+			font-weight: bold;
+		    font-size: 23px;
+		    color: #5e361a;
+		    border: none;
+		    padding-left: 2px;
+		}
+		
+		.descTextDetail{
+			padding-top: 10px;
+			border: none;
+			width: 70%;
+			padding-left: 2px;
+		}
+		
+		.title, .category, .desc, .location, .openChatLink, .openChatPw{
+			font-weight: bold;
+		    font-size: 23px;
+		    color: #5e361a;
+		}
+		
+		.categoryDiv{
+			display: flex;
+		    flex-direction: column;
+		    gap: 8px;
+		    padding: 10px;
+		    border-bottom: 1px dotted #A66A3F;
+		}
+		
+		.inputLink {
+			padding:5px;
+			background-color: #fbe5c0;
+			border-radius: 10px;
+			border:none;
+			font-size:15px;
+			width: 610px;
+			word-break: break-all;
+			white-space: normal; 
+		}
+		
+		.inputPw {
+			padding:5px;
+			background-color: #fbe5c0;
+			border-radius: 10px;
+			border:none;
+			font-size:15px;
+			width: 310px;
+			word-break: break-all;
+			white-space: normal;
+		}
+		
+		.openChatWrapper{
+			display:flex;
+			gap: 50px;
+		}
+		
+		.bottomBtn {
+		    display: flex;
+		    justify-content: center;
+		    gap: 20px;
+		    margin-top: 20px;
+		    margin-bottom: 10px;
+		}
+		
+		.requestBtn, .backBtn{
+			width: 350px;
+		    height: 40px;
+		    background-color: #FFB300;
+		    border:none;
+		    border-radius: 10px;
+		    color: #5e361a;
+		    font-size: 17px;
+		    font-weight: bold;
+		}
+		
+		.requestBtn:hover, .backBtn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+		}
+		
+		.requestBtn:active, .backBtn:active{
+			transform: translateY(2px);
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		}
+		
+		.clubName{
+			width: 800px;
+			height: 35px;
+			top: 30px;
+		    left: 0;
+		    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+		    z-index: 10;
+		    font-family: 'GMarketSans';
+		    border: 1px solid #A66A3F;
+		    border-radius: 5px;
+		    background-color: #F2D3A2;
+		    color: #A66A3F;
+		    font-size: 12px;
+		    padding: 2px;
+		    outline: none;
+		}
+		
+		.detailContent{
+			width: 800px;
+			height: 300px;
+			top: 30px;
+		    left: 0;
+		    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+		    z-index: 10;
+		    font-family: 'GMarketSans';
+		    border: 1px solid #A66A3F;
+		    border-radius: 5px;
+		    background-color: #F2D3A2;
+		    color: #A66A3F;
+		    font-size: 12px;
+		    padding: 2px;
+		    outline: none;
+		}
+		
+		.categoryGuide{
+			font-size: 14px;
+    		color: #5e361a;
+		}
+		
+		.report{
+			display: none;
+			width: 200px;
+    		height: 32px;
+		    top: 30px;
+		    left: 0;
+		    width: 150px;
+		    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+		    z-index: 10;
+		    font-family: 'GMarketSans';
+		    border: 1px solid #A66A3F;
+		    border-radius: 5px;
+		    background-color: #F2D3A2;
+		    color: #A66A3F;
+		    font-size: 12px;
+		    padding: 2px;
+		    outline: none;
+		}
+		
+		textarea{
+		    resize: none;
+		}
+		
+		.kakaotalk{
+			width: 600px;
+			height: 35px;
+			top: 30px;
+		    left: 0;
+		    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+		    z-index: 10;
+		    font-family: 'GMarketSans';
+		    border: 1px solid #A66A3F;
+		    border-radius: 5px;
+		    background-color: #F2D3A2;
+		    color: #A66A3F;
+		    font-size: 12px;
+		    padding: 2px;
+		    outline: none;
+		}
+		
+		.kakaotalkPw {
+			width: 300px;
+			height: 35px;
+			top: 30px;
+		    left: 0;
+		    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+		    z-index: 10;
+		    font-family: 'GMarketSans';
+		    border: 1px solid #A66A3F;
+		    border-radius: 5px;
+		    background-color: #F2D3A2;
+		    color: #A66A3F;
+		    font-size: 12px;
+		    padding: 2px;
+		    outline: none;
+		}
 	
 	</style>
 <body>
+	<div class="container">
+		<div class="top-section">
+			<div class="mainTitle">
+			<span>새 모임 만들기</span>
+			</div>
+			
+			
+			</div>
+			
+				<div class="meetingDetail">
+					<div class="titleDiv">
+						<div class="title">모임명</div>
+						<div class="titleDetail"><input class="clubName" maxlength="50" type="text" placeholder="모임명을 작성해주세요."></div>
+					</div>
+					
+					<div class="categoryDiv">
+						<div class="category">카테고리</div>
+							<div class="categoryGuide">카테고리를 선택하세요  <i class="icon fa-solid fa-sort fa-lg" style="color: #A66A3F;"></i></div>
+							<select class="report">
+								<option class="report-menu">운동</option>
+								<option class="report-menu">문화</option>
+								<option class="report-menu">취미</option>
+								<option class="report-menu">스터디</option>
+							</select>
+					</div>
+					
+					<div class="descDiv">
+						<div class="desc">간단한 한 줄 소개</div>
+						<div class="descDetail"><input class="clubName" maxlength="100" type="text" placeholder="한 줄 소개를 작성해주세요"></div>
+					</div>
+					
+					<div class="descTextDiv">
+						<div class="descText">자세한 소개글</div>
+						<div class="descTextDetail"><textarea class="detailContent" maxlength="1000" type="text" placeholder="모임을 소개해주세요"></textarea></div>
+					</div>
+					
+					<div class="locationDiv">	
+						<div class="location">활동지역</div>	
+						<div class="locationDetail"><input class="clubName" maxlength="33" type="text" placeholder="활동지역을 입력해주세요"></div>
+					</div>
+					
+					<div class="openChatWrapper">
+						<div class="openChatLinkDiv">	
+							<div class="openChatLink">카톡 오픈채팅 링크</div>	
+							<div class="inputLink"><input class="kakaotalk" maxlength="100" type="text" placeholder="카톡 오픈채팅 링크를 붙여넣어주세요"></div>
+						</div>
+						
+						<div class="openChatPwDiv">
+							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
+							<div class="inputPw"><input class="kakaotalkPw" maxlength="8" type="text" placeholder="카톡 오픈채팅 비밀번호를 넣어주세요"></div>
+						</div>
+					</div>
+			</div>
+	</div>
+		<div class="bottomBtn">
+			<button class="requestBtn" type="button">신청하기</button>
+			<a href="/meeting/test"><button class="backBtn" type="button">뒤로가기</button></a>
+		</div>
+		
+		<script>
+		$(".icon").on("click", function (e) {
+		    $(".report").css({"display" : "inline"});
+		});
+		</script>
 
 </body>
 </html>
