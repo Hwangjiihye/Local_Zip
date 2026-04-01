@@ -25,9 +25,27 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<context:component-scan base-package="com.kedu"/>
+	<context:component-scan base-package="com.kedu" />
 
 	<bean id="gson" class="com.google.gson.Gson"></bean>
-
+	
+	<!-- properties 파일 위치지정(메일주소와 패스워드) -->
+	<context:property-placeholder location="classpath:email.properties" />
+	
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="${email.username}"/>
+		<property name="password" value="${email.password}"/>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop> <!-- 로그 확인용 -->
+			</props>
+		</property>
+	</bean>
 
 </beans>
