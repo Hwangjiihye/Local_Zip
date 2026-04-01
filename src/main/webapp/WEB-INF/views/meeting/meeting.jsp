@@ -281,7 +281,7 @@ body {
 		<div class="top-section">
 			<div class="mainTitle">
 			<span>동네 모임.zip</span>
-			<a href=""><button class="topBtn" type="button">+ 모임 만들기</button></a>
+			<button class="topBtn" type="button">+ 모임 만들기</button>
 			</div>
 			
 			<div class="categoryDiv">
@@ -301,8 +301,9 @@ body {
 					<i class="fa-solid fa-book"> 스터디</i>
 				</button>
 			</div>
-			</div>
+		</div>
 			
+				
 				<div class="meeting-card">
 					<div class="card-header">
 						<div class="title">모임제목</div>
@@ -334,114 +335,12 @@ body {
 						<div class="gauge-text">6 / 10명 참여중</div>
 						<button class="join-btn">참여신청</button>
 					</div>
-				
 			</div>
-			<div class="meeting-card">
-					<div class="card-header">
-						<div class="title">모임제목</div>
-							<div class="reportDiv">
-<!-- 								<i class="fa-solid fa-flag reportIcon"></i> -->
-				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-								<select class="report">
-									<option class="report-menu" disabled selected>신고 사유</option>
-									<option class="report-menu">부적절한 컨텐츠</option>
-									<option class="report-menu">욕설/비방</option>
-									<option class="report-menu">광고/스팸</option>
-								</select>
-							</div>
-					</div>
-				
-					<div class="category">카테고리</div>
-					<div class="desc">한 줄 소개</div>
-					
-					
-					<div class="info">	
-						<div class="location">📍 위치</div>	
-						<div class="count">👥 정원 수</div>
-					</div>
-					
-					<div class="card-footer">
-						<div class="gauge-wrap">
-							<div class="gauge-bar" style="width: 60%;"></div>
-						</div>
-						<div class="gauge-text">6 / 10명 참여중</div>
-						<button class="join-btn">참여신청</button>
-					</div>
-				
-			</div>
-			<div class="meeting-card">
-					<div class="card-header">
-						<div class="title">모임제목</div>
-							<div class="reportDiv">
-<!-- 								<i class="fa-solid fa-flag reportIcon"></i> -->
-				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-								<select class="report">
-									<option class="report-menu" disabled selected>신고 사유</option>
-									<option class="report-menu">부적절한 컨텐츠</option>
-									<option class="report-menu">욕설/비방</option>
-									<option class="report-menu">광고/스팸</option>
-								</select>
-							</div>
-					</div>
-				
-					<div class="category">카테고리</div>
-					<div class="desc">한 줄 소개</div>
-					
-					
-					<div class="info">	
-						<div class="location">📍 위치</div>	
-						<div class="count">👥 정원 수</div>
-					</div>
-					
-					<div class="card-footer">
-						<div class="gauge-wrap">
-							<div class="gauge-bar" style="width: 60%;"></div>
-						</div>
-						<div class="gauge-text">6 / 10명 참여중</div>
-						<button class="join-btn">참여신청</button>
-					</div>
-				
-			</div>
-			<div class="meeting-card">
-					<div class="card-header">
-						<div class="title">모임제목</div>
-							<div class="reportDiv">
-<!-- 								<i class="fa-solid fa-flag reportIcon"></i> -->
-				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-								<select class="report">
-									<option class="report-menu" disabled selected>신고 사유</option>
-									<option class="report-menu">부적절한 컨텐츠</option>
-									<option class="report-menu">욕설/비방</option>
-									<option class="report-menu">광고/스팸</option>
-								</select>
-							</div>
-					</div>
-				
-					<div class="category">카테고리</div>
-					<div class="desc">한 줄 소개</div>
-					
-					
-					<div class="info">	
-						<div class="location">📍 위치</div>	
-						<div class="count">👥 정원 수</div>
-					</div>
-					
-					<div class="card-footer">
-						<div class="gauge-wrap">
-							<div class="gauge-bar" style="width: 60%;"></div>
-						</div>
-						<div class="gauge-text">6 / 10명 참여중</div>
-						<button class="join-btn">참여신청</button>
-					</div>
-				
-			</div>
-			
-	
 	</div>
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-			<a><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
 			<a><i class="navicon fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
@@ -458,6 +357,16 @@ body {
 			
 			$(document).on("click", function () {
 			    $(".report").hide();
+			});
+			
+			$(document).on("click", ".meeting-card", function(){
+// 			    let seq = $(this).data("seq");
+// 			    location.href = "/detail?seq=" + seq; 모임카드의 시퀀스
+				location.href = "/meeting/meetingDetail";
+			});
+			
+			$(document).on("click", ".join-btn, .reportIcon", function (e) {
+				e.stopPropagation();
 			});
 	</script>
 </body>

@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/meeting")
 public class MeetingController {
 	
-	@RequestMapping("/test") // 지도 jsp로 이동
+	@RequestMapping("/test") // meeting jsp로 이동
 	public String test() {
 		return "meeting/meeting";
+	}
+	
+	@RequestMapping("/meetingDetail") // meeting 디테일 jsp로 이동
+	public String meetingCreateForm() {
+		return "meeting/meetingDetail";
 	}
 }
