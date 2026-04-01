@@ -201,5 +201,18 @@ hr {
 			</div>
 		</form>
 	</div>
+	
+	<script>
+		let msg = "${msg}";
+		
+		if(msg == "empty"){
+			alert("아이디와 비밀번호를 입력해주세요");
+		} else if(msg == "pwFail") {
+			alert("비밀번호가 틀립니다.");
+		} else if(msg == "idFail") {
+			alert("존재하지 않는 계정입니다.");
+		}
+	</script>
+	
 </body>
 </html>

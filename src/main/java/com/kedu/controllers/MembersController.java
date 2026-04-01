@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.kedu.dao.MembersDAO;
@@ -43,26 +44,55 @@ public class MembersController {
 	}
 	
 	// 로그인 및 (메인)닉네임 출력
+//	@RequestMapping("/login")
+//	public String login(HttpSession session, String mem_id, String mem_password, String mem_nickname) throws Exception {
+//			
+//	System.out.println("mem_id = " + mem_id);
+//	System.out.println("mem_password = " + mem_password);
+//	System.out.println("mem_nickname = " + mem_nickname);
+//	System.out.println("dao = " + dao);
+//			
+//	boolean result = dao.login(mem_id, mem_password);
+//			
+//	if(result) {
+//		String nickname = dao.nickname(mem_id); // if문 안에 넣어야 로그인 성공한 경우만 실행됨
+//		session.setAttribute("loginId", mem_id);
+//		session.setAttribute("nickname", nickname);
+//		return "redirect:/";
+//	} else {
+//		return "redirect:/members/loginUi";
+//		}
+//	}
+	
+	// 로그인 및 (메인)닉네임 출력(새로운거)
 	@RequestMapping("/login")
-	public String login(HttpSession session, String mem_id, String mem_password, String mem_nickname) throws Exception {
-			
-	System.out.println("mem_id = " + mem_id);
-	System.out.println("mem_password = " + mem_password);
-	System.out.println("mem_nickname = " + mem_nickname);
-	System.out.println("dao = " + dao);
-			
-	boolean result = dao.login(mem_id, mem_password);
-			
-	if(result) {
-		String nickname = dao.nickname(mem_id); // if문 안에 넣어야 로그인 성공한 경우만 실행됨
-		session.setAttribute("loginId", mem_id);
-		session.setAttribute("nickname", nickname);
-		return "redirect:/";
-	} else {
+	public String login(HttpSession session, String mem_id, String mem_password, RedirectAttributes rttr) throws Exception {
+		
+		if(mem_id == null || mem_id.trim().equals("") || mem_password == null || mem_password.trim().equals("")) {
+			rttr.addFlashAttribute("msg", "empty");
+			return "redirect:/members/loginUi";
+		}
+		
+		int result = dao.login(mem_id,  mem_password);
+		
+		if(result == 1) {
+			session.setAttribute("loginId", mem_id);
+			return "redirect:/";
+		} else if(result == 0){
+			rttr.addFlashAttribute("msg", "pwFail");
+		} else {
+			rttr.addFlashAttribute("msg", "idFail");
+		}
+		
 		return "redirect:/members/loginUi";
 		}
-	}
+//			String nickname = dao.nickname(mem_id); 
+//			session.setAttribute("nickname", nickname);
+			
 		
+		
+	
+	
 	// 회원가입 완료 버튼 클릭 시
 	@RequestMapping("/signup")
 	public String signup(MembersDTO dto) {

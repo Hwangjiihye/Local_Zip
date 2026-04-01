@@ -35,10 +35,34 @@ public class MembersDAO {
 	}
 	
 	// 로그인
-	public boolean login(String mem_id, String mem_password) {
-		String sql = "select count(*) from members where mem_id = ? and mem_password = ?";
-		return jdbc.queryForObject(sql, Integer.class, mem_id, EncryptionUtils.getSha512(mem_password)) > 0;
+//	public boolean login(String mem_id, String mem_password) {
+//		String sql = "select count(*) from members where mem_id = ? and mem_password = ?";
+//		return jdbc.queryForObject(sql, Integer.class, mem_id, EncryptionUtils.getSha512(mem_password)) > 0;
+//	}
+	
+	// 로그인 새로운 기능 구현
+	public int login(String mem_id, String mem_password) {
+		
+		String id = "select count(*) from members where mem_id = ?";
+		Integer idCount = jdbc.queryForObject(id, Integer.class, mem_id); // Integer(객체)로 써야 null 값도 확인 가능
+		
+		if(idCount == 0 ) {
+			return -1; // id가 db에 있는지 확인(없으면 -1 반환)
+		}
+		
+		String pw = "select count(*) from members where mem_id = ? and mem_password = ?";
+		Integer pwCount = jdbc.queryForObject(pw, Integer.class, mem_id, EncryptionUtils.getSha512(mem_password));
+		
+		if(pwCount > 0) {
+			return 1; // id, pw 있음(로그인 성공)
+		} else {
+			return 0; // id는 있고, pw 없음
+		}
 	}
+	
+	
+	
+	
 	
 	// 홈 화면에서 닉네임 조회 후 띄우기
 	public String nickname(String mem_id) { // DB에서 mem_id 기준으로 조회
