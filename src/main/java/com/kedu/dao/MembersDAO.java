@@ -34,13 +34,7 @@ public class MembersDAO {
 		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<MembersDTO>(MembersDTO.class),mem_id);
 	}
 	
-	// 로그인
-//	public boolean login(String mem_id, String mem_password) {
-//		String sql = "select count(*) from members where mem_id = ? and mem_password = ?";
-//		return jdbc.queryForObject(sql, Integer.class, mem_id, EncryptionUtils.getSha512(mem_password)) > 0;
-//	}
-	
-	// 로그인 새로운 기능 구현
+	// 로그인, 닉네임 출력, 로그인 alert 기능 구현
 	public int login(String mem_id, String mem_password) {
 		
 		String id = "select count(*) from members where mem_id = ?";
@@ -59,10 +53,6 @@ public class MembersDAO {
 			return 0; // id는 있고, pw 없음
 		}
 	}
-	
-	
-	
-	
 	
 	// 홈 화면에서 닉네임 조회 후 띄우기
 	public String nickname(String mem_id) { // DB에서 mem_id 기준으로 조회
