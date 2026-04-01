@@ -42,28 +42,27 @@ public class MembersController {
 		return "members/login";
 	}
 	
-	// 로그인
+	// 로그인 및 (메인)닉네임 출력
 	@RequestMapping("/login")
-	public String login(HttpSession session, String mem_id, String mem_password) throws Exception {
+	public String login(HttpSession session, String mem_id, String mem_password, String mem_nickname) throws Exception {
 			
 	System.out.println("mem_id = " + mem_id);
 	System.out.println("mem_password = " + mem_password);
+	System.out.println("mem_nickname = " + mem_nickname);
 	System.out.println("dao = " + dao);
 			
 	boolean result = dao.login(mem_id, mem_password);
 			
 	if(result) {
+		String nickname = dao.nickname(mem_id); // if문 안에 넣어야 로그인 성공한 경우만 실행됨
 		session.setAttribute("loginId", mem_id);
+		session.setAttribute("nickname", nickname);
 		return "redirect:/";
 	} else {
 		return "redirect:/members/loginUi";
 		}
 	}
 		
-	
-	
-	
-	
 	// 회원가입 완료 버튼 클릭 시
 	@RequestMapping("/signup")
 	public String signup(MembersDTO dto) {

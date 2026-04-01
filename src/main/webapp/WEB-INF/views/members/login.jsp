@@ -155,7 +155,7 @@ hr {
 					</div>
 					<!-- 일반 버튼 -->
 					<div class="signUpDiv">
-						<button class="JoinBtn" type="button">Join</button>
+						<a href="/members/join"><button class="JoinBtn" type="button">Join</button></a>
 					</div>
 				</div>
 				<hr>

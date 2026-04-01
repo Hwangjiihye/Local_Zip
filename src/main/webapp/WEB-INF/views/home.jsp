@@ -291,7 +291,9 @@
             text-align: center;
         }
         
-        .new
+        .welcome2{
+        	font-size: 12px;
+        }
 
 
     </style>
@@ -301,21 +303,39 @@
 	<div class="container">
         <div class="topBar">
                 <div class="logo" style="font-size: 50px; background-color: #F2D3A2; color: #A66A3F">우리 동네.zip</div> <!-- 상단바 -->
+               
+     <c:choose>
+     	<c:when test="${loginId == null}">
             <div class="loginBox">
                     <a href="/members/loginUi"><input type="button"  value="로그인" class="loginBtn" style="border: 0px; font-weight: bold;  background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
                     <a href="/members/join"><input type="button"  value="회원가입" class="joinBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
-
-                <span class="logoutArea" style="display:none;">
-                    <a href="/members/logout"><input type="button"  value="로그아웃" class="logoutBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
-                </span>
-            </div>
+			</div>
+		</c:when>	
+		<c:otherwise>
+	                <span class="logoutArea" style="display:inline;">
+	                    <a href="/members/logout"><input type="button"  value="로그아웃" class="logoutBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
+	                </span>
+        </c:otherwise>  
+     </c:choose>
         </div>
-
+		
+		<!-- 메인화면에서 비회원/로그인 일시 userBar 전환 -->
         <div class="centerBox">
-            <div class="userBar">
-                <img class="profile" src="/resources/images/user1.png">
-                <div class="welcome">환영합니다!</div>
-            </div>
+        	<c:choose>
+        		<c:when test="${loginId == null}">
+		            <div class="userBar">
+		            	<div class="welcome">환영합니다!</div>
+		            </div>
+		         </c:when>
+			      <c:otherwise>
+	            	 <div class="userBar">
+	            	 	<img class="profile" src="/resources/images/user1.png">
+		            	<div class="welcome">${nickname}님 환영합니다!<br><div style="font-size: 12px;">우리 동네의 소식과 모임을 확인해보세요:)</div></div>
+		             </div>
+	              </c:otherwise>   
+           	  </c:choose>
+                
+           
 
             <div class="categoryBtn">
                 <button

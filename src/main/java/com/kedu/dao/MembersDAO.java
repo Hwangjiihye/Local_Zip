@@ -39,4 +39,10 @@ public class MembersDAO {
 		String sql = "select count(*) from members where mem_id = ? and mem_password = ?";
 		return jdbc.queryForObject(sql, Integer.class, mem_id, EncryptionUtils.getSha512(mem_password)) > 0;
 	}
+	
+	// 홈 화면에서 닉네임 조회 후 띄우기
+	public String nickname(String mem_id) { // DB에서 mem_id 기준으로 조회
+		String sql = "select mem_nickname from members where mem_id = ?";
+		return jdbc.queryForObject(sql, String.class, mem_id);
+	}
 }
