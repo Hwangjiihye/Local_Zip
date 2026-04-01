@@ -388,7 +388,7 @@ body {
 			            {
 			                label: '신규 방문자',
 			                data: [8, 14, 21, 26, 38, 47, 56, 51, 49, 62, 71, 86, 60, 55, 68, 72, 80, 79, 65, 60, 52, 58, 63, 70, 75, 78, 66, 61, 69, 73, 88],
-			                borderColor: '#F4A261',
+			                borderColor: '#F6BD60',
 			                backgroundColor: 'rgba(180,180,180,0.2)',
 			                tension: 0.3
 			            }
@@ -408,7 +408,7 @@ body {
 			        labels: ['10대', '20대', '30대', '40대'],
 			        datasets: [{
 			            data: [12, 35, 30, 23],
-			            backgroundColor: ['#F4A261', '#F7E1AE', '#E76F51', '#F6BD60']
+			            backgroundColor: ['#F7E1AE', '#F6BD60', '#F4A261', '#E76F51']
 			        }]
 			    },
 			    options: {
