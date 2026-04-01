@@ -86,8 +86,8 @@
             border-radius: 10px;
             font-size: 30px;
             color: #A66A3F;
-            border: 1px solid #A66A3F;
             position: relative;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
         .userBar {
             width: 100%;
