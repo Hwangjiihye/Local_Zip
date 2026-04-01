@@ -41,6 +41,8 @@
 	font-display: swap;
 }
 
+*{box-sizing: border-box;}
+
 button, body {
 	font-family: 'GMarketSans', sans-serif;
 }
@@ -71,12 +73,12 @@ body {
 }
 
 .meetingDetail {
-    width: 93%;
+	margin: auto;
+    width: 80%;
     border-radius: 10px;
     background-color: #fbe5c0;
     padding: 35px;
-    margin-left: 30px;
-    margin-top: 220px;
+ 	margin-top: 30px;
     background-color: #F2D3A2;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -90,44 +92,101 @@ body {
     color: #5e361a;
 }
 
-.titleDiv, .categoryDiv, .descDiv, .descTextDiv, .locationDiv{
-	border : 1px solid black;
+.titleDiv, .categoryDiv, .descDiv, .locationDiv, .descTextDiv{
+	padding:10px;
+	border-bottom: 1px dotted #A66A3F;
 }
 
-.titleDiv{
-	height: 100px;
+.openChatLinkDiv, .openChatPwDiv{
+	padding:10px;
+}
+
+.descText{
+	font-weight: bold;
+    font-size: 23px;
+    color: #5e361a;
+    border: none;
+    padding-left: 2px;
+}
+
+.descTextDetail{
+	padding-top: 10px;
+	border: none;
+	width: 70%;
+	padding-left: 2px;
+}
+
+.title, .category, .desc, .location, .openChatLink, .openChatPw{
+	font-weight: bold;
+    font-size: 23px;
+    color: #5e361a;
+}
+
+.categoryDiv{
+	display:flex;
+	gap:10px;
+}
+
+.inputLink, .inputPw{
+	padding:5px;
+	background-color: #fbe5c0;
+	border-radius: 10px;
+	border:none;
+	font-size:15px;
+	width: 400px;
+	word-break: break-all;
+	white-space: normal; 
+}
+
+.openChatWrapper{
+	display:flex;
+	gap: 300px;
+}
+
+.openChatPwDiv{
+	padding-left: 50px;
 }
 
 .categoryDetail {
     display: inline-block;
-    line-height : 23px;
+    line-height : 25px;
     font-size: 12px;
     padding: 3px 8px;
     border-radius: 5px;
     background-color: #FFB300;
-    height: 20px;
-    color: #5e361a;
+    height: 28px;
+    color: #3e5e40;
+    font-weight: bold;
 }
 
-.desc {
+.bottomBtn {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
     margin-bottom: 10px;
-    color: #5e361a;
 }
 
-.info {
-    font-size: 13px;
-    color: #555;
-    margin-bottom: 10px;
+.requestBtn, .backBtn{
+	width: 350px;
+    height: 40px;
+    background-color: #FFB300;
+    border:none;
+    border-radius: 10px;
     color: #5e361a;
+    font-size: 17px;
+    font-weight: bold;
 }
 
-.card-footer {
-    text-align: center;
-    color: #5e361a;
+.requestBtn:hover, .backBtn:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-
-
+.requestBtn:active, .backBtn:active{
+	transform: translateY(2px);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
 </style>
 </head>
@@ -160,20 +219,36 @@ body {
 					
 					<div class="descTextDiv">
 						<div class="descText">자세한 소개글</div>
-						<div class="descTextDetail">자세한 소개글임ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</div>
+						<div class="descTextDetail">건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						</div>
 					</div>
 					
 					<div class="locationDiv">	
 						<div class="location">활동지역</div>	
 						<div class="locationDetail">봉천동</div>
 					</div>
-			
-			
-		</div>
+					
+					<div class="openChatWrapper">
+						<div class="openChatLinkDiv">	
+							<div class="openChatLink">카톡 오픈채팅 링크</div>	
+							<div class="inputLink">www...asdfasdfasdfasd.fa...asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd.sdfcasdf</div>
+						</div>
+						
+						<div class="openChatPwDiv">
+							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
+							<div class="inputPw">*******</div>
+						</div>
+					</div>
+			</div>
 	</div>
 		<div class="bottomBtn">
-			<button>신청하기</button>
-			<button>뒤로가기</button>
+			<button class="requestBtn" type="button">신청하기</button>
+			<a href="/meeting/test"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>
 </body>
 </html>
