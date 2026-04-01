@@ -259,7 +259,7 @@ body {
 
 .gauge-bar {
 	height: 100%;
-	background-color: #FFB300;
+	background-color: #7BB8C9;
 	border-radius: 999px;
 }
 
@@ -304,7 +304,8 @@ body {
 					<div class="card-header">
 						<div class="title">모임제목</div>
 							<div class="reportDiv">
-								<i class="fa-solid fa-flag reportIcon"></i>
+<!-- 								<i class="fa-solid fa-flag reportIcon"></i> -->
+				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 								<select class="report">
 									<option class="report-menu" disabled selected>신고 사유</option>
 									<option class="report-menu">부적절한 컨텐츠</option>
