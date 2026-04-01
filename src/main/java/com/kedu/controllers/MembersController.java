@@ -82,13 +82,18 @@ public class MembersController {
 	    }
 
 	    dao.insert(dto);
-	    return "redirect:/members/loginUi"; // 나중에 로그인 창으로 이동하는 것으로 바꾸기
+	    return "redirect:/members/loginUi";
 	}
 	
 	// 마이페이지 아이콘 클릭 시
 	@RequestMapping("/mypage")
-	public String mypage() {
-		return "members/mypage";
+	public String mypage(HttpSession session) {
+		session.getAttribute("nickname");
+		if(session.getAttribute("loginId") == null) {
+			return "redirect:/members/loginUi";
+		}else {
+			return "members/mypage";
+		}
 	}
 	
 	// 마이페이지 > 내 정보 버튼 클릭 시
