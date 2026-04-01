@@ -302,7 +302,7 @@
         <div class="topBar">
                 <div class="logo" style="font-size: 50px; background-color: #F2D3A2; color: #A66A3F">우리 동네.zip</div> <!-- 상단바 -->
             <div class="loginBox">
-                    <a href="/members/login"><input type="button"  value="로그인" class="loginBtn" style="border: 0px; font-weight: bold;  background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
+                    <a href="/members/loginUi"><input type="button"  value="로그인" class="loginBtn" style="border: 0px; font-weight: bold;  background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
                     <a href="/members/join"><input type="button"  value="회원가입" class="joinBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: all 0.2s ease;"></a>
 
                 <span class="logoutArea" style="display:none;">

@@ -14,8 +14,6 @@ public class MembersDAO {
 	@Autowired
 	private JdbcTemplate jdbc;
 	
-	EncryptionUtils eu = new EncryptionUtils();
-	
 	// 회원가입
 	public int insert(MembersDTO dto) {
 		String sql = "insert into members values(?,?,?,?,?,?,?,?,?,?,?,?,sysdate,?)";

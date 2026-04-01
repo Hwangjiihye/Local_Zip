@@ -36,6 +36,34 @@ public class MembersController {
 		return result;
 	}
 	
+	// 로그인 경유 후 아래 로그인으로 이동
+	@RequestMapping("/loginUi")
+	public String loginUI() throws Exception {
+		return "members/login";
+	}
+	
+	// 로그인
+	@RequestMapping("/login")
+	public String login(HttpSession session, String mem_id, String mem_password) throws Exception {
+			
+	System.out.println("mem_id = " + mem_id);
+	System.out.println("mem_password = " + mem_password);
+	System.out.println("dao = " + dao);
+			
+	boolean result = dao.login(mem_id, mem_password);
+			
+	if(result) {
+		session.setAttribute("loginId", mem_id);
+		return "redirect:/";
+	} else {
+		return "redirect:/members/loginUi";
+		}
+	}
+		
+	
+	
+	
+	
 	// 회원가입 완료 버튼 클릭 시
 	@RequestMapping("/signup")
 	public String signup(MembersDTO dto) {
@@ -76,19 +104,5 @@ public class MembersController {
 //		
 //	}
 	
-	// 로그인
-	@RequestMapping("/login")
-	public String login(HttpSession session, String mem_id, String mem_password) throws Exception {
-		
-		System.out.println("mem_id = " + mem_id);
-		System.out.println("mem_password = " + mem_password);
-		System.out.println("dao = " + dao);
-		
-		boolean result = dao.login(mem_id, mem_password);
-		
-		if(result) {
-			session.setAttribute("loginId", mem_id);
-		}
-		return "/";
-	}
+	
 }
