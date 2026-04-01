@@ -67,11 +67,11 @@ public class AuthController {
 	public String verify(@RequestParam("email")String email,@RequestParam("auth_code") String auth_code) {
 		
 		if(dao.checkAuth(email, auth_code) > 0){
-			dao.updateVerified(email);
+			 dao.updateVerified(email);
 			return "success";
 		}
 		return "fail";
-	}
+	} 
 	
 		//최종 가입전에 인증확인
 	@RequestMapping(value="/isVerified" ,method=RequestMethod.POST)
