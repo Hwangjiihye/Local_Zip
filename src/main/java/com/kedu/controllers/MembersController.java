@@ -88,10 +88,6 @@ public class MembersController {
 		}
 //			String nickname = dao.nickname(mem_id); 
 //			session.setAttribute("nickname", nickname);
-			
-		
-		
-	
 	
 	// 회원가입 완료 버튼 클릭 시
 	@RequestMapping("/signup")
