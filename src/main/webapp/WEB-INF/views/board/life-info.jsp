@@ -507,7 +507,8 @@
 
 
                     <div class="reportArea">
-                        <i class="fa-solid fa-flag reportIcon"></i>
+<!--                         <i class="fa-solid fa-flag reportIcon"></i> -->
+							<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
                         <select class="reportSelect">
                             <option value="" disabled selected>신고 사유</option>
                             <option value="1" class="reportOption">부적절한 콘텐츠</option>
@@ -555,7 +556,7 @@
         <div class="bottomBox">
             <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-            <a><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+            <a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
             <a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 

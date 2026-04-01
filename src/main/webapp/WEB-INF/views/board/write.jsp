@@ -267,10 +267,10 @@ button, body {
 					카테고리를 선택하세요 <i class="icon fa-solid fa-sort fa-lg" style="color: #A66A3F;"></i>
 				</div>
 				<select class="report">
-					<option class="report-menu">운동</option>
-					<option class="report-menu">문화</option>
-					<option class="report-menu">취미</option>
-					<option class="report-menu">스터디</option>
+					<option class="report-menu">생활정보</option>
+					<option class="report-menu">맛집/카페</option>
+					<option class="report-menu">고민/이야기</option>
+					<option class="report-menu">미용/패션</option>
 				</select>
 			</div>
 
