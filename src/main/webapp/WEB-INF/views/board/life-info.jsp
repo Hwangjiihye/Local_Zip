@@ -227,7 +227,7 @@
 
         }
 
-        .profile {
+        .contentProfile {
             margin-top: -10px;
             margin-left: 2px;
         }
@@ -483,7 +483,7 @@
                 <div class="postUpBox">
 
                     <div class="postProfile">
-                        <img class="profile" src="/resources/images/Profile.png" width="60px">
+                        <img class="contentProfile" src="/resources/images/Profile.png" width="60px">
                     </div>
 
                     <div class="postInfoBox">
