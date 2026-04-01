@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>myInfo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
 	@font-face {
@@ -51,86 +52,200 @@
         line-height: 100px;
         background-color: #F2D3A2;
         padding-left: 20px;
+        display: flex;
+    }
+    .backBtnDiv{
+    	margin-left: 1500px;
+    	margin-top: 10px;
     }
     .divTotal{
-        padding-top: 30px;
-        border: 2px solid #A66A3F;
+        padding-top: 60px;
         margin: auto;
-        margin-top: 20px;
+        margin-top: 100px;
         width: 1000px;
-        height: 750px;
+        height: 570px;
         text-align: center;
         border-radius: 60px;
         background-color: #F2D3A2;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+		position: relative;
+	    z-index: 1;
     }
-    .form-row{
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
+    
+    .labelBox {
+	    display: flex;
+	    align-items: center;
+	    gap: 8px;
+	    width: 220px;
+	    font-weight: bold;
+	}
+	
+	.form-row {
+	    display: flex;
+	    align-items: center;
+	    margin-bottom: 30px;
+	    margin-left: 300px;
+	}
+	.valueBox {
+	    display: flex;
+	    align-items: center;
+	    gap: 10px;
+	}
+	.form-row > div:not(.labelBox) {
+	    margin-left: 10px;
+	}
+	.emptyIcon {
+	    width: 20px;
+	    display: inline-block;
+	}
+	.icon {
+	    width: 20px;
+	    text-align: center;
+	}
+    .btnDiv{
+    	margin-top: 30px;
     }
-    label {
-        width: 120px;
-        text-align: right;
-        margin-right: 10px;
-        margin-left: 230px;
-        font-weight: bold;
+    .searchBtn{
+    	margin-left: 5px;
+    	margin-top: -3px;
     }
-    .searchBtn, .updateBtn, .deleteBtn, .completeBtn, .cancelBtn, .backBtn{
+    .searchBtn, .backBtn{
         background-color: #ffb300;
         color: #5e361a;
         border: 1px solid #ffb300;
         border-radius: 10px;
         font-weight: bold;
     }
-    .completeBtn, .cancelBtn{
-    	display: none;
+    .updateBtn, .deleteBtn, .completeBtn, .cancelBtn{
+    	background-color: #ffb300;
+        color: #5e361a;
+        border: 1px solid #ffb300;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: medium;
+        width: 80px;
+        height: 40px;
     }
+     .completeBtn, .cancelBtn, .searchBtn{
+     	display: none;
+     }
+    .updateBtn, .completeBtn{
+    	margin-right: 30px;
+    }
+    .backBtn{
+    	height: 30px;
+    	font-weight: bold;
+    }
+    .searchBtn:hover,
+    .updateBtn:hover,
+    .deleteBtn:hover,
+    .completeBtn:hover,
+    .cancelBtn:hover,
+    .backBtn:hover{
+	    transform: translateY(-3px); /* 살짝 위로 뜸 */
+	    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    .searchBtn:active,
+    .updateBtn:active,
+    .deleteBtn:active,
+    .completeBtn:active,
+    .cancelBtn:active,
+    .backBtn:active{
+    	transform: translateY(2px); /* 아래로 눌림 */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
     hr{
-        margin-top: 20px;
+        margin-top: 30px;
         width: 700px;
         border-color: #A66A3F;
     }
+    
+    .leftImg, .rightImg{
+		position: absolute;
+		width: 400px;
+		height: 155px;
+		z-index: 10;
+		bottom: 0;
+	}
+	.leftImg{
+	    left: 0;
+	}
+	.rightImg{
+		right: 0;
+	}
 </style>
 </head>
 <body>
 	<div class="container">
 	    <div class="topBar">
 	    	<div class="mainTitle">내 정보.zip</div>
-	    	<div><a href="/members/mypage"><input class="backBtn" type="button" value="내.zip가기"></a></div>
+	    	<div class="backBtnDiv">
+	    		<a href="/members/mypage">
+	    			<input class="backBtn" type="button" value="내.zip으로 가기">
+	    		</a>
+	    	</div>
 	    </div>
 	    <form>
 	        <div class="divTotal">
 	            <div class="form-row">
-	                <label>· NAME : </label>
+	            	<div class="labelBox">
+	            		<i class="fa-solid fa-user fa-lg icon"></i>
+	            		<span> NAME : </span>
+	            	</div>
 	                <div class="name">${list.mem_name}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>· ID : </label>
+	            	<div class="labelBox">
+	            		<i class="fa-solid fa-address-card fa-lg icon"></i>
+	                	<span> ID : </span>
+	                </div>
 	                <div class="id">${loginId }</div>
 	            </div>
 	            <div class="form-row">
-	                <label>·NICKNAME : </label>
-	                <div class="nickname">${list.mem_nickname}</div>
+	            	<div class="labelBox">
+	            		<i class="fa-solid fa-user-pen fa-lg icon"></i> 
+	            		<span> NICKNAME : </span>
+	            	</div>
+	            	<div class="nickname">${list.mem_nickname}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>· EMAIL : </label>
+	            	<div class="labelBox">
+	                	<i class="fa-solid fa-envelope fa-lg icon"></i>
+	                	<span> EMAIL : </span>
+	                </div>
 	                <div class="email">${list.mem_email}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>· PHONE : </label>
+	            	<div class="labelBox">
+	                	<i class="fa-solid fa-phone fa-lg icon"></i>
+	                	<span> PHONE : </span>
+	                </div>
 	                <div class="phone">${list.mem_phone}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>·ZONECODE : </label>
-	                <div class="zonecode">${list.mem_zip_code}</div>
-	                <input class="searchBtn" type="button" value="찾기">
+	            	<div class="labelBox">
+	                	<i class="fa-solid fa-house-chimney fa-lg icon"></i>
+	                	<span> ZONECODE :</span>
+	                </div>
+	                <div class="valueBox">
+	                	<div class="zonecode">${list.mem_zip_code}</div>
+	                	<input class="searchBtn" type="button" value="찾기">
+	                </div>
 	            </div>
 	            <div class="form-row">
-	                <label>·ADDRESS : </label>
+	            	<div class="labelBox">
+	            		<span class="emptyIcon"></span>
+	                	<span> ADDRESS : </span>
+	                </div>
 	                <div class="address1">${list.mem_address1}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>· DETAIL : </label>
+	            	<div class="labelBox">
+	            		<span class="emptyIcon"></span>
+	                	<span> DETAIL : </span>
+	                </div>
 	                <div class="address2">${list.mem_address2}</div>
 	            </div>
 	            <hr>
@@ -142,6 +257,8 @@
 	            </div>
 	        </div>
     	</form>
+    	<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
     </div>
 </body>
 </html>
