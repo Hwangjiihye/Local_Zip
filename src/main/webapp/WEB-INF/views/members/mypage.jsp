@@ -141,10 +141,6 @@
 	        border-radius: 10px;
 	        font-weight: bold;
     	}
-    	.myInfoBtn{
-    		
-    	}
-    	
     	.adminPageDiv{
     		width: 600px;
     		height: 50px;
@@ -165,6 +161,7 @@
     		margin-top: 25px;
     		border-radius: 20px;
     		padding-top: 10px;
+    		box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     	}
     	
     	.myInfoDiv{
