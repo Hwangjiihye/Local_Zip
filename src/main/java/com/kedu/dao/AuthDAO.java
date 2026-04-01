@@ -39,5 +39,4 @@ public class AuthDAO {
 		 	return jdbc.queryForObject(sql, Integer.class,email);
 	 }
 	 
-	 
 }
