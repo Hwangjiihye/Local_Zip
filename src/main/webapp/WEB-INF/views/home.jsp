@@ -113,16 +113,7 @@
             margin-top: 10px;
             margin-left: 20px;
         }
-
-        .postBox {
-            width: 90%;
-            min-height: 200px;
-            margin-top: 10px;
-            margin-left: 20px;
-            border-radius: 10px;
-            border: 1px solid black;
-        }
-
+        
         .centerBox{
             width: 100%;
             margin-top: 100px;
@@ -177,15 +168,6 @@
             border-radius: 10px;
             margin-top: 0px;
             margin-left: 0px;
-        }
-
-        .postBox {
-            width: 1500px;
-            min-height: 200px;
-            margin-top: 10px;
-            margin-left: 0px;
-            border-radius: 10px;
-            border: 1px solid black;
         }
 
         .rightBox{
@@ -315,7 +297,7 @@
             margin-top: 30px;
 
             border-radius: 10px;
-            border: 2px solid #A66A3F;
+           /*  border: 2px solid #A66A3F; */
             /* 그림자 효과 */
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 
@@ -325,6 +307,8 @@
             width: 100%;
             height: 95px;
             display: flex;
+            
+            border-radius: 10px 10px 0 0;
             background-color: #F2D3A2;
         }
 
