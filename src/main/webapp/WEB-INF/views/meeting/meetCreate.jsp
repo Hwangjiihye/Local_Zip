@@ -70,7 +70,7 @@
 		
 		.meetingDetail {
 			margin: auto;
-		    width: 80%;
+		    width: 56.5%;
 		    border-radius: 10px;
 		    background-color: #fbe5c0;
 		    padding: 35px;
@@ -161,7 +161,7 @@
 		}
 		
 		.clubName{
-			width: 800px;
+			width: 970px;
 			height: 35px;
 			top: 30px;
 		    left: 0;
@@ -177,7 +177,7 @@
 		}
 		
 		.detailContent{
-			width: 800px;
+			width: 970px;
 			height: 300px;
 			top: 30px;
 		    left: 0;
@@ -257,6 +257,7 @@
 	
 	</style>
 <body>
+<form action="/meeting/test" class="frm" method="post">
 	<div class="container">
 		<div class="top-section">
 			<div class="mainTitle">
@@ -312,9 +313,10 @@
 			</div>
 	</div>
 		<div class="bottomBtn">
-			<button class="requestBtn" type="button">신청하기</button>
+			<button class="requestBtn" type="submit">신청하기</button>
 			<a href="/meeting/test"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>
+	</form>
 		
 		<script>
 		$(".icon").on("click", function (e) {
