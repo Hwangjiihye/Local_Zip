@@ -97,12 +97,12 @@
         }
         
         .userBarContents{
-            font-size: 30px;
+            font-size: 40px;
             color: #A66A3F;
             font-weight: bold;
             position: absolute;
             top: 50%;
-            left: 50%;
+            left: 53%;
             transform: translate(-50%, -50%);
         }
         
