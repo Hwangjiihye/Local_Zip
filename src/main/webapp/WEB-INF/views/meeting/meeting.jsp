@@ -52,6 +52,9 @@ body {
 
 .container {
 	width: 100%;
+	display: grid;
+	grid-template-columns:repeat(4, 1fr);
+	gap:20px;
 }
 
 .top-section {
@@ -85,7 +88,7 @@ body {
 	font-size: 15px;
 	width: 100%;
 	height: 50px;
-	margin-top: 10px;
+	margin-top: 7px;
 	display: flex;
 	align-items: center;
 	gap: 10px;    
@@ -149,11 +152,11 @@ body {
 }
 
 .meeting-card {
-    width: 300px;
+    width: 330px;
     border: 2px solid #A66A3F;
     border-radius: 10px;
     background-color: #fbe5c0;
-    padding: 20px;
+    padding: 35px;
     margin-left: 30px;
     margin-top: 220px;
 }
@@ -183,7 +186,7 @@ body {
     font-size: 12px;
     padding: 3px 8px;
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: 18px;
     margin-bottom: 10px;
     background-color: #FFB300;
     height: 20px;
@@ -320,8 +323,8 @@ body {
 					
 					
 					<div class="info">	
-						<div class="location">위치</div>	
-						<div class="count">정원 수</div>
+						<div class="location">📍 위치</div>	
+						<div class="count">👥 정원 수</div>
 					</div>
 					
 					<div class="card-footer">
@@ -333,6 +336,106 @@ body {
 					</div>
 				
 			</div>
+			<div class="meeting-card">
+					<div class="card-header">
+						<div class="title">모임제목</div>
+							<div class="reportDiv">
+<!-- 								<i class="fa-solid fa-flag reportIcon"></i> -->
+				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+								<select class="report">
+									<option class="report-menu" disabled selected>신고 사유</option>
+									<option class="report-menu">부적절한 컨텐츠</option>
+									<option class="report-menu">욕설/비방</option>
+									<option class="report-menu">광고/스팸</option>
+								</select>
+							</div>
+					</div>
+				
+					<div class="category">카테고리</div>
+					<div class="desc">한 줄 소개</div>
+					
+					
+					<div class="info">	
+						<div class="location">📍 위치</div>	
+						<div class="count">👥 정원 수</div>
+					</div>
+					
+					<div class="card-footer">
+						<div class="gauge-wrap">
+							<div class="gauge-bar" style="width: 60%;"></div>
+						</div>
+						<div class="gauge-text">6 / 10명 참여중</div>
+						<button class="join-btn">참여신청</button>
+					</div>
+				
+			</div>
+			<div class="meeting-card">
+					<div class="card-header">
+						<div class="title">모임제목</div>
+							<div class="reportDiv">
+<!-- 								<i class="fa-solid fa-flag reportIcon"></i> -->
+				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+								<select class="report">
+									<option class="report-menu" disabled selected>신고 사유</option>
+									<option class="report-menu">부적절한 컨텐츠</option>
+									<option class="report-menu">욕설/비방</option>
+									<option class="report-menu">광고/스팸</option>
+								</select>
+							</div>
+					</div>
+				
+					<div class="category">카테고리</div>
+					<div class="desc">한 줄 소개</div>
+					
+					
+					<div class="info">	
+						<div class="location">📍 위치</div>	
+						<div class="count">👥 정원 수</div>
+					</div>
+					
+					<div class="card-footer">
+						<div class="gauge-wrap">
+							<div class="gauge-bar" style="width: 60%;"></div>
+						</div>
+						<div class="gauge-text">6 / 10명 참여중</div>
+						<button class="join-btn">참여신청</button>
+					</div>
+				
+			</div>
+			<div class="meeting-card">
+					<div class="card-header">
+						<div class="title">모임제목</div>
+							<div class="reportDiv">
+<!-- 								<i class="fa-solid fa-flag reportIcon"></i> -->
+				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+								<select class="report">
+									<option class="report-menu" disabled selected>신고 사유</option>
+									<option class="report-menu">부적절한 컨텐츠</option>
+									<option class="report-menu">욕설/비방</option>
+									<option class="report-menu">광고/스팸</option>
+								</select>
+							</div>
+					</div>
+				
+					<div class="category">카테고리</div>
+					<div class="desc">한 줄 소개</div>
+					
+					
+					<div class="info">	
+						<div class="location">📍 위치</div>	
+						<div class="count">👥 정원 수</div>
+					</div>
+					
+					<div class="card-footer">
+						<div class="gauge-wrap">
+							<div class="gauge-bar" style="width: 60%;"></div>
+						</div>
+						<div class="gauge-text">6 / 10명 참여중</div>
+						<button class="join-btn">참여신청</button>
+					</div>
+				
+			</div>
+			
 	
 	</div>
 		<div class="bottomBar">
