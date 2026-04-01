@@ -49,6 +49,7 @@
             width: 100%;
             min-height: 100vh;
             padding-bottom: 80px;
+            position: relative;
         }
 
         .topBar{ /* 상단바 고정 */
@@ -77,35 +78,32 @@
             z-index: 1000;
             gap: 200px;
         }
-        
-        .userBar {
-            width: 1879px;
-            height: 100px;
+        .userBarDiv{
+        	width: 1750px;
+            height: 180px;
             margin-top: 20px;
             margin-left: 20px;
             border-radius: 10px;
             font-size: 30px;
             color: #A66A3F;
             border: 1px solid #A66A3F;
-            background-color: #F2D3A2;
-            display: flex;
+            position: relative;
         }
-
-        /* userBar의 개인 사진 */
-        .profile { 
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            /* 찌그러짐 방지 */
-            margin-top: 10px;
-            margin-left: 10px;
+        .userBar {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            display: block;
         }
-
-        .nickname {
-            margin-top: 30px;
-            margin-left: 20px;
+        
+        .userBarContents{
+            font-size: 30px;
+            color: #A66A3F;
             font-weight: bold;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         
         hr{
@@ -155,7 +153,7 @@
     	
     	.divContainer{
     		width: 1650px;
-    		height: 600px;
+    		height: 500px;
     		background-color: #F2D3A2;
     		margin-left: 140px;
     		margin-top: 25px;
@@ -239,19 +237,31 @@
      	.adminPage{
      		margin-left: 520px;
      	}
+     	
+     	.leftImg, .rightImg{
+     		position: absolute;
+     		height: 135px;
+     	}
+     	.leftImg{
+     		left: 0;
+     	}
+     	.rightImg{
+     		right: 0;
+     	}
 </style>
 </head>
 <body>
 	<div class="topBar">내.zip</div>
-	<div class="userBar">
-    	<img class="profile" src="/resources/images/birdprofile.png">
-        <div class="nickname">닉네임</div>
-        <div class="myInfoDiv">
-        	<a href="/members/myInfo">
-        		<button class="myInfoBtn"><i class="fa-solid fa-user-gear"></i> 내 정보.zip</button>
-        	</a>
-        </div>
-    </div>
+	<div class="userBarDiv">
+		<div class="userBarContents">닉네임님, 반가워요!</div>
+<!-- 			<div class="myInfoDiv"> -->
+<!-- 	        	<a href="/members/myInfo"> -->
+<!-- 	        		<button class="myInfoBtn"><i class="fa-solid fa-user-gear"></i> 내 정보.zip</button> -->
+<!-- 	        	</a> -->
+<!-- 	        </div> -->
+	    
+	    <img class="userBar" src="/resources/images/userbar.png">
+	</div>
     <hr>
     <div class="divContainer">
 	    <div class="myActiveTitle">· 나의 활동</div>
@@ -289,6 +299,8 @@
 	    	<input class="adminPage" type="button" value="관리자 페이지">
 	    </div>
     </div>
+    	<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
     <div class="bottomBar" style="box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <!-- 하단바 -->
     	<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
         <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
