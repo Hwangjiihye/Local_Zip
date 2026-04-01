@@ -406,6 +406,50 @@
             border: 1px solid #cdaa69;
             ;
         }
+        
+        .pageBox{
+            width: 100%;
+    		text-align: center;   /* 가운데 정렬 */
+    		padding: 20px 0;      /* 상하 여백 */
+    		margin-bottom: 80px;  /* 중요: 하단 바에 가려지지 않도록 아래쪽 여백 확보 */
+    
+    		font-size: 18px;
+    		color: #A66A3F;
+    		font-weight: bold;
+        }
+        
+        
+        .writeBtn{
+            width: 50px;
+            height: 50px;
+            right: 30px;
+            bottom: 90px;
+            cursor: pointer;
+            margin-top: 90%;
+            border-radius: 50%;
+            background-color: #A66A3F;
+            border: #fbe5c0;
+            color: #fbe5c0;
+            font-size: 30px;
+            position: fixed; /* 버튼 따라다니게 만들기 */
+
+            align-items: center;
+            display: flex;
+            justify-content: center;
+
+            /* 그림자 효과 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+            /* 애니메이션 부드럽게 */
+            transition: all 0.2s ease;
+        }
+        
+        .writeBtn:hover{
+        	transform: translateY(-3px); /* 살짝 위로 뜸 */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        
+        
     </style>
 
 </head>
@@ -417,7 +461,7 @@
 
         <div class="categoryBtnBox">
             <div class="categoryBtns">
-                <button class="categoryBtn topBtn"><i class="fa-solid fa-house fa-lg"></i> 전체</button>
+                <a href="/"><button class="categoryBtn topBtn"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
                 <button class="categoryBtn topBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> "생활정보"</button>
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
                 <button class="categoryBtn topBtn"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button>
@@ -439,7 +483,7 @@
                 <div class="postUpBox">
 
                     <div class="postProfile">
-                        <img class="profile" src="Profile.png" width="60px">
+                        <img class="profile" src="/resources/images/Profile.png" width="60px">
                     </div>
 
                     <div class="postInfoBox">
@@ -499,7 +543,9 @@
         </div>
 
         <div class="pageBox">1 2 3</div>
-
+        
+        <button class="writeBtn"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button>
+        
 
         <div class="bottomBox">
             <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
