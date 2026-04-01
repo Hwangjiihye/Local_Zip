@@ -63,15 +63,15 @@ body {
 }
 
 .divTotal {
-	padding-top: 30px;
-	border: 2px solid #A66A3F;
-	margin: auto;
-	margin-top: 195px;
+	padding: 20px 0;
+	margin: 195px auto 0;
 	width: 800px;
-	height: 400px;
-	text-align: center;
+	min-height: 380px;
 	border-radius: 60px;
 	background-color: #F2D3A2;
+	position: relative;
+	text-align: center;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .form-row {
@@ -82,15 +82,10 @@ body {
 }
 
 label {
-	width: 50px;
+	width: 70px;
 	text-align: right;
 	margin-right: 10px;
-	/* 	        margin-left: 120px; */
 	font-weight: bold;
-}
-
-.id {
-	margin-right: 10px;
 }
 
 .id, .pw {
@@ -99,7 +94,10 @@ label {
 }
 
 hr {
-	margin-top: 70px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 120px;
 	width: 700px;
 	border-color: #A66A3F;
 }
@@ -115,23 +113,53 @@ hr {
 }
 
 .backBtn {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 35px;
+
 	background-color: #ffb300;
 	color: #5e361a;
 	border: 1px solid #ffb300;
-	margin-top: 8px;
 	border-radius: 10px;
 	font-weight: bold;
-	height: 20px;
-	width: 60px;
+	height: 40px;
+	width: 90px;
 }
 
 .loginBox {
-	width: 700px;
 	display: flex;
 	justify-content: center;
-	margin-top: 145px;
-	margin-left: 45px;
+	margin-top: 25px;
+	margin-left: 23px;
 	gap: 40px;
+}
+
+.inputArea{
+	position: absolute;
+    top: 90px;  
+    left: 48%;
+    transform: translateX(-50%);
+}
+
+.linkDiv{
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 100px;   
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+}
+
+.linkText{
+	display: flex;
+	gap: 60px;
+	font-size: 14px;
+	font-weight: 500;
+	margin-left: 10px;
 }
 </style>
 </head>
@@ -140,14 +168,15 @@ hr {
 		<div class="mainTitle">우리 동네.zip 로그인</div>
 		<form action="/members/login" class="frm" method="post">
 			<div class="divTotal">
-				<div class="form-row">
-					<label>· ID : </label><input name="mem_id" class="id" type="text" placeholder="아이디를 입력해주세요.">
-				</div>
-
-				<div class="form-row">
-					<label>· PW : </label><input name="mem_password" class="pw" type="password" placeholder="비밀번호를 입력해주세요.">
-				</div>
-
+				<div class="inputArea">
+					<div class="form-row">
+						<label>· ID : </label><input name="mem_id" class="id" type="text" placeholder="아이디를 입력해주세요.">
+					</div>
+	
+					<div class="form-row">
+						<label>· PW : </label><input name="mem_password" class="pw" type="password" placeholder="비밀번호를 입력해주세요.">
+					</div>
+					
 				<div class="loginBox">
 					<!-- submit 버튼 -->
 					<div class="signUpDiv">
@@ -158,8 +187,14 @@ hr {
 						<a href="/members/join"><button class="JoinBtn" type="button">Join</button></a>
 					</div>
 				</div>
+			</div>
 				<hr>
-				<div class="linkDiv">Forgot Id? Forgot password?</div>
+				<div class="linkDiv">
+					<div class="linkText">
+						<div>Forgot   Id?</div>
+						<div>Forgot password?</div>
+					</div>
+				</div>
 				<div>
 					<a href="/"><button class="backBtn" type="button">Back</button></a>
 				</div>

@@ -87,9 +87,9 @@
             margin-left: -1px;
         } 
 
-        .logoutBtn{
+       /*  .logoutBtn{
             margin-left: 1400px;
-        }
+        } */
 
         .bottomBar{
             border: 2px solid #A66A3F;
@@ -293,6 +293,12 @@
         
         .welcome2{
         	font-size: 12px;
+        }
+        
+        .logoutArea{
+        	position: absolute;
+		    right: 30px;
+		    top: 30px;
         }
 
 
