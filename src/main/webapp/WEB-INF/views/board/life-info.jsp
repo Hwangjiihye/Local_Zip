@@ -204,7 +204,6 @@
             margin-top: 30px;
 
             border-radius: 10px;
-            /* border: 2px solid #A66A3F; */
             
             /* 그림자 효과 */
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
@@ -216,6 +215,7 @@
             height: 95px;
             display: flex;
             
+            border-radius: 10px 10px 0 0;
             background-color: #F2D3A2;
         }
 
