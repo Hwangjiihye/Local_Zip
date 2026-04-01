@@ -236,14 +236,15 @@
         		return false;
         	}else{
         		$.ajax({
-        			url : "auth/verify",
+        			url : "auth/findMyId",
         			type : "post",
         			data : {
         				email : $(".email").val(),
         				auth_code : $(".auth_code").val()	
         			} 
-        		}).done(function(){
+        		}).done(function(resp){
         			
+        			console.log(resp.status);
         		});
         	}
         })
