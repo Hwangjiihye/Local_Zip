@@ -53,20 +53,24 @@ body {
 	background-color: #fbe5c0;
 }
 
-.mainTitle {
+.topBar {
 	padding-left: 20px;
 	font-weight: bold;
-	font-size: 50px;
 	color: #A66A3F;
 	border-bottom: 2px solid #A66A3F;
 	height: 100px;
 	line-height: 100px;
 	background-color: #F2D3A2;
+	display: flex;
 }
-
+.mainTitle{
+	font-size: 50px;
+}
+.backBtnDiv{
+	margin-left: 1300px;
+}
 .divTotal {
 	padding-top: 30px;
-	border: 2px solid #A66A3F;
 	margin: auto;
 	margin-top: 20px;
 	width: 1000px;
@@ -74,6 +78,9 @@ body {
 	text-align: center;
 	border-radius: 60px;
 	background-color: #F2D3A2;
+	box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+	position: relative;
+    z-index: 1;
 }
 
 .form-row {
@@ -138,7 +145,7 @@ hr {
 	margin-top: 30px;
 }
 
-.duplCheck, .signUpBtn, .authCheck, .confirmBtn, .searchBtn {
+.duplCheck, .signUpBtn, .authCheck, .confirmBtn, .searchBtn, .backBtn {
 	background-color: #ffb300;
 	color: #5e361a;
 	border: 1px solid #ffb300;
@@ -168,11 +175,51 @@ hr {
 .notUse, .incorrect, .no {
 	color: #de4f28;
 }
+
+.duplCheck:hover,
+.authCheck:hover,
+.confirmBtn:hover,
+.searchBtn:hover,
+.signUpBtn:hover,
+.backBtn:hover{
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.duplCheck:active,
+.authCheck:active,
+.confirmBtn:active,
+.searchBtn:active,
+.signUpBtn:hover,
+.backBtn:hover{
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.leftImg, .rightImg{
+	position: absolute;
+	width: 400px;
+	height: 155px;
+	z-index: 10;
+	bottom: 0;
+}
+.leftImg{
+    left: 0;
+}
+.rightImg{
+	right: 0;
+}
+
 </style>
 </head>
 <body>
 	<div class="container">
-		<div class="mainTitle">우리 동네.zip 회원가입</div>
+		<div class="topBar">
+			<div class="mainTitle">우리 동네.zip 회원가입</div>
+			<div class="backBtnDiv">
+				<a href="/"><input class="backBtn" type="button" value="뒤로가기"></a>
+			</div>
+		</div>
 		<form action="/members/signup" class="frm">
 			<div class="divTotal">
 				<div class="form-row">
@@ -240,6 +287,9 @@ hr {
 				</div>
 			</div>
 		</form>
+		
+		<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 	</div>
 
 	<script>
