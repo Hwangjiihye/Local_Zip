@@ -204,7 +204,10 @@
             margin-top: 30px;
 
             border-radius: 10px;
-            border: 2px solid #A66A3F;
+            /* border: 2px solid #A66A3F; */
+            
+            /* 그림자 효과 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 
         }
 
@@ -212,6 +215,8 @@
             width: 100%;
             height: 95px;
             display: flex;
+            
+            background-color: #F2D3A2;
         }
 
 
@@ -551,7 +556,7 @@
             <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
             <a><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-            <a><i class="navicon fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i></a>
+            <a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 
         </div>
