@@ -74,11 +74,11 @@ public class MembersController {
 		}
 		
 		int result = dao.login(mem_id,  mem_password);
-		String nickname = dao.nickname(mem_id); 
-		session.setAttribute("nickname", nickname);
 		
 		if(result == 1) {
-			session.setAttribute("loginId", mem_id);
+			String nickname = dao.nickname(mem_id);
+			session.setAttribute("loginId", mem_id); 
+			session.setAttribute("nickname", nickname);
 			return "redirect:/";
 		} else if(result == 0){
 			rttr.addFlashAttribute("msg", "pwFail");
@@ -88,10 +88,6 @@ public class MembersController {
 		
 		return "redirect:/members/loginUi";
 		}
-//			String nickname = dao.nickname(mem_id); 
-//			session.setAttribute("nickname", nickname);
-	
-	
 	
 	// 회원가입 완료 버튼 클릭 시
 	@RequestMapping("/signup")
