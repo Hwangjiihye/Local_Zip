@@ -82,7 +82,7 @@
         	width: 1750px;
             height: 180px;
             margin-top: 20px;
-            margin-left: 20px;
+            margin-left: 75px;
             border-radius: 10px;
             font-size: 30px;
             color: #A66A3F;
@@ -112,27 +112,31 @@
         	border-color: #A66A3F;
     	}
     	
-        .loginBtn:hover,
-        .logoutBtn:hover,
-        .joinBtn:hover,
         .navicon:hover,
         .adminPage:hover,
-        .myInfoBtn:hover{
+        .myInfo:hover,
+        .myWrite:hover,
+        .myLike:hover,
+        .myClub:hover,
+        .CS:hover,
+        .notice:hover{
             transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
 
-        .loginBtn:active,
-        .logoutBtn:active,
-        .joinBtn:active,
         .navicon:active,
-        .adminPage:hover,
-        .myInfoBtn:hover{
+        .adminPage:active,
+        .myInfo:active,
+        .myWrite:active,
+        .myLike:active,
+        .myClub:active,
+        .CS:active,
+        .notice:active{
             transform: translateY(2px); /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
-        .myInfoBtn, .adminPage{
+        .adminPage{
 	        background-color: #ffb300;
 	        color: #5e361a;
 	        border: 1px solid #ffb300;
@@ -152,14 +156,14 @@
     	}
     	
     	.divContainer{
-    		width: 1650px;
-    		height: 500px;
+    		width: 1600px;
+    		height: 470px;
     		background-color: #F2D3A2;
-    		margin-left: 140px;
+    		margin-left: 160px;
     		margin-top: 25px;
     		border-radius: 20px;
-    		padding-top: 10px;
     		box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    		padding-top: 5px;
     	}
     	
     	.myInfoDiv{
@@ -171,45 +175,55 @@
     		height: 60px;
     		font-size: x-large;
     		font-weight: bold;
-    		margin-top: 50px;
+    		margin-top: 25px;
     		margin-left: 110px;
     	}
     	.FAQTitle{
-    		margin-top: 60px;
+    		margin-top: 20px;
     	}
     	.myActiveDiv, .FAQDiv{
     		display: flex;
-    		gap: 40px;
+    		gap: 20px;
     		width: 90%;
     		height: 125px;
     		margin-left: 115px;
     	}
     	
-    	.myWrite, .myLike, .myClub{
-    		width: 30%;
-    		height: 100%;
+    	.myWrite, .myLike, .myClub, .myInfo{
+    		width: 300px;
+    		height: 115px;
     		background-color: #fbe5c0;
     		border-radius: 30px;
     	}
-    	.myWriteIcon, .myLikeIcon, .myClubIcon{
+    	
+    	.myInfo{
+    		width: 300px;
+    	}
+    	
+    	.myInfoTitle{
+    		margin-top: 20px;
+    	}
+    	.myWriteIcon, .myLikeIcon, .myClubIcon, .myInfoIcon{
     		width: 30%;
     		height: 100%;
     	}
-    	.myWriteContents, .myLikeContents, .myClubContents{
+    	.myWriteContents, .myLikeContents, .myClubContents, .myInfoContents{
     		width: 70%;
     		height: 100%;
     	}
-    	.myWriteIcon, .myWriteContents, .myLikeIcon, .myLikeContents, .myClubIcon, .myClubContents{
+    	.myWriteIcon, .myWriteContents, .myLikeIcon, .myLikeContents, .myClubIcon, .myClubContents, .myInfoIcon, .myInfoContents{
     		float: left;
     	}
-    	.myWriteTitle, .myWriteNum, .myLikeTitle, .myLikeNum, .myClubTitle, .myClubNum{
+    	.myWriteTitle, .myWriteNum, .myLikeTitle, .myLikeNum, .myClubTitle, .myClubNum, .myInfoTitle{
     		height: 50%;
     		font-size: x-large;
     		font-weight: bold;
-    		line-height: 87px;
+    		line-height: 85px;
+    		margin-left: 50px;
     	}
     	.myWriteTitle, .myLikeTitle, .myClubTitle{
     		font-size: x-large;
+    		
     	}
     	.myWriteNum, .myLikeNum, .myClubNum{
     		font-size: x-large;
@@ -233,14 +247,18 @@
     		padding-left: 30px;
     		padding-top: 10px;
     	}
-
+		
+		.adminPageDiv{
+			margin-top: -40px;
+		}
      	.adminPage{
      		margin-left: 520px;
      	}
      	
      	.leftImg, .rightImg{
      		position: absolute;
-     		height: 135px;
+     		width: 300px;
+     		height: 100px;
      	}
      	.leftImg{
      		left: 0;
@@ -248,24 +266,30 @@
      	.rightImg{
      		right: 0;
      	}
+     	
+     	a{
+     		color: #5e361a;
+     	}
 </style>
 </head>
 <body>
 	<div class="topBar">내.zip</div>
 	<div class="userBarDiv">
 		<div class="userBarContents">닉네임님, 반가워요!</div>
-<!-- 			<div class="myInfoDiv"> -->
-<!-- 	        	<a href="/members/myInfo"> -->
-<!-- 	        		<button class="myInfoBtn"><i class="fa-solid fa-user-gear"></i> 내 정보.zip</button> -->
-<!-- 	        	</a> -->
-<!-- 	        </div> -->
-	    
 	    <img class="userBar" src="/resources/images/userbar.png">
 	</div>
     <hr>
     <div class="divContainer">
 	    <div class="myActiveTitle">· 나의 활동</div>
 	    <div class="myActiveDiv">
+		    <a href="/members/myInfo">
+		    	<div class="myInfo">
+		 	        <div class="myInfoIcon"><img src="/resources/images/settings.png" class="icon"></div>
+		 	        <div class="myInfoContents">
+				    	<div class="myInfoTitle">내 정보.zip</div>
+			    	</div>
+	 	        </div>
+	 	    </a>
 	    	<div class="myWrite">
 	    		<div class="myWriteIcon"><img src="/resources/images/text1.png" class="icon"></div>
 	    		<div class="myWriteContents">
