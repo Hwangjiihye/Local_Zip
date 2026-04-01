@@ -96,12 +96,10 @@ public class MembersController {
 		return "members/myInfo";
 	}
 	
-	// 로그아웃 버튼 > 홈으로 이동
-//	@RequestMapping("/logout")
-//	public String logout(HttpSession session) throws Exception {
-//		
-//		
-//	}
-	
-	
+	//로그아웃 버튼 > 홈으로 이동
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) throws Exception {
+		session.invalidate();
+		return "redirect:/";
+	}
 }
