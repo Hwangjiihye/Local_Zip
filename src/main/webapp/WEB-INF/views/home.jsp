@@ -316,6 +316,8 @@
 
             border-radius: 10px;
             border: 2px solid #A66A3F;
+            /* 그림자 효과 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 
         }
 
@@ -323,6 +325,7 @@
             width: 100%;
             height: 95px;
             display: flex;
+            background-color: #F2D3A2;
         }
 
 
