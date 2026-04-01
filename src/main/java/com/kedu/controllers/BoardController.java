@@ -25,5 +25,11 @@ public class BoardController {
 	}
 	
 	
+	@RequestMapping("/write")
+	public String write() {
+		return "board/write";
+	}
+	
+	
 	
 }
