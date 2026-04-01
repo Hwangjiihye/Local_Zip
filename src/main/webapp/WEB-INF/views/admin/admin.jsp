@@ -381,14 +381,14 @@ body {
 			            {
 			                label: '총 방문자',
 			                data: [12, 18, 25, 30, 42, 50, 65, 78, 72, 81, 76, 69, 55, 60, 70, 85, 90, 88, 77, 66, 58, 62, 75, 80, 82, 79, 68, 64, 72, 85, 91],
-			                borderColor: '#555',
+			                borderColor: '#E76F51',
 			                backgroundColor: 'rgba(85,85,85,0.2)',
 			                tension: 0.3
 			            },
 			            {
 			                label: '신규 방문자',
 			                data: [8, 14, 21, 26, 38, 47, 56, 51, 49, 62, 71, 86, 60, 55, 68, 72, 80, 79, 65, 60, 52, 58, 63, 70, 75, 78, 66, 61, 69, 73, 88],
-			                borderColor: '#bbb',
+			                borderColor: '#F4A261',
 			                backgroundColor: 'rgba(180,180,180,0.2)',
 			                tension: 0.3
 			            }
@@ -408,7 +408,7 @@ body {
 			        labels: ['10대', '20대', '30대', '40대'],
 			        datasets: [{
 			            data: [12, 35, 30, 23],
-			            backgroundColor: ['#d9d9d9', '#bfbfbf', '#999999', '#666666']
+			            backgroundColor: ['#F4A261', '#F7E1AE', '#E76F51', '#F6BD60']
 			        }]
 			    },
 			    options: {
@@ -425,7 +425,7 @@ body {
 			        labels: ['남성', '여성'],
 			        datasets: [{
 			            data: [420, 580],
-			            backgroundColor: ['#999999', '#dddddd']
+			            backgroundColor: ['#F4A261', '#E76F51']
 			        }]
 			    },
 			    options: {
@@ -444,17 +444,17 @@ body {
 			            {
 			                label: '게시글 수',
 			                data: [21, 18, 27, 15],
-			                backgroundColor: 'rgba(255, 120, 219, 1.00)'
+			                backgroundColor: '#F4A261'
 			            },
 			            {
 			                label: '신청 수',
 			                data: [17, 15, 21, 10],
-			                backgroundColor: 'rgba(3, 192, 0, 1.00)'
+			                backgroundColor: '#F7E1AE'
 			            },
 			            {
 			                label: '신고 수',
 			                data: [7, 6, 5, 6],
-			                backgroundColor: 'rgba(133, 161, 249, 1.00)'
+			                backgroundColor: '#E76F51'
 			            }
 			        ]
 			    },
