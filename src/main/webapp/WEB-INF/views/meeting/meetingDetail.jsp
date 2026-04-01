@@ -73,12 +73,12 @@ body {
 }
 
 .meetingDetail {
-    width: 97%;
+	margin: auto;
+    width: 80%;
     border-radius: 10px;
     background-color: #fbe5c0;
     padding: 35px;
-    margin-left: 30px;
-    margin-top: 20px;
+ 	margin-top: 30px;
     background-color: #F2D3A2;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -92,73 +92,59 @@ body {
     color: #5e361a;
 }
 
-.titleDiv, .categoryDiv, .descDiv, .descTextDiv, .locationDiv, .openChatWrapper{
-	border : 1px solid black;
+.titleDiv, .categoryDiv, .descDiv, .locationDiv, .descTextDiv{
+	padding:10px;
+	border-bottom: 1px dotted #A66A3F;
 }
 
-.titleDiv, .categoryDiv, .descDiv, .locationDiv, .openChatLinkDiv, .openChatPwDiv{
-	height: 80px;
-	padding:5px;
-}
-
-.descTextDiv{
-	height: 250px;
-	padding:5px;
+.openChatLinkDiv, .openChatPwDiv{
+	padding:10px;
 }
 
 .descText{
-	height: 10%;
 	font-weight: bold;
     font-size: 23px;
     color: #5e361a;
+    border: none;
+    padding-left: 2px;
 }
 
 .descTextDetail{
-	height: 90%;
 	padding-top: 10px;
+	border: none;
+	width: 70%;
+	padding-left: 2px;
 }
 
 .title, .category, .desc, .location, .openChatLink, .openChatPw{
-	height: 50%;
 	font-weight: bold;
     font-size: 23px;
     color: #5e361a;
 }
 
-.titleDetail, .categoryDetail, .descDetail, .locationDetail{
-	height: 50%;
+.categoryDiv{
+	display:flex;
+	gap:10px;
 }
 
-
-
 .inputLink, .inputPw{
-	height: 35%;
 	padding:5px;
 	background-color: #fbe5c0;
 	border-radius: 10px;
-}
-
-input:focus {
-    border: 1px solid #FFB300;
-    background-color: #fff8e1;
+	border:none;
+	font-size:15px;
+	width: 400px;
+	word-break: break-all;
+	white-space: normal; 
 }
 
 .openChatWrapper{
 	display:flex;
 	gap: 300px;
-	height: 80px;
 }
 
 .openChatPwDiv{
-	padding-left: 600px;
-}
-
-.openChatLink, .inputLink{
-	width: 400px;
-}
-
-.openChatPw, .inputPw{
-	width: 300px;
+	padding-left: 50px;
 }
 
 .categoryDetail {
@@ -178,6 +164,7 @@ input:focus {
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .requestBtn, .backBtn{
@@ -191,6 +178,15 @@ input:focus {
     font-weight: bold;
 }
 
+.requestBtn:hover, .backBtn:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.requestBtn:active, .backBtn:active{
+	transform: translateY(2px);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
 </style>
 </head>
@@ -223,7 +219,13 @@ input:focus {
 					
 					<div class="descTextDiv">
 						<div class="descText">자세한 소개글</div>
-						<div class="descTextDetail">자세한 소개글임ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</div>
+						<div class="descTextDetail">건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
+						</div>
 					</div>
 					
 					<div class="locationDiv">	
@@ -234,12 +236,12 @@ input:focus {
 					<div class="openChatWrapper">
 						<div class="openChatLinkDiv">	
 							<div class="openChatLink">카톡 오픈채팅 링크</div>	
-							<input type="text" placeholder="오픈채팅의 링크를 입력해 주세요." class="inputLink">
+							<div class="inputLink">www...asdfasdfasdfasd.fa...asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd.sdfcasdf</div>
 						</div>
 						
 						<div class="openChatPwDiv">
 							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
-							<input type="password" placeholder="오픈채팅의 비밀번호를 입력해 주세요." class="inputPw">
+							<div class="inputPw">*******</div>
 						</div>
 					</div>
 			</div>
