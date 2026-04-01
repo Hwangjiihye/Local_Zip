@@ -75,6 +75,19 @@
 			<artifactId>gson</artifactId>
 			<version>2.13.2</version>
 		</dependency>
+
+		<!-- email 인증 관련 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
 		<!-- *라이브러리 넣기 끝 -->
 
 
