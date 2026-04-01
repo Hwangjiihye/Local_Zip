@@ -439,22 +439,22 @@ body {
 			new Chart(categoryCtx, {
 			    type: 'bar',
 			    data: {
-			        labels: ['운동', '스터디', '취미', '문화', '기타'],
+			        labels: ['운동', '스터디', '취미', '문화'],
 			        datasets: [
 			            {
 			                label: '게시글 수',
-			                data: [32, 21, 18, 27, 15],
-			                backgroundColor: '#4caf50'
+			                data: [21, 18, 27, 15],
+			                backgroundColor: 'rgba(255, 120, 219, 1.00)'
 			            },
 			            {
 			                label: '신청 수',
-			                data: [20, 17, 15, 21, 10],
-			                backgroundColor: '#ffeb3b'
+			                data: [17, 15, 21, 10],
+			                backgroundColor: 'rgba(3, 192, 0, 1.00)'
 			            },
 			            {
 			                label: '신고 수',
-			                data: [8, 7, 6, 5, 6],
-			                backgroundColor: '#f44336'
+			                data: [7, 6, 5, 6],
+			                backgroundColor: 'rgba(133, 161, 249, 1.00)'
 			            }
 			        ]
 			    },
