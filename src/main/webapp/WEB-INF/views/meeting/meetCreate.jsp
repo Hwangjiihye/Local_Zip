@@ -126,28 +126,6 @@
 		    border-bottom: 1px dotted #A66A3F;
 		}
 		
-		.inputLink {
-			padding:5px;
-			background-color: #fbe5c0;
-			border-radius: 10px;
-			border:none;
-			font-size:15px;
-			width: 610px;
-			word-break: break-all;
-			white-space: normal; 
-		}
-		
-		.inputPw {
-			padding:5px;
-			background-color: #fbe5c0;
-			border-radius: 10px;
-			border:none;
-			font-size:15px;
-			width: 310px;
-			word-break: break-all;
-			white-space: normal;
-		}
-		
 		.openChatWrapper{
 			display:flex;
 			gap: 50px;
@@ -190,9 +168,8 @@
 		    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 		    z-index: 10;
 		    font-family: 'GMarketSans';
-		    border: 1px solid #A66A3F;
 		    border-radius: 5px;
-		    background-color: #F2D3A2;
+		    background-color: #fbe5c0;
 		    color: #A66A3F;
 		    font-size: 12px;
 		    padding: 2px;
@@ -209,7 +186,7 @@
 		    font-family: 'GMarketSans';
 		    border: 1px solid #A66A3F;
 		    border-radius: 5px;
-		    background-color: #F2D3A2;
+		    background-color: #fbe5c0;
 		    color: #A66A3F;
 		    font-size: 12px;
 		    padding: 2px;
@@ -254,7 +231,7 @@
 		    font-family: 'GMarketSans';
 		    border: 1px solid #A66A3F;
 		    border-radius: 5px;
-		    background-color: #F2D3A2;
+		    background-color: #fbe5c0;
 		    color: #A66A3F;
 		    font-size: 12px;
 		    padding: 2px;
@@ -271,7 +248,7 @@
 		    font-family: 'GMarketSans';
 		    border: 1px solid #A66A3F;
 		    border-radius: 5px;
-		    background-color: #F2D3A2;
+		    background-color: #fbe5c0;
 		    color: #A66A3F;
 		    font-size: 12px;
 		    padding: 2px;
@@ -292,7 +269,7 @@
 				<div class="meetingDetail">
 					<div class="titleDiv">
 						<div class="title">모임명</div>
-						<div class="titleDetail"><input class="clubName" maxlength="50" type="text" placeholder="모임명을 작성해주세요."></div>
+						<div class="titleDetail"><input class="clubName" maxlength="50" type="text" style="border: #fbe5c0" placeholder="모임명을 작성해주세요."></div>
 					</div>
 					
 					<div class="categoryDiv">
@@ -308,28 +285,28 @@
 					
 					<div class="descDiv">
 						<div class="desc">간단한 한 줄 소개</div>
-						<div class="descDetail"><input class="clubName" maxlength="100" type="text" placeholder="한 줄 소개를 작성해주세요"></div>
+						<div class="descDetail"><input class="clubName" maxlength="100" style="border: #fbe5c0" type="text" placeholder="한 줄 소개를 작성해주세요"></div>
 					</div>
 					
 					<div class="descTextDiv">
 						<div class="descText">자세한 소개글</div>
-						<div class="descTextDetail"><textarea class="detailContent" maxlength="1000" type="text" placeholder="모임을 소개해주세요"></textarea></div>
+						<div class="descTextDetail"><textarea class="detailContent" maxlength="1000" style="border: #fbe5c0" type="text" placeholder="모임을 소개해주세요"></textarea></div>
 					</div>
 					
 					<div class="locationDiv">	
 						<div class="location">활동지역</div>	
-						<div class="locationDetail"><input class="clubName" maxlength="33" type="text" placeholder="활동지역을 입력해주세요"></div>
+						<div class="locationDetail"><input class="clubName" maxlength="33" type="text" style="border: #fbe5c0" placeholder="활동지역을 입력해주세요"></div>
 					</div>
 					
 					<div class="openChatWrapper">
 						<div class="openChatLinkDiv">	
 							<div class="openChatLink">카톡 오픈채팅 링크</div>	
-							<div class="inputLink"><input class="kakaotalk" maxlength="100" type="text" placeholder="카톡 오픈채팅 링크를 붙여넣어주세요"></div>
+							<div class="inputLink"><input class="kakaotalk" maxlength="100" type="text" style="border: #fbe5c0" placeholder="카톡 오픈채팅 링크를 붙여넣어주세요"></div>
 						</div>
 						
 						<div class="openChatPwDiv">
 							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
-							<div class="inputPw"><input class="kakaotalkPw" maxlength="8" type="text" placeholder="카톡 오픈채팅 비밀번호를 넣어주세요"></div>
+							<div class="inputPw"><input class="kakaotalkPw" maxlength="8" type="text" style="border: #fbe5c0" placeholder="카톡 오픈채팅 비밀번호를 넣어주세요"></div>
 						</div>
 					</div>
 			</div>
