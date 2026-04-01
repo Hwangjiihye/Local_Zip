@@ -1,5 +1,8 @@
 package com.kedu.controllers;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kedu.dao.AuthDAO;
 import com.kedu.dto.AuthDTO;
 
@@ -24,21 +28,22 @@ public class AuthController {
 	private JavaMailSender mailSender;
 
 	@Autowired
+	private Gson gson;
+
+	@Autowired
 	private AuthDAO dao;
 
 	// 인증번호 발송 요청
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.POST)
 	@ResponseBody
-	public String mailCheck(@RequestParam("email") String email,@RequestParam("auth_type") int auth_type) {
+	public String mailCheck(@RequestParam("email") String email, @RequestParam("auth_type") int auth_type) {
 
-		
-		
 		// 6자리 랜덤번호 생성
 		String authCode = String.valueOf(new Random().nextInt(888888) + 111111);
 
 		try {
 
-			//메일 발송 로직
+			// 메일 발송 로직
 			MimeMessage mail = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mail, true, "utf-8");
 			helper.setTo(email);
@@ -46,35 +51,58 @@ public class AuthController {
 			helper.setText("인증번호: " + authCode, true);
 			mailSender.send(mail);
 			System.out.println(authCode);
-			//db에 저장
-			dao.saveAuth(new AuthDTO(email,authCode,auth_type,0,"0"));
-			
+			// db에 저장
+			dao.saveAuth(new AuthDTO(email, authCode, auth_type, 0, "0"));
+
 			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "fail";
 		}
 	}
-		//인증번호 확인
-	@RequestMapping(value="/verify" ,method=RequestMethod.POST)
+
+	// 인증번호 확인
+	@RequestMapping(value = "/verify", method = RequestMethod.POST)
 	@ResponseBody
-	public String verify(@RequestParam("email")String email,@RequestParam("auth_code") String auth_code) {
-		
-		if(dao.checkAuth(email, auth_code) > 0) {
+	public String verify(@RequestParam("email") String email, @RequestParam("auth_code") String auth_code) {
+
+		if (dao.checkAuth(email, auth_code) > 0) {
 			dao.updateVerified(email);
 			return "success";
 		}
 		return "fail";
 	}
-	
-		//최종 가입전에 인증확인
-	@RequestMapping(value="/isVerified" ,method=RequestMethod.POST)
+
+	// 최종 가입전에 인증확인
+	@RequestMapping(value = "/isVerified", method = RequestMethod.POST)
 	@ResponseBody
 	public String isVerified(@RequestParam("email") String email) {
-		
+
 		int result = dao.isVerified(email);
-		
-		return result+"";
+
+		return result + "";
 	}
-	
+
+	// 아이디 찾기
+	@RequestMapping(value = "/findMyId", method = RequestMethod.POST)
+	@ResponseBody
+	public String findMyId(@RequestParam("email") String email, @RequestParam("auth_code") String auth_code) {
+
+		if (dao.checkAuth(email, auth_code) > 0) {
+			dao.updateVerified(email);
+			
+			String myId = dao.findIdByEmail(email);
+			
+			Map<String, Object> result = new HashMap<>();
+	        if(myId!= null) {
+	            result.put("status", "success");
+	            result.put("myId", myId);
+	        } else {
+	            result.put("status", "fail");
+	            result.put("msg", "해당 이메일로 가입된 정보가 없습니다.");
+	        }
+	        return gson.toJson(result); // Gson으로 직렬화하여 반환
+		}
+		return gson.toJson(Collections.singletonMap("status","wrong_code"));
+	}
 }
