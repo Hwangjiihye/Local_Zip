@@ -60,37 +60,54 @@
     }
     .divTotal{
         padding-top: 60px;
-        border: 2px solid #A66A3F;
         margin: auto;
-        margin-top: 20px;
+        margin-top: 100px;
         width: 1000px;
-        height: 600px;
+        height: 570px;
         text-align: center;
         border-radius: 60px;
         background-color: #F2D3A2;
-    }
-    .form-row{
-        display: flex;
-        align-items: center;
-        margin-bottom: 30px;
-        margin-left: 90px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+		position: relative;
+	    z-index: 1;
     }
     
-    .form-row div{
-    	margin-left: 30px;
-    }
-    label {
-        width: 120px;
-        text-align: left;
-        margin-right: 10px;
-        margin-left: 230px;
-        font-weight: bold;
-    }
+    .labelBox {
+	    display: flex;
+	    align-items: center;
+	    gap: 8px;
+	    width: 220px;
+	    font-weight: bold;
+	}
+	
+	.form-row {
+	    display: flex;
+	    align-items: center;
+	    margin-bottom: 30px;
+	    margin-left: 300px;
+	}
+	.valueBox {
+	    display: flex;
+	    align-items: center;
+	    gap: 10px;
+	}
+	.form-row > div:not(.labelBox) {
+	    margin-left: 10px;
+	}
+	.emptyIcon {
+	    width: 20px;
+	    display: inline-block;
+	}
+	.icon {
+	    width: 20px;
+	    text-align: center;
+	}
     .btnDiv{
     	margin-top: 30px;
     }
     .searchBtn{
-    	margin-left: 10px;
+    	margin-left: 5px;
+    	margin-top: -3px;
     }
     .searchBtn, .backBtn{
         background-color: #ffb300;
@@ -109,10 +126,10 @@
         width: 80px;
         height: 40px;
     }
-    .completeBtn, .cancelBtn, .searchBtn{
-    	display: none;
-    }
-    .updateBtn{
+     .completeBtn, .cancelBtn, .searchBtn{
+     	display: none;
+     }
+    .updateBtn, .completeBtn{
     	margin-right: 30px;
     }
     .backBtn{
@@ -144,13 +161,20 @@
         width: 700px;
         border-color: #A66A3F;
     }
-    .iconDiv{
     
-    }
-/*     .icon{ */
-    
-/*     	margin-right: 5px; */
-/*     } */
+    .leftImg, .rightImg{
+		position: absolute;
+		width: 400px;
+		height: 155px;
+		z-index: 10;
+		bottom: 0;
+	}
+	.leftImg{
+	    left: 0;
+	}
+	.rightImg{
+		right: 0;
+	}
 </style>
 </head>
 <body>
@@ -166,38 +190,62 @@
 	    <form>
 	        <div class="divTotal">
 	            <div class="form-row">
-	            	<div class="iconDiv"><i class="fa-solid fa-user fa-lg icon"></i></div>
-	                <label> NAME : </label>
+	            	<div class="labelBox">
+	            		<i class="fa-solid fa-user fa-lg icon"></i>
+	            		<span> NAME : </span>
+	            	</div>
 	                <div class="name">${list.mem_name}</div>
 	            </div>
 	            <div class="form-row">
-	            	<div class="iconDiv"><i class="fa-solid fa-address-card fa-lg icon"></i></div>
-	                <label> ID : </label>
+	            	<div class="labelBox">
+	            		<i class="fa-solid fa-address-card fa-lg icon"></i>
+	                	<span> ID : </span>
+	                </div>
 	                <div class="id">${loginId }</div>
 	            </div>
 	            <div class="form-row">
-	                <label><i class="fa-solid fa-user-pen fa-lg icon"></i>NICKNAME : </label>
-	                <div class="nickname">${list.mem_nickname}</div>
+	            	<div class="labelBox">
+	            		<i class="fa-solid fa-user-pen fa-lg icon"></i> 
+	            		<span> NICKNAME : </span>
+	            	</div>
+	            	<div class="nickname">${list.mem_nickname}</div>
 	            </div>
 	            <div class="form-row">
-	                <label><i class="fa-solid fa-envelope fa-lg icon"></i> EMAIL : </label>
+	            	<div class="labelBox">
+	                	<i class="fa-solid fa-envelope fa-lg icon"></i>
+	                	<span> EMAIL : </span>
+	                </div>
 	                <div class="email">${list.mem_email}</div>
 	            </div>
 	            <div class="form-row">
-	                <label><i class="fa-solid fa-phone fa-lg icon"></i> PHONE : </label>
+	            	<div class="labelBox">
+	                	<i class="fa-solid fa-phone fa-lg icon"></i>
+	                	<span> PHONE : </span>
+	                </div>
 	                <div class="phone">${list.mem_phone}</div>
 	            </div>
 	            <div class="form-row">
-	                <label><i class="fa-solid fa-house-chimney fa-lg icon"></i>ZONECODE :</label>
-	                <div class="zonecode">${list.mem_zip_code}</div>
-	                <input class="searchBtn" type="button" value="찾기">
+	            	<div class="labelBox">
+	                	<i class="fa-solid fa-house-chimney fa-lg icon"></i>
+	                	<span> ZONECODE :</span>
+	                </div>
+	                <div class="valueBox">
+	                	<div class="zonecode">${list.mem_zip_code}</div>
+	                	<input class="searchBtn" type="button" value="찾기">
+	                </div>
 	            </div>
 	            <div class="form-row">
-	                <label>ADDRESS : </label>
+	            	<div class="labelBox">
+	            		<span class="emptyIcon"></span>
+	                	<span> ADDRESS : </span>
+	                </div>
 	                <div class="address1">${list.mem_address1}</div>
 	            </div>
 	            <div class="form-row">
-	                <label> DETAIL : </label>
+	            	<div class="labelBox">
+	            		<span class="emptyIcon"></span>
+	                	<span> DETAIL : </span>
+	                </div>
 	                <div class="address2">${list.mem_address2}</div>
 	            </div>
 	            <hr>
@@ -209,6 +257,8 @@
 	            </div>
 	        </div>
     	</form>
+    	<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
     </div>
 </body>
 </html>
