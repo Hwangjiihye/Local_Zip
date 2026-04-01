@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.kedu.dao.MembersDAO;
@@ -36,6 +37,37 @@ public class MembersController {
 		return result;
 	}
 	
+	// 로그인 경유 후 아래 로그인으로 이동
+	@RequestMapping("/loginUi")
+	public String loginUI() throws Exception {
+		return "members/login";
+	}
+	
+	// 로그인, (메인)닉네임 출력(새로운거), 로그인 alert 기능
+	@RequestMapping("/login")
+	public String login(HttpSession session, String mem_id, String mem_password, RedirectAttributes rttr) throws Exception {
+		
+		if(mem_id == null || mem_id.trim().equals("") || mem_password == null || mem_password.trim().equals("")) {
+			rttr.addFlashAttribute("msg", "empty");
+			return "redirect:/members/loginUi";
+		}
+		
+		int result = dao.login(mem_id,  mem_password);
+		
+		if(result == 1) {
+			String nickname = dao.nickname(mem_id);
+			session.setAttribute("loginId", mem_id); 
+			session.setAttribute("nickname", nickname);
+			return "redirect:/";
+		} else if(result == 0){
+			rttr.addFlashAttribute("msg", "pwFail");
+		} else {
+			rttr.addFlashAttribute("msg", "idFail");
+		}
+		
+		return "redirect:/members/loginUi";
+		}
+	
 	// 회원가입 완료 버튼 클릭 시
 	@RequestMapping("/signup")
 	public String signup(MembersDTO dto) {
@@ -50,7 +82,7 @@ public class MembersController {
 	    }
 
 	    dao.insert(dto);
-	    return "redirect:/members/mypage"; // 나중에 로그인 창으로 이동하는 것으로 바꾸기
+	    return "redirect:/members/loginUi"; // 나중에 로그인 창으로 이동하는 것으로 바꾸기
 	}
 	
 	// 마이페이지 아이콘 클릭 시
@@ -67,5 +99,12 @@ public class MembersController {
 		
 		model.addAttribute("list",list);
 		return "members/myInfo";
+	}
+	
+	//로그아웃 버튼 > 홈으로 이동
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) throws Exception {
+		session.invalidate();
+		return "redirect:/";
 	}
 }
