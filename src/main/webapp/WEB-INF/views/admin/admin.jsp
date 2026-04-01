@@ -122,52 +122,110 @@ body {
 .menuDiv{
 	width: 1600px;
 	margin: 200px auto 30px auto;
-	border: 1px solid black;
 	display:flex;
 }
 .menuDetail{
-	border: 1px solid black;
 	width: 20%;
 	margin: 0 auto 0 auto;
+	background-color: #F2D3A2;
+	border-radius: 20px;
+}
+
+.menuDetail:hover{
+    transform: translateY(-3px); /* 살짝 위로 뜸 */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.menuDetail:active{
+    transform: translateY(2px); /* 아래로 눌림 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .chart-box {
 	width: 80%;
 	height: 400px;
-	border: 1px solid #999;
-	padding: 35px;
+	padding: 40px;
 	box-sizing: border-box;
 	background-color: white;
-	margin:auto auto 90px auto;
+	margin:auto auto 40px auto;
 }
 
-.chart-row {
-	width: 80%;
+.chart-rowDiv{
 	display: flex;
 	gap: 30px;
-	margin: 30px auto;
-	position: relative;
-	padding-top: 45px; 
+	margin: 25px auto;
+	width: 80%;
+}
+.chart-row, .chart-rowGen{
+	width: 50%;
+    position: relative;
+    padding-top: 40px;
 }
 
-.rowText{
-	width: 100px;
-	height: 40px;
-	position: absolute;
-    top: -20px;
-    left: 10px;
-	text-align: center;
-	border: 1px solid black;
-    padding: 3px 10px;
+.rowText, .rowTextGen, .categoryText, .visitText{
+	font-size: 20px;
+	font-weight: bold;
+	color: #5e361a;
+}
+
+.category-wrap, .visit-wrap{
+    width: 80%;
+    margin: 40px auto 70px auto;
+    position: relative;
+    padding-top: 60px;   /* 제목 올라갈 자리 */
+}
+
+.categoryText, .visitText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background-color: #F2D3A2;
+    border-radius: 20px;
     font-weight: bold;
+    z-index: 2;
 }
 
+.visitText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background-color: #F2D3A2;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.category-box, .visit-box{
+    width: 100%;
+    height: 400px;
+    padding: 35px;
+    box-sizing: border-box;
+    background-color: white;
+    margin: 0;
+}
+
+.rowText, .rowTextGen{
+	text-align:center;
+	width: 100px;
+	height: 50px;
+	line-height: 52px;
+	background-color: #F2D3A2;
+	border-radius: 20px;
+	margin-bottom: 10px;
+}
 
 .chart-box.small {
-	width: 50%;
+	width: 100%;
 	height: 290px;
 }
-
 
 .bottomBar {
 	border: 1px solid #A66A3F;
@@ -201,6 +259,14 @@ body {
 	display: flex;
 	align-items: center;
 	gap:10px;
+	font-weight: bold;
+	font-size: 20px;
+	color: #5e361a;
+}
+
+.membersCount, .visitantCount, .askCount{
+	font-weight: bold;
+	color: #286708;
 }
 </style>
 </head>
@@ -255,30 +321,35 @@ body {
 
 		</div>
 
-
-		<div class="chart-box">
-			<div>일별 방문자</div>
-			<canvas id="visitChart"></canvas>
+		<div class="visit-wrap">
+			<div class="visitText">일별 방문자</div>
+			<div class="chart-box visit-box">
+				<canvas id="visitChart"></canvas>
+			</div>
 		</div>
-	
 		
-		<div class="chart-row">
-			<div class="rowText">연령대별</div>
-			<div class="chart-box small">
-				<canvas id="ageChart"></canvas>
+		<div class="chart-rowDiv">
+			<div class="chart-row">
+				<div class="rowText">연령대별</div>
+				<div class="chart-box small">
+					<canvas id="ageChart"></canvas>
+				</div>
 			</div>
-			
-			<div class="rowText">성별별</div>
-			<div class="chart-box small">
-				<canvas id="genderChart"></canvas>
+				
+			<div class="chart-rowGen">
+				<div class="rowTextGen">성별별</div>
+				<div class="chart-box small">
+					<canvas id="genderChart"></canvas>
+				</div>
 			</div>
 		</div>
-
-		<div class="chart-box">
-			<div>카테고리별 게시글 현황</div>
-			<canvas id="categoryChart"></canvas>
+		
+		<div class="category-wrap">
+			<div class="categoryText">카테고리별 게시글 현황</div>
+			<div class="chart-box category-box">
+				<canvas id="categoryChart"></canvas>
+			</div>
 		</div>
-
 
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl"
@@ -299,18 +370,24 @@ body {
 			new Chart(visitCtx, {
 			    type: 'line',
 			    data: {
-			        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			        labels: [
+			        	 '1일','2일','3일','4일','5일','6일','7일',
+			             '8일','9일','10일','11일','12일','13일','14일',
+			             '15일','16일','17일','18일','19일','20일','21일',
+			             '22일','23일','24일','25일','26일','27일','28일',
+			             '29일','30일','31일'
+			        ],
 			        datasets: [
 			            {
 			                label: '총 방문자',
-			                data: [120, 180, 250, 300, 420, 500, 650, 780, 720, 810, 760, 690],
+			                data: [12, 18, 25, 30, 42, 50, 65, 78, 72, 81, 76, 69, 55, 60, 70, 85, 90, 88, 77, 66, 58, 62, 75, 80, 82, 79, 68, 64, 72, 85, 91],
 			                borderColor: '#555',
 			                backgroundColor: 'rgba(85,85,85,0.2)',
 			                tension: 0.3
 			            },
 			            {
 			                label: '신규 방문자',
-			                data: [80, 140, 210, 260, 380, 470, 560, 510, 490, 620, 710, 860],
+			                data: [8, 14, 21, 26, 38, 47, 56, 51, 49, 62, 71, 86, 60, 55, 68, 72, 80, 79, 65, 60, 52, 58, 63, 70, 75, 78, 66, 61, 69, 73, 88],
 			                borderColor: '#bbb',
 			                backgroundColor: 'rgba(180,180,180,0.2)',
 			                tension: 0.3
@@ -371,7 +448,7 @@ body {
 			            },
 			            {
 			                label: '신청 수',
-			                data: [45, 17, 40, 38, 42],
+			                data: [20, 17, 15, 21, 10],
 			                backgroundColor: '#ffeb3b'
 			            },
 			            {
