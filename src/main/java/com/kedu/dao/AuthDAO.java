@@ -1,6 +1,7 @@
 package com.kedu.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +38,16 @@ public class AuthDAO {
 	 public int isVerified(String email) {
 		 	String sql = "select count(*) from email_auth where email=? and is_verified=1";
 		 	return jdbc.queryForObject(sql, Integer.class,email);
+	 }
+	 
+	 // 아이디 찾기
+	 public String findIdByEmail(String email) {
+		 	String sql = "select mem_id from members where mem_email=?";
+		 	try {
+		 	return jdbc.queryForObject(sql,String.class,email);
+		 	}catch(Exception e) {
+		 		return null;
+		 	}
 	 }
 	 
 }

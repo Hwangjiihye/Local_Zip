@@ -1,5 +1,7 @@
 package com.kedu.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kedu.dao.AuthDAO;
 import com.kedu.dto.AuthDTO;
 
@@ -23,6 +26,9 @@ public class AuthController {
 	@Autowired
 	private JavaMailSender mailSender;
 
+	@Autowired
+	private Gson gson;
+	
 	@Autowired
 	private AuthDAO dao;
 
@@ -48,7 +54,7 @@ public class AuthController {
 			System.out.println(authCode);
 			//db에 저장
 			dao.saveAuth(new AuthDTO(email,authCode,auth_type,0,"0"));
-			
+		
 			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,7 +66,7 @@ public class AuthController {
 	@ResponseBody
 	public String verify(@RequestParam("email")String email,@RequestParam("auth_code") String auth_code) {
 		
-		if(dao.checkAuth(email, auth_code) > 0) {
+		if(dao.checkAuth(email, auth_code) > 0){
 			dao.updateVerified(email);
 			return "success";
 		}

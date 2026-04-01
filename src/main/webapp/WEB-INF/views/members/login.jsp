@@ -114,8 +114,7 @@ hr {
 
 .backBtn {
 	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
+	left: 44%;
 	bottom: 35px;
 
 	background-color: #ffb300;
@@ -153,7 +152,19 @@ hr {
 	align-items: center;
 	gap: 15px;
 }
+		.loginBtn:hover,
+        .JoinBtn:hover,
+        .backBtn:hover{
+            transform: translateY(-3px); /* 살짝 위로 뜸 */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
 
+        .loginBtn:active,
+        .JoinBtn:active,
+        .backBtn:active{
+            transform: translateY(2px); /* 아래로 눌림 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
 .linkText{
 	display: flex;
 	gap: 60px;
@@ -191,7 +202,7 @@ hr {
 				<hr>
 				<div class="linkDiv">
 					<div class="linkText">
-						<div>Forgot   Id?</div>
+						<a href=""><div>Forgot   Id?</div></a>
 						<div>Forgot password?</div>
 					</div>
 				</div>
