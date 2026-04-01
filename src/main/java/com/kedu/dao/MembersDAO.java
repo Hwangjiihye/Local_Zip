@@ -59,4 +59,14 @@ public class MembersDAO {
 		String sql = "select mem_nickname from members where mem_id = ?";
 		return jdbc.queryForObject(sql, String.class, mem_id);
 	}
+	
+	public int updateById(MembersDTO dto, String mem_id) {
+		String sql = "update members set mem_nickname =?, mem_phone =?, mem_zip_code=?, mem_address1=?, mem_address2=? where mem_id=?";
+		return jdbc.update(sql, dto, mem_id);
+	}
+	
+	public int deleteById(String mem_id) {
+		String sql = "delete from members where mem_id=?";
+		return jdbc.update(sql, mem_id);
+	}
 }

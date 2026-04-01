@@ -187,7 +187,7 @@
 	    		</a>
 	    	</div>
 	    </div>
-	    <form>
+	    <form action="/members/update" method="post" id="frm">
 	        <div class="divTotal">
 	            <div class="form-row">
 	            	<div class="labelBox">
@@ -205,17 +205,17 @@
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
-	            		<i class="fa-solid fa-user-pen fa-lg icon"></i> 
-	            		<span> NICKNAME : </span>
-	            	</div>
-	            	<div class="nickname">${list.mem_nickname}</div>
-	            </div>
-	            <div class="form-row">
-	            	<div class="labelBox">
 	                	<i class="fa-solid fa-envelope fa-lg icon"></i>
 	                	<span> EMAIL : </span>
 	                </div>
 	                <div class="email">${list.mem_email}</div>
+	            </div>
+	            <div class="form-row">
+	            	<div class="labelBox">
+	            		<i class="fa-solid fa-user-pen fa-lg icon"></i> 
+	            		<span> NICKNAME : </span>
+	            	</div>
+	            	<div class="nickname">${list.mem_nickname}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
@@ -249,6 +249,14 @@
 	                <div class="address2">${list.mem_address2}</div>
 	            </div>
 	            <hr>
+	            
+	            <input type="hidden" id="input_nickname" name="mem_nickname">
+	            <input type="hidden" id="input_phone" name="mem_phone">
+	            <input type="hidden" id="input_zip_code" name="mem_zip_code">
+	            <input type="hidden" id="input_address1" name="mem_address1">
+	            <input type="hidden" id="input_address2" name="mem_address2">
+	            <input type="hidden" id="input_id" name="mem_id" value="${loginId}">
+	            
 	            <div class="btnDiv">
 	            	<input class="updateBtn" type="button" value="정보 수정">
 	            	<input class="deleteBtn" type="button" value="회원 탈퇴">
@@ -260,5 +268,9 @@
     	<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
     	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
     </div>
+    
+    <script>
+    	$(".completeBtn")
+    </script>
 </body>
 </html>

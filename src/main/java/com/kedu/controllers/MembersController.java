@@ -112,4 +112,12 @@ public class MembersController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/update")
+	public String update(MembersDTO dto, HttpSession session) throws Exception {
+		String id = (String)session.getAttribute("loginId");
+		dao.updateById(dto, id);
+		return "";
+	}
+	
 }
