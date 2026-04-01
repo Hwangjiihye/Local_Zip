@@ -80,7 +80,7 @@
         }
         .userBarDiv{
         	width: 1750px;
-            height: 180px;
+            height: 200px;
             margin-top: 20px;
             margin-left: 75px;
             border-radius: 10px;
@@ -113,7 +113,6 @@
     	}
     	
         .navicon:hover,
-        .adminPage:hover,
         .myInfo:hover,
         .myWrite:hover,
         .myLike:hover,
@@ -125,7 +124,6 @@
         }
 
         .navicon:active,
-        .adminPage:active,
         .myInfo:active,
         .myWrite:active,
         .myLike:active,
@@ -135,29 +133,9 @@
             transform: translateY(2px); /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        
-        .adminPage{
-	        background-color: #ffb300;
-	        color: #5e361a;
-	        border: 1px solid #ffb300;
-	        border-radius: 10px;
-	        font-weight: bold;
-    	}
-    	.adminPageDiv{
-    		width: 600px;
-    		height: 50px;
-    	}
-
-    	.adminPage{
-    		width: 100%;
-    		height: 100%;
-    		font-size: large;
-    		line-height: 50px;
-    	}
-    	
     	.divContainer{
     		width: 1600px;
-    		height: 470px;
+    		height: 420px;
     		background-color: #F2D3A2;
     		margin-left: 160px;
     		margin-top: 25px;
@@ -250,17 +228,10 @@
     		padding-top: 10px;
     	}
 		
-		.adminPageDiv{
-			margin-top: -35px;
-		}
-     	.adminPage{
-     		margin-left: 520px;
-     	}
-     	
      	.leftImg, .rightImg{
      		position: absolute;
-     		width: 300px;
-     		height: 150px;
+     		width: 330px;
+     		height: 180px;
      		z-index: 10;
      		bottom: 50px;
      	}
@@ -279,7 +250,7 @@
 <body>
 	<div class="topBar">내.zip</div>
 	<div class="userBarDiv">
-		<div class="userBarContents">닉네임님, 반가워요!</div>
+		<div class="userBarContents">${nickname }님, 반가워요!</div>
 	    <img class="userBar" src="/resources/images/userbar.png">
 	</div>
     <hr>
@@ -323,9 +294,6 @@
 	    	<div class="notice">공지사항 ></div>
 	    </div>
 	    
-	    <div class="adminPageDiv">
-	    	<input class="adminPage" type="button" value="관리자 페이지">
-	    </div>
     </div>
     	<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
     	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">

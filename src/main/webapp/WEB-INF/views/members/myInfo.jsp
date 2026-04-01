@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>myInfo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
 	@font-face {
@@ -51,14 +52,19 @@
         line-height: 100px;
         background-color: #F2D3A2;
         padding-left: 20px;
+        display: flex;
+    }
+    .backBtnDiv{
+    	margin-left: 1500px;
+    	margin-top: 10px;
     }
     .divTotal{
-        padding-top: 30px;
+        padding-top: 60px;
         border: 2px solid #A66A3F;
         margin: auto;
         margin-top: 20px;
         width: 1000px;
-        height: 750px;
+        height: 600px;
         text-align: center;
         border-radius: 60px;
         background-color: #F2D3A2;
@@ -66,71 +72,132 @@
     .form-row{
         display: flex;
         align-items: center;
-        margin-bottom: 15px;
+        margin-bottom: 30px;
+        margin-left: 90px;
+    }
+    
+    .form-row div{
+    	margin-left: 30px;
     }
     label {
         width: 120px;
-        text-align: right;
+        text-align: left;
         margin-right: 10px;
         margin-left: 230px;
         font-weight: bold;
     }
-    .searchBtn, .updateBtn, .deleteBtn, .completeBtn, .cancelBtn, .backBtn{
+    .btnDiv{
+    	margin-top: 30px;
+    }
+    .searchBtn{
+    	margin-left: 10px;
+    }
+    .searchBtn, .backBtn{
         background-color: #ffb300;
         color: #5e361a;
         border: 1px solid #ffb300;
         border-radius: 10px;
         font-weight: bold;
     }
-    .completeBtn, .cancelBtn{
+    .updateBtn, .deleteBtn, .completeBtn, .cancelBtn{
+    	background-color: #ffb300;
+        color: #5e361a;
+        border: 1px solid #ffb300;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: medium;
+        width: 80px;
+        height: 40px;
+    }
+    .completeBtn, .cancelBtn, .searchBtn{
     	display: none;
     }
+    .updateBtn{
+    	margin-right: 30px;
+    }
+    .backBtn{
+    	height: 30px;
+    	font-weight: bold;
+    }
+    .searchBtn:hover,
+    .updateBtn:hover,
+    .deleteBtn:hover,
+    .completeBtn:hover,
+    .cancelBtn:hover,
+    .backBtn:hover{
+	    transform: translateY(-3px); /* 살짝 위로 뜸 */
+	    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    .searchBtn:active,
+    .updateBtn:active,
+    .deleteBtn:active,
+    .completeBtn:active,
+    .cancelBtn:active,
+    .backBtn:active{
+    	transform: translateY(2px); /* 아래로 눌림 */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
     hr{
-        margin-top: 20px;
+        margin-top: 30px;
         width: 700px;
         border-color: #A66A3F;
     }
+    .iconDiv{
+    
+    }
+/*     .icon{ */
+    
+/*     	margin-right: 5px; */
+/*     } */
 </style>
 </head>
 <body>
 	<div class="container">
 	    <div class="topBar">
 	    	<div class="mainTitle">내 정보.zip</div>
-	    	<div><a href="/members/mypage"><input class="backBtn" type="button" value="내.zip가기"></a></div>
+	    	<div class="backBtnDiv">
+	    		<a href="/members/mypage">
+	    			<input class="backBtn" type="button" value="내.zip으로 가기">
+	    		</a>
+	    	</div>
 	    </div>
 	    <form>
 	        <div class="divTotal">
 	            <div class="form-row">
-	                <label>· NAME : </label>
+	            	<div class="iconDiv"><i class="fa-solid fa-user fa-lg icon"></i></div>
+	                <label> NAME : </label>
 	                <div class="name">${list.mem_name}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>· ID : </label>
+	            	<div class="iconDiv"><i class="fa-solid fa-address-card fa-lg icon"></i></div>
+	                <label> ID : </label>
 	                <div class="id">${loginId }</div>
 	            </div>
 	            <div class="form-row">
-	                <label>·NICKNAME : </label>
+	                <label><i class="fa-solid fa-user-pen fa-lg icon"></i>NICKNAME : </label>
 	                <div class="nickname">${list.mem_nickname}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>· EMAIL : </label>
+	                <label><i class="fa-solid fa-envelope fa-lg icon"></i> EMAIL : </label>
 	                <div class="email">${list.mem_email}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>· PHONE : </label>
+	                <label><i class="fa-solid fa-phone fa-lg icon"></i> PHONE : </label>
 	                <div class="phone">${list.mem_phone}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>·ZONECODE : </label>
+	                <label><i class="fa-solid fa-house-chimney fa-lg icon"></i>ZONECODE :</label>
 	                <div class="zonecode">${list.mem_zip_code}</div>
 	                <input class="searchBtn" type="button" value="찾기">
 	            </div>
 	            <div class="form-row">
-	                <label>·ADDRESS : </label>
+	                <label>ADDRESS : </label>
 	                <div class="address1">${list.mem_address1}</div>
 	            </div>
 	            <div class="form-row">
-	                <label>· DETAIL : </label>
+	                <label> DETAIL : </label>
 	                <div class="address2">${list.mem_address2}</div>
 	            </div>
 	            <hr>

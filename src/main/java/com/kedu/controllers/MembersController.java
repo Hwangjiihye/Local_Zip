@@ -87,7 +87,8 @@ public class MembersController {
 	
 	// 마이페이지 아이콘 클릭 시
 	@RequestMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpSession session) {
+		session.getAttribute("nickname");
 		return "members/mypage";
 	}
 	
