@@ -41,6 +41,8 @@
 	font-display: swap;
 }
 
+*{box-sizing: border-box;}
+
 button, body {
 	font-family: 'GMarketSans', sans-serif;
 }
@@ -71,12 +73,12 @@ body {
 }
 
 .meetingDetail {
-    width: 93%;
+    width: 97%;
     border-radius: 10px;
     background-color: #fbe5c0;
     padding: 35px;
     margin-left: 30px;
-    margin-top: 220px;
+    margin-top: 20px;
     background-color: #F2D3A2;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -90,43 +92,104 @@ body {
     color: #5e361a;
 }
 
-.titleDiv, .categoryDiv, .descDiv, .descTextDiv, .locationDiv{
+.titleDiv, .categoryDiv, .descDiv, .descTextDiv, .locationDiv, .openChatWrapper{
 	border : 1px solid black;
 }
 
-.titleDiv{
-	height: 100px;
+.titleDiv, .categoryDiv, .descDiv, .locationDiv, .openChatLinkDiv, .openChatPwDiv{
+	height: 80px;
+	padding:5px;
+}
+
+.descTextDiv{
+	height: 250px;
+	padding:5px;
+}
+
+.descText{
+	height: 10%;
+	font-weight: bold;
+    font-size: 23px;
+    color: #5e361a;
+}
+
+.descTextDetail{
+	height: 90%;
+	padding-top: 10px;
+}
+
+.title, .category, .desc, .location, .openChatLink, .openChatPw{
+	height: 50%;
+	font-weight: bold;
+    font-size: 23px;
+    color: #5e361a;
+}
+
+.titleDetail, .categoryDetail, .descDetail, .locationDetail{
+	height: 50%;
+}
+
+
+
+.inputLink, .inputPw{
+	height: 35%;
+	padding:5px;
+	background-color: #fbe5c0;
+	border-radius: 10px;
+}
+
+input:focus {
+    border: 1px solid #FFB300;
+    background-color: #fff8e1;
+}
+
+.openChatWrapper{
+	display:flex;
+	gap: 300px;
+	height: 80px;
+}
+
+.openChatPwDiv{
+	padding-left: 600px;
+}
+
+.openChatLink, .inputLink{
+	width: 400px;
+}
+
+.openChatPw, .inputPw{
+	width: 300px;
 }
 
 .categoryDetail {
     display: inline-block;
-    line-height : 23px;
+    line-height : 25px;
     font-size: 12px;
     padding: 3px 8px;
     border-radius: 5px;
     background-color: #FFB300;
-    height: 20px;
-    color: #5e361a;
+    height: 28px;
+    color: #3e5e40;
+    font-weight: bold;
 }
 
-.desc {
-    margin-bottom: 10px;
-    color: #5e361a;
+.bottomBtn {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
 }
 
-.info {
-    font-size: 13px;
-    color: #555;
-    margin-bottom: 10px;
+.requestBtn, .backBtn{
+	width: 350px;
+    height: 40px;
+    background-color: #FFB300;
+    border:none;
+    border-radius: 10px;
     color: #5e361a;
+    font-size: 17px;
+    font-weight: bold;
 }
-
-.card-footer {
-    text-align: center;
-    color: #5e361a;
-}
-
-
 
 
 </style>
@@ -167,13 +230,23 @@ body {
 						<div class="location">활동지역</div>	
 						<div class="locationDetail">봉천동</div>
 					</div>
-			
-			
-		</div>
+					
+					<div class="openChatWrapper">
+						<div class="openChatLinkDiv">	
+							<div class="openChatLink">카톡 오픈채팅 링크</div>	
+							<input type="text" placeholder="오픈채팅의 링크를 입력해 주세요." class="inputLink">
+						</div>
+						
+						<div class="openChatPwDiv">
+							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
+							<input type="password" placeholder="오픈채팅의 비밀번호를 입력해 주세요." class="inputPw">
+						</div>
+					</div>
+			</div>
 	</div>
 		<div class="bottomBtn">
-			<button>신청하기</button>
-			<button>뒤로가기</button>
+			<button class="requestBtn" type="button">신청하기</button>
+			<a href="/meeting/test"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>
 </body>
 </html>
