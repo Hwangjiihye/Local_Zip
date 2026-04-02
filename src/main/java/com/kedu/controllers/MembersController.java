@@ -112,4 +112,20 @@ public class MembersController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/update")
+	public String update(MembersDTO dto, HttpSession session) throws Exception {
+		dao.updateById(dto, dto.getMem_id());
+		session.setAttribute("nickname", dto.getMem_nickname());
+		return "redirect:/members/myInfo";
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(HttpSession session) {
+		String id = (String)session.getAttribute("loginId");
+		dao.deleteById(id);
+		session.invalidate();
+		return "home";
+	}
+	
 }
