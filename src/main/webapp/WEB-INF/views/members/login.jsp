@@ -172,6 +172,8 @@ hr {
 	font-weight: 500;
 	margin-left: 10px;
 }
+a:link{color:black;text-decoration:none;}
+a:visited{color:black;text-decoration:none;}
 </style>
 </head>
 <body>
@@ -202,8 +204,8 @@ hr {
 				<hr>
 				<div class="linkDiv">
 					<div class="linkText">
-						<a href=""><div>Forgot   Id?</div></a>
-						<div>Forgot password?</div>
+						<a href="/find/toFindId"><div>아이디 찾기</div></a>
+						<a href="/find/toFindPw"><div>비밀번호 찾기</div></a>
 					</div>
 				</div>
 				<div>
