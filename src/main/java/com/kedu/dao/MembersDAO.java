@@ -66,8 +66,8 @@ public class MembersDAO {
 	}
 	
 	public int updateById(MembersDTO dto, String mem_id) {
-		String sql = "update members set mem_nickname =?, mem_phone =?, mem_zip_code=?, mem_address1=?, mem_address2=? where mem_id=?";
-		return jdbc.update(sql, dto.getMem_nickname(), dto.getMem_phone(), dto.getMem_zip_code(), dto.getMem_address1(), dto.getMem_address2(), mem_id);
+		String sql = "update members set mem_nickname =?, mem_phone =?, mem_zip_code=?, mem_address1=?, mem_address2=?, mem_dong=? where mem_id=?";
+		return jdbc.update(sql, dto.getMem_nickname(), dto.getMem_phone(), dto.getMem_zip_code(), dto.getMem_address1(), dto.getMem_address2(), dto.getMem_dong(), mem_id);
 	}
 	
 	public int deleteById(String mem_id) {
