@@ -280,7 +280,6 @@ body {
 		
 		
 		<div class="qaReplyDiv">
-<!-- 			<div class="qaContainer"> -->
 				<div class="categoryAndWriterDiv">
 		            <div class="categoryAndWriter">
 		            <div class="postProfile">
@@ -299,9 +298,6 @@ body {
 	                <div class="title">제목</div>
 	                <div class="content">내용</div>
 	            </div>
-	            
-<!-- 			</div> -->
-	             
 	             
 	        <div class="qaReply">
 	        	<div class="adminProfileDiv">
@@ -314,10 +310,6 @@ body {
 				</div>
 	        	</div>      
 			</div>
-                  
-
-
-              
 
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
