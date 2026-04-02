@@ -8,6 +8,8 @@
 <title>myInfo</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script
+	src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 	@font-face {
     font-family: 'GMarketSans';
@@ -187,7 +189,7 @@
 	    		</a>
 	    	</div>
 	    </div>
-	    <form action="/members/update" method="post" id="frm">
+	    <form action="/members/update" method="post" class="frm">
 	        <div class="divTotal">
 	            <div class="form-row">
 	            	<div class="labelBox">
@@ -231,7 +233,7 @@
 	                </div>
 	                <div class="valueBox">
 	                	<div class="zonecode updateDiv">${list.mem_zip_code}</div>
-	                	<input class="searchBtn" type="button" value="찾기">
+	                	<input class="searchBtn save_cancelBtn" type="button" value="찾기">
 	                </div>
 	            </div>
 	            <div class="form-row">
@@ -279,22 +281,22 @@
     	
     	$(".updateBtn").on("click", function(){
     		$(".updateDiv").attr("contenteditable","true");
+    		$(".zonecode, .address1").attr("contenteditable","false");
     		
     		$(".updateDiv").css({
     			"background-color": "#fbe5c0",
     			"border":"none",
     			"border-radius": "10px",
     			"word-break": "break-all",
-    			"flex": "1"
+    			"width":"fit-content"
     		})
     		
     		$(".labelBox").css({
     			"display": "flex"
-    	    	
     		})
     		
-    		$(".lavel").css({ /* 고정 */
-    	    	"flex-shrink": "0"   /* 절대 안 줄어듦 */
+    		$(".lavel").css({
+    	    	"flex-shrink": "0"
     		})
     		
     		$(".update_deleteBtn").css({
@@ -314,6 +316,9 @@
     		$(".address2").html(address2);
     		
     		$(".updateDiv").attr("contenteditable","false");
+    		$(".updateDiv").css({
+    			"background-color": "#F2D3A2"
+    		})
     		
     		$(".update_deleteBtn").css({
     			"display":"inline"
@@ -327,6 +332,73 @@
     	})
     	
     	
+    	$(".searchBtn").on("click", function(){
+    		new kakao.Postcode({
+						oncomplete : function(data) {
+							$(".zonecode").html(data.zonecode);
+							$(".address1").html(data.roadAddress);
+							
+							$("#input_zip_code").html(data.zonecode);
+							$("#input_address1").html(data.roadAddress);
+						}
+					}).open();
+    	})
+		
+		
+		
+		$(".frm").on("submit", function(e){
+				e.preventDefault();
+				
+				// nickname 정규표현식
+				let nickname = $(".nickname").text().trim();
+				if (nickname == "") {
+					alert("닉네임을 입력해주세요.");
+					$(".nickname").focus();
+					return false;
+				} else {
+					let regex = /^[가-힣]{2,30}$|^[a-z]{2,30}$/;
+					nicknameResult = regex.test(nickname);
+					if (!nicknameResult) {
+						alert("2~30글자의 닉네임만 등록 가능합니다.");
+						$(".nickname").text("");
+						$(".nickname").focus();
+						return false;
+					}
+				}
+				
+				// phone 정규표현식
+				let phone = $(".phone").text().trim();
+				if (phone == "") {
+					alert("전화번호를 입력해주세요.");
+					phone.focus();
+					return false;
+				} else {
+					let regex = /^010[\d]{8}$/;
+					let phoneResult = regex.test(phone);
+					if (!phoneResult) {
+						alert("연락처 형식은 010********(8자) 입니다.");
+						phone.value = "";
+						phone.focus();
+						return false;
+					}
+				}
+				
+				// zonecode 정규표현식
+				let zip_code = $(".zonecode").text().trim();
+				if (zip_code == "") {
+					alert("우편번호 찾기를 눌러주세요.");
+					zip_code.focus();
+					return false;
+				}
+	            
+	            $("input_nickname").val($(".nickname").html());
+	            $("input_phone").val($(".phone").html());
+	            $("input_zip_code").val($(".zonecode").html());
+	            $("input_address1").val($(".address1").html());
+	            $("input_address2").val($(".address2").html());
+		})
+		
+		
     </script>
 </body>
 </html>
