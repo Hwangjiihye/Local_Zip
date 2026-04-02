@@ -118,9 +118,13 @@ public class AuthController {
 	}
 	
 	//새 비밀번호 생성
-	@RequestMapping(value="/findMyPw",method=RequestMethod.POST)
+	@RequestMapping(value="/updateMyPw",method=RequestMethod.POST)
 	@ResponseBody
-	public String findMyPw(@RequestParam("email") String email, @RequestParam("id") String id) {
-		return "";
+	public String updateMyPw(@RequestParam("mem_id") String id, @RequestParam("pw") String pw) {
+		int result = dao.updatePwById(id,pw);
+		if(result>0) {
+			return "success";
+		}
+		return "fail";
 	}
 }
