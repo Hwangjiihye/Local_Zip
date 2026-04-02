@@ -15,6 +15,8 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
+* {box-sizing: border-box;}
+
 @font-face {
 	font-family: 'GMarketSans';
 	src:
@@ -137,6 +139,68 @@ body {
 	gap: 200px;
 }
 
+.qaReplyDiv{
+	border: 1px solid black;
+	margin: 300px auto 0 auto;
+	width: 97%;
+}
+
+.qaContainer{
+	border: 2px solid #A66A3F;
+	margin: 10px 10px 10px 10px;
+}
+
+.categoryAndWriterDiv{
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 1px solid black;
+	margin: 10px 10px 10px 10px;
+	font-size: 18px;
+}
+
+.categoryAndWriter{
+	display:flex;
+	gap:20px;
+}
+
+.titleAndContent>div{
+	border: 1px solid black;
+}
+
+.titleAndContent, .qaReply, .title, .content{
+	margin: 10px 5px 10px 5px;
+}
+
+.title, .content{
+	font-size: 30px;
+}
+
+.inputQaReply{
+	padding:5px;
+	background-color: #fbe5c0;
+	border-radius: 10px;
+	border:none;
+	font-size:15px;
+	width: 400px;
+	word-break: break-all;
+	white-space: normal; 
+}
+
+.replyBtn{
+	 margin-left:auto;
+	 background-color: #ffb300;
+     color: #5e361a;
+     border: 1px solid #ffb300;
+     border-radius: 10px;
+     font-weight: bold;
+     width: 100px;
+	 height: 40px;
+	 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+	
+}
+
 </style>
 </head>
 
@@ -161,37 +225,37 @@ body {
 			</div>
 		</div>
 		
-		<div class="postBox">
-                    	<div class="postUpBox">
+		
+		<div class="qaReplyDiv">
+			<div class="qaContainer">
+				<div class="categoryAndWriterDiv">
+		            <div class="categoryAndWriter">
+		             	<div class="category">문의유형</div>
+		             	<div class="writer">작성자:홍길동</div> 
+		           	</div>
+		           	
+		           	<div class="writeData">작성일시</div> 
+	           	</div>
+		           	
+		        
+				<div class="titleAndContent">
+	                <div class="title">제목</div>
+	                <div class="content">내용</div>
+	            </div>
+	            
+			</div>
+	             
+	             <div class="replyProfile"><img src="/resources/images/adminProfile.png" width="60px"></div>
+	        <div class="qaReply">
+	        		
+	            	<input type="text" placeholder="댓글을 입력하세요." class="inputQaReply">
+					<button class="replyBtn" type="button">등록</button>
+	        </div>      
+		</div>
+                  
 
-                    <div class="postProfile">
-                        <img class="contentProfile" src="/resources/images/user1.png" width="60px">
-                    </div>
 
-                    <div class="postInfoBox">
-                        <div class="postInfoUp">
-                            <div class="profileName profileInfo">홍길동</div>
-                            <div class="profileLocal profileInfo">지역(동)</div>
-                            <div class="profileCatagory profileInfo">
-                                <button class="topBtn">카테고리</button>
-                            </div>
-                        </div>
-
-                        <div class="postInfoDown">
-                            <div class="profileTime profileInfo">00시간 전</div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-                <div class="postMidBox">
-
-                    <div class="postTitle">제목이 들어가는 곳</div>
-                    <div class="postContent">내용들이 들어가는 곳</div>
-
-                </div>
-           	</div>
+              
 
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 

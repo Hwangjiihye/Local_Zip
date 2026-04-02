@@ -15,6 +15,8 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
+* {box-sizing: border-box;}
+
 @font-face {
 	font-family: 'GMarketSans';
 	src:
