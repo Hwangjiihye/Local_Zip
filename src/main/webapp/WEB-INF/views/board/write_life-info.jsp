@@ -263,7 +263,9 @@ button, body, div, input {
 			<div class="meetingDetail">
 				<div class="titleDiv">
 					<div class="title">제목</div>
-					<div name="post_title" class="titleContent"><input class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요"></div>
+					<div class="titleContent">
+						<input name="post_title" class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
+					</div>
 					
 				</div>
 	
@@ -276,8 +278,10 @@ button, body, div, input {
 						<option class="report-menu">생활정보</option>
 						<option class="report-menu">맛집/카페</option>
 						<option class="report-menu">고민/이야기</option>
-						<option class="report-menu">미용/패션</option>
+						<option class="report-menu">미용/패션</option>	
 					</select>
+					
+					<input name="post_category" class="report" type="hidden">
 				</div>
 	
 	

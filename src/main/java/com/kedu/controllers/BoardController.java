@@ -28,8 +28,8 @@ public class BoardController {
 		return "board/concern";
 	}
 	
-	@RequestMapping("/write")
-	public String write() {
+	@RequestMapping("/write_lifeInfo")
+	public String write_lifeInfo() {
 		return "board/write_life-info";
 	}
 	
