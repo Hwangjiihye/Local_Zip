@@ -174,6 +174,8 @@ hr {
 }
 a:link{color:black;text-decoration:none;}
 a:visited{color:black;text-decoration:none;}
+
+
 </style>
 </head>
 <body>
@@ -216,6 +218,11 @@ a:visited{color:black;text-decoration:none;}
 	</div>
 	
 	<script>
+	let pwMsg = "${pwMsg}";
+    if (pwMsg && pwMsg !== "") {
+        alert(pwMsg);
+    }
+	
 		let msg = "${msg}";
 		
 		if(msg == "empty"){
