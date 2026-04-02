@@ -38,7 +38,6 @@
 
         button, body {
             font-family: 'GMarketSans', sans-serif;
-            font-weight: bold;
         }
 
         body,html {
@@ -146,8 +145,9 @@
         }
 
         .welcome {
-            margin-top: 20px;
+            margin-top: 10px;
             margin-left: 20px;
+            font-weight: bold;
         }
 
         .categoryBtn {
@@ -520,11 +520,11 @@
            
 
             <div class="categoryBtn">
-                <button
-                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">전체</button>
-                <button
+                <a href="/"><button
+                    style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;"><i class="navicon fa-solid fa-house fa-sm" style="color: #3e5e40"></i> 전체</button></a>
+                <a href="/board/lifeInfo"><button
                     style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-                    <i class="fa-regular fa-lightbulb fa-sm" style="color: #3e5e40;"></i> 생활정보</button>
+                    <i class="fa-regular fa-lightbulb fa-sm" style="color: #3e5e40;"></i> 생활정보</button></a>
                 <button
                     style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
                     <i class="fa-solid fa-utensils fa-sm" style="color: #3e5e40;"></i> 맛집/카페</button>
@@ -570,7 +570,8 @@
 
 
                     <div class="reportArea">
-                        <i class="fa-solid fa-flag reportIcon"></i>
+                        <!-- <i class="fa-solid fa-flag reportIcon"></i> -->
+                        <img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
                         <select class="reportSelect">
                             <option value="" disabled selected>신고 사유</option>
                             <option value="1" class="reportOption">부적절한 콘텐츠</option>
