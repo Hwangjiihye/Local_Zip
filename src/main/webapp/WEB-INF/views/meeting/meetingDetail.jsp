@@ -199,7 +199,7 @@ body {
 			</div>
 			
 			
-			</div>
+		</div>
 			
 				<div class="meetingDetail">
 					<div class="titleDiv">
@@ -248,7 +248,34 @@ body {
 	</div>
 		<div class="bottomBtn">
 			<button class="requestBtn" type="button">신청하기</button>
-			<a href="/meeting/test"><button class="backBtn" type="button">뒤로가기</button></a>
+			<a href="/meeting/list"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>
+		
+		<script>
+			$(".requestBtn").on("click", function(){
+				
+				// 팝업창 크기
+				const width = 800;
+			    const height = 400;
+	
+			    // window.screenX : 브라우저가 모니터에서 시작하는 위치
+			    // window.outerWidth / 2 : 브라우저의 가운데 위치
+			    // width / 2 : 팝업의 절반
+			    const left = window.screenX + (window.outerWidth / 2) - (width / 2);
+			    const top = window.screenY + 80; // 상단에서 80px
+
+			    const popup = window.open(
+			        "/apply/applyForm",
+			        "",
+			        `width=${width},height=${height}`
+			    );
+
+			    if (popup) {
+			        popup.resizeTo(width, height);
+			        popup.moveTo(left, top);
+			        popup.focus();
+			    } 
+			})
+		</script>
 </body>
 </html>

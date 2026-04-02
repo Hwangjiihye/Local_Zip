@@ -15,6 +15,8 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
+* {box-sizing: border-box;}
+
 @font-face {
 	font-family: 'GMarketSans';
 	src:
@@ -64,6 +66,7 @@ body {
 	background-color: #fbe5c0;
 	z-index: 1000;
 	border-bottom: 2px solid #A66A3F;
+	border: none;
 }
 
 .mainTitle {
@@ -92,8 +95,7 @@ body {
 }
 
 .categoryBtnAll {
-	margin-left: 10px;
-	font-weight: bold;
+	margin-left: 20px;
 	background-color: #FFB300;
 	border-radius: 10px;
 	border: 1px solid #FFB300;
@@ -103,6 +105,7 @@ body {
 	cursor: pointer;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	transition: all 0.2s ease;
+	line-height: 30px;
 }
 
 .categoryBtnAll:hover, .navicon:hover {
@@ -115,9 +118,6 @@ body {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.categoryBtnAll:first-child {
-	margin-left: 25px;
-}
 
 .menuDiv{
 	width: 1600px;
@@ -277,17 +277,17 @@ body {
 		<div class="top-section">
 			<div class="mainTitle">관리자.zip</div>
 			<div class="categoryDiv">
-				<button class="categoryBtnAll">
-					<i class="fa-solid fa-chart-column"> 대시보드</i>
+				<a href="/admin/adminPage"><button class="categoryBtnAll" type="button">
+					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
+				</button></a>
+				<button class="categoryBtnAll" type="button">
+					<i class="fa-solid fa-user fa-lg"></i> 회원관리
 				</button>
-				<button class="categoryBtnAll">
-					<i class="fa-solid fa-user"> 회원관리</i>
-				</button>
-				<button class="categoryBtnAll">
-					<i class="fa-solid fa-headset"> 고객지원</i>
-				</button>
-				<button class="categoryBtnAll">
-					<i class="fa-solid fa-bullhorn"> 공지사항</i>
+				<a href="/admin/adminQA"><button class="categoryBtnAll" type="button">
+					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
+				</button></a>
+				<button class="categoryBtnAll" type="button">
+					<i class="fa-solid fa-bullhorn fa-lg"></i> 공지사항
 				</button>
 			</div>
 		</div>
@@ -352,15 +352,11 @@ body {
 		</div>
 
 		<div class="bottomBar">
-			<a href="/"><i class="navicon fa-solid fa-house fa-2xl"
-				style="color: #A66A3F"></i></a> <a href="/map/test"><i
-				class="navicon fa-solid fa-map-location-dot fa-2xl"
-				style="color: #A66A3F"></i></a> <a href="/meeting/test"><i
-				class="navicon fa-solid fa-people-group fa-2xl"
-				style="color: #A66A3F"></i></a> <a><i
-				class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> <a
-				href="/admin/test"><i class="navicon fa-solid fa-user fa-2xl"
-				style="color: #A66A3F"></i></a>
+			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> 
+			<a><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 	</div>
 
