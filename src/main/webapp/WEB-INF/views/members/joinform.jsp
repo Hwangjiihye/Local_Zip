@@ -330,7 +330,7 @@ hr {
 		//인증번호 전송
 		$(".authCheck").on("click", function() {
 			if ($(".email").val() == "") {
-				alert("아이디를 먼저 입력해주세요.");
+				alert("이메일을 먼저 입력해주세요.");
 				return false;
 			} else {
 				$.ajax({
