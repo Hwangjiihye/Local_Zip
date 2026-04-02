@@ -116,7 +116,7 @@ public class MembersController {
 	@RequestMapping("/update")
 	public String update(MembersDTO dto, HttpSession session) throws Exception {
 		dao.updateById(dto, dto.getMem_id());
-		session.setAttribute("upNickName", dto.getMem_nickname());
+		session.setAttribute("nickname", dto.getMem_nickname());
 		return "redirect:/members/myInfo";
 	}
 	
