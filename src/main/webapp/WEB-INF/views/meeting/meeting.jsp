@@ -303,12 +303,11 @@ body {
 			</div>
 		</div>
 			
-				
+			<c:forEach var="i" items="${list}">
 				<div class="meeting-card">
 					<div class="card-header">
-						<div class="title">모임제목</div>
+						<div class="title">${i.meet_title}</div>
 							<div class="reportDiv">
-<!-- 								<i class="fa-solid fa-flag reportIcon"></i> -->
 				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 								<select class="report">
 									<option class="report-menu" disabled selected>신고 사유</option>
@@ -319,13 +318,13 @@ body {
 							</div>
 					</div>
 				
-					<div class="category">카테고리</div>
-					<div class="desc">한 줄 소개</div>
+					<div class="category">${i.meet_category}</div>
+					<div class="desc">${i.meet_introcontents}</div>
 					
 					
 					<div class="info">	
-						<div class="location">📍 위치</div>	
-						<div class="count">👥 정원 수</div>
+						<div class="location">📍 ${i.mem_address1}</div>	
+						<div class="count">👥 ${i.meet_maxpeople}</div>
 					</div>
 					
 					<div class="card-footer">
@@ -335,7 +334,9 @@ body {
 						<div class="gauge-text">6 / 10명 참여중</div>
 						<button class="join-btn">참여신청</button>
 					</div>
-			</div>
+				</div>
+		</c:forEach>
+		
 	</div>
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
