@@ -263,7 +263,7 @@ button, body, div, input {
 			<div class="meetingDetail">
 				<div class="titleDiv">
 					<div class="title">제목</div>
-					<div class="titleContent"><input class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요"></div>
+					<div name="post_title" class="titleContent"><input class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요"></div>
 					
 				</div>
 	
