@@ -200,51 +200,46 @@ body {
 			
 			
 		</div>
-			
+			<c:forEach var="i" items="${list}">
 				<div class="meetingDetail">
 					<div class="titleDiv">
 						<div class="title">모임명</div>
-						<div class="titleDetail">주말 운동할 사람 구함~ ^^</div>
+						<div class="titleDetail">${i.meet_title}</div>
 					</div>
 					
 					<div class="categoryDiv">
 						<div class="category">카테고리</div>
-						<div class="categoryDetail">운동</div>
+						<div class="categoryDetail">${i.meet_category}</div>
 					</div>
 					
 					<div class="descDiv">
 						<div class="desc">간단한 한 줄 소개</div>
-						<div class="descDetail">주말에 운동할 사람 구해욘~</div>
+						<div class="descDetail">${i.meet_introcontents}</div>
 					</div>
 					
 					<div class="descTextDiv">
 						<div class="descText">자세한 소개글</div>
-						<div class="descTextDetail">건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
-						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
-						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
-						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
-						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
-						출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때
-						</div>
+						<div class="descTextDetail">${i.meet_detailcontents}</div>
 					</div>
 					
 					<div class="locationDiv">	
 						<div class="location">활동지역</div>	
-						<div class="locationDetail">봉천동</div>
+						<div class="locationDetail">${i.mem_address1}</div>
 					</div>
 					
 					<div class="openChatWrapper">
 						<div class="openChatLinkDiv">	
 							<div class="openChatLink">카톡 오픈채팅 링크</div>	
-							<div class="inputLink">www...asdfasdfasdfasd.fa...asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd....asdfasdfasdfasd.sdfcasdf</div>
+							<div class="inputLink">${i.meet_kakaolink}</div>
 						</div>
 						
 						<div class="openChatPwDiv">
 							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
-							<div class="inputPw">*******</div>
+							<div class="inputPw">${i.meet_kakaopw}</div>
 						</div>
 					</div>
-			</div>
+				</div>
+			</c:forEach>
 	</div>
 		<div class="bottomBtn">
 			<button class="requestBtn" type="button">신청하기</button>
