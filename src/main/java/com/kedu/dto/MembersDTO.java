@@ -12,6 +12,7 @@ public class MembersDTO {
 	private String mem_zip_code;
 	private String mem_address1;
 	private String mem_address2;
+	private String mem_dong;
 	private int mem_role;
 	private String mem_join_date;
 	private int mem_status;
@@ -19,7 +20,8 @@ public class MembersDTO {
 	public MembersDTO() {}
 	public MembersDTO(String mem_id, String mem_password, String mem_nickname, String mem_name, String mem_ssn,
 			int mem_gender, String mem_phone, String mem_email, String mem_zip_code, String mem_address1,
-			String mem_address2, int mem_role, String mem_join_date, int mem_status) {
+			String mem_address2, String mem_dong, int mem_role, String mem_join_date, int mem_status) {
+		super();
 		this.mem_id = mem_id;
 		this.mem_password = mem_password;
 		this.mem_nickname = mem_nickname;
@@ -31,6 +33,7 @@ public class MembersDTO {
 		this.mem_zip_code = mem_zip_code;
 		this.mem_address1 = mem_address1;
 		this.mem_address2 = mem_address2;
+		this.mem_dong = mem_dong;
 		this.mem_role = mem_role;
 		this.mem_join_date = mem_join_date;
 		this.mem_status = mem_status;
@@ -101,6 +104,12 @@ public class MembersDTO {
 	public void setMem_address2(String mem_address2) {
 		this.mem_address2 = mem_address2;
 	}
+	public String getMem_dong() {
+		return mem_dong;
+	}
+	public void setMem_dong(String mem_dong) {
+		this.mem_dong = mem_dong;
+	}
 	public int getMem_role() {
 		return mem_role;
 	}
@@ -119,4 +128,7 @@ public class MembersDTO {
 	public void setMem_status(int mem_status) {
 		this.mem_status = mem_status;
 	}
+	
+	
 }
+	

@@ -43,6 +43,26 @@ public class MembersController {
 		return "members/login";
 	}
 	
+	// 회원가입 완료 버튼 클릭 시
+	@RequestMapping("/signup")
+	public String signup(MembersDTO dto, String mem_dong, HttpSession session) {
+
+	    String ssn = dto.getMem_ssn();
+	    String genderCode = ssn.substring(7, 8);
+
+	    if (genderCode.equals("1") || genderCode.equals("3")) {
+	        dto.setMem_gender(1);
+	    } else if (genderCode.equals("2") || genderCode.equals("4")) {
+	        dto.setMem_gender(2);
+	    }
+	    
+	    session.setAttribute("dong", mem_dong);
+	    
+	    System.out.println(mem_dong);
+	    
+	    dao.insert(dto);
+	    return "redirect:/members/loginUi";
+	}
 	// 로그인, (메인)닉네임 출력(새로운거), 로그인 alert 기능
 	@RequestMapping("/login")
 	public String login(HttpSession session, String mem_id, String mem_password, RedirectAttributes rttr) throws Exception {
@@ -56,10 +76,10 @@ public class MembersController {
 		
 		if(result == 1) {
 			String nickname = dao.nickname(mem_id);
-			String address = dao.address(mem_id); // 로그인 아이디로 주소 저장(00동 출력용)
+			String dong = dao.address(mem_id); // 로그인 아이디로 주소 저장(00동 출력용)
 			session.setAttribute("loginId", mem_id); 
 			session.setAttribute("nickname", nickname);
-			session.setAttribute("address", address);// 로그인 아이디로 주소 저장(00동 출력용)
+			session.getAttribute("dong");// 로그인 아이디로 주소 저장(00동 출력용)
 			return "redirect:/";
 		} else if(result == 0){
 			rttr.addFlashAttribute("msg", "pwFail");
@@ -69,23 +89,6 @@ public class MembersController {
 		
 		return "redirect:/members/loginUi";
 		}
-	
-	// 회원가입 완료 버튼 클릭 시
-	@RequestMapping("/signup")
-	public String signup(MembersDTO dto) {
-
-	    String ssn = dto.getMem_ssn();
-	    String genderCode = ssn.substring(7, 8);
-
-	    if (genderCode.equals("1") || genderCode.equals("3")) {
-	        dto.setMem_gender(1);
-	    } else if (genderCode.equals("2") || genderCode.equals("4")) {
-	        dto.setMem_gender(2);
-	    }
-
-	    dao.insert(dto);
-	    return "redirect:/members/loginUi";
-	}
 	
 	// 마이페이지 아이콘 클릭 시
 	@RequestMapping("/mypage")

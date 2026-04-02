@@ -257,8 +257,8 @@
         }
 
         .contentProfile {
-            margin-top: -5px;
-            margin-left: -6px;
+            margin-top: -10px;
+            margin-left: 2px;
         }
 
         .postInfoBox {
@@ -497,7 +497,10 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
         
-        
+        a{
+     		color: #5e361a;
+     		text-decoration: none;
+     	}
     </style>
 
 </head>
@@ -531,20 +534,20 @@
                 <div class="postUpBox">
 
                     <div class="postProfile">
-                        <img class="contentProfile" src="/resources/images/birdprofile.png" style="width: 80px;">
+                        <img class="contentProfile" src="/resources/images/Profile.png" width="60px">
                     </div>
 
                     <div class="postInfoBox">
                         <div class="postInfoUp">
-                            <div class="profileName profileInfo">홍길동</div>
-                            <div class="profileLocal profileInfo">지역(동)</div>
+                            <div class="profileName profileInfo" style="color: #5e361a;">홍길동</div>
+                            <div class="profileLocal profileInfo" style="color: #5e361a;">지역(동)</div>
                             <div class="profileCatagory profileInfo">
                                 <button class="topBtn" type="button">카테고리</button>
                             </div>
                         </div>
 
                         <div class="postInfoDown">
-                            <div class="profileTime profileInfo">00시간 전</div>
+                            <div class="profileTime profileInfo" style="color: #5e361a;">00시간 전</div>
                         </div>
                     </div>
 
@@ -599,7 +602,7 @@
         <div class="bottomBox">
             <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+            <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
             <a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 
