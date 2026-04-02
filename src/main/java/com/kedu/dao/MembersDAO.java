@@ -16,10 +16,10 @@ public class MembersDAO {
 	
 	// 회원가입
 	public int insert(MembersDTO dto) {
-		String sql = "insert into members values(?,?,?,?,?,?,?,?,?,?,?,?,sysdate,?)";
+		String sql = "insert into members values(?,?,?,?,?,?,?,?,?,?,?,?,?,sysdate,?)";
 		return jdbc.update(sql, dto.getMem_id(),EncryptionUtils.getSha512(dto.getMem_password()),dto.getMem_nickname(),
 				dto.getMem_name(), dto.getMem_ssn(), dto.getMem_gender(), dto.getMem_phone(), dto.getMem_email(),
-				dto.getMem_zip_code(), dto.getMem_address1(), dto.getMem_address2(), 1, 0);
+				dto.getMem_zip_code(), dto.getMem_address1(), dto.getMem_address2(),dto.getMem_dong(), 1, 0);
 	}
 	
 	// 아이디 중복체크
@@ -61,7 +61,7 @@ public class MembersDAO {
 	}
 	
 	public String address(String mem_id) { // DB에서 mem_id를 기준으로 주소 조회
-		String sql ="select MEM_ADDRESS1 from members where mem_id = ?";
+		String sql ="select mem_dong from members where mem_id = ?";
 		return jdbc.queryForObject(sql, String.class, mem_id);
 	}
 	

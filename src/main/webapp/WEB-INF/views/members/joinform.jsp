@@ -277,6 +277,9 @@ hr {
 					<label>· DETAIL :</label> <input name="mem_address2"
 						class="address2" type="text" placeholder="상세 주소를 입력해주세요.">
 				</div>
+				
+				<input type="hidden" name="mem_dong" class="dong">
+				
 				<div class="agreeDiv">
 					<input class="agreeBtn" type="checkbox">I agree to the
 					Terms of Use and Privacy Policy (필수)
@@ -381,6 +384,7 @@ hr {
 						oncomplete : function(data) {
 							document.getElementsByClassName("zonecode")[0].value = data.zonecode;
 							document.getElementsByClassName("address1")[0].value = data.roadAddress;
+							document.getElementsByClassName("dong")[0].value = data.bname;
 						}
 					}).open();
 		}
