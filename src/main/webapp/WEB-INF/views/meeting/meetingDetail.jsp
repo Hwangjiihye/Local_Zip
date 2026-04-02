@@ -248,7 +248,22 @@ body {
 	</div>
 		<div class="bottomBtn">
 			<button class="requestBtn" type="button">신청하기</button>
-			<a href="/meeting/test"><button class="backBtn" type="button">뒤로가기</button></a>
+			<a href="/meeting/list"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>
+		
+		<script>
+			$(".requestBtn").on("click", function(){
+				
+				let width = 800;
+				let height = 350;
+				
+				//현재 브라우저 창 위치 + 크기 기준 계산
+				let left = window.screenX + (window.outerWidth - width) / 2;
+				let top = window.screenY + 100; // 상단에서 100px
+					
+				window.open(
+				"/apply/applyForm", "applyPopup", `width=${width},height=${height},left=${left},top=${top}`); 
+			})
+		</script>
 </body>
 </html>
