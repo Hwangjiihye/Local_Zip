@@ -526,7 +526,7 @@
                 <button class="orderPopular orderBtn" type="button">인기순</button>
             </div>
 
-            <div class="postBox">
+            <a href="/board/postDetail"><div class="postBox">
 
                 <div class="postUpBox">
 
@@ -587,7 +587,7 @@
 
                 </div>
 
-            </div>
+            </div></a>
 
         </div>
 
@@ -631,8 +631,6 @@
             $(".reportSelect").css({ "display": "inline" });
             $(".reportBtn").css({"display": "inline"});
         })
-
-
     </script>
 
 </body>
