@@ -97,7 +97,6 @@ body {
 
 .categoryBtnAll {
 	margin-left: 10px;
-	font-weight: bold;
 	background-color: #FFB300;
 	border-radius: 10px;
 	border: 1px solid #FFB300;
@@ -273,6 +272,30 @@ body {
 	text-align: right;
 }
 
+.nowBtn{
+          	background-color: #fecc56;
+            color: #A66A3F;
+
+            transform: translateY(-3px);
+            /* 살짝 위로 뜸 */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            
+            
+            height: 30px;
+
+            border-radius: 10px;
+            border: 1px solid #FFB300;
+
+            align-items: center;
+            /* 수직 중앙 정렬 */
+
+            vertical-align: middle;
+            /* 버튼들끼리 줄이 안 맞을 때를 대비 */
+
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
 </style>
 </head>
 <body>
@@ -285,20 +308,20 @@ body {
 			</div>
 			
 			<div class="categoryDiv">
-				<button class="categoryBtnAll">
-					<i class="fa-solid fa-house"> 전체</i>
+				<button class="categoryBtnAll nowBtn">
+					<i class="fa-solid fa-house fa-lg"></i> 전체
 				</button>
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-dumbbell"> 운동</i>
+					<i class="fa-solid fa-dumbbell fa-lg"></i> 운동
 				</button>
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-film"> 문화</i>
+					<i class="fa-solid fa-film fa-lg"></i> 문화
 				</button>
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-palette"> 취미</i>
+					<i class="fa-solid fa-palette fa-lg"></i> 취미
 				</button>
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-book"> 스터디</i>
+					<i class="fa-solid fa-book fa-lg"></i> 스터디
 				</button>
 			</div>
 		</div>
@@ -341,7 +364,7 @@ body {
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
 			<a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
