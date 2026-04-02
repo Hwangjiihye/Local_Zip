@@ -593,7 +593,7 @@
 
         <div class="pageBox">1 2 3</div>
         
-        <a href="/board/write_concern"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
+        <a href="/board/write"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
         
 
         <div class="bottomBox">
