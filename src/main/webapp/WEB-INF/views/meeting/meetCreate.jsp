@@ -256,8 +256,8 @@
 		}
 	
 	</style>
-<body>
-<form action="/meeting/test" class="frm" method="post">
+<body><!-- /meeting/test -->
+<form action="/meeting/meetGenerate" class="frm" method="post">
 	<div class="container">
 		<div class="top-section">
 			<div class="mainTitle">
@@ -291,7 +291,7 @@
 					
 					<div class="descTextDiv">
 						<div class="descText">자세한 소개글</div>
-						<div class="descTextDetail"><textarea name="meet_detailContents" class="detailContent" maxlength="1000" style="border: #fbe5c0" type="text" placeholder="모임을 소개해주세요"></textarea></div>
+						<div class="descTextDetail"><textarea name="meet_detailcontents" class="detailContent" maxlength="1000" style="border: #fbe5c0" type="text" placeholder="모임을 소개해주세요"></textarea></div>
 					</div>
 					
 					<div class="locationDiv">	
@@ -307,7 +307,7 @@
 						
 						<div class="openChatPwDiv">
 							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
-							<div class="inputPw"><input name="kakaopw" class="kakaotalkPw" maxlength="8" type="text" style="border: #fbe5c0" placeholder="카톡 오픈채팅 비밀번호를 넣어주세요"></div>
+							<div class="inputPw"><input name="meet_kakaopw" class="kakaotalkPw" maxlength="8" type="text" style="border: #fbe5c0" placeholder="카톡 오픈채팅 비밀번호를 넣어주세요"></div>
 						</div>
 					</div>
 			</div>

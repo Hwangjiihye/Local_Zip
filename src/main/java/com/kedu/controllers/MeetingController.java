@@ -1,9 +1,12 @@
 package com.kedu.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kedu.dao.MeetingDAO;
@@ -27,13 +30,13 @@ public class MeetingController {
 	}
 	
 	// 모임 생성 폼 작성
-	@RequestMapping("meetCreate")
+	@RequestMapping("/meetCreate")
 	public String meetCreateFrom() {
 		return "meeting/meetCreate";
 	}
 	
-	// 모임 신청 폼
-	@RequestMapping("meetCreate")
+	// 모임 신청 폼 db에 넣기
+	@RequestMapping("/meetGenerate")
 	public String meetCreateFrom(MeetingDTO dto, HttpSession session) throws Exception {
 		
 		String loginId = (String)session.getAttribute("loginId");
@@ -42,6 +45,17 @@ public class MeetingController {
 		
 		dao.insert(dto);
 		
-		return "meeting/meetCreate";
+		return "meeting/meeting";
+	}
+	
+	// 모임 신청 폼 출력
+	@RequestMapping("/list")
+	public String list(Model model) throws Exception {
+		
+		List<MeetingDTO> list = dao.selectAll();
+		
+		model.addAttribute("list", list);
+		
+		return "meeting/meeting";
 	}
 }
