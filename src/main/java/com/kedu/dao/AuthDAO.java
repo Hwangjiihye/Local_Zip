@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kedu.commons.EncryptionUtils;
 import com.kedu.dto.AuthDTO;
  
 @Repository
@@ -55,4 +56,11 @@ public class AuthDAO {
 		    String sql = "SELECT COUNT(*) FROM members WHERE mem_EMAIL = ?";
 		    return jdbc.queryForObject(sql, Integer.class, email);
 		}
+	 
+	 //비밀번호 업데이트
+	 public int updatePwById(String id,String pw) {
+		
+		String sql = "update members set mem_password=? where mem_id=?"; 
+		return jdbc.update(sql,EncryptionUtils.getSha512(pw),id);
+	 }
 }
