@@ -18,7 +18,6 @@ public class BoardController {
 	private LifeInfoDAO dao;
 	
 	
-	
 	@RequestMapping("/lifeInfo")
 	public String lifeInfo() {
 		return "board/life-info";
