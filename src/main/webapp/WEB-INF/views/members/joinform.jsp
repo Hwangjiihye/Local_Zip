@@ -343,6 +343,8 @@ hr {
 				}).done(function(resp) {
 					if (resp == "success") {
 						alert("이메일로 인증번호를 발송했습니다.");
+					}else if(resp == "duplicate"){
+						alert("이미 사용되고 있는 이메일입니다. 다른 이메일을 입력해주십시오.");
 					} else {
 						alert("인증번호 발송 실패했습니다.");
 					}

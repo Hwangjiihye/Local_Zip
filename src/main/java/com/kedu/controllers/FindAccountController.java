@@ -11,4 +11,9 @@ public class FindAccountController {
 	public String toFindId(){
 		return "members/findId";
 	}
+	
+	@RequestMapping("/toFindPw")
+	public String toFind(){
+		return "members/findPw";
+	}
 }
