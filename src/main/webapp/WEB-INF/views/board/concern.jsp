@@ -498,9 +498,9 @@
         <div class="categoryBtnBox">
             <div class="categoryBtns">
                 <a href="/"><button class="categoryBtn topBtn"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
-                <a href="/board/lifeInfo"><button class="categoryBtn nowBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
+                <a href="/board/lifeInfo"><button class="categoryBtn topBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
-                <a href="/board/concern"><button class="categoryBtn topBtn"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
+                <a href="/board/concern"><button class="categoryBtn nowBtn"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
             </div>
         </div>
@@ -538,7 +538,6 @@
 
 
                     <div class="reportArea">
-<!--                         <i class="fa-solid fa-flag reportIcon"></i> -->
 							<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
                         <select class="reportSelect">
                             <option value="" disabled selected>신고 사유</option>
@@ -594,7 +593,6 @@
         </div>
 
     </div>
-
 
     <script>
 
