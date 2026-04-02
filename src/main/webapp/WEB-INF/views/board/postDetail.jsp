@@ -5,9 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>postDetail</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 
@@ -86,48 +85,6 @@
 
         }
 
-        .categoryBtnBox {
-
-            width: 100%;
-            height: 70px;
-        }
-
-        .categoryBtns {
-
-            position: relative;
-            top: 20px;
-            left: 20px;
-
-            /* 수정: 고정 800px 대신 화면의 90%만 차지하게 */
-            width: 90%;
-            max-width: 800px;
-        }
-        
-        .nowBtn{
-         	background-color: #fecc56;
-            color: #A66A3F;
-
-            transform: translateY(-3px);
-            /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            
-            
-            height: 25px;
-
-            border-radius: 10px;
-            border: 1px solid #FFB300;
-
-            align-items: center;
-            /* 수직 중앙 정렬 */
-
-            vertical-align: middle;
-            /* 버튼들끼리 줄이 안 맞을 때를 대비 */
-
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-
         .topBtn {
             height: 25px;
 
@@ -146,75 +103,13 @@
             transition: 0.3s;
         }
 
-        .categoryBtn {
-            margin-right: 10px;
-            height: 30px;
-
-            /* 그림자 효과 */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
-            /* 애니메이션 부드럽게 */
-            transition: all 0.2s ease;
-        }
-
-        .categoryBtn:hover {
-            background-color: #fecc56;
-            color: #A66A3F;
-
-            transform: translateY(-3px);
-            /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .categoryBtn:active {
-            transform: translateY(2px);
-            /* 아래로 눌림 */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
         .bodyBox {
             width: 100%;
             min-height: 100vh;
             /* 최소 높이 지정 : 브라우저 */
-
-            margin-top: -40px;
+            margin-top: 30px;
+            color: #5e361a;
         }
-
-
-        .orderBox {
-            text-align: right;
-            font-size: 14px;
-
-            position: relative;
-            top: 30px;
-
-            width: 95%;
-            max-width: 1500px;
-
-            margin: auto;
-
-            border-radius: 10px;
-        }
-
-        .orderNew {
-            display: none;
-        }
-
-        .orderBtn {
-            border: none;
-            border-radius: 30%;
-            background-color: transparent;
-
-            font-size: 15px;
-
-            color: #A66A3F;
-        }
-
-        .orderBtn:hover {
-            background-color: #fecc56;
-        }
-
-
         .postBox {
             /* 수정: 고정 1500px 제거 */
             width: 95%;
@@ -234,17 +129,16 @@
 
         }
 
-        .postUpBox {
+        .postUpBox, .replyUpBox {
             width: 100%;
             height: 95px;
             display: flex;
-            
             border-radius: 10px 10px 0 0;
             background-color: #F2D3A2;
         }
 
 
-        .postProfile {
+        .postProfile, .replyProfileBox {
             width: 75px;
             height: 75px;
             border: 4px solid #A66A3F;
@@ -259,6 +153,11 @@
         .contentProfile {
             margin-top: -10px;
             margin-left: 2px;
+        }
+        
+        .replyProfile{
+        	margin-top: -3px;
+            margin-left: -5px;
         }
 
         .postInfoBox {
@@ -276,6 +175,7 @@
         .postInfoUp,
         .postInfoDown {
             display: flex;
+            color: #5e361a;
         }
 
 
@@ -455,174 +355,172 @@
             ;
         }
         
-        .pageBox{
-            width: 100%;
-    		text-align: center;   /* 가운데 정렬 */
-    		padding: 20px 0;      /* 상하 여백 */
-    		margin-bottom: 80px;  /* 중요: 하단 바에 가려지지 않도록 아래쪽 여백 확보 */
-    
-    		font-size: 18px;
-    		color: #A66A3F;
-    		font-weight: bold;
-        }
-        
-        
-        .writeBtn{
-            width: 50px;
-            height: 50px;
-            right: 30px;
-            bottom: 90px;
-            cursor: pointer;
-            margin-top: 90%;
-            border-radius: 50%;
-            background-color: #A66A3F;
-            border: #fbe5c0;
-            color: #fbe5c0;
-            font-size: 30px;
-            position: fixed; /* 버튼 따라다니게 만들기 */
-
-            align-items: center;
-            display: flex;
-            justify-content: center;
-
-            /* 그림자 효과 */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-
-            /* 애니메이션 부드럽게 */
-            transition: all 0.2s ease;
-        }
-        
-        .writeBtn:hover{
-        	transform: translateY(-3px); /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-        }
-        
         a{
      		color: #5e361a;
      		text-decoration: none;
+     	}
+     	.replyContainer{
+     		width
+     	}
+     	.replyBox{
+     		width: 95%;
+            max-width: 1500px;
+            /* 적당히 보기 좋은 최대 너비 설정 */
+
+            min-height: 200px;
+            height: auto;
+
+            margin: auto;
+            margin-top: 30px;
+            
+            /* 그림자 효과 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-radius: 10px;
+     	}
+     	.replyTitle{
+     		width: 100%;
+            height: 15px;
+            font-size: x-large;
+            font-weight: bold;
+            color: #A66A3F;
+            margin-top: 30px;
+            margin-left: 40px;
+     	}
+     	.newReplyBox{
+     		display: flex;
+     	}
+     	.newReplyDiv{
+     		width: 80%;
+     		box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            margin-top: 10px;
+            margin-left: 5px;
+     	}
+     	.newReply{
+     		width: 100%;
+     		background-color: #fbe5c0;
+     		border-radius: 10px;
+     		border: none;
+     		font-family: 'GMarketSans';
+     	}
+     	.applyBtnDiv{
+     		width: 20%;
+     	}
+     	.applyBtn{
+     		background-color: #ffb300;
+	        color: #5e361a;
+	        border: 1px solid #ffb300;
+	        border-radius: 10px;
+	        font-weight: bold;
+	        margin-left: 5px;
+    		margin-top: -3px;
+    		width: 
      	}
     </style>
 
 </head>
 <body>
+	<div class="container">
 
-    <div class="container">
-
-        <div class="headBox">우리 동네.zip</div>
-
-        <div class="categoryBtnBox">
-            <div class="categoryBtns">
-                <a href="/"><button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
-                <a href="/board/lifeInfo"><button class="categoryBtn topBtn" type="button"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
-                <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
-                <a href="/board/concern"><button class="categoryBtn nowBtn" type="button"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
-                <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
-            </div>
-        </div>
-
-        <hr>
+        <div class="headBox">게시글 자세히보기</div>
 
         <div class="bodyBox">
-
-            <div class="orderBox">
-                <button class="orderNew orderBtn" type="button">최신순</button>
-                <button class="orderPopular orderBtn" type="button">인기순</button>
-            </div>
-
-            <a href="/board/postDetail"><div class="postBox">
-
-                <div class="postUpBox">
-
-                    <div class="postProfile">
-                        <img class="contentProfile" src="/resources/images/Profile.png" width="60px">
-                    </div>
-
-                    <div class="postInfoBox">
-                        <div class="postInfoUp">
-                            <div class="profileName profileInfo" style="color: #5e361a;">홍길동</div>
-                            <div class="profileLocal profileInfo" style="color: #5e361a;">지역(동)</div>
-                            <div class="profileCatagory profileInfo">
-                                <button class="topBtn" type="button">카테고리</button>
-                            </div>
-                        </div>
-
-                        <div class="postInfoDown">
-                            <div class="profileTime profileInfo" style="color: #5e361a;">00시간 전</div>
-                        </div>
-                    </div>
-
-
-                    <div class="reportArea">
-							<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-                        <select class="reportSelect">
-                            <option value="" disabled selected>신고 사유</option>
-                            <option value="1" class="reportOption">부적절한 콘텐츠</option>
-                            <option value="2" class="reportOption">욕설/비방</option>
-                            <option value="3" class="reportOption">광고/스팸</option>
-                        </select>
-                        <input class="reportBtn" type="submit" value="신고하기">
-                    </div>
-
-
-                </div>
-
-                <div class="postMidBox">
-
-                    <div class="postTitle">제목이 들어가는 곳</div>
-                    <div class="postContent">내용들이 들어가는 곳</div>
-
-                </div>
-
-                <div class="postDownBox">
-
-                    <div class="postLikeBox">
-                        <i class="fa-regular fa-heart fa-xl beforeHeart"></i>
-                        <i class="fa-solid fa-heart fa-xl afterHeart"></i>
-
-                        <div>갯수</div>
-                    </div>
-
-                    <div class="postCommentBox">
-                        <i class="fa-regular fa-comment fa-xl comment"></i>
-
-                        <div>갯수</div>
-                    </div>
-
-                </div>
-
-            </div></a>
-
-        </div>
-
-        <div class="pageBox">1 2 3</div>
-        
-        <a href="/board/write"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
-        
-
-        <div class="bottomBox">
-            <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-            <a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-
-        </div>
-
+	            <div class="postBox">
+	
+	                <div class="postUpBox">
+	
+	                    <div class="postProfile">
+	                        <img class="contentProfile" src="/resources/images/Profile.png" style="width: 60px;">
+	                    </div>
+	
+	                    <div class="postInfoBox">
+	                        <div class="postInfoUp">
+	                            <div class="profileName profileInfo" style="color: #5e361a;">홍길동</div>
+	                            <div class="profileLocal profileInfo" style="color: #5e361a;">지역(동)</div>
+	                        </div>
+	
+	                        <div class="postInfoDown">
+	                            <div class="profileTime profileInfo" style="color: #5e361a;">00시간 전</div>
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="postMidBox">
+	
+	                    <div class="postTitle">제목이 들어가는 곳</div>
+	                    <div class="postContent">내용들이 들어가는 곳</div>
+	
+	                </div>
+	
+	                <div class="postDownBox">
+	
+	                    <div class="postLikeBox">
+	                        <i class="fa-regular fa-heart fa-xl beforeHeart"></i>
+	                        <i class="fa-solid fa-heart fa-xl afterHeart"></i>
+	
+	                        <div>갯수</div>
+	                    </div>
+	
+	                    <div class="postCommentBox">
+	                        <i class="fa-regular fa-comment fa-xl comment"></i>
+	
+	                        <div>갯수</div>
+	                    </div>
+	
+	                </div>
+	
+	            </div>
+	            <div class="replyContainer">
+					<div class="replyTitle">댓글</div>
+					<div class="replyBox">
+						<div class="newReplyBox">
+							<div class="newReplyDiv">
+								<textarea class="newReply" placeholder="댓글을 입력하세요."></textarea>
+							</div>
+							<div class="applyBtnDiv">
+								<input class="applyBtn" type="submit" value="등록">
+							</div>
+						</div>
+						<div class="replyUpBox">
+							<div class="replyProfileBox">
+			                	<img class="replyProfile" src="/resources/images/birdprofile.png" style="width: 80px;">
+			                </div>
+		
+		                    <div class="replyInfoBox">
+		                        <div class="replyInfoUp">
+		                            <div class="writerName replyInfo">댓글작성자</div>
+		                            <div class="writeTime replyInfo">00시간 전</div>
+		                        </div>
+								<div class="reportArea">
+									<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px"></img>
+			                        <select class="reportSelect" name="reports_reason">
+			                            <option value="" disabled selected>신고 사유</option>
+			                            <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
+			                            <option value="badWord" class="reportOption">욕설/비방</option>
+			                            <option value="AD" class="reportOption">광고/스팸</option>
+			                        </select>
+			                        <input class="reportBtn" type="submit" value="신고하기">
+			                    </div>
+			            
+		                        <div class="replyInfoDown">
+		                            <div class="replyContents replyInfo">댓글 내용</div>
+		                        </div>
+		                    </div>
+		                 </div>   
+					</div>
+				</div>
+	        <div class="bottomBox">
+	            <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
+	            <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
+	            <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+	            <a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+	            <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+	
+	        </div>
+		</div>
     </div>
 
     <script>
-
-        // 최신순, 인기순 버튼
-        $(".orderNew").on("click", function () {
-            $(".orderNew").css({ "display": "none" });
-            $(".orderPopular").css({ "display": "inline" });
-        })
-
-        $(".orderPopular").on("click", function () {
-            $(".orderNew").css({ "display": "inline" });
-            $(".orderPopular").css({ "display": "none" });
-        })
-
 
         // 좋아요 버튼
         $(".postLikeBox").on("click", function () {
@@ -635,6 +533,5 @@
             $(".reportBtn").css({"display": "inline"});
         })
     </script>
-
 </body>
 </html>
