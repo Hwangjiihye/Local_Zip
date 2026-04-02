@@ -250,7 +250,7 @@
 <body>
 	<div class="topBar">내.zip</div>
 	<div class="userBarDiv">
-		<div class="userBarContents">${nickname }님, 반가워요!</div>
+		<div class="userBarContents">${nickname}님, 반가워요!</div>
 	    <img class="userBar" src="/resources/images/userbar.png">
 	</div>
     <hr>
@@ -300,7 +300,7 @@
     <div class="bottomBar" style="box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <!-- 하단바 -->
     	<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
         <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
-        <a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i></a> <!-- 하단바 모임 이모지-->
+        <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i></a> <!-- 하단바 모임 이모지-->
         <i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 건의사항 이모지-->
         <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 마이페이지 이모지-->
     </div>

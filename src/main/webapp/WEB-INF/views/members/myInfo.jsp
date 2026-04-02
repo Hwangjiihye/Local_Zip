@@ -8,6 +8,8 @@
 <title>myInfo</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script
+	src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 	@font-face {
     font-family: 'GMarketSans';
@@ -187,78 +189,222 @@
 	    		</a>
 	    	</div>
 	    </div>
-	    <form>
+	    <form action="/members/update" method="post" class="frm">
 	        <div class="divTotal">
 	            <div class="form-row">
 	            	<div class="labelBox">
 	            		<i class="fa-solid fa-user fa-lg icon"></i>
-	            		<span> NAME : </span>
+	            		<span class="lavel"> NAME : </span>
 	            	</div>
 	                <div class="name">${list.mem_name}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	            		<i class="fa-solid fa-address-card fa-lg icon"></i>
-	                	<span> ID : </span>
+	                	<span class="lavel"> ID : </span>
 	                </div>
 	                <div class="id">${loginId }</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
-	            		<i class="fa-solid fa-user-pen fa-lg icon"></i> 
-	            		<span> NICKNAME : </span>
-	            	</div>
-	            	<div class="nickname">${list.mem_nickname}</div>
-	            </div>
-	            <div class="form-row">
-	            	<div class="labelBox">
 	                	<i class="fa-solid fa-envelope fa-lg icon"></i>
-	                	<span> EMAIL : </span>
+	                	<span class="lavel"> EMAIL : </span>
 	                </div>
 	                <div class="email">${list.mem_email}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
+	            		<i class="fa-solid fa-user-pen fa-lg icon"></i> 
+	            		<span class="lavel"> NICKNAME : </span>
+	            	</div>
+	            	<div class="nickname updateDiv">${list.mem_nickname}</div>
+	            </div>
+	            <div class="form-row">
+	            	<div class="labelBox">
 	                	<i class="fa-solid fa-phone fa-lg icon"></i>
-	                	<span> PHONE : </span>
+	                	<span class="lavel"> PHONE : </span>
 	                </div>
-	                <div class="phone">${list.mem_phone}</div>
+	                <div class="phone updateDiv">${list.mem_phone}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	                	<i class="fa-solid fa-house-chimney fa-lg icon"></i>
-	                	<span> ZONECODE :</span>
+	                	<span class="lavel"> ZONECODE :</span>
 	                </div>
 	                <div class="valueBox">
-	                	<div class="zonecode">${list.mem_zip_code}</div>
-	                	<input class="searchBtn" type="button" value="찾기">
+	                	<div class="zonecode updateDiv">${list.mem_zip_code}</div>
+	                	<input class="searchBtn save_cancelBtn" type="button" value="찾기">
 	                </div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	            		<span class="emptyIcon"></span>
-	                	<span> ADDRESS : </span>
+	                	<span class="lavel"> ADDRESS : </span>
 	                </div>
-	                <div class="address1">${list.mem_address1}</div>
+	                <div class="address1 updateDiv">${list.mem_address1}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	            		<span class="emptyIcon"></span>
-	                	<span> DETAIL : </span>
+	                	<span class="lavel"> DETAIL : </span>
 	                </div>
-	                <div class="address2">${list.mem_address2}</div>
+	                <div class="address2 updateDiv">${list.mem_address2}</div>
 	            </div>
 	            <hr>
+	            
+	            <input type="hidden" id="input_nickname" name="mem_nickname">
+	            <input type="hidden" id="input_phone" name="mem_phone">
+	            <input type="hidden" id="input_zip_code" name="mem_zip_code">
+	            <input type="hidden" id="input_address1" name="mem_address1">
+	            <input type="hidden" id="input_address2" name="mem_address2">
+	            <input type="hidden" id="mem_id" name="mem_id" value="${loginId}">
+	            
 	            <div class="btnDiv">
-	            	<input class="updateBtn" type="button" value="정보 수정">
-	            	<input class="deleteBtn" type="button" value="회원 탈퇴">
-	            	<input class="completeBtn" type="submit" value="수정 완료">
-	            	<input class="cancelBtn" type="button" value="수정 취소">
+	            	<input class="updateBtn update_deleteBtn" type="button" value="정보 수정">
+	            	<a href="/members/delete"><input class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴"></a>
+	            	<input class="completeBtn save_cancelBtn" type="submit" value="수정 완료">
+	            	<input class="cancelBtn save_cancelBtn" type="button" value="수정 취소">
 	            </div>
 	        </div>
     	</form>
     	<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
     	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
     </div>
+    
+    <script>
+    	let nickname = $(".nickname").html();
+    	let phone = $(".phone").html();
+    	let zip_code = $(".zonecode").html();
+    	let address1 = $(".address1").html();
+    	let address2 = $(".address2").html();
+    	
+    	
+    	$(".updateBtn").on("click", function(){
+    		$(".updateDiv").attr("contenteditable","true");
+    		$(".zonecode, .address1").attr("contenteditable","false");
+    		
+    		$(".updateDiv").css({
+    			"background-color": "#fbe5c0",
+    			"border":"none",
+    			"border-radius": "10px",
+    			"word-break": "break-all",
+    			"width":"fit-content"
+    		})
+    		
+    		$(".labelBox").css({
+    			"display": "flex"
+    		})
+    		
+    		$(".lavel").css({
+    	    	"flex-shrink": "0"
+    		})
+    		
+    		$(".update_deleteBtn").css({
+    			"display":"none"
+   			})
+    		
+   			$(".save_cancelBtn").css({
+   				"display":"inline"
+  			})
+    	})
+    	
+    	$(".cancelBtn").on("click", function(){
+    		$(".nickname").html(nickname);
+    		$(".phone").html(phone);
+    		$(".zonecode").html(zip_code);
+    		$(".address1").html(address1);
+    		$(".address2").html(address2);
+    		
+    		$(".updateDiv").attr("contenteditable","false");
+    		$(".updateDiv").css({
+    			"background-color": "#F2D3A2"
+    		})
+    		
+    		$(".update_deleteBtn").css({
+    			"display":"inline"
+   			})
+    		
+   			$(".save_cancelBtn").css({
+   				"display":"none"
+  			})
+  			
+  			
+    	})
+    	
+    	
+    	$(".searchBtn").on("click", function(){
+    		new kakao.Postcode({
+						oncomplete : function(data) {
+							$(".zonecode").html(data.zonecode);
+							$(".address1").html(data.roadAddress);
+							
+							$("#input_zip_code").html(data.zonecode);
+							$("#input_address1").html(data.roadAddress);
+						}
+					}).open();
+    	})
+    	
+    	$(".frm").on("submit", function(e){
+				e.preventDefault();
+				
+				// nickname 정규표현식
+				let nickname = $(".nickname").text().trim();
+				if (nickname == "") {
+					alert("닉네임을 입력해주세요.");
+					$(".nickname").focus();
+					return false;
+				} else {
+					let regex = /^[가-힣]{2,30}$|^[a-z]{2,30}$/;
+					nicknameResult = regex.test(nickname);
+					if (!nicknameResult) {
+						alert("2~30글자의 닉네임만 등록 가능합니다.");
+						$(".nickname").text("");
+						$(".nickname").focus();
+						return false;
+					}
+				}
+				
+				// phone 정규표현식
+				let phone = $(".phone").text().trim();
+				if (phone == "") {
+					alert("전화번호를 입력해주세요.");
+					$(".phone").focus();
+					return false;
+				} else {
+					let regex = /^010[\d]{8}$/;
+					let phoneResult = regex.test(phone);
+					if (!phoneResult) {
+						alert("연락처 형식은 010********(8자) 입니다.");
+						$(".phone").text("");
+						$(".phone").focus();
+						return false;
+					}
+				}
+				
+				// zonecode 정규표현식
+				let zip_code = $(".zonecode").text().trim();
+				if (zip_code == "") {
+					alert("우편번호 찾기를 눌러주세요.");
+					$(".zonecode").focus();
+					return false;
+				}
+				
+	            $("#input_nickname").val($(".nickname").text().trim());
+	            $("#input_phone").val($(".phone").text().trim());
+	            $("#input_zip_code").val($(".zonecode").text().trim());
+	            $("#input_address1").val($(".address1").text().trim());
+	            $("#input_address2").val($(".address2").text().trim());
+	            
+	            this.submit();
+		})
+		
+		
+		$(".deleteBtn").on("click", function(e){
+			if(!confirm("정말 회원 탈퇴를 하시겠습니까? 탈퇴 시 복구는 불가합니다.")){
+				e.preventDefault();
+			}
+		})
+		
+    </script>
 </body>
 </html>
