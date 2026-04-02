@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.kedu.dao.AuthDAO;
@@ -38,17 +39,17 @@ public class AuthController {
 	@ResponseBody
 	public String mailCheck(@RequestParam("email") String email, @RequestParam("auth_type") int auth_type) {
 
-		//이메일 존재 여부 확인
-		if(auth_type==1 && (dao.isEmailExists(email)>0)) {
+		// 이메일 존재 여부 확인
+		if (auth_type == 1 && (dao.isEmailExists(email) > 0)) {
 			return "duplicate";
 		}
-	    if (auth_type == 2 && (dao.isEmailExists(email) == 0)) {
-	        return "empty"; 
-	    }
-	    if (auth_type == 3 && (dao.isEmailExists(email) == 0)) {
-	    	return "empty";
-	    }
-	    
+		if (auth_type == 2 && (dao.isEmailExists(email) == 0)) {
+			return "empty";
+		}
+		if (auth_type == 3 && (dao.isEmailExists(email) == 0)) {
+			return "empty";
+		}
+
 		// 6자리 랜덤번호 생성
 		String authCode = String.valueOf(new Random().nextInt(888888) + 111111);
 
@@ -64,7 +65,7 @@ public class AuthController {
 			System.out.println(authCode);
 			// db에 저장
 			dao.saveAuth(new AuthDTO(email, authCode, auth_type, 0, "0"));
-			
+
 			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,30 +102,32 @@ public class AuthController {
 
 		if (dao.checkAuth(email, auth_code) > 0) {
 			dao.updateVerified(email);
-			
+
 			String myId = dao.findIdByEmail(email);
-			
+
 			Map<String, Object> result = new HashMap<>();
-	        if(myId!= null) {
-	            result.put("status", "success");
-	            result.put("myId", myId);
-	        } else {
-	            result.put("status", "fail");
-	            result.put("msg", "해당 이메일로 가입된 정보가 없습니다.");
-	        }
-	        return gson.toJson(result); // Gson으로 직렬화하여 반환
+			if (myId != null) {
+				result.put("status", "success");
+				result.put("myId", myId);
+			} else {
+				result.put("status", "fail");
+				result.put("msg", "해당 이메일로 가입된 정보가 없습니다.");
+			}
+			return gson.toJson(result); // Gson으로 직렬화하여 반환
 		}
-		return gson.toJson(Collections.singletonMap("status","wrong_code"));
+		return gson.toJson(Collections.singletonMap("status", "wrong_code"));
 	}
-	
-	//새 비밀번호 생성
-	@RequestMapping(value="/updateMyPw",method=RequestMethod.POST)
-	@ResponseBody
-	public String updateMyPw(@RequestParam("mem_id") String id, @RequestParam("pw") String pw) {
-		int result = dao.updatePwById(id,pw);
-		if(result>0) {
-			return "success";
+
+	// 새 비밀번호 생성
+	@RequestMapping(value = "/updateMyPw", method = RequestMethod.POST)
+	public String updateMyPw(@RequestParam("mem_id") String id, @RequestParam("pw") String pw,
+			@RequestParam("email") String email,RedirectAttributes rttr) {
+		// 인증상태확인
+		if (dao.isVerified(email) <= 0 || dao.updatePwById(id, pw) <= 0) {
+			rttr.addFlashAttribute("pwMsg", "인증 정보가 만료되었거나 변경에 실패했습니다.");
+			return "redirect:/find/toFindPw";
 		}
-		return "fail";
+		rttr.addFlashAttribute("pwMsg", "비밀번호 변경에 성공하셨습니다.");
+		return "redirect:/members/loginUi";
 	}
 }
