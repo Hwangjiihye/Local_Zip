@@ -38,13 +38,15 @@ public class AuthController {
 	@ResponseBody
 	public String mailCheck(@RequestParam("email") String email, @RequestParam("auth_type") int auth_type) {
 
-		
+		//이메일 존재 여부 확인
 		if(auth_type==1 && (dao.isEmailExists(email)>0)) {
 			return "duplicate";
 		}
-	    
 	    if (auth_type == 2 && (dao.isEmailExists(email) == 0)) {
-	        return "empty"; // 
+	        return "empty"; 
+	    }
+	    if (auth_type == 3 && (dao.isEmailExists(email) == 0)) {
+	    	return "empty";
 	    }
 	    
 		// 6자리 랜덤번호 생성
@@ -113,5 +115,12 @@ public class AuthController {
 	        return gson.toJson(result); // Gson으로 직렬화하여 반환
 		}
 		return gson.toJson(Collections.singletonMap("status","wrong_code"));
+	}
+	
+	//새 비밀번호 생성
+	@RequestMapping(value="/findMyPw",method=RequestMethod.POST)
+	@ResponseBody
+	public String findMyPw(@RequestParam("email") String email, @RequestParam("id") String id) {
+		return "";
 	}
 }

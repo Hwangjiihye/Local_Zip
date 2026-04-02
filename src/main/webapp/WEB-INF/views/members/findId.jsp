@@ -200,7 +200,7 @@ hr {
 					</div>
 				</div>
 				<div>
-					<a href="/"><button class="backBtn" type="button">돌아가기</button></a>
+					<a href="/members/loginUi"><button class="backBtn" type="button">돌아가기</button></a>
 				</div>
 			</div>
 		</form>
