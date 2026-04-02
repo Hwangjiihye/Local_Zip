@@ -223,9 +223,11 @@ hr {
 
 				}).done(function(resp) {
 					if (resp == "success") {
-						alert("이메일로 인증번호를 발송했습니다.")
+						alert("이메일로 인증번호를 발송했습니다.");
+					}else if(resp == "empty"){
+						alert("가입된 정보가 없습니다.");
 					} else {
-						alert("인증번호 발송을 실패했습니다. 다시 시도해주세요.")
+						alert("인증번호 발송을 실패했습니다. 다시 시도해주세요.");
 					}
 				});
 			}

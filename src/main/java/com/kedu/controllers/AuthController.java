@@ -38,6 +38,15 @@ public class AuthController {
 	@ResponseBody
 	public String mailCheck(@RequestParam("email") String email, @RequestParam("auth_type") int auth_type) {
 
+		
+		if(auth_type==1 && (dao.isEmailExists(email)>0)) {
+			return "duplicate";
+		}
+	    
+	    if (auth_type == 2 && (dao.isEmailExists(email) == 0)) {
+	        return "empty"; // 
+	    }
+	    
 		// 6자리 랜덤번호 생성
 		String authCode = String.valueOf(new Random().nextInt(888888) + 111111);
 
@@ -53,7 +62,7 @@ public class AuthController {
 			System.out.println(authCode);
 			// db에 저장
 			dao.saveAuth(new AuthDTO(email, authCode, auth_type, 0, "0"));
-
+			
 			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,6 +102,7 @@ public class AuthController {
 			
 			String myId = dao.findIdByEmail(email);
 			
+			System.out.println(myId);
 			Map<String, Object> result = new HashMap<>();
 	        if(myId!= null) {
 	            result.put("status", "success");
