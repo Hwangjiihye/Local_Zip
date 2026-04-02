@@ -399,6 +399,12 @@
 		})
 		
 		
+		$(".deleteBtn").on("click", function(e){
+			if(!confirm("정말 회원 탈퇴를 하시겠습니까? 탈퇴 시 복구는 불가합니다.")){
+				e.preventDefault();
+			}
+		})
+		
     </script>
 </body>
 </html>
