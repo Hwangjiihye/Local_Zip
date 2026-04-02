@@ -19,8 +19,14 @@ public class MeetingController {
 	@Autowired
 	public MeetingDAO dao;
 	
-	@RequestMapping("/test") // meeting jsp로 이동
-	public String test() {
+	// 모임 신청 폼 출력
+	@RequestMapping("/list")
+	public String list(Model model) throws Exception {
+			
+		List<MeetingDTO> list = dao.selectAll();
+			
+		model.addAttribute("list", list);
+			
 		return "meeting/meeting";
 	}
 	
@@ -46,16 +52,5 @@ public class MeetingController {
 		dao.insert(dto);
 		
 		return "redirect:/meeting/list";
-	}
-	
-	// 모임 신청 폼 출력
-	@RequestMapping("/list")
-	public String list(Model model) throws Exception {
-		
-		List<MeetingDTO> list = dao.selectAll();
-		
-		model.addAttribute("list", list);
-		
-		return "meeting/meeting";
 	}
 }
