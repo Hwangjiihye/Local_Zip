@@ -45,7 +45,7 @@ public class MeetingController {
 		
 		dao.insert(dto);
 		
-		return "meeting/meeting";
+		return "redirect:/meeting/list";
 	}
 	
 	// 모임 신청 폼 출력

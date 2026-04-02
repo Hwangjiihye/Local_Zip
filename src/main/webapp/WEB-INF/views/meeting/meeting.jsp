@@ -306,7 +306,7 @@ body {
 			<c:forEach var="i" items="${list}">
 				<div class="meeting-card">
 					<div class="card-header">
-						<div class="title">${dto.meet_title}</div>
+						<div class="title">${i.meet_title}</div>
 							<div class="reportDiv">
 				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 								<select class="report">
@@ -318,13 +318,13 @@ body {
 							</div>
 					</div>
 				
-					<div class="category">${dto.meet_category}</div>
-					<div class="desc">${dto.meet_introcontents}</div>
+					<div class="category">${i.meet_category}</div>
+					<div class="desc">${i.meet_introcontents}</div>
 					
 					
 					<div class="info">	
-						<div class="location">📍 ${dto.mem_address1}</div>	
-						<div class="count">👥 ${dto.maxpeople}</div>
+						<div class="location">📍 ${i.mem_address1}</div>	
+						<div class="count">👥 ${i.meet_maxpeople}</div>
 					</div>
 					
 					<div class="card-footer">
