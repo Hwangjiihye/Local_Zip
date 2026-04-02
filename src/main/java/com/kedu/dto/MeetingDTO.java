@@ -14,12 +14,12 @@ public class MeetingDTO {
 	private String meet_kakaolink;
 	private String meet_kakaopw;
 	private int meet_status;
-	private int meet_date;
+	private String meet_date;
 	
 	public MeetingDTO() {}
 	public MeetingDTO(int meet_seq, String mem_id, String meet_title, String meet_category, String meet_introcontents,
 			String meet_detailcontents, int meet_maxpeople, int meet_currentpeople, String mem_address1,
-			String meet_kakaolink, String meet_kakaopw, int meet_status, int meet_date) {
+			String meet_kakaolink, String meet_kakaopw, int meet_status, String meet_date) {
 		super();
 		this.meet_seq = meet_seq;
 		this.mem_id = mem_id;
@@ -108,10 +108,10 @@ public class MeetingDTO {
 	public void setMeet_status(int meet_status) {
 		this.meet_status = meet_status;
 	}
-	public int getMeet_date() {
+	public String getMeet_date() {
 		return meet_date;
 	}
-	public void setMeet_date(int meet_date) {
+	public void setMeet_date(String meet_date) {
 		this.meet_date = meet_date;
 	}
 }
