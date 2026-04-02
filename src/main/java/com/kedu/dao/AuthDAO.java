@@ -50,4 +50,9 @@ public class AuthDAO {
 		 	}
 	 }
 	 
+	 //이메일 존재 여부 확인
+	 public int isEmailExists(String email) {
+		    String sql = "SELECT COUNT(*) FROM members WHERE mem_EMAIL = ?";
+		    return jdbc.queryForObject(sql, Integer.class, email);
+		}
 }
