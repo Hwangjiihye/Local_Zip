@@ -115,7 +115,7 @@ hr {
 	width: 90px;
 }
 
-.backBtn {
+.backBtn, .loginBtn {
 	position: absolute;
 	left: 40%;
 	bottom: 35px;
@@ -162,12 +162,12 @@ hr {
 	margin-left: 10px;
 }
 
-.requestBtn:hover, .certifyBtn:hover, .backBtn:hover {
+.requestBtn:hover, .certifyBtn:hover, .backBtn:hover, .loginBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.requestBtn:active, .certifyBtn:active, .backBtn:active {
+.requestBtn:active, .certifyBtn:active, .backBtn:active, .loginBtn:hover {
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -181,11 +181,11 @@ hr {
 			<div class="divTotal">
 				<div id="resultArea" style="display:none; padding: 30px 0;">
         <p style="font-size: 18px; margin-bottom: 10px;">찾으시는 아이디는</p>
-        <div style="background-color: #fff; display: inline-block; padding: 10px 30px; border-radius: 20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);">
+        <div style="background-color: #fbe5c0; display: inline-block; padding: 10px 30px; border-radius: 20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);">
             <strong id="foundedId" style="font-size: 24px; color: #A66A3F;"></strong>
         </div>
         <p style="font-size: 18px; margin-top: 10px;">입니다.</p>
-        <button type="button" class="backBtn" onclick="location.href='/members/login'" style="position:static; margin-top:20px;">로그인하기</button>
+        <button type="button" class="loginBtn" onclick="location.href='/members/loginUi'" style="position:static; margin-top:20px;">로그인하기</button>
     </div>
 				<div class="inputArea">
 					<div class="form-row">
@@ -207,6 +207,7 @@ hr {
 	</div>
 
 	<script>
+	
 		// 이메일 인증 요청 보내기
 		$(".requestBtn").on("click", function() {
 			if ($(".email").val() == "") {
@@ -232,7 +233,7 @@ hr {
 				});
 			}
 		});
-
+		
 		//이메일 인증 확인 
 
 		$(".certifyBtn").on("click", function() {
@@ -251,12 +252,13 @@ hr {
 				}).done(function(resp) {
 					if (resp.status === "success") {
 						alert("인증에 성공하였습니다.");
-
+						console.log(resp.MyId)
 						// 입력창 영역을 숨기고 결과 영역을 보여줌
 						$(".inputArea").hide();
 						$(".backBtn").hide();
-							$("#foundedId").text(resp.MyId);
+							$("#foundedId").text(resp.myId);
 							$("#resultArea").show();
+							$(".loginBtn").show();
 					} else if (resp.status === "fail") {
 						alert(resp.msg);
 					} else if (resp.status === "wrong_code") {

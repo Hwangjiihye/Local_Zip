@@ -102,7 +102,6 @@ public class AuthController {
 			
 			String myId = dao.findIdByEmail(email);
 			
-			System.out.println(myId);
 			Map<String, Object> result = new HashMap<>();
 	        if(myId!= null) {
 	            result.put("status", "success");
