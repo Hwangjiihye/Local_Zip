@@ -18,11 +18,22 @@ public class BoardController {
 	private LifeInfoDAO dao;
 	
 	
-	
 	@RequestMapping("/lifeInfo")
 	public String lifeInfo() {
 		return "board/life-info";
 	}
+	
+	@RequestMapping("/concern")
+	public String concern() {
+		return "board/concern";
+	}
+	
+	@RequestMapping("/write")
+	public String write() {
+		return "board/write_life-info";
+	}
+	
+	
 	
 	
 	
