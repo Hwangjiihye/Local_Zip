@@ -20,6 +20,8 @@ public class MeetingController {
 	// 모임 신청 폼
 	@RequestMapping("meetCreate")
 	public String meetCreateFrom() {
+		
+		
 		return "meeting/meetCreate";
 	}
 	

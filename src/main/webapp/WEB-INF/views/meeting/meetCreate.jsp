@@ -315,7 +315,7 @@
 		<div class="bottomBtn">
 			<button class="requestBtn" type="submit">신청하기</button>
 			<a href="/meeting/test"><button class="backBtn" type="button">뒤로가기</button></a>
-		</div>
+		</div>   
 	</form>
 		
 		<script>
