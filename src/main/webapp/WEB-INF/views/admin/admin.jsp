@@ -64,6 +64,7 @@ body {
 	background-color: #fbe5c0;
 	z-index: 1000;
 	border-bottom: 2px solid #A66A3F;
+	border: none;
 }
 
 .mainTitle {
@@ -277,16 +278,16 @@ body {
 		<div class="top-section">
 			<div class="mainTitle">관리자.zip</div>
 			<div class="categoryDiv">
-				<button class="categoryBtnAll">
+				<a href="/admin/adminPage"><button class="categoryBtnAll" type="button">
 					<i class="fa-solid fa-chart-column"> 대시보드</i>
-				</button>
-				<button class="categoryBtnAll">
+				</button></a>
+				<button class="categoryBtnAll" type="button">
 					<i class="fa-solid fa-user"> 회원관리</i>
 				</button>
-				<button class="categoryBtnAll">
+				<a href="/admin/adminQA"><button class="categoryBtnAll" type="button">
 					<i class="fa-solid fa-headset"> 고객지원</i>
-				</button>
-				<button class="categoryBtnAll">
+				</button></a>
+				<button class="categoryBtnAll" type="button">
 					<i class="fa-solid fa-bullhorn"> 공지사항</i>
 				</button>
 			</div>
@@ -352,15 +353,11 @@ body {
 		</div>
 
 		<div class="bottomBar">
-			<a href="/"><i class="navicon fa-solid fa-house fa-2xl"
-				style="color: #A66A3F"></i></a> <a href="/map/test"><i
-				class="navicon fa-solid fa-map-location-dot fa-2xl"
-				style="color: #A66A3F"></i></a> <a href="/meeting/test"><i
-				class="navicon fa-solid fa-people-group fa-2xl"
-				style="color: #A66A3F"></i></a> <a><i
-				class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> <a
-				href="/admin/test"><i class="navicon fa-solid fa-user fa-2xl"
-				style="color: #A66A3F"></i></a>
+			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> 
+			<a><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 	</div>
 
