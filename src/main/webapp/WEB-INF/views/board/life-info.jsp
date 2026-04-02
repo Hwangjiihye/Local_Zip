@@ -532,8 +532,9 @@
                 <button class="orderPopular orderBtn" type="button">인기순</button>
             </div>
 
+		<c:forEach var="i" items="${lifeInfo}">
             <div class="postBox">
-
+			
                 <div class="postUpBox">
 
                     <div class="postProfile">
@@ -542,15 +543,15 @@
 
                     <div class="postInfoBox">
                         <div class="postInfoUp">
-                            <div class="profileName profileInfo" style=color:#5e361a;>홍길동</div>
+                            <div class="profileName profileInfo" style=color:#5e361a;>${nickname}</div>
                             <div class="profileLocal profileInfo" style=color:#5e361a;>지역(동)</div>
                             <div class="profileCatagory profileInfo">
-                                <button class="topBtn" type="button" >카테고리</button>
+                                <button class="topBtn" type="button" >생활정보</button>
                             </div>
                         </div>
 
                         <div class="postInfoDown">
-                            <div class="profileTime profileInfo" style=color:#5e361a;>00시간 전</div>
+                            <div class="profileTime profileInfo" style=color:#5e361a;>${i.post_date}</div>
                         </div>
                     </div>
 
@@ -591,8 +592,9 @@
                         <div>갯수</div>
                     </div>
 
-                </div>
-
+                	</div>
+				</div>
+				</c:forEach>
             </div>
 
         </div>
