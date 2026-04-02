@@ -189,14 +189,13 @@ body {
 	border: 1px dotted #ffb300;
 	font-size:15px;
 	width: 700px;
-	height: 40px;
+	height: 40%;
 	margin: 0 0 7px 10px;
 	word-break: break-all;
 	white-space: normal; 
-}
-
-input{
+	resize: none;
 	outline: none;
+	font-family: 'GMarketSans';
 }
 
 .replyBtn{
@@ -310,7 +309,7 @@ input{
 	        		<div class="replyAdminId">관리자</div>
         		</div>
         		<div class="replyTextAndBtn">
-	            	<input type="text" placeholder="댓글을 입력하세요." class="inputQaReply">
+	            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply"></textarea>
 					<button class="replyBtn" type="button">등록</button>
 				</div>
 	        	</div>      
@@ -328,5 +327,13 @@ input{
 			<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 	</div>
+	
+	<script>
+			$(".inputQaReply").on("input", function(){
+			    this.style.height = "auto";              // 초기화
+			    this.style.height = this.scrollHeight + "px";  // 내용만큼 늘림
+			});
+	
+	</script>
 </body>
 </html>
