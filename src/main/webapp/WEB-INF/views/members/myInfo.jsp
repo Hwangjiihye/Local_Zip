@@ -192,61 +192,61 @@
 	            <div class="form-row">
 	            	<div class="labelBox">
 	            		<i class="fa-solid fa-user fa-lg icon"></i>
-	            		<span> NAME : </span>
+	            		<span class="lavel"> NAME : </span>
 	            	</div>
 	                <div class="name">${list.mem_name}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	            		<i class="fa-solid fa-address-card fa-lg icon"></i>
-	                	<span> ID : </span>
+	                	<span class="lavel"> ID : </span>
 	                </div>
 	                <div class="id">${loginId }</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	                	<i class="fa-solid fa-envelope fa-lg icon"></i>
-	                	<span> EMAIL : </span>
+	                	<span class="lavel"> EMAIL : </span>
 	                </div>
 	                <div class="email">${list.mem_email}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	            		<i class="fa-solid fa-user-pen fa-lg icon"></i> 
-	            		<span> NICKNAME : </span>
+	            		<span class="lavel"> NICKNAME : </span>
 	            	</div>
-	            	<div class="nickname">${list.mem_nickname}</div>
+	            	<div class="nickname updateDiv">${list.mem_nickname}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	                	<i class="fa-solid fa-phone fa-lg icon"></i>
-	                	<span> PHONE : </span>
+	                	<span class="lavel"> PHONE : </span>
 	                </div>
-	                <div class="phone">${list.mem_phone}</div>
+	                <div class="phone updateDiv">${list.mem_phone}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	                	<i class="fa-solid fa-house-chimney fa-lg icon"></i>
-	                	<span> ZONECODE :</span>
+	                	<span class="lavel"> ZONECODE :</span>
 	                </div>
 	                <div class="valueBox">
-	                	<div class="zonecode">${list.mem_zip_code}</div>
+	                	<div class="zonecode updateDiv">${list.mem_zip_code}</div>
 	                	<input class="searchBtn" type="button" value="찾기">
 	                </div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	            		<span class="emptyIcon"></span>
-	                	<span> ADDRESS : </span>
+	                	<span class="lavel"> ADDRESS : </span>
 	                </div>
-	                <div class="address1">${list.mem_address1}</div>
+	                <div class="address1 updateDiv">${list.mem_address1}</div>
 	            </div>
 	            <div class="form-row">
 	            	<div class="labelBox">
 	            		<span class="emptyIcon"></span>
-	                	<span> DETAIL : </span>
+	                	<span class="lavel"> DETAIL : </span>
 	                </div>
-	                <div class="address2">${list.mem_address2}</div>
+	                <div class="address2 updateDiv">${list.mem_address2}</div>
 	            </div>
 	            <hr>
 	            
@@ -258,10 +258,10 @@
 	            <input type="hidden" id="input_id" name="mem_id" value="${loginId}">
 	            
 	            <div class="btnDiv">
-	            	<input class="updateBtn" type="button" value="정보 수정">
-	            	<input class="deleteBtn" type="button" value="회원 탈퇴">
-	            	<input class="completeBtn" type="submit" value="수정 완료">
-	            	<input class="cancelBtn" type="button" value="수정 취소">
+	            	<input class="updateBtn update_deleteBtn" type="button" value="정보 수정">
+	            	<input class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴">
+	            	<input class="completeBtn save_cancelBtn" type="submit" value="수정 완료">
+	            	<input class="cancelBtn save_cancelBtn" type="button" value="수정 취소">
 	            </div>
 	        </div>
     	</form>
@@ -270,7 +270,63 @@
     </div>
     
     <script>
-    	$(".completeBtn")
+    	let nickname = $(".nickname").html();
+    	let phone = $(".phone").html();
+    	let zip_code = $(".zonecode").html();
+    	let address1 = $(".address1").html();
+    	let address2 = $(".address2").html();
+    	
+    	
+    	$(".updateBtn").on("click", function(){
+    		$(".updateDiv").attr("contenteditable","true");
+    		
+    		$(".updateDiv").css({
+    			"background-color": "#fbe5c0",
+    			"border":"none",
+    			"border-radius": "10px",
+    			"word-break": "break-all",
+    			"flex": "1"
+    		})
+    		
+    		$(".labelBox").css({
+    			"display": "flex"
+    	    	
+    		})
+    		
+    		$(".lavel").css({ /* 고정 */
+    	    	"flex-shrink": "0"   /* 절대 안 줄어듦 */
+    		})
+    		
+    		$(".update_deleteBtn").css({
+    			"display":"none"
+   			})
+    		
+   			$(".save_cancelBtn").css({
+   				"display":"inline"
+  			})
+    	})
+    	
+    	$(".cancelBtn").on("click", function(){
+    		$(".nickname").html(nickname);
+    		$(".phone").html(phone);
+    		$(".zonecode").html(zip_code);
+    		$(".address1").html(address1);
+    		$(".address2").html(address2);
+    		
+    		$(".updateDiv").attr("contenteditable","false");
+    		
+    		$(".update_deleteBtn").css({
+    			"display":"inline"
+   			})
+    		
+   			$(".save_cancelBtn").css({
+   				"display":"none"
+  			})
+  			
+  			
+    	})
+    	
+    	
     </script>
 </body>
 </html>
