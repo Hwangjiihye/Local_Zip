@@ -102,6 +102,30 @@
             width: 90%;
             max-width: 800px;
         }
+        
+        .nowBtn{
+         	background-color: #fecc56;
+            color: #A66A3F;
+
+            transform: translateY(-3px);
+            /* 살짝 위로 뜸 */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            
+            
+            height: 25px;
+
+            border-radius: 10px;
+            border: 1px solid #FFB300;
+
+            align-items: center;
+            /* 수직 중앙 정렬 */
+
+            vertical-align: middle;
+            /* 버튼들끼리 줄이 안 맞을 때를 대비 */
+
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
 
         .topBtn {
@@ -322,13 +346,20 @@
             margin: auto;
 
             width: 95%;
-            min-height: 40px;
-            height: auto;
+            height: 1.5em;       /* 한 줄 높이만큼 고정 */
+    		line-height: 1.5em;
 
             font-size: 18px;
 
             background-color: #f0d8af;
             border-radius: 5px;
+            
+            padding: 0 10px;
+             
+            white-space: nowrap;
+            overflow: hidden;
+    		text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+    		display: block;
         }
 
 
@@ -467,7 +498,7 @@
         <div class="categoryBtnBox">
             <div class="categoryBtns">
                 <a href="/"><button class="categoryBtn topBtn"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
-                <button class="categoryBtn topBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> "생활정보"</button>
+                <button class="categoryBtn nowBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button>
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
                 <button class="categoryBtn topBtn"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button>
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>

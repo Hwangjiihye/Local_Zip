@@ -23,11 +23,17 @@ public class BoardController {
 		return "board/life-info";
 	}
 	
+	@RequestMapping("/concern")
+	public String concern() {
+		return "board/concern";
+	}
 	
 	@RequestMapping("/write")
 	public String write() {
-		return "board/write";
+		return "board/write_life-info";
 	}
+	
+	
 	
 	
 	

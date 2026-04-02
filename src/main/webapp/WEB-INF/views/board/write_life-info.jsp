@@ -49,7 +49,7 @@ body, html {
 }
 
 /* 폰트 지정 */
-button, body {
+button, body, div, input {
 	font-family: 'GMarketSans', sans-serif;
 }
 
@@ -101,29 +101,37 @@ button, body {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.card-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	font-weight: bold;
-	font-size: 20px;
-	color: #5e361a;
-}
 
 .titleDiv, .categoryDiv, .fileDiv, .locationDiv, .TextDiv {
 	padding: 10px;
 	border-bottom: 1px dotted #A66A3F;
 }
 
-.titleContent, .TextDetail {
-	width: 70%;
-	padding-left: 3px;
-	border-radius: 8px;
-	background-color: #f0d8af;
-}
-
 .TextDetail {
-	min-height: 230px;
+/* 	width: 70%; */
+/* 	padding-left: 3px; */
+/* 	border-radius: 8px; */
+/* 	background-color: #f0d8af; */
+	
+	min-height: 300px;
+
+
+	border: 1px solid #A66A3F;
+	background-color: #fbe5c0;
+	width: 970px;
+	height: 35px;
+	top: 30px;
+	left: 0;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+	font-family: 'GMarketSans';
+	border-radius: 5px;
+	color: #A66A3F;
+	font-size: 15px;
+	padding: 2px;
+	outline: none;
+	
+	
 }
 
 .fileDetail {
@@ -131,6 +139,8 @@ button, body {
 	padding-left: 3px;
 	border-radius: 8px;
 }
+
+
 
 .openChatLinkDiv, .openChatPwDiv {
 	padding: 10px;
@@ -143,8 +153,6 @@ button, body {
 	border: none;
 	padding-left: 2px;
 }
-
-
 
 .title, .category, .file, .location, .openChatLink, .openChatPw {
 	font-weight: bold;
@@ -225,23 +233,22 @@ button, body {
 	outline: none;
 }
 
-
-.inputBox{
-/*          width: 600px; */
-         top: 30px;
-          left: 0;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-          z-index: 10;
-          font-family: 'GMarketSans';
-          border: 1px solid #A66A3F;
-          border-radius: 5px;
-          background-color: #F2D3A2;
-          color: #A66A3F;
-          font-size: 15px;
-          padding: 2px;
-          outline: none;
-      }
-
+.inputBox {
+	border: 1px solid #A66A3F;
+	background-color: #fbe5c0;
+	width: 970px;
+	height: 35px;
+	top: 30px;
+	left: 0;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+	font-family: 'GMarketSans';
+	border-radius: 5px;
+	color: #A66A3F;
+	font-size: 15px;
+	padding: 2px;
+	outline: none;
+}
 </style>
 
 
@@ -252,55 +259,52 @@ button, body {
 	<div class="container">
 		<div class="headBox">새 게시글 작성</div>
 
-		<div class="meetingDetail">
-			<div class="titleDiv">
-				<div class="title">제목</div>
-				<div class="titleContent"><input class="inputBox" maxlength="50" type="text" placeholder="제목을 입력해주세요"></div>
-				
-				
-				
-			</div>
-
-			<div class="categoryDiv">
-				<div class="category">카테고리</div>
-				<div class="categoryGuide">
-					카테고리를 선택하세요 <i class="icon fa-solid fa-sort fa-lg" style="color: #A66A3F;"></i>
+		<form action="">
+			<div class="meetingDetail">
+				<div class="titleDiv">
+					<div class="title">제목</div>
+					<div class="titleContent"><input class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요"></div>
+					
 				</div>
-				<select class="report">
-					<option class="report-menu">생활정보</option>
-					<option class="report-menu">맛집/카페</option>
-					<option class="report-menu">고민/이야기</option>
-					<option class="report-menu">미용/패션</option>
-				</select>
-			</div>
-
-
-
-			<div class="fileDiv">
-				<div class="file">
-					첨부파일 <i class="fa-solid fa-file-circle-plus fa-sm"></i>
+	
+				<div class="categoryDiv">
+					<div class="category">카테고리</div>
+					<div class="categoryGuide">
+						카테고리를 선택하세요 <i class="icon fa-solid fa-sort fa-lg" style="color: #A66A3F;"></i>
+					</div>
+					<select class="report">
+						<option class="report-menu">생활정보</option>
+						<option class="report-menu">맛집/카페</option>
+						<option class="report-menu">고민/이야기</option>
+						<option class="report-menu">미용/패션</option>
+					</select>
 				</div>
-				<div class="fileDetail">
-					<input class="fileBtn" type="file" name="files" multiple>
+	
+	
+	
+				<div class="fileDiv">
+					<div class="file">
+						첨부파일 <i class="fa-solid fa-file-circle-plus fa-sm"></i>
+					</div>
+					<div class="fileDetail">
+						<input class="fileBtn" type="file" name="files" multiple>
+					</div>
 				</div>
+	
+				<div class="TextDiv">
+					<div class="TextTitle">내용</div>
+					<textarea class="TextDetail" type="text" placeholder="내용을 작성해주세요" maxlength="1000" style="border: #fbe5c0"></textarea>
+				</div>
+	
+	
 			</div>
+	
+				<div class="bottomBtn">
+					<button class="requestBtn">작성 완료</button>
+					<a href="/"><button class="backBtn" type="button">뒤로가기</button></a>
+				</div>
 
-			<div class="TextDiv">
-				<div class="TextTitle">내용</div>
-				<div class="TextDetail" contenteditable>건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때 출력이면
-					글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때 출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의
-					내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때 출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는
-					곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때 출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을
-					다르게 주는 게 어때 출력이면 글자수가 줄어나고 해야 되는 거 아니야.건의 내용 : 아까.. 그.. 댓글 글자 들어가는 곳에 색 줬짜나 배경색. 여기다가 또 색을 다르게 주는 게 어때</div>
-			</div>
-
-
-		</div>
-
-		<div class="bottomBtn">
-			<button class="requestBtn" type="button">작성 완료</button>
-			<a href="/"><button class="backBtn" type="button">뒤로가기</button></a>
-		</div>
+		</form>
 
 	</div>
 
