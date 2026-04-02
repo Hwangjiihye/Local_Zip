@@ -257,7 +257,7 @@
 	
 	</style>
 <body><!-- /meeting/test -->
-<form action="/meeting/meetGenerate" class="frm" method="post">
+<form action="/meeting/meetGenerate" class="frm" method="post" onsubmit="return checkForm();">
 	<div class="container">
 		<div class="top-section">
 			<div class="mainTitle">
@@ -270,44 +270,45 @@
 				<div class="meetingDetail">
 					<div class="titleDiv">
 						<div class="title">모임명</div>
-						<div class="titleDetail"><input name="meet_title" class="clubName" maxlength="50" type="text" style="border: #fbe5c0" placeholder="모임명을 작성해주세요."></div>
+						<div class="titleDetail"><input id="title" name="meet_title" class="clubName" maxlength="50" type="text" style="border: #fbe5c0" placeholder="모임명을 작성해주세요."></div>
 					</div>
 					
 					<div class="categoryDiv">
 						<div class="category">카테고리</div>
 							<div class="categoryGuide">카테고리를 선택하세요  <i class="icon fa-solid fa-sort fa-lg" style="color: #A66A3F;"></i></div>
-							<select name="meet_category" class="report">
-								<option class="report-menu">운동</option>
-								<option class="report-menu">문화</option>
-								<option class="report-menu">취미</option>
-								<option class="report-menu">스터디</option>
+							<select id="category" name="meet_category" class="report">
+								<option value="" class="report-menu">--선택하세요--</option>
+								<option value="운동" class="report-menu">운동</option>
+								<option value="문화" class="report-menu">문화</option>
+								<option value="취미" class="report-menu">취미</option>
+								<option value="스터디" class="report-menu">스터디</option>
 							</select>
 					</div>
 					
 					<div class="descDiv">
 						<div class="desc">간단한 한 줄 소개</div>
-						<div class="descDetail"><input name="meet_introcontents" class="clubName" maxlength="100" style="border: #fbe5c0" type="text" placeholder="한 줄 소개를 작성해주세요"></div>
+						<div class="descDetail"><input id="intro" name="meet_introcontents" class="clubName" maxlength="100" style="border: #fbe5c0" type="text" placeholder="한 줄 소개를 작성해주세요"></div>
 					</div>
 					
 					<div class="descTextDiv">
 						<div class="descText">자세한 소개글</div>
-						<div class="descTextDetail"><textarea name="meet_detailcontents" class="detailContent" maxlength="1000" style="border: #fbe5c0" type="text" placeholder="모임을 소개해주세요"></textarea></div>
+						<div class="descTextDetail"><textarea id="detail" name="meet_detailcontents" class="detailContent" maxlength="1000" style="border: #fbe5c0" type="text" placeholder="모임을 소개해주세요"></textarea></div>
 					</div>
 					
 					<div class="locationDiv">	
 						<div class="location">활동지역</div>	
-						<div class="locationDetail"><input name="mem_address1" class="clubName" maxlength="33" type="text" style="border: #fbe5c0" placeholder="활동지역을 입력해주세요"></div>
+						<div class="locationDetail"><input id="address" name="mem_address1" class="clubName" maxlength="33" type="text" style="border: #fbe5c0" placeholder="활동지역을 입력해주세요"></div>
 					</div>
 					
 					<div class="openChatWrapper">
 						<div class="openChatLinkDiv">	
 							<div class="openChatLink">카톡 오픈채팅 링크</div>	
-							<div class="inputLink"><input name="meet_kakaolink" class="kakaotalk" maxlength="100" type="text" style="border: #fbe5c0" placeholder="카톡 오픈채팅 링크를 붙여넣어주세요"></div>
+							<div class="inputLink"><input id="link" name="meet_kakaolink" class="kakaotalk" maxlength="100" type="text" style="border: #fbe5c0" placeholder="카톡 오픈채팅 링크를 붙여넣어주세요"></div>
 						</div>
 						
 						<div class="openChatPwDiv">
 							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
-							<div class="inputPw"><input name="meet_kakaopw" class="kakaotalkPw" maxlength="8" type="text" style="border: #fbe5c0" placeholder="카톡 오픈채팅 비밀번호를 넣어주세요"></div>
+							<div class="inputPw"><input id="pw" name="meet_kakaopw" class="kakaotalkPw" maxlength="8" type="text" style="border: #fbe5c0" placeholder="카톡 오픈채팅 비밀번호를 넣어주세요"></div>
 						</div>
 					</div>
 			</div>
@@ -315,7 +316,7 @@
 		<div class="bottomBtn">
 			<button class="requestBtn" type="submit">추가하기</button>
 			
-			<a href="/meeting/test"><button class="backBtn" type="button">뒤로가기</button></a>
+			<a href="/meeting/list"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>   
 </form>
 		
@@ -323,6 +324,41 @@
 		$(".icon").on("click", function (e) {
 		    $(".report").css({"display" : "inline"});
 		});
+		
+		function checkForm() {
+			let title = document.getElementById("title").value;
+			let category = document.getElementById("category").value;
+			let intro = document.getElementById("intro").value;
+			let detail = document.getElementById("detail").value;
+			let address = document.getElementById("address").value;
+			let link = document.getElementById("link").value;
+			let pw = document.getElementById("pw").value;
+			
+			if(title == ""){
+				alert("모임명을 입력해주세요");
+				return false;
+			} else if(category == "") {
+				alert("카테고리를 선택해주세요");
+				return false;
+			} else if(intro == "") {
+				alert("한 줄 소개를 작성해주세요");
+				return false;
+			} else if(detail == "") {
+				alert("모임 소개를 작성해주세요");
+				return false;
+			} else if(address == "") {
+				alert("활동 지역을 작성해주세요");
+				return false;
+			} else if(link == "") {
+				alert("오픈채팅 링크를 넣어주세요");
+				return false;
+			} else if(pw == "") {
+				alert("오픈채팅 비밀번호를 넣어주세요");
+				return false;
+			}
+			return true;
+		}
+		
 		</script>
 
 </body>
