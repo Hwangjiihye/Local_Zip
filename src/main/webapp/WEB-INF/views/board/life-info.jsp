@@ -544,7 +544,7 @@
                     <div class="postInfoBox">
                         <div class="postInfoUp">
                             <div class="profileName profileInfo" style=color:#5e361a;>${nickname}</div>
-                            <div class="profileLocal profileInfo" style=color:#5e361a;>지역(동)</div>
+                            <div class="profileLocal profileInfo" style=color:#5e361a;>${dong}</div>
                             <div class="profileCatagory profileInfo">
                                 <button class="topBtn" type="button" >생활정보</button>
                             </div>
@@ -572,8 +572,8 @@
 
                 <div class="postMidBox">
 
-                    <div class="postTitle">제목이 들어가는 곳</div>
-                    <div class="postContent">내용들이 들어가는 곳</div>
+                    <div class="postTitle">${i.post_title}</div>
+                    <div class="postContent">${i.post_contents}</div>
 
                 </div>
 
