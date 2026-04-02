@@ -178,6 +178,7 @@
             /* 최소 높이 지정 : 브라우저 */
 
             margin-top: -40px;
+            color: #5e361a;
         }
 
 
@@ -515,7 +516,7 @@
         <div class="categoryBtnBox">
             <div class="categoryBtns">
                 <a href="/"><button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
-                <a href="/board/lifeInfo"><button class="categoryBtn nowBtn" type="button"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
+                <a href="/board/list_lifeInfo"><button class="categoryBtn nowBtn" type="button"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
                 <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
                 <a href="/board/concern"><button class="categoryBtn topBtn" type="button"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
                 <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
@@ -541,27 +542,27 @@
 
                     <div class="postInfoBox">
                         <div class="postInfoUp">
-                            <div class="profileName profileInfo">홍길동</div>
-                            <div class="profileLocal profileInfo">지역(동)</div>
+                            <div class="profileName profileInfo" style=color:#5e361a;>홍길동</div>
+                            <div class="profileLocal profileInfo" style=color:#5e361a;>지역(동)</div>
                             <div class="profileCatagory profileInfo">
-                                <button class="topBtn" type="button">카테고리</button>
+                                <button class="topBtn" type="button" >카테고리</button>
                             </div>
                         </div>
 
                         <div class="postInfoDown">
-                            <div class="profileTime profileInfo">00시간 전</div>
+                            <div class="profileTime profileInfo" style=color:#5e361a;>00시간 전</div>
                         </div>
                     </div>
 
 					<form action="">
 	                    <div class="reportArea">
-								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-	                        <select class="reportSelect">
-	                            <option value="" disabled selected>신고 사유</option>
-	                            <option value="1" class="reportOption">부적절한 콘텐츠</option>
-	                            <option value="2" class="reportOption">욕설/비방</option>
-	                            <option value="3" class="reportOption">광고/스팸</option>
-	                        </select>
+							<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+							<select class="reportSelect" name="reports_reason">
+                               <option value="" disabled selected>신고 사유</option>
+                               <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
+                               <option value="badWord" class="reportOption">욕설/비방</option>
+                               <option value="AD" class="reportOption">광고/스팸</option>
+                           </select>
 	                        <input class="reportBtn" type="submit" value="신고하기">
 	                    </div>
 					</form>
@@ -604,7 +605,7 @@
         <div class="bottomBox">
             <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+            <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
             <a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 

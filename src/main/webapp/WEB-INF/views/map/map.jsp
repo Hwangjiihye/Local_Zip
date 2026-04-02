@@ -92,7 +92,6 @@ body {
 
 .categoryBtnAll {
 	margin-left: 10px;
-	font-weight: bold;
 	background-color: #FFB300;
 	border-radius: 10px;
 	border: 1px solid #FFB300;
@@ -239,16 +238,16 @@ body {
 			<div class="mainTitle">우리 동네 지도.zip</div>
 			<div class="categoryDiv">
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-house"> 전체</i>
+					<i class="fa-solid fa-house fa-lg"></i> 전체
 				</button>
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-shield-halved"> 치안</i>
+					<i class="fa-solid fa-shield-halved fa-lg"></i> 치안
 				</button>
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-person-running"> 대피소</i>
+					<i class="fa-solid fa-person-running fa-lg"></i> 대피소
 				</button>
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-restroom"> 공중화장실</i>
+					<i class="fa-solid fa-restroom fa-lg"></i> 공중화장실
 				</button>
 			</div>
 
