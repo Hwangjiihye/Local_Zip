@@ -316,7 +316,7 @@
 		<div class="bottomBtn">
 			<button class="requestBtn" type="submit">추가하기</button>
 			
-			<a href="/meeting/test"><button class="backBtn" type="button">뒤로가기</button></a>
+			<a href="/meeting/list"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>   
 </form>
 		
