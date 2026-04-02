@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
-import com.kedu.dao.LifeInfoDAO;
+import com.kedu.dao.BoardDAO;
 
 @Controller
 @RequestMapping("/board")
@@ -15,7 +15,7 @@ public class BoardController {
 	private Gson gson;
 
 	@Autowired
-	private LifeInfoDAO dao;
+	private BoardDAO dao;
 	
 	
 	@RequestMapping("/lifeInfo")
@@ -28,9 +28,9 @@ public class BoardController {
 		return "board/concern";
 	}
 	
-	@RequestMapping("/write_lifeInfo")
+	@RequestMapping("/write")
 	public String write_lifeInfo() {
-		return "board/write_life-info";
+		return "board/write";
 	}
 	
 	

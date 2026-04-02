@@ -5,9 +5,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LifeInfoDAO {
-	
+public class BoardDAO {
+
 	@Autowired
 	private JdbcTemplate jdbc;
-
+	
 }

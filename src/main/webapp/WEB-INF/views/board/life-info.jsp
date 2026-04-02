@@ -553,18 +553,18 @@
                         </div>
                     </div>
 
-
-                    <div class="reportArea">
-							<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-                        <select class="reportSelect">
-                            <option value="" disabled selected>신고 사유</option>
-                            <option value="1" class="reportOption">부적절한 콘텐츠</option>
-                            <option value="2" class="reportOption">욕설/비방</option>
-                            <option value="3" class="reportOption">광고/스팸</option>
-                        </select>
-                        <input class="reportBtn" type="submit" value="신고하기">
-                    </div>
-
+					<form action="">
+	                    <div class="reportArea">
+								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+	                        <select class="reportSelect">
+	                            <option value="" disabled selected>신고 사유</option>
+	                            <option value="1" class="reportOption">부적절한 콘텐츠</option>
+	                            <option value="2" class="reportOption">욕설/비방</option>
+	                            <option value="3" class="reportOption">광고/스팸</option>
+	                        </select>
+	                        <input class="reportBtn" type="submit" value="신고하기">
+	                    </div>
+					</form>
 
                 </div>
 
@@ -598,7 +598,7 @@
 
         <div class="pageBox">1 2 3</div>
         
-        <a href="/board/write_lifeInfo"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
+        <a href="/board/write"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
         
 
         <div class="bottomBox">
