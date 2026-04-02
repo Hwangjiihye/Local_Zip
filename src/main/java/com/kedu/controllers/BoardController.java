@@ -37,4 +37,10 @@ public class BoardController {
 	
 	
 	
+	
+	// 게시물 상세보기
+	@RequestMapping("/postDetail")
+	public String postDetail() {
+		return "board/postDetail";
+	}
 }

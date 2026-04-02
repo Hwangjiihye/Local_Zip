@@ -257,8 +257,8 @@
         }
 
         .contentProfile {
-            margin-top: -10px;
-            margin-left: 2px;
+            margin-top: -5px;
+            margin-left: -6px;
         }
 
         .postInfoBox {
@@ -296,9 +296,8 @@
         /* 신고 영역 스타일 */
         .reportArea {
             position: relative;
-            top: 15px;
+            top: 8px;
             right: 20px;
-
             display: flex;
             flex-direction: column;
             /* 아이콘과 선택창을 세로로 배치 */
@@ -320,13 +319,27 @@
             background-color: #F2D3A2;
             color: #A66A3F;
             font-size: 12px;
-            padding: 2px;
             outline: none;
-
             display: none;
         }
-
-
+		.reportBtn{
+			background-color: #ffb300;
+			color: #5e361a;
+			border: 1px solid #ffb300;
+			border-radius: 10px;
+			font-weight: bold;
+			display: none;
+		}
+		.reportBtn:hover{
+			transform: translateY(-3px); /* 살짝 위로 뜸 */
+			box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+		}
+		
+		.reportBtn:active{
+			transform: translateY(2px); /* 아래로 눌림 */
+			box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+		}
+		
         .postMidBox {
             width: 100%;
             height: auto;
@@ -437,7 +450,6 @@
 
         hr {
             width: 97%;
-
             margin-bottom: 40px;
             border: 1px solid #cdaa69;
             ;
@@ -497,11 +509,11 @@
 
         <div class="categoryBtnBox">
             <div class="categoryBtns">
-                <a href="/"><button class="categoryBtn topBtn"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
-                <a href="/board/lifeInfo"><button class="categoryBtn topBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
-                <button class="categoryBtn topBtn"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
-                <a href="/board/concern"><button class="categoryBtn nowBtn"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
-                <button class="categoryBtn topBtn"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
+                <a href="/"><button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
+                <a href="/board/lifeInfo"><button class="categoryBtn topBtn" type="button"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
+                <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
+                <a href="/board/concern"><button class="categoryBtn nowBtn" type="button"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
+                <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
             </div>
         </div>
 
@@ -510,16 +522,16 @@
         <div class="bodyBox">
 
             <div class="orderBox">
-                <button class="orderNew orderBtn">최신순</button>
-                <button class="orderPopular orderBtn">인기순</button>
+                <button class="orderNew orderBtn" type="button">최신순</button>
+                <button class="orderPopular orderBtn" type="button">인기순</button>
             </div>
 
-            <div class="postBox">
+            <a href="/board/postDetail"><div class="postBox">
 
                 <div class="postUpBox">
 
                     <div class="postProfile">
-                        <img class="contentProfile" src="/resources/images/Profile.png" width="60px">
+                        <img class="contentProfile" src="/resources/images/birdprofile.png" style="width: 80px;">
                     </div>
 
                     <div class="postInfoBox">
@@ -527,7 +539,7 @@
                             <div class="profileName profileInfo">홍길동</div>
                             <div class="profileLocal profileInfo">지역(동)</div>
                             <div class="profileCatagory profileInfo">
-                                <button class="topBtn">카테고리</button>
+                                <button class="topBtn" type="button">카테고리</button>
                             </div>
                         </div>
 
@@ -545,6 +557,7 @@
                             <option value="2" class="reportOption">욕설/비방</option>
                             <option value="3" class="reportOption">광고/스팸</option>
                         </select>
+                        <input class="reportBtn" type="submit" value="신고하기">
                     </div>
 
 
@@ -574,13 +587,13 @@
 
                 </div>
 
-            </div>
+            </div></a>
 
         </div>
 
         <div class="pageBox">1 2 3</div>
         
-        <a href="/board/write"><button class="writeBtn"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
+        <a href="/board/write"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
         
 
         <div class="bottomBox">
@@ -616,9 +629,8 @@
         // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
         $(".reportIcon").on("click", function () {
             $(".reportSelect").css({ "display": "inline" });
+            $(".reportBtn").css({"display": "inline"});
         })
-
-
     </script>
 
 </body>
