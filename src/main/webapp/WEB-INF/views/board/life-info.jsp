@@ -498,9 +498,9 @@
         <div class="categoryBtnBox">
             <div class="categoryBtns">
                 <a href="/"><button class="categoryBtn topBtn"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
-                <button class="categoryBtn nowBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button>
+                <a href="/board/lifeInfo"><button class="categoryBtn nowBtn"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
-                <button class="categoryBtn topBtn"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button>
+                <a href="/board/concern"><button class="categoryBtn topBtn"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
                 <button class="categoryBtn topBtn"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
             </div>
         </div>
