@@ -239,7 +239,7 @@ hr {
 				return false;
 			} else {
 				$.ajax({
-					url : "auth/findMyId",
+					url : "/auth/findMyId",
 					type : "post",
 					data : {
 						email : $(".email").val(),
@@ -255,8 +255,6 @@ hr {
 						$(".backBtn").hide();
 							$("#foundedId").text(resp.MyId);
 							$("#resultArea").show();
-						
-
 					} else if (resp.status === "fail") {
 						alert(resp.msg);
 					} else if (resp.status === "wrong_code") {
