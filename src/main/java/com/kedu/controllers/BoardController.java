@@ -52,6 +52,12 @@ public class BoardController {
 	@RequestMapping("/list_lifeInfo")
 	public String list_lifeInfo() {
 		
+		int result = dao.list_lifeInfo();
+		
+		if(result > 0) {
+			System.out.println("생활정보 출력 완료");
+		}
+		
 		return "redirect: /board/lifeInfo";
 	}
 

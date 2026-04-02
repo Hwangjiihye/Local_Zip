@@ -90,9 +90,10 @@ button, body, div, input {
 	box-sizing: border-box;
 }
 
-.meetingDetail {
+.writeDetail {
 	margin: auto;
 	width: 80%;
+	height: auto;
 	border-radius: 10px;
 	background-color: #fbe5c0;
 	padding: 35px;
@@ -108,18 +109,11 @@ button, body, div, input {
 }
 
 .TextDetail {
-/* 	width: 70%; */
-/* 	padding-left: 3px; */
-/* 	border-radius: 8px; */
-/* 	background-color: #f0d8af; */
-	
 	min-height: 300px;
-
-
 	border: 1px solid #A66A3F;
 	background-color: #fbe5c0;
 	width: 970px;
-	height: 35px;
+	height: auto;
 	top: 30px;
 	left: 0;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -130,8 +124,7 @@ button, body, div, input {
 	font-size: 15px;
 	padding: 2px;
 	outline: none;
-	
-	
+	resize: none; /*늘어나기 방지*/
 }
 
 .fileDetail {
@@ -260,7 +253,7 @@ button, body, div, input {
 		<div class="headBox">새 게시글 작성</div>
 
 		<form action="/board/insert" method="post" class="frm">
-			<div class="meetingDetail">
+			<div class="writeDetail">
 				<div class="titleDiv">
 					<div class="title">제목</div>
 					<div class="titleContent">

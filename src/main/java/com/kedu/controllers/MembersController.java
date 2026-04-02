@@ -56,8 +56,10 @@ public class MembersController {
 		
 		if(result == 1) {
 			String nickname = dao.nickname(mem_id);
+			String address = dao.address(mem_id); // 로그인 아이디로 주소 저장(00동 출력용)
 			session.setAttribute("loginId", mem_id); 
 			session.setAttribute("nickname", nickname);
+			session.setAttribute("address", address);// 로그인 아이디로 주소 저장(00동 출력용)
 			return "redirect:/";
 		} else if(result == 0){
 			rttr.addFlashAttribute("msg", "pwFail");
