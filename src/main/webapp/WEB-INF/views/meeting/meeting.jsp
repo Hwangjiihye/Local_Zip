@@ -109,12 +109,12 @@ body {
 	transition: all 0.2s ease;
 }
 
-.categoryBtnAll:hover, .navicon:hover {
+.categoryBtnAll:hover, .navicon:hover, .topBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.categoryBtnAll:active, .navicon:active{
+.categoryBtnAll:active, .navicon:active, .topBtn:active{
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -132,8 +132,8 @@ body {
      font-weight: bold;
      width: 100px;
 	 height: 40px;
+	 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
-
 
 .bottomBar {
 	border: 1px solid #A66A3F;
@@ -281,7 +281,7 @@ body {
 		<div class="top-section">
 			<div class="mainTitle">
 			<span>동네 모임.zip</span>
-			<button class="topBtn" type="button">+ 모임 만들기</button>
+			<a href="/meeting/meetCreate"><button class="topBtn" type="button">+ 모임 만들기</button></a>
 			</div>
 			
 			<div class="categoryDiv">
@@ -341,7 +341,7 @@ body {
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-			<a><i class="navicon fa-solid fa-volume-high fa-2xl" style="color: #A66A3F"></i></a>
+			<a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 		
