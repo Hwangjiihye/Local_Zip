@@ -39,19 +39,20 @@ public class BoardController {
 	
 	@RequestMapping("/insert")
 	public String insert(BoardDTO dto, HttpSession session) throws Exception{
-		
-		//db되는 카테고리 확인용
-	    System.out.println(dto.getPost_category());
 	    
 	    String mem_id = (String)session.getAttribute("loginId");
 		
 		int result = dao.insert(dto, mem_id);
 		
-		if(result > 0) {
-			System.out.println("게시글 등록 완료되었습니다.");
-		}
-		
 		return "redirect:/";
+	}
+	
+	
+	//생활정보 jsp에 생활정보 카테고리 list만 출력
+	@RequestMapping("/list_lifeInfo")
+	public String list_lifeInfo() {
+		
+		return "redirect: /board/lifeInfo";
 	}
 
 
