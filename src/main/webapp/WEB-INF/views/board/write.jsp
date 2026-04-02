@@ -90,9 +90,10 @@ button, body, div, input {
 	box-sizing: border-box;
 }
 
-.meetingDetail {
+.writeDetail {
 	margin: auto;
 	width: 80%;
+	height: auto;
 	border-radius: 10px;
 	background-color: #fbe5c0;
 	padding: 35px;
@@ -108,18 +109,11 @@ button, body, div, input {
 }
 
 .TextDetail {
-/* 	width: 70%; */
-/* 	padding-left: 3px; */
-/* 	border-radius: 8px; */
-/* 	background-color: #f0d8af; */
-	
 	min-height: 300px;
-
-
 	border: 1px solid #A66A3F;
 	background-color: #fbe5c0;
 	width: 970px;
-	height: 35px;
+	height: auto;
 	top: 30px;
 	left: 0;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -130,8 +124,7 @@ button, body, div, input {
 	font-size: 15px;
 	padding: 2px;
 	outline: none;
-	
-	
+	resize: none; /*늘어나기 방지*/
 }
 
 .fileDetail {
@@ -259,8 +252,8 @@ button, body, div, input {
 	<div class="container">
 		<div class="headBox">새 게시글 작성</div>
 
-		<form action="">
-			<div class="meetingDetail">
+		<form action="/board/insert" method="post" class="frm">
+			<div class="writeDetail">
 				<div class="titleDiv">
 					<div class="title">제목</div>
 					<div class="titleContent">
@@ -274,14 +267,13 @@ button, body, div, input {
 					<div class="categoryGuide">
 						카테고리를 선택하세요 <i class="icon fa-solid fa-sort fa-lg" style="color: #A66A3F;"></i>
 					</div>
-					<select class="report">
-						<option class="report-menu">생활정보</option>
-						<option class="report-menu">맛집/카페</option>
-						<option class="report-menu">고민/이야기</option>
-						<option class="report-menu">미용/패션</option>	
+					<select class="report" name="post_category">
+						<option value="">-- 카테고리 선택 --</option> <!-- 빈 값 추가 -->
+						<option value="lifeInfo" class="report-menu">생활정보</option>
+						<option value="food" class="report-menu">맛집/카페</option>
+						<option value="talk" class="report-menu">고민/이야기</option>
+						<option value="beauty" class="report-menu">미용/패션</option>	
 					</select>
-					
-					<input name="post_category" class="report" type="hidden">
 				</div>
 	
 	
@@ -297,14 +289,14 @@ button, body, div, input {
 	
 				<div class="TextDiv">
 					<div class="TextTitle">내용</div>
-					<textarea class="TextDetail" type="text" placeholder="내용을 작성해주세요" maxlength="1000" style="border: #fbe5c0"></textarea>
+					<textarea name="post_contents" class="TextDetail" type="text" placeholder="내용을 작성해주세요" maxlength="1000" style="border: #fbe5c0"></textarea>
 				</div>
 	
 	
 			</div>
 	
 				<div class="bottomBtn">
-					<button class="requestBtn">작성 완료</button>
+					<button class="requestBtn" type="submit">작성 완료</button>
 					<a href="/"><button class="backBtn" type="button">뒤로가기</button></a>
 				</div>
 
@@ -318,6 +310,35 @@ button, body, div, input {
 				"display" : "inline"
 			});
 		});
+		
+		
+		// submit 전 공백에 대한 안내메시지
+		$(".frm").on("submit",function(){
+			
+			// 공백 예외 처리
+			if($(".inputBox").val() == ""){
+				alert("제목을 입력해주세요.");
+				$(".inputBox").focus();
+				return false;
+				
+			}else if($(".report").val() == ""){
+				alert("카테고리를 선택해주세요.");
+				$(".report").focus();
+				return false;
+				
+			}else if($(".TextDetail").val() == ""){
+				alert("내용을 입력해주세요.");
+				$(".TextDetail").focus();
+				return false;
+				
+			}
+			
+			alert("글이 등록되었습니다!");
+			return true;
+			
+		});
+		
+		
 	</script>
 
 
