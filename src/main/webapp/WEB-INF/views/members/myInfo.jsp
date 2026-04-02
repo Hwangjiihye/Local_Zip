@@ -257,11 +257,11 @@
 	            <input type="hidden" id="input_zip_code" name="mem_zip_code">
 	            <input type="hidden" id="input_address1" name="mem_address1">
 	            <input type="hidden" id="input_address2" name="mem_address2">
-	            <input type="hidden" id="input_id" name="mem_id" value="${loginId}">
+	            <input type="hidden" id="mem_id" name="mem_id" value="${loginId}">
 	            
 	            <div class="btnDiv">
 	            	<input class="updateBtn update_deleteBtn" type="button" value="정보 수정">
-	            	<input class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴">
+	            	<a href="/members/delete"><input class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴"></a>
 	            	<input class="completeBtn save_cancelBtn" type="submit" value="수정 완료">
 	            	<input class="cancelBtn save_cancelBtn" type="button" value="수정 취소">
 	            </div>
@@ -343,10 +343,8 @@
 						}
 					}).open();
     	})
-		
-		
-		
-		$(".frm").on("submit", function(e){
+    	
+    	$(".frm").on("submit", function(e){
 				e.preventDefault();
 				
 				// nickname 정규표현식
@@ -370,15 +368,15 @@
 				let phone = $(".phone").text().trim();
 				if (phone == "") {
 					alert("전화번호를 입력해주세요.");
-					phone.focus();
+					$(".phone").focus();
 					return false;
 				} else {
 					let regex = /^010[\d]{8}$/;
 					let phoneResult = regex.test(phone);
 					if (!phoneResult) {
 						alert("연락처 형식은 010********(8자) 입니다.");
-						phone.value = "";
-						phone.focus();
+						$(".phone").text("");
+						$(".phone").focus();
 						return false;
 					}
 				}
@@ -387,15 +385,17 @@
 				let zip_code = $(".zonecode").text().trim();
 				if (zip_code == "") {
 					alert("우편번호 찾기를 눌러주세요.");
-					zip_code.focus();
+					$(".zonecode").focus();
 					return false;
 				}
+				
+	            $("#input_nickname").val($(".nickname").text().trim());
+	            $("#input_phone").val($(".phone").text().trim());
+	            $("#input_zip_code").val($(".zonecode").text().trim());
+	            $("#input_address1").val($(".address1").text().trim());
+	            $("#input_address2").val($(".address2").text().trim());
 	            
-	            $("input_nickname").val($(".nickname").html());
-	            $("input_phone").val($(".phone").html());
-	            $("input_zip_code").val($(".zonecode").html());
-	            $("input_address1").val($(".address1").html());
-	            $("input_address2").val($(".address2").html());
+	            this.submit();
 		})
 		
 		
