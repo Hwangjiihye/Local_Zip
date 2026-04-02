@@ -296,9 +296,8 @@
         /* 신고 영역 스타일 */
         .reportArea {
             position: relative;
-            top: 15px;
+            top: 8px;
             right: 20px;
-
             display: flex;
             flex-direction: column;
             /* 아이콘과 선택창을 세로로 배치 */
@@ -320,13 +319,27 @@
             background-color: #F2D3A2;
             color: #A66A3F;
             font-size: 12px;
-            padding: 2px;
             outline: none;
-
             display: none;
         }
-
-
+		.reportBtn{
+			background-color: #ffb300;
+			color: #5e361a;
+			border: 1px solid #ffb300;
+			border-radius: 10px;
+			font-weight: bold;
+			display: none;
+		}
+		.reportBtn:hover{
+			transform: translateY(-3px); /* 살짝 위로 뜸 */
+			box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+		}
+		
+		.reportBtn:active{
+			transform: translateY(2px); /* 아래로 눌림 */
+			box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+		}
+		
         .postMidBox {
             width: 100%;
             height: auto;
@@ -437,7 +450,6 @@
 
         hr {
             width: 97%;
-
             margin-bottom: 40px;
             border: 1px solid #cdaa69;
             ;
@@ -545,6 +557,7 @@
                             <option value="2" class="reportOption">욕설/비방</option>
                             <option value="3" class="reportOption">광고/스팸</option>
                         </select>
+                        <input class="reportBtn" type="submit" value="신고하기">
                     </div>
 
 
@@ -616,6 +629,7 @@
         // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
         $(".reportIcon").on("click", function () {
             $(".reportSelect").css({ "display": "inline" });
+            $(".reportBtn").css({"display": "inline"});
         })
 
 
