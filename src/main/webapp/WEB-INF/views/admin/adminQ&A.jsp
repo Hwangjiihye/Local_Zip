@@ -95,17 +95,17 @@ body {
 }
 
 .categoryBtnAll {
-	margin-left: 10px;
-	font-weight: bold;
+	margin-left: 20px;
 	background-color: #FFB300;
 	border-radius: 10px;
 	border: 1px solid #FFB300;
-	color: #3e5e40;
+	color: #286708;
 	height: 30px;
 	padding: 0 15px;
 	cursor: pointer;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	transition: all 0.2s ease;
+	line-height: 30px;
 }
 
 .categoryBtnAll:hover, .navicon:hover {
@@ -117,11 +117,6 @@ body {
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
-.categoryBtnAll:first-child {
-	margin-left: 25px;
-}
-
 
 .bottomBar {
 	border: 1px solid #A66A3F;
@@ -140,67 +135,126 @@ body {
 }
 
 .qaReplyDiv{
-	border: 1px solid black;
-	margin: 300px auto 0 auto;
-	width: 97%;
-}
-
-.qaContainer{
-	border: 2px solid #A66A3F;
-	margin: 10px 10px 10px 10px;
+	background-color: #fbe5c0;
+	border-radius:20px;
+	margin: 190px auto 0 auto;
+	width: 90%;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+	overflow: hidden;
 }
 
 .categoryAndWriterDiv{
+	width: 100%;
+	background-color:#F2D3A2;
 	display:flex;
 	justify-content: space-between;
 	align-items: center;
-	border: 1px solid black;
-	margin: 10px 10px 10px 10px;
-	font-size: 18px;
+	font-size: 14px;
+	border:none;
+	padding: 10px 15px;
+	margin:0;
+}
+
+.replyAdminId{
+	font-size: 14px;
 }
 
 .categoryAndWriter{
 	display:flex;
 	gap:20px;
+	align-items: center;
 }
 
-.titleAndContent>div{
-	border: 1px solid black;
+.content{
+	background-color:#F2D3A2;
 }
 
-.titleAndContent, .qaReply, .title, .content{
-	margin: 10px 5px 10px 5px;
+.title{
+	font-size: 25px;
+	padding: 20px 5px 10px 5px;
+	margin: 0 40px 0 40px;
 }
 
-.title, .content{
-	font-size: 30px;
+.content{
+	font-size: 18px;
+	padding: 10px 5px 10px 5px;
+	margin: 0 40px 0 40px;
+	border-radius: 10px;
 }
 
 .inputQaReply{
 	padding:5px;
 	background-color: #fbe5c0;
 	border-radius: 10px;
-	border:none;
+	border: 1px dotted #ffb300;
 	font-size:15px;
-	width: 400px;
+	width: 700px;
+	height: 40px;
+	margin: 0 0 7px 10px;
 	word-break: break-all;
 	white-space: normal; 
 }
 
+input{
+	outline: none;
+}
+
 .replyBtn{
-	 margin-left:auto;
+	 margin: 0 0 7px 20px;
 	 background-color: #ffb300;
-     color: #5e361a;
+     color: #286708;
      border: 1px solid #ffb300;
      border-radius: 10px;
-     font-weight: bold;
      width: 100px;
 	 height: 40px;
 	 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
-	
+
+.replyTextAndBtn{
+	display:flex;
+	align-items: center;
 }
 
+.qaReply{
+	padding: 10px;
+	margin: 10px 10px 10px 15px;
+	border-radius: 10px;
+}
+
+.adminProfileDiv{
+	display:flex;
+	align-items:center;
+	gap: 21px;
+}
+
+.category{
+	font-size:14px;
+    height: 25px;
+	background-color: #FFB300;
+	border-radius: 10px;
+	border: 1px solid #FFB300;
+	color: #3e5e40;
+	align-items: center;
+	vertical-align: middle;
+	line-height: 17px;
+	padding:5px;
+}
+
+.contentProfile{
+   	margin-top: 4px;
+    width: 80px;
+    height: 80px;
+    border-radius: 70%;
+    object-fit: cover;
+}
+
+.profileImg{
+   	margin-top: 4px;
+    width: 80px;
+    height: 80px;
+    border-radius: 70%;
+    object-fit: cover;
+}
 </style>
 </head>
 
@@ -211,27 +265,31 @@ body {
 			<div class="mainTitle">관리자.zip</div>
 			<div class="categoryDiv">
 				<a href="/admin/adminPage"><button class="categoryBtnAll">
-					<i class="fa-solid fa-chart-column"> 대시보드</i>
+					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-user"> 회원관리</i>
+					<i class="fa-solid fa-user fa-lg"></i> 회원관리
 				</button>
 				<a href="/admin/adminQA"><button class="categoryBtnAll">
-					<i class="fa-solid fa-headset"> 고객지원</i>
+					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>
 				<button class="categoryBtnAll">
-					<i class="fa-solid fa-bullhorn"> 공지사항</i>
+					<i class="fa-solid fa-bullhorn fa-lg"></i> 공지사항
 				</button>
 			</div>
 		</div>
 		
 		
 		<div class="qaReplyDiv">
-			<div class="qaContainer">
+<!-- 			<div class="qaContainer"> -->
 				<div class="categoryAndWriterDiv">
 		            <div class="categoryAndWriter">
+		            <div class="postProfile">
+                        <img class="contentProfile" src="/resources/images/user1.png" width="60px">
+                    </div>
+		           		<div class="writer">작성자:홍길동</div> 
 		             	<div class="category">문의유형</div>
-		             	<div class="writer">작성자:홍길동</div> 
+		             	
 		           	</div>
 		           	
 		           	<div class="writeData">작성일시</div> 
@@ -243,15 +301,20 @@ body {
 	                <div class="content">내용</div>
 	            </div>
 	            
-			</div>
+<!-- 			</div> -->
 	             
-	             <div class="replyProfile"><img src="/resources/images/adminProfile.png" width="60px"></div>
+	             
 	        <div class="qaReply">
-	        		
+	        	<div class="adminProfileDiv">
+	        		<div class="replyProfile"><img src="/resources/images/adminProfile.png" width="60px" class="profileImg"></div>
+	        		<div class="replyAdminId">관리자</div>
+        		</div>
+        		<div class="replyTextAndBtn">
 	            	<input type="text" placeholder="댓글을 입력하세요." class="inputQaReply">
 					<button class="replyBtn" type="button">등록</button>
-	        </div>      
-		</div>
+				</div>
+	        	</div>      
+			</div>
                   
 
 

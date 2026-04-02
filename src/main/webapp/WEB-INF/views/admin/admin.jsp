@@ -95,8 +95,7 @@ body {
 }
 
 .categoryBtnAll {
-	margin-left: 10px;
-	font-weight: bold;
+	margin-left: 20px;
 	background-color: #FFB300;
 	border-radius: 10px;
 	border: 1px solid #FFB300;
@@ -106,6 +105,7 @@ body {
 	cursor: pointer;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	transition: all 0.2s ease;
+	line-height: 30px;
 }
 
 .categoryBtnAll:hover, .navicon:hover {
@@ -118,9 +118,6 @@ body {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.categoryBtnAll:first-child {
-	margin-left: 25px;
-}
 
 .menuDiv{
 	width: 1600px;
@@ -281,16 +278,16 @@ body {
 			<div class="mainTitle">관리자.zip</div>
 			<div class="categoryDiv">
 				<a href="/admin/adminPage"><button class="categoryBtnAll" type="button">
-					<i class="fa-solid fa-chart-column"> 대시보드</i>
+					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
 				<button class="categoryBtnAll" type="button">
-					<i class="fa-solid fa-user"> 회원관리</i>
+					<i class="fa-solid fa-user fa-lg"></i> 회원관리
 				</button>
 				<a href="/admin/adminQA"><button class="categoryBtnAll" type="button">
-					<i class="fa-solid fa-headset"> 고객지원</i>
+					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>
 				<button class="categoryBtnAll" type="button">
-					<i class="fa-solid fa-bullhorn"> 공지사항</i>
+					<i class="fa-solid fa-bullhorn fa-lg"></i> 공지사항
 				</button>
 			</div>
 		</div>
