@@ -129,14 +129,20 @@
 
         }
 
-        .postUpBox, .replyUpBox {
+        .postUpBox {
             width: 100%;
             height: 95px;
             display: flex;
             border-radius: 10px 10px 0 0;
             background-color: #F2D3A2;
         }
-
+		.replyUpBox {
+			width: 100%;
+			min-height: 95px;
+			height: auto;
+            display: flex;
+            background-color: #fbe5c0;
+		}
 
         .postProfile, .replyProfileBox {
             width: 75px;
@@ -171,15 +177,30 @@
             flex-grow: 1;
             /* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
         }
-
+		.replyInfoBox{
+			width: 300px;
+		    min-height: 50px;
+			position: relative;
+		    left: 20px;
+		    top: 20px;
+			flex-grow: 1;
+		}
         .postInfoUp,
-        .postInfoDown {
+        .postInfoDown,
+        .replyInfoUp,
+        .replyInfoDown{
             display: flex;
             color: #5e361a;
         }
-
-
-        .profileInfo {
+		.replyInfoDown{
+			margin-top: -20px;
+			width: 70%;
+			min-height: 40px;
+			border-radius: 5px;
+			background-color: #f0d8af;
+		}
+        .profileInfo,
+        .replyInfo {
             width: auto;
             margin-right: 15px;
             /* 정보 사이의 간격 일정하게 부여 */
@@ -196,14 +217,15 @@
         /* 신고 영역 스타일 */
         .reportArea {
             position: relative;
-            top: 8px;
-            right: 20px;
+            top: -30px;
+            right: 23px;
             display: flex;
             flex-direction: column;
             /* 아이콘과 선택창을 세로로 배치 */
             align-items: flex-end;
             /* 오른쪽 정렬 */
             gap: 5px;
+            
         }
 
         .reportIcon {
@@ -319,13 +341,15 @@
             color: red;
         }
 
-        .navicon:hover {
+        .navicon:hover,
+        .applyBtn:hover {
             transform: translateY(-3px);
             /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .navicon:active {
+        .navicon:active,
+        .applyBtn:active {
             transform: translateY(2px);
             /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -383,18 +407,18 @@
             font-size: x-large;
             font-weight: bold;
             color: #A66A3F;
-            margin-top: 30px;
-            margin-left: 40px;
+            margin-top: 20px;
+            margin-left: 210px;
      	}
      	.newReplyBox{
      		display: flex;
+     		background-color: #F2D3A2;
      	}
      	.newReplyDiv{
-     		width: 80%;
-     		box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+     		width: 90%;
             border-radius: 10px;
-            margin-top: 10px;
-            margin-left: 5px;
+            margin: 15px;
+            margin-left: 65px;
      	}
      	.newReply{
      		width: 100%;
@@ -402,9 +426,12 @@
      		border-radius: 10px;
      		border: none;
      		font-family: 'GMarketSans';
+     		color: #5e361a;
+     		outline: none;
+     		resize: none;
      	}
      	.applyBtnDiv{
-     		width: 20%;
+     		width: 10%;
      	}
      	.applyBtn{
      		background-color: #ffb300;
@@ -412,9 +439,14 @@
 	        border: 1px solid #ffb300;
 	        border-radius: 10px;
 	        font-weight: bold;
-	        margin-left: 5px;
-    		margin-top: -3px;
-    		width: 
+	        margin-left: 10px;
+    		margin-top: 20px;
+    		width: 60px;
+    		height: 40px;
+    		font-size: medium;
+     	}
+     	.writeTime{
+     		margin-top: -5px;
      	}
     </style>
 
@@ -475,7 +507,7 @@
 					<div class="replyBox">
 						<div class="newReplyBox">
 							<div class="newReplyDiv">
-								<textarea class="newReply" placeholder="댓글을 입력하세요."></textarea>
+								<textarea class="newReply" type="text" placeholder="댓글을 입력하세요."></textarea>
 							</div>
 							<div class="applyBtnDiv">
 								<input class="applyBtn" type="submit" value="등록">
@@ -488,8 +520,8 @@
 		
 		                    <div class="replyInfoBox">
 		                        <div class="replyInfoUp">
-		                            <div class="writerName replyInfo">댓글작성자</div>
-		                            <div class="writeTime replyInfo">00시간 전</div>
+		                            <div class="writerName replyInfo" style="color: #5e361a;">댓글작성자</div>
+		                            <div class="writeTime replyInfo" style="color: #5e361a;">00시간 전</div>
 		                        </div>
 								<div class="reportArea">
 									<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px"></img>
@@ -503,7 +535,7 @@
 			                    </div>
 			            
 		                        <div class="replyInfoDown">
-		                            <div class="replyContents replyInfo">댓글 내용</div>
+		                            <div class="replyContents replyInfo" style="color: #5e361a;">댓글 내용</div>
 		                        </div>
 		                    </div>
 		                 </div>   
