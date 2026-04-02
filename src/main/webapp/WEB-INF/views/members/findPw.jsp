@@ -103,6 +103,8 @@ label {
 	border-radius: 5px;
 	box-sizing: border-box;
 	background-color: #fbe5c0;
+	color : #5e361a;
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 .mem_id {
     margin-right: 80px; 

@@ -89,11 +89,18 @@ label {
 	text-align: right;
 	margin-right: 10px;
 	font-weight: bold;
+	margin-left : 14px;
 }
 
 .email, .auth_code {
 	width: 300px;
 	padding: 5px;
+	background-color: #fbe5c0;
+	border-radius: 5px;
+	border : 0px;
+	color : #5e361a;
+	height : 30px;
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 hr {
@@ -113,6 +120,7 @@ hr {
 	font-weight: bold;
 	height: 40px;
 	width: 90px;
+	margin-left : 16px;
 }
 
 .backBtn, .loginBtn {
