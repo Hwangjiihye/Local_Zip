@@ -24,7 +24,12 @@ public class AdminController {
 	private UserQaDAO udao;
 	
 	@RequestMapping("/adminPage")
-	public String test() {
+	public String test(HttpSession session) {
+		int qaCount = dao.qaCount();
+		int memberCount = dao.activityMemberCount();
+		
+		session.setAttribute("qaCount", qaCount);
+		session.setAttribute("memberCount", memberCount);
 		return "admin/admin";
 	}
 	
@@ -43,8 +48,7 @@ public class AdminController {
 		String adminId = (String) session.getAttribute("loginId");
 	    dto.setMem_admin_id(adminId);
 	    dao.updateReply(dto, qa_seq);
-	    System.out.println("문의글 시퀀스 " + dto.getQa_seq() + " 답변 내용 " + dto.getAdmin_answer() + " 관리자 ID " + dto.getMem_admin_id() + " 세션에 넣은 어드민 아이디" + adminId);
-		
+	    
 		return "redirect:/admin/adminQA";
 	}
 	

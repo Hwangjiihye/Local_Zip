@@ -168,7 +168,7 @@ body {
  	border:none;
  	margin: 0 0 5px 0;
  	font-size:15px;
- 	width: 700px;
+ 	width: 835px;
  	height: 40%;
  	word-break: break-all;
  	white-space: normal;
@@ -177,8 +177,21 @@ body {
  	font-family: 'GMarketSans';
 }
 
+.answerDiv{
+	padding:5px;
+ 	background-color: #F2D3A2;
+ 	color: #A66A3F;
+ 	border-radius: 10px;
+ 	border:none;
+ 	margin: 0 0 5px 0;
+ 	font-size: 15px;
+ 	width: 970px;
+ 	height: 40%;
+ 	font-family: 'GMarketSans';
+}
+
 .replyBtn{
- 	 margin: 0 0 7px 20px;
+ 	 margin: 0 0 7px 15px;
  	 background-color: #ffb300;
      color: #5e361a;
      border: 1px solid #ffb300;
@@ -296,10 +309,6 @@ body {
         transform: translateX(-20px);
     }
     .pageBox span { margin: 0 10px; cursor: pointer; }
-	
-	.answerDiv{
-		border:1px solid black;
-	}
  
 </style>
 </head>
@@ -378,13 +387,7 @@ body {
 			        	<div class="adminProfileDiv">
 			        		<div class="replyAdminId">관리자</div>
 		        		</div>
-	        		<form action="/admin/answer" method="post">
-	        			<input type="hidden" name="qa_seq" value="${i.qa_seq}">
-	        			
-		        		<div class="replyTextAndBtn">
 			            	<div class="answerDiv">${i.admin_answer}</div>
-						</div>
-					</form>
 	        		</div>  
 	        	</div> 
         	</c:when>

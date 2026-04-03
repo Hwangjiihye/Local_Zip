@@ -12,6 +12,7 @@ import com.kedu.dto.QaDTO;
 @Repository
 public class AdminQaDAO {
 	
+	
 	@Autowired
 	private JdbcTemplate jdbc;
 	
@@ -23,5 +24,15 @@ public class AdminQaDAO {
 	public int updateReply(QaDTO dto, int seq) {
 		String sql = "update qa set admin_answer =?, admin_answer_date = sysdate, qa_status = 1, mem_admin_id=? where qa_seq =?";
 		return jdbc.update(sql, dto.getAdmin_answer(), dto.getMem_admin_id(), seq);
+	}
+	
+	public int qaCount() {
+		String sql = "select count(*) from qa where qa_status = 0";
+		return jdbc.queryForObject(sql, Integer.class);
+	}
+	
+	public int activityMemberCount() {
+		String sql = "select count(*) from members where mem_status = 0 and mem_role = 1";
+		return jdbc.queryForObject(sql, Integer.class);
 	}
 }
