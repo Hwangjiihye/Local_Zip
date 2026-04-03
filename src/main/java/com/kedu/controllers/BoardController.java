@@ -42,8 +42,10 @@ public class BoardController {
 	public String insert(BoardDTO dto, HttpSession session) throws Exception{
 	    
 	    String mem_id = (String)session.getAttribute("loginId");
+		String mem_nickname = (String)session.getAttribute("nickname");
+		String mem_dong = (String)session.getAttribute("dong");
 		
-		dao.insert(dto, mem_id);
+		dao.insert(dto, mem_id, mem_nickname, mem_dong);
 		
 		return "redirect:/";
 	}

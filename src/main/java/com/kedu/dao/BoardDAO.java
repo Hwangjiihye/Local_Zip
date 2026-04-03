@@ -17,10 +17,10 @@ public class BoardDAO {
 	
 	
 	//db에 게시글 등록
-	public int insert(BoardDTO dto, String mem_id) throws Exception{
-		String sql = "insert into post values(post_seq.nextval,?,?,?,?,?,?,sysdate)";
-		return jdbc.update(sql, dto.getPost_category(), mem_id, dto.getPost_hit(),
-				dto.getPost_title(), dto.getPost_contents(), dto.getPost_like());
+	public int insert(BoardDTO dto, String mem_id, String mem_nickname, String mem_dong) throws Exception{
+		String sql = "insert into post values(post_seq.nextval,?,?,?,?,?,?,?,?,sysdate)";
+		return jdbc.update(sql, dto.getPost_category(), mem_id, mem_nickname, mem_dong, 
+				dto.getPost_hit(),dto.getPost_title(), dto.getPost_contents(), dto.getPost_like());
 	}
 	
 	//db에 생활정보 리스트 출력(최신순)

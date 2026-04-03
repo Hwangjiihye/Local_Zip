@@ -356,8 +356,10 @@
             width: 95%;
             height: 40px;
 
-            font-size: 25px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            margin-top: 5px;
+            
+            line-height: 40px;
         }
 
         .postContent {
@@ -503,6 +505,18 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
         
+  		.emptyBox{
+ 			
+  			width: 100%;
+  			height: 600px;
+  			
+  			font-size: 25px;
+  			
+  			color: #5e361a;
+  			
+  			text-align: center;
+  		}
+        
         
     </style>
 
@@ -525,81 +539,92 @@
 
         <hr>
 
-        <div class="bodyBox">
-
-            <div class="orderBox">
-                <button class="orderNew orderBtn" type="button">최신순</button>
-                <button class="orderPopular orderBtn" type="button">인기순</button>
-            </div>
-
-		<c:forEach var="i" items="${lifeInfo}">
-            <div class="postBox">
-			
-                <div class="postUpBox">
-
-                    <div class="postProfile">
-                        <img class="contentProfile" src="/resources/images/Profile.png" width="60px">
-                    </div>
-
-                    <div class="postInfoBox">
-                        <div class="postInfoUp">
-                            <div class="profileName profileInfo" style=color:#5e361a;>${nickname}</div>
-                            <div class="profileLocal profileInfo" style=color:#5e361a;>${dong}</div>
-                            <div class="profileCatagory profileInfo">
-                                <button class="topBtn" type="button" >생활정보</button>
-                            </div>
-                        </div>
-
-                        <div class="postInfoDown">
-                            <div class="profileTime profileInfo" style=color:#5e361a;>${i.post_date}</div>
-                        </div>
-                    </div>
-
-					<form action="">
-	                    <div class="reportArea">
-							<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-							<select class="reportSelect" name="reports_reason">
-                               <option value="" disabled selected>신고 사유</option>
-                               <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
-                               <option value="badWord" class="reportOption">욕설/비방</option>
-                               <option value="AD" class="reportOption">광고/스팸</option>
-                           </select>
-	                        <input class="reportBtn" type="submit" value="신고하기">
+	<c:choose>
+		<c:when test="${empty lifeInfo}">
+		
+			<div class="emptyBox">등록된 게시글이 없습니다.</div>
+		
+		</c:when>
+		
+		<c:otherwise>
+	        <div class="bodyBox">
+	
+	            <div class="orderBox">
+	                <button class="orderNew orderBtn" type="button">최신순</button>
+	                <button class="orderPopular orderBtn" type="button">인기순</button>
+	            </div>
+	
+			<c:forEach var="i" items="${lifeInfo}">
+	            <div class="postBox">
+				
+	                <div class="postUpBox">
+	
+	                    <div class="postProfile">
+	                        <img class="contentProfile" src="/resources/images/Profile.png" width="60px">
 	                    </div>
-					</form>
-
-                </div>
-
-                <div class="postMidBox">
-
-                    <div class="postTitle">${i.post_title}</div>
-                    <div class="postContent">${i.post_contents}</div>
-
-                </div>
-
-                <div class="postDownBox">
-
-                    <div class="postLikeBox">
-                        <i class="fa-regular fa-heart fa-xl beforeHeart"></i>
-                        <i class="fa-solid fa-heart fa-xl afterHeart"></i>
-
-                        <div>갯수</div>
-                    </div>
-
-                    <div class="postCommentBox">
-                        <i class="fa-regular fa-comment fa-xl comment"></i>
-
-                        <div>갯수</div>
-                    </div>
-
-                	</div>
-				</div>
+	
+	                    <div class="postInfoBox">
+	                        <div class="postInfoUp">
+	                            <div class="profileName profileInfo" style=color:#5e361a;>${i.mem_nickname}</div>
+	                            <div class="profileLocal profileInfo" style=color:#5e361a;>${i.mem_dong}</div>
+	                            <div class="profileCatagory profileInfo">
+	                                <button class="topBtn" type="button" >생활정보</button>
+	                            </div>
+	                        </div>
+	
+	                        <div class="postInfoDown">
+	                            <div class="profileTime profileInfo" style=color:#5e361a;>${i.post_date}</div>
+	                        </div>
+	                    </div>
+	
+						<form action="">
+		                    <div class="reportArea">
+								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+								<select class="reportSelect" name="reports_reason">
+	                               <option value="" disabled selected>신고 사유</option>
+	                               <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
+	                               <option value="badWord" class="reportOption">욕설/비방</option>
+	                               <option value="AD" class="reportOption">광고/스팸</option>
+	                           </select>
+		                        <input class="reportBtn" type="submit" value="신고하기">
+		                    </div>
+						</form>
+	
+	                </div>
+	
+	                <div class="postMidBox">
+	
+	                    <div class="postTitle">${i.post_title}</div>
+	                    <div class="postContent">${i.post_contents}</div>
+	
+	                </div>
+	
+	                <div class="postDownBox">
+	
+	                    <div class="postLikeBox">
+	                        <i class="fa-regular fa-heart fa-xl beforeHeart"></i>
+	                        <i class="fa-solid fa-heart fa-xl afterHeart"></i>
+	
+	                        <div>갯수</div>
+	                    </div>
+	
+	                    <div class="postCommentBox">
+	                        <i class="fa-regular fa-comment fa-xl comment"></i>
+	
+	                        <div>갯수</div>
+	                    </div>
+	
+	                	</div>
+					</div>
 				</c:forEach>
-            </div>
+	          </div>
+	          
+	          <div class="pageBox">1 2 3</div>
+	          
+           </c:otherwise>
+        </c:choose>
 
-        </div>
-
-        <div class="pageBox">1 2 3</div>
+        
         
         <a href="/board/write"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
         
