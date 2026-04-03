@@ -79,7 +79,7 @@ public class MembersController {
 			String dong = dao.address(mem_id); // 로그인 아이디로 주소 저장(00동 출력용)
 			session.setAttribute("loginId", mem_id); 
 			session.setAttribute("nickname", nickname);
-			session.getAttribute("dong");// 로그인 아이디로 주소 저장(00동 출력용)
+			session.setAttribute("dong", dong);// 로그인 아이디로 주소 저장(00동 출력용)
 			return "redirect:/";
 		} else if(result == 2){
 			session.setAttribute("loginId", mem_id); 

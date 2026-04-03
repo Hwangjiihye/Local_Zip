@@ -52,10 +52,12 @@ public class MembersDAO {
 		String admin = "select count(*) from members where mem_id = ? and mem_password = ? and mem_role = 0";
 		Integer adminCount = jdbc.queryForObject(admin, Integer.class, mem_id, EncryptionUtils.getSha512(mem_password));
 				
+		if(adminCount > 0) {
+			return 2;
+		}
+			
 		if(pwCount > 0) {
 			return 1; // id, pw 있음(로그인 성공)
-		}else if(adminCount > 0) {
-			return 2;
 		}else {
 			return 0; // id는 있고, pw 없음
 		}

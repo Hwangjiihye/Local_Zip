@@ -6,7 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kedu.dao.BoardDAO;
@@ -29,8 +31,24 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/concern")
-	public String concern() {
-		return "board/concern";
+	public String concern(String sort, Model model) throws Exception {
+		
+		if(sort == null){
+			sort = "latest";
+		}
+	    List<BoardDTO> list;
+	    
+	    // 출력을 어떤 종류를 기준으로 할 지 검사
+	    if ("like".equals(sort)) {
+	        list = dao.list_concern_like();
+	    } else {
+	        list = dao.list_concern_latest();
+	    }
+
+	    model.addAttribute("list", list);
+	    model.addAttribute("sort",sort);
+
+	    return "board/concern";
 	}
 	
 	@RequestMapping("/write")
@@ -44,7 +62,7 @@ public class BoardController {
 	    String mem_id = (String)session.getAttribute("loginId");
 		String mem_nickname = (String)session.getAttribute("nickname");
 		String mem_dong = (String)session.getAttribute("dong");
-		
+		System.out.println(mem_dong);
 		dao.insert(dto, mem_id, mem_nickname, mem_dong);
 		
 		return "redirect:/";
@@ -53,52 +71,14 @@ public class BoardController {
 	
 	//생활정보 jsp에 생활정보 카테고리 list만 출력
 	@RequestMapping("/list_lifeInfo")
-	public String list_lifeInfo(HttpSession session) throws Exception{
+	public String list_lifeInfo(Model model) throws Exception{
 		
 		List<BoardDTO> list = dao.list_lifeInfo();
 		
-		session.setAttribute("lifeInfo", list);
+		model.addAttribute("lifeInfo", list);
 		
-		return "redirect: /board/lifeInfo";
+		return "board/life-info";
 	}
-
-
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
