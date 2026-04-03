@@ -125,6 +125,21 @@
 		<input id="use" class="okBtn" type="submit" value="완료">
 	</div>
 </form>	
+	
+	<script>
+	$(".okBtn").on("click", function(){
+		
+		let intro = document.getElementById("intro").value;
+		
+		if(intro == ""){
+			alert("한 줄 소개를 작성해주세요")
+			return false;
+		} else {
+			return true;
+		}
+	})
+	
+	</script>
 
 </body>
 </html>

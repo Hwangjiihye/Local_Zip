@@ -31,6 +31,9 @@ public class MeetingMemberController {
 		
 		dao.insert(dto);
 		
+		String meetmem_contents = (String)session.getAttribute("meetmem_contents");
+		dto.setMeetmem_contents(meetmem_contents);
+		
 		return "meeting/applySuccess";
 	}
 }
