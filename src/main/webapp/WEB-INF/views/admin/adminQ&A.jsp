@@ -296,7 +296,10 @@ body {
         transform: translateX(-20px);
     }
     .pageBox span { margin: 0 10px; cursor: pointer; }
-
+	
+	.answerDiv{
+		border:1px solid black;
+	}
  
 </style>
 </head>
@@ -351,10 +354,12 @@ body {
 	                </div>
             	</div>
         		</div>
+      	<c:choose>
+      		<c:when test=${i.qa_status == 0}>
         	<div class="qaReply">
         			<div class="qaReplyRow">
 			        	<div class="adminProfileDiv">
-			        		<div class="replyAdminId">관리자 ${i.admin_answer}</div>
+			        		<div class="replyAdminId">관리자</div>
 		        		</div>
 	        		<form action="/admin/answer" method="post">
 	        			<input type="hidden" name="qa_seq" value="${i.qa_seq}">
@@ -366,9 +371,27 @@ body {
 					</form>
 	        		</div>  
 	        	</div> 
+        	</c:when>
+        	<c:when test=${i.qa_status == 1}>
+	        	<div class="qaReply">
+        			<div class="qaReplyRow">
+			        	<div class="adminProfileDiv">
+			        		<div class="replyAdminId">관리자</div>
+		        		</div>
+	        		<form action="/admin/answer" method="post">
+	        			<input type="hidden" name="qa_seq" value="${i.qa_seq}">
+	        			
+		        		<div class="replyTextAndBtn">
+			            	<div class="answerDiv">${i.admin_answer}</div>
+						</div>
+					</form>
+	        		</div>  
+	        	</div> 
+        	</c:when>
+        	</c:choose>
     		</div>
    			
-   			  
+  		
 		</c:forEach>
 		<div class="pageBox">
 		        <i class="fa-solid fa-chevron-left"></i>
