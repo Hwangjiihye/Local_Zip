@@ -242,7 +242,7 @@ body {
 			</c:forEach>
 	</div>
 		<div class="bottomBtn">
-			<button class="requestBtn" type="button">신청하기</button>
+				<button class="requestBtn" type="submit">신청하기</button>
 			<a href="/meeting/list"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>
 		

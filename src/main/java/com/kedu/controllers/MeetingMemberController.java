@@ -31,6 +31,6 @@ public class MeetingMemberController {
 		
 		dao.insert(dto);
 		
-		return "redirect:/meeting/list";
+		return "meeting/applySuccess";
 	}
 }
