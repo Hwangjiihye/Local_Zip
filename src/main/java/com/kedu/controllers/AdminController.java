@@ -37,4 +37,15 @@ public class AdminController {
 		return "admin/adminQ&A";
 	}
 	
+	@RequestMapping("/answer")
+	public String answer(QaDTO dto, int qa_seq, HttpSession session) {
+		
+		String adminId = (String) session.getAttribute("loginId");
+	    dto.setMem_admin_id(adminId);
+	    dao.updateReply(dto, qa_seq);
+	    System.out.println("문의글 시퀀스 " + dto.getQa_seq() + " 답변 내용 " + dto.getAdmin_answer() + " 관리자 ID " + dto.getMem_admin_id() + " 세션에 넣은 어드민 아이디" + adminId);
+		
+		return "redirect:/admin/adminQA";
+	}
+	
 }

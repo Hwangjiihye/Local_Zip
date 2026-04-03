@@ -354,12 +354,14 @@ body {
         	<div class="qaReply">
         			<div class="qaReplyRow">
 			        	<div class="adminProfileDiv">
-			        		<div class="replyAdminId">관리자</div>
+			        		<div class="replyAdminId">관리자 ${i.admin_answer}</div>
 		        		</div>
-	        		<form>
+	        		<form action="/admin/answer" method="post">
+	        			<input type="hidden" name="qa_seq" value="${i.qa_seq}">
+	        			
 		        		<div class="replyTextAndBtn">
-			            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply"></textarea>
-							<button class="replyBtn" type="button">등록</button>
+			            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply" name="admin_answer"></textarea>
+							<button class="replyBtn" type="submit">등록</button>
 						</div>
 					</form>
 	        		</div>  

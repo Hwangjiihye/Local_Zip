@@ -20,7 +20,8 @@ public class AdminQaDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class));
 	}
 	
-//	public int updateReply() {
-//		String sql = "update qa set admin_answer =?, admin_answer_date = sysdate, qa_status = 1 where qa_seq =?";
-//	}
+	public int updateReply(QaDTO dto, int seq) {
+		String sql = "update qa set admin_answer =?, admin_answer_date = sysdate, qa_status = 1, mem_admin_id=? where qa_seq =?";
+		return jdbc.update(sql, dto.getAdmin_answer(), dto.getMem_admin_id(), seq);
+	}
 }
