@@ -327,7 +327,7 @@ body {
 		</div>
 			
 			<c:forEach var="i" items="${list}">
-				<div class="meeting-card">
+				<div class="meeting-card" data-seq="${i.meet_seq}">
 					<div class="card-header">
 						<div class="title">${i.meet_title}</div>
 							<div class="reportDiv">
@@ -384,9 +384,8 @@ body {
 			});
 			
 			$(document).on("click", ".meeting-card", function(){
-// 			    let seq = $(this).data("seq");
-// 			    location.href = "/detail?seq=" + seq; 모임카드의 시퀀스
-				location.href = "/meeting/meetingDetail";
+			    let seq = $(this).data("seq");
+			    location.href = "/meeting/meetingDetail?seq=" + seq;
 			});
 			
 			$(document).on("click", ".join-btn, .reportIcon", function (e) {
