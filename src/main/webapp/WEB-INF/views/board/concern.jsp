@@ -351,8 +351,8 @@
             width: 95%;
             height: 40px;
 
-            font-size: 25px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            color: #5e361a;
         }
 
         .postContent {
@@ -362,17 +362,16 @@
             height: 1.5em;       /* 한 줄 높이만큼 고정 */
     		line-height: 1.5em;
 
-            font-size: 18px;
+            font-size: 15px;
 
             background-color: #f0d8af;
             border-radius: 5px;
-            
             padding: 0 10px;
-             
             white-space: nowrap;
             overflow: hidden;
     		text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
     		display: block;
+    		color: #5e361a;
         }
 
 
@@ -382,6 +381,7 @@
 
             min-height: 40px;
             display: flex;
+            color: #5e361a;
         }
 
         .postLikeBox,
@@ -529,7 +529,7 @@
                 <button class="orderPopular orderBtn" type="button">인기순</button>
             </div>
 
-            <a href="/board/postDetail"><div class="postBox">
+            <div class="postBox" onclick="location.href='/board/postDetail'">
 
                 <div class="postUpBox">
 
@@ -590,7 +590,7 @@
 
                 </div>
 
-            </div></a>
+            </div>
 
         </div>
 
@@ -634,6 +634,11 @@
             $(".reportSelect").css({ "display": "inline" });
             $(".reportBtn").css({"display": "inline"});
         })
+        
+        // 좋아요 버튼, 신고버튼 클릭 시에는 페이지 이동 X
+        $(".postLikeBox, .reportArea, .reportIcon, .reportSelect, .reportBtn").on("click", function (e) {
+		    e.stopPropagation();
+		});
     </script>
 
 </body>

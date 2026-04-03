@@ -109,6 +109,7 @@
             /* 최소 높이 지정 : 브라우저 */
             margin-top: 30px;
             color: #5e361a;
+            padding-bottom: 50px;
         }
         .postBox {
             /* 수정: 고정 1500px 제거 */
@@ -181,23 +182,31 @@
 			width: 300px;
 		    min-height: 50px;
 			position: relative;
-		    left: 20px;
-		    top: 20px;
 			flex-grow: 1;
+    		margin-top: 5px;
+    		margin-right:5px;
+    		margin-left: 20px;
 		}
         .postInfoUp,
         .postInfoDown,
-        .replyInfoUp,
-        .replyInfoDown{
+        .replyInfoUp{
             display: flex;
-            color: #5e361a;
+        }
+        .replyInfoUP{
+    		align-items: center;
+    		width: 100%;
+    		padding-right: 40px;
         }
 		.replyInfoDown{
-			margin-top: -20px;
+			margin-top: 0px;
 			width: 70%;
 			min-height: 40px;
 			border-radius: 5px;
 			background-color: #f0d8af;
+			color: #5e361a;
+			padding: 10px;
+		    line-height: normal;
+		    word-break: break-all;
 		}
         .profileInfo,
         .replyInfo {
@@ -216,16 +225,14 @@
 
         /* 신고 영역 스타일 */
         .reportArea {
-            position: relative;
-            top: -30px;
-            right: 23px;
             display: flex;
             flex-direction: column;
             /* 아이콘과 선택창을 세로로 배치 */
             align-items: flex-end;
-            /* 오른쪽 정렬 */
-            gap: 5px;
-            
+            margin-left: auto;
+            position: absolute;
+		    top: 5px;     /* 위에서 살짝 띄움 */
+		    right: 20px;  /* 오른쪽에서 살짝 띄움 */
         }
 
         .reportIcon {
@@ -273,8 +280,8 @@
             width: 95%;
             height: 40px;
 
-            font-size: 25px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            margin-top: 5px;
         }
 
         .postContent {
@@ -284,7 +291,7 @@
             height: 1.5em;       /* 한 줄 높이만큼 고정 */
     		line-height: 1.5em;
 
-            font-size: 18px;
+            font-size: 15px;
 
             background-color: #f0d8af;
             border-radius: 5px;
@@ -368,7 +375,6 @@
             z-index: 1000;
             border-top: 2px solid #A66A3F;
             background-color: #F2D3A2;
-
             gap: 200px;
         }
 
@@ -419,6 +425,7 @@
             border-radius: 10px;
             margin: 15px;
             margin-left: 65px;
+            margin-top: 20px;
      	}
      	.newReply{
      		width: 100%;
@@ -447,6 +454,9 @@
      	}
      	.writeTime{
      		margin-top: -5px;
+     	}
+     	hr{
+     		border: 1px dotted #5e361a;
      	}
     </style>
 
@@ -522,8 +532,7 @@
 		                        <div class="replyInfoUp">
 		                            <div class="writerName replyInfo" style="color: #5e361a;">댓글작성자</div>
 		                            <div class="writeTime replyInfo" style="color: #5e361a;">00시간 전</div>
-		                        </div>
-								<div class="reportArea">
+		                            <div class="reportArea">
 									<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px"></img>
 			                        <select class="reportSelect" name="reports_reason">
 			                            <option value="" disabled selected>신고 사유</option>
@@ -533,12 +542,14 @@
 			                        </select>
 			                        <input class="reportBtn" type="submit" value="신고하기">
 			                    </div>
-			            
+		                        </div>
 		                        <div class="replyInfoDown">
 		                            <div class="replyContents replyInfo" style="color: #5e361a;">댓글 내용</div>
 		                        </div>
+								
 		                    </div>
-		                 </div>   
+		                 </div>
+		                 <hr>
 					</div>
 				</div>
 	        <div class="bottomBox">
