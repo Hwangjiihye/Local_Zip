@@ -257,6 +257,7 @@
 	            <input type="hidden" id="input_zip_code" name="mem_zip_code">
 	            <input type="hidden" id="input_address1" name="mem_address1">
 	            <input type="hidden" id="input_address2" name="mem_address2">
+	            <input type="hidden" id="input_dong" name="mem_dong" value="${mem_dong}">
 	            <input type="hidden" id="mem_id" name="mem_id" value="${loginId}">
 	            
 	            <div class="btnDiv">
@@ -340,6 +341,7 @@
 							
 							$("#input_zip_code").html(data.zonecode);
 							$("#input_address1").html(data.roadAddress);
+							$("#input_dong").val(data.bname);
 						}
 					}).open();
     	})
@@ -394,6 +396,7 @@
 	            $("#input_zip_code").val($(".zonecode").text().trim());
 	            $("#input_address1").val($(".address1").text().trim());
 	            $("#input_address2").val($(".address2").text().trim());
+	            $("#input_dong").val($("#input_dong").val().trim());
 	            
 	            this.submit();
 		})
