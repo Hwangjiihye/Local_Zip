@@ -33,6 +33,6 @@ public class UserQaController {
 						,@RequestParam("post_contents")String contents,HttpSession session) {
 		String id = (String)session.getAttribute("loginId");
 		uDAO.insert(new QaDTO(0,id,title,contents,category,"",0,"","",""));
-		return "";
+		return "redirect:/qa/toQa";
 	}
 }
