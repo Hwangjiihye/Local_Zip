@@ -77,18 +77,24 @@ public class MembersController {
 		if(result == 1) {
 			String nickname = dao.nickname(mem_id);
 			String dong = dao.address(mem_id); // 로그인 아이디로 주소 저장(00동 출력용)
+			int role = dao.getRole(mem_id);
+			session.setAttribute("role", role);
 			session.setAttribute("loginId", mem_id); 
 			session.setAttribute("nickname", nickname);
 			session.setAttribute("dong", dong);// 로그인 아이디로 주소 저장(00동 출력용)
 			return "redirect:/";
 		} else if(result == 2){
-			session.setAttribute("loginId", mem_id); 
+			String nickname = dao.nickname(mem_id);
+			session.setAttribute("loginId", mem_id);
+			session.setAttribute("nickname", nickname);
 			return "redirect:/admin/adminPage";
 		} else if(result == 0){
 			rttr.addFlashAttribute("msg", "pwFail");
 		} else {
 			rttr.addFlashAttribute("msg", "idFail");
 		}
+		
+		
 		
 		return "redirect:/members/loginUi";
 		}
@@ -99,6 +105,12 @@ public class MembersController {
 		session.getAttribute("nickname");
 		if(session.getAttribute("loginId") == null) {
 			return "redirect:/members/loginUi";
+		}
+		Integer role = (Integer) session.getAttribute("role");
+		
+		if(role == 0){
+			System.out.println(role);
+			return "redirect:/admin/adminPage";
 		}else {
 			return "members/mypage";
 		}
