@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kedu.dao.MeetingDAO;
 import com.kedu.dto.MeetingDTO;
@@ -37,7 +38,10 @@ public class MeetingController {
 	}
 	
 	@RequestMapping("/meetingDetail") // meeting 디테일 jsp로 이동
-	public String meetingCreateForm() {
+	public String meetingCreateForm(@RequestParam int seq, Model model) throws Exception{
+		System.out.println(seq);
+		List<MeetingDTO> list = dao.selectBySeq(seq);
+		model.addAttribute("list", list);
 		return "meeting/meetingDetail";
 	}
 	

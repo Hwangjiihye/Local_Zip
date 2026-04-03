@@ -32,4 +32,11 @@ public class MeetingDAO {
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class));
 	}
+	
+	public List<MeetingDTO> selectBySeq(int seq) throws Exception {
+		
+		String sql = "select * from meeting where meet_seq=?";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), seq);
+	}
 }

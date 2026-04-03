@@ -122,6 +122,8 @@ public class MembersController {
 	public String update(MembersDTO dto, HttpSession session) throws Exception {
 		dao.updateById(dto, dto.getMem_id());
 		session.setAttribute("nickname", dto.getMem_nickname());
+		session.setAttribute("dong", dto.getMem_dong());
+		System.out.println(dto.getMem_dong());
 		return "redirect:/members/myInfo";
 	}
 	
