@@ -546,7 +546,7 @@
             <div class="categoryBtn">
                 <a href="/"><button type="button" class="nowBtn"
                     style="background-color: #fecc56; border-radius: 10px; height: 30px; margin-right: 10px;"><i class="navicon fa-solid fa-house fa-lg"></i> 전체</button></a>
-                <a href="/board/lifeInfo"><button type="button"
+                <a href="/board/list_lifeInfo"><button type="button"
                     style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
                     <i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보</button></a>
                 <button type="button"
@@ -647,11 +647,23 @@
         </div>
 
         <div class="bottomBar" style="box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <!-- 하단바 -->
-            <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
+           
+        <c:choose>
+        <c:when test="${role == 1}">
+        	<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
             <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i></a> <!-- 하단바 모임 이모지-->
            	<i class="navicon fa-solid fa-bullhorn fa-2xl" style="color:#A66A3F"></i> <!-- 하단바 건의사항 이모지-->
             <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 마이페이지 이모지-->
+       	</c:when>
+       	<c:otherwise>
+       		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
+            <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
+            <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i></a> <!-- 하단바 모임 이모지-->
+           	<i class="navicon fa-solid fa-bullhorn fa-2xl" style="color:#A66A3F"></i> <!-- 하단바 건의사항 이모지-->
+       		<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 마이페이지 이모지-->
+       	</c:otherwise>
+        </c:choose>
         </div>
     </div>
 
