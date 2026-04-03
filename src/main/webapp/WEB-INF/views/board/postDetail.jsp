@@ -308,7 +308,6 @@
         .postDownBox {
             width: 95%;
             margin: auto;
-
             min-height: 40px;
             display: flex;
         }
@@ -452,8 +451,11 @@
     		height: 40px;
     		font-size: medium;
      	}
+     	.writerName{
+     		margin-top: 10px;
+     	}
      	.writeTime{
-     		margin-top: -5px;
+     		margin-top: 6px;
      	}
      	hr{
      		border: 1px dotted #5e361a;
