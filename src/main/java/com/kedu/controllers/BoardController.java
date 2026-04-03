@@ -33,7 +33,8 @@ public class BoardController {
 	@RequestMapping("/concern")
 	public String concern(String sort, Model model) throws Exception {
 		
-		if(sort == null){
+		// 기본 정렬
+		if(sort == null) {
 			sort = "latest";
 		}
 	    List<BoardDTO> list;
@@ -41,7 +42,7 @@ public class BoardController {
 	    // 출력을 어떤 종류를 기준으로 할 지 검사
 	    if ("like".equals(sort)) {
 	        list = dao.list_concern_like();
-	    } else {
+	    }else {
 	        list = dao.list_concern_latest();
 	    }
 
