@@ -129,14 +129,6 @@ button, body, div, input {
 	resize: none; /*늘어나기 방지*/
 }
 
-
-
-
-
-.openChatLinkDiv, .openChatPwDiv {
-	padding: 10px;
-}
-
 .TextTitle {
 	font-weight: bold;
 	font-size: 23px;
@@ -145,7 +137,7 @@ button, body, div, input {
 	padding-left: 2px;
 }
 
-.title, .category, .location, .openChatLink, .openChatPw {
+.title, .category, .location{
 	font-weight: bold;
 	font-size: 23px;
 	color: #5e361a;
@@ -162,14 +154,6 @@ button, body, div, input {
 	white-space: normal;
 }
 
-.openChatWrapper {
-	display: flex;
-	gap: 300px;
-}
-
-.openChatPwDiv {
-	padding-left: 50px;
-}
 
 .bottomBtn {
 	display: flex;
@@ -246,7 +230,7 @@ button, body, div, input {
 	<div class="container">
 		<div class="headBox">문의하기</div>
 
-		<form action="/board/insert" method="post" class="frm">
+		<form action="/qa/insert" method="post" class="frm">
 			<div class="writeDetail">
 				<div class="titleDiv">
 					<div class="title">제목</div>
@@ -275,8 +259,8 @@ button, body, div, input {
 			</div>
 	
 				<div class="bottomBtn">
-					<button class="requestBtn" type="submit">작성 완료</button>
-					<a href="/"><button class="backBtn" type="button">뒤로가기</button></a>
+					<button class="requestBtn">작성 완료</button>
+					<a href="/qa/toQa"><button class="backBtn" type="button">뒤로가기</button></a>
 				</div>
 
 		</form>
