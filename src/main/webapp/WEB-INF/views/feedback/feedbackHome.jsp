@@ -430,11 +430,13 @@
             height: 100px;
             margin-left: 80px;
             cursor: pointer;
-            margin-top: 0.4%;
+            margin-top: 1%;
+            margin-bottom: 1%;
             border: #fbe5c0;
             color:  #5e361a;
             font-size: 30px;
-			background-color: #F2D3A2;
+            font-weight: bold;
+			background-color:  #FFB300;
 			border-radius: 5px;
             align-items: center;
             display: flex;
@@ -467,6 +469,10 @@
   			
   			text-align: center;
   		}
+  		
+  		.navicon2 {
+  			margin-right: 20px;
+  		}
     </style>
 
 </head>
@@ -474,8 +480,8 @@
 
     <div class="container">
 
-        <div class="headBox">우리 동네.zip</div>
-		<a href="/board/write"><button class="writeBtn" type="button"><i class="navicon fa-solid fa-bullhorn fa-xl" style="color: #A66A3F"></i>  새 건의 작성하기</button></a>
+        <div class="headBox">동네 건의.zip</div>
+		<a href="/feedback/feedbackInsert"><button class="writeBtn" type="button"><i class="navicon2 fa-solid fa-bullhorn fa-xl" style="color: #A66A3F"></i>  새 건의 작성하기</button></a>
         <hr>
 		<c:choose>
 			<c:when test="${empty list}">
@@ -564,9 +570,8 @@
             <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-            <a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+            <a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-
         </div>
 
     </div>

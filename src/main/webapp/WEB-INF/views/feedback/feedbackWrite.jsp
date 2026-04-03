@@ -202,11 +202,6 @@
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
 	
-	.categoryGuide {
-		font-size: 14px;
-		color: #5e361a;
-	}
-	
 	.report {
 		width: 200px;
 		height: 32px;
@@ -245,30 +240,17 @@
 </head>
 <body>
 	<div class="container">
-		<div class="headBox">새 게시글 작성</div>
+		<div class="headBox">건의사항 작성</div>
 
-		<form action="/feedback/feedbackWrite" method="post" class="frm">
+		<form action="/feedback/feedbackInsert" method="post" class="frm">
 			<div class="writeDetail">
 				<div class="titleDiv">
 					<div class="title">제목</div>
 					<div class="titleContent">
-						<input name="post_title" class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
+						<input name="suggestion_title" class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
 					</div>
 					
 				</div>
-	
-				<div class="categoryDiv">
-					<div class="category">카테고리</div>
-					<select class="report" name="post_category">
-						<option value="">-- 카테고리 선택 --</option> <!-- 빈 값 추가 -->
-						<option value="lifeInfo" class="report-menu">생활정보</option>
-						<option value="food" class="report-menu">맛집/카페</option>
-						<option value="talk" class="report-menu">고민/이야기</option>
-						<option value="beauty" class="report-menu">미용/패션</option>	
-					</select>
-				</div>
-	
-	
 	
 				<div class="fileDiv">
 					<div class="file">
@@ -281,25 +263,20 @@
 	
 				<div class="TextDiv">
 					<div class="TextTitle">내용</div>
-					<textarea name="post_contents" class="TextDetail" type="text" placeholder="내용을 작성해주세요" maxlength="1000" style="border: #fbe5c0"></textarea>
+					<textarea name="suggestioin_contents" class="TextDetail" type="text" placeholder="내용을 작성해주세요" maxlength="1000" style="border: #fbe5c0"></textarea>
 				</div>
-	
 	
 			</div>
-	
 				<div class="bottomBtn">
 					<button class="requestBtn" type="submit">작성 완료</button>
-					<a href="/"><button class="backBtn" type="button">뒤로가기</button></a>
+					<a href="/feedback/feedbackHome"><button class="backBtn" type="button">뒤로가기</button></a>
 				</div>
-
 		</form>
-
 	</div>
-
 	<script>
 		
 		// submit 전 공백에 대한 안내메시지
-		$(".frm").on("submit",function(){
+		/* $(".frm").on("submit",function(){
 			
 			// 공백 예외 처리
 			if($(".inputBox").val() == ""){
@@ -322,7 +299,7 @@
 			alert("글이 등록되었습니다!");
 			return true;
 			
-		});
+		}); */
 	</script>
 
 </body>
