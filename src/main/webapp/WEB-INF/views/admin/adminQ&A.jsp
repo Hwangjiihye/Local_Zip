@@ -57,6 +57,7 @@ body {
 	width: 100%;
 	min-height: 100vh;
 	padding-top: 160px;
+	padding-bottom: 65px;
 }
 
 .top-section {
@@ -135,15 +136,6 @@ body {
 	gap: 200px;
 }
 
-/* .qaReplyDiv{ */
-/* 	background-color: #fbe5c0; */
-/* 	border-radius:20px; */
-/* 	margin: 190px auto 0 auto; */
-/* 	width: 90%; */
-/* 	box-shadow: 0 4px 10px rgba(0,0,0,0.3); */
-/* 	overflow: hidden; */
-/* } */
-
 .categoryAndWriterDiv{
  	width: 100%; 
  	background-color:#F2D3A2;
@@ -157,7 +149,9 @@ body {
 }
 
 .replyAdminId{
+	padding-bottom: 10px;
 	font-size: 14px;
+	color: #A66A3F;
 }
 
 .categoryAndWriter{
@@ -166,32 +160,16 @@ body {
  	align-items: center;
 }
 
-/* .content{ */
-/* 	background-color:#F2D3A2; */
-/* } */
-
-/* .title{ */
-/* 	font-size: 25px; */
-/* 	padding: 20px 5px 10px 5px; */
-/* 	margin: 0 40px 0 40px; */
-/* } */
-
-/* .content{ */
-/* 	font-size: 18px; */
-/* 	padding: 10px 5px 10px 5px; */
-/* 	margin: 0 40px 0 40px; */
-/* 	border-radius: 10px; */
-/* } */
-
 .inputQaReply{
  	padding:5px;
- 	background-color: #fbe5c0;
+ 	background-color: #F2D3A2;
+ 	color: #A66A3F;
  	border-radius: 10px;
- 	border: 1px dotted #ffb300;
+ 	border:none;
+ 	margin: 0 0 5px 0;
  	font-size:15px;
  	width: 700px;
  	height: 40%;
- 	margin: 0 0 7px 10px;
  	word-break: break-all;
  	white-space: normal;
  	resize: none;
@@ -214,49 +192,37 @@ body {
 .replyTextAndBtn{
  	display:flex;
  	align-items: center;
+ 	gap:10px;
 }
 
 .qaReply{
-	padding: 10px;
-	margin: 0 10px 10px 15px;
+	padding: 10px 15px;
+/* 	margin: 0 10px 10px 15px; */
 	border-radius: 10px;
 }
 
+.replyRow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .adminProfileDiv{
- 	display:flex;
- 	align-items:center;
- 	gap: 21px; */
+ 	margin-left: 0;
 }
 
 .category{
  	font-size:14px;
-     height: 25px;
+    height: 25px;
  	background-color: #FFB300;
 	border-radius: 10px;
  	border: 1px solid #FFB300;
  	color: #3e5e40;
  	align-items: center;
  	vertical-align: middle;
- 	line-height: 17px;
+ 	line-height: 18px;
  	padding:5px;
 }
-
-/* .contentProfile{ */
-/*    	margin-top: 4px; */
-/*     width: 80px; */
-/*     height: 80px; */
-/*     border-radius: 70%; */
-/*     object-fit: cover; */
-/* } */
-
-/* .profileImg{ */
-/*    	margin-top: 4px; */
-/*     width: 80px; */
-/*     height: 80px; */
-/*     border-radius: 70%; */
-/*     object-fit: cover; */
-/* } */
-
 
 .postBox {
         width: 95%;
@@ -274,10 +240,12 @@ body {
         font-size: 14px;
         border-bottom: 1px solid #A66A3F;
         color: #A66A3F;
+        display: flex;
+        justify-content: space-between;
     }
 
     .postBody {
-        padding: 15px;
+        padding: 15px 15px 5px 15px;
     }
 
     .rowItem1 {
@@ -291,7 +259,6 @@ body {
     .rowItem2 {
         border: 0px solid #ccc;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
         padding: 10px;
         border-radius: 5px;
     }
@@ -326,6 +293,7 @@ body {
         padding: 20px;
         font-size: 18px;
         color: #A66A3F;
+        transform: translateX(-20px);
     }
     .pageBox span { margin: 0 10px; cursor: pointer; }
 
@@ -361,8 +329,11 @@ body {
 		        <div class="categoryAndWriter">
 		           
 		           		<div class="writer">작성자: ${i.mem_id}</div> 
-		             	<div class="category">${i.qa_category}</div>
-		             	
+	           		<c:choose>
+	           			<c:when test="${i.qa_category == 0}"><div class="category">계정/로그인</div></c:when>
+	           			<c:when test="${i.qa_category == 1}"><div class="category">이용문의</div></c:when>
+	           			<c:when test="${i.qa_category == 2}"><div class="category">기타</div></c:when>
+	             	</c:choose>
 		           	</div>
 		           	
 		           	<div class="writeData">${i.qa_create_date}</div> 
@@ -371,25 +342,28 @@ body {
         	<div class="postBody">
             	<div class="rowItem1">
 	                <span class="labelName">제목</span>
-	                <div class="titleContent">앱 결제 오류 관련</div>
+	                <div class="titleContent">${i.qa_title}</div>
             	</div>
            		<div class="rowItem2">
                 	<span class="labelName">내용</span>
 	                <div class="textContent">
-	                    카드 결제 시 자꾸 튕기는 현상이 발생합니다.
+	                  ${i.qa_contents}
 	                </div>
             	</div>
         		</div>
         	<div class="qaReply">
-	        	<div class="adminProfileDiv">
-	        		<div class="replyProfile"><img src="/resources/images/adminProfile.png" width="60px" class="profileImg"></div>
-	        		<div class="replyAdminId">${i.mem_admin_id}</div>
-        		</div>
-        		<div class="replyTextAndBtn">
-	            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply"></textarea>
-					<button class="replyBtn" type="button">등록</button>
-				</div>
-	        </div>  
+        			<div class="qaReplyRow">
+			        	<div class="adminProfileDiv">
+			        		<div class="replyAdminId">관리자</div>
+		        		</div>
+	        		<form>
+		        		<div class="replyTextAndBtn">
+			            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply"></textarea>
+							<button class="replyBtn" type="button">등록</button>
+						</div>
+					</form>
+	        		</div>  
+	        	</div> 
     		</div>
    			
    			  
