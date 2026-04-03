@@ -81,6 +81,9 @@ public class MembersController {
 			session.setAttribute("nickname", nickname);
 			session.getAttribute("dong");// 로그인 아이디로 주소 저장(00동 출력용)
 			return "redirect:/";
+		} else if(result == 2){
+			session.setAttribute("loginId", mem_id); 
+			return "redirect:/admin/adminPage";
 		} else if(result == 0){
 			rttr.addFlashAttribute("msg", "pwFail");
 		} else {
