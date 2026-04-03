@@ -355,7 +355,7 @@ body {
             	</div>
         		</div>
       	<c:choose>
-      		<c:when test=${i.qa_status == 0}>
+      		<c:when test="${i.qa_status == 0}">
         	<div class="qaReply">
         			<div class="qaReplyRow">
 			        	<div class="adminProfileDiv">
@@ -372,7 +372,7 @@ body {
 	        		</div>  
 	        	</div> 
         	</c:when>
-        	<c:when test=${i.qa_status == 1}>
+        	<c:when test="${i.qa_status == 1}">
 	        	<div class="qaReply">
         			<div class="qaReplyRow">
 			        	<div class="adminProfileDiv">
