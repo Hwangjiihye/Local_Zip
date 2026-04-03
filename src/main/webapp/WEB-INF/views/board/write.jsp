@@ -208,7 +208,6 @@ button, body, div, input {
 }
 
 .report {
-	display: none;
 	width: 200px;
 	height: 32px;
 	top: 30px;
@@ -264,9 +263,6 @@ button, body, div, input {
 	
 				<div class="categoryDiv">
 					<div class="category">카테고리</div>
-					<div class="categoryGuide">
-						카테고리를 선택하세요 <i class="icon fa-solid fa-sort fa-lg" style="color: #A66A3F;"></i>
-					</div>
 					<select class="report" name="post_category">
 						<option value="">-- 카테고리 선택 --</option> <!-- 빈 값 추가 -->
 						<option value="lifeInfo" class="report-menu">생활정보</option>
@@ -305,12 +301,6 @@ button, body, div, input {
 	</div>
 
 	<script>
-		$(".icon").on("click", function(e) {
-			$(".report").css({
-				"display" : "inline"
-			});
-		});
-		
 		
 		// submit 전 공백에 대한 안내메시지
 		$(".frm").on("submit",function(){
