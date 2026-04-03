@@ -40,4 +40,10 @@ public class BoardDAO {
 		String sql = "select * from post where post_category = 'talk' order by post_like desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
+	
+	//게시글 상세 내용 출력
+	public BoardDTO selectByPost_seq(int post_seq) throws Exception{
+		String sql = "select * from post where post_seq = ?";
+		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),post_seq);
+	}
 }

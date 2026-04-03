@@ -540,7 +540,7 @@
 		                <button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
 		            </div>
 				<c:forEach var="i" items="${list}">
-		            <div class="postBox" onclick="location.href='/board/postDetail'">
+		            <div class="postBox" onclick="location.href='/board/postDetail?post_seq=${i.post_seq }'">
 		
 		                <div class="postUpBox">
 		

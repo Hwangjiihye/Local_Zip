@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kedu.dao.BoardDAO;
+import com.kedu.dao.ReplyDAO;
 import com.kedu.dto.BoardDTO;
 
 @Controller
@@ -23,7 +24,8 @@ public class BoardController {
 
 	@Autowired
 	private BoardDAO dao;
-	
+	@Autowired
+	private ReplyDAO Replydao;
 	
 	@RequestMapping("/lifeInfo")
 	public String lifeInfo() {
@@ -83,7 +85,11 @@ public class BoardController {
 	
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
-	public String postDetail() {
+	public String postDetail(Model model, int post_seq) throws Exception{
+		
+		BoardDTO dto = dao.selectByPost_seq(post_seq);
+		model.addAttribute("dto",dto);
+		
 		return "board/postDetail";
 	}
 }

@@ -288,8 +288,6 @@
             margin: auto;
 
             width: 95%;
-            height: 1.5em;       /* 한 줄 높이만큼 고정 */
-    		line-height: 1.5em;
 
             font-size: 15px;
 
@@ -297,11 +295,6 @@
             border-radius: 5px;
             
             padding: 0 10px;
-             
-            white-space: nowrap;
-            overflow: hidden;
-    		text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
-    		display: block;
         }
 
 
@@ -479,20 +472,20 @@
 	
 	                    <div class="postInfoBox">
 	                        <div class="postInfoUp">
-	                            <div class="profileName profileInfo" style="color: #5e361a;">홍길동</div>
-	                            <div class="profileLocal profileInfo" style="color: #5e361a;">지역(동)</div>
+	                            <div class="profileName profileInfo" style="color: #5e361a;">${dto.mem_nickname }</div>
+	                            <div class="profileLocal profileInfo" style="color: #5e361a;">${dto.mem_dong }</div>
 	                        </div>
 	
 	                        <div class="postInfoDown">
-	                            <div class="profileTime profileInfo" style="color: #5e361a;">00시간 전</div>
+	                            <div class="profileTime profileInfo" style="color: #5e361a;">${dto.post_date }</div>
 	                        </div>
 	                    </div>
 	                </div>
 	
 	                <div class="postMidBox">
 	
-	                    <div class="postTitle">제목이 들어가는 곳</div>
-	                    <div class="postContent">내용들이 들어가는 곳</div>
+	                    <div class="postTitle">${dto.post_title }</div>
+	                    <div class="postContent">${dto.post_contents }</div>
 	
 	                </div>
 	
