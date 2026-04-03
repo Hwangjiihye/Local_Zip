@@ -521,7 +521,16 @@
         </div>
 
         <hr>
-
+<%-- 	<c:choose> --%>
+<%-- 		<c:when test="${empty lifeInfo}"> --%>
+		
+<!-- 			<div class="emptyBox">등록된 게시글이 없습니다.</div> -->
+		
+<%-- 		</c:when> --%>
+		
+<%-- 		<c:otherwise> --%>
+<%-- 		</c:otherwise> --%>
+<%-- 		</c:choose> --%>
         <div class="bodyBox">
 
             <div class="orderBox">

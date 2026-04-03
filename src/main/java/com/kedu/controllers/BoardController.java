@@ -62,7 +62,7 @@ public class BoardController {
 		
 		return "board/life-info";
 	}
-
+	
 	//고민/이야기 카테고리 list 출력(최신순)
 	@RequestMapping("/list_concern_latest")
 	public String list_concern_latest(Model model) throws Exception{
@@ -85,39 +85,6 @@ public class BoardController {
 		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
 	public String postDetail() {
