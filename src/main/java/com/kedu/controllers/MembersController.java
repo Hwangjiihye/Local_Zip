@@ -135,4 +135,10 @@ public class MembersController {
 		return "home";
 	}
 	
+	// 마이페이지 > 작성글(모아보기)를 눌렀을 때,
+	@RequestMapping("/myPosts")
+	public String myPosts() {
+		return "members/myPosts";
+	}
+	
 }
