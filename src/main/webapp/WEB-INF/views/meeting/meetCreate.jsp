@@ -199,7 +199,6 @@
 		}
 		
 		.report{
-			display: none;
 			width: 200px;
     		height: 32px;
 		    top: 30px;
@@ -275,7 +274,6 @@
 					
 					<div class="categoryDiv">
 						<div class="category">카테고리</div>
-							<div class="categoryGuide">카테고리를 선택하세요  <i class="icon fa-solid fa-sort fa-lg" style="color: #A66A3F;"></i></div>
 							<select id="category" name="meet_category" class="report">
 								<option value="" class="report-menu">--선택하세요--</option>
 								<option value="운동" class="report-menu">운동</option>
