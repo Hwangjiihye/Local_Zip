@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/feedback")
 public class FeedBackController {
 	
-	@RequestMapping("/Home")
+	@RequestMapping("/feedbackHome")
 	public String feedbackHome() {
-		return "feedback/Home";
+	    return "feedback/feedbackHome";
 	}
 
 }
