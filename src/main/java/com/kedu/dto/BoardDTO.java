@@ -5,6 +5,8 @@ public class BoardDTO {
 	private int post_seq;
 	private String post_category;
 	private String mem_id;
+	private String mem_nickname;
+	private String mem_dong;
 	private int post_hit;
 	private String post_title;
 	private String post_contents;
@@ -13,12 +15,14 @@ public class BoardDTO {
 	
 	public BoardDTO() {}
 	
-	public BoardDTO(int post_seq, String post_category, String mem_id, int post_hit, String post_title,
-			String post_contents, int post_like, String post_date) {
+	public BoardDTO(int post_seq, String post_category, String mem_id, String mem_nickname, String mem_dong,
+			int post_hit, String post_title, String post_contents, int post_like, String post_date) {
 		super();
 		this.post_seq = post_seq;
 		this.post_category = post_category;
 		this.mem_id = mem_id;
+		this.mem_nickname = mem_nickname;
+		this.mem_dong = mem_dong;
 		this.post_hit = post_hit;
 		this.post_title = post_title;
 		this.post_contents = post_contents;
@@ -43,6 +47,18 @@ public class BoardDTO {
 	}
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
+	}
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
+	}
+	public String getMem_dong() {
+		return mem_dong;
+	}
+	public void setMem_dong(String mem_dong) {
+		this.mem_dong = mem_dong;
 	}
 	public int getPost_hit() {
 		return post_hit;
@@ -74,6 +90,7 @@ public class BoardDTO {
 	public void setPost_date(String post_date) {
 		this.post_date = post_date;
 	}
+	
 	
 
 }
