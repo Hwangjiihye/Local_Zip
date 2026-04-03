@@ -29,4 +29,15 @@ public class BoardDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
 	
+	//고민/이야기 리스트 출력(최신순)
+	public List<BoardDTO> list_concern_latest() throws Exception{
+		String sql = "select * from post where post_category = 'talk' order by post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
+	//고민/이야기 리스트 출력(인기순)
+	public List<BoardDTO> list_concern_like() throws Exception{
+		String sql = "select * from post where post_category = 'talk' order by post_like desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
 }
