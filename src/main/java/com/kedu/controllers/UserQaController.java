@@ -41,12 +41,10 @@ public class UserQaController {
 		if (id == null) {
 	        return "redirect:/members/login"; // 로그인 페이지로 튕기기
 	    }
-		try {
+		
 		uDAO.insert(new QaDTO(0,id,title,contents,category,"",0,"","",""));
-		}catch(Exception e) {
-			e.printStackTrace();
-			return "error";
-		}
+		
+		
 		return "redirect:/qa/toQa";
 	}
 }

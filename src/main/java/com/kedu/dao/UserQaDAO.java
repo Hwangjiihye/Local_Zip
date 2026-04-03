@@ -19,7 +19,8 @@ public class UserQaDAO {
 	private AdminQaDAO adao;
 	
 	public void insert(QaDTO dto) {
-		String sql = "insert into qa values(qa_seq.nextval,?,?,?,?,sysdate,?)";
+		String sql = "insert into qa (qa_seq, mem_id, qa_title, qa_contents, qa_category, qa_create_date, qa_status) " +
+	             "values (qa_seq.nextval, ?, ?, ?, ?, sysdate, ?)";
 		jdbc.update(sql,dto.getMem_id(),dto.getQa_title(),dto.getQa_contents(),dto.getQa_category(),dto.getQa_status());
 	}
 	

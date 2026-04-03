@@ -241,16 +241,15 @@ body, html {
 			<c:when test="${not empty list}">
 				<c:forEach var="i" items="${list}">
 				<div class="postBox">
-					<div class="postHeader">작성일자 : i.</div>
+					<div class="postHeader">작성일자 : ${i.qa_create_date}</div>
 					<div class="postBody">
 						<div class="rowItem1">
 							<span class="labelName">제목</span>
-							<div class="titleContent">우리 동네 보안등 관련 문의드립니다.</div>
+							<div class="titleContent">${i.qa_title}</div>
 						</div>
 						<div class="rowItem2">
 							<span class="labelName">내용</span>
-							<div class="textContent">밤마다 골목길이 너무 어두워요. 보안등 추가 설치가 가능한지
-								궁금합니다.</div>
+							<div class="textContent">${i.qa_contents}</div>
 						</div>
 					</div>
 					<div class="answerBox">
@@ -271,7 +270,7 @@ body, html {
 		</div>
 
 		<button class="writeBtn" type="button"
-			onclick="location.href='/board/write'">
+			onclick="location.href='/qa/toWrite'">
 			<i class="fa-solid fa-pencil"></i>
 		</button>
 
