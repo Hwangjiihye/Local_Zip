@@ -15,8 +15,8 @@ public class MeetingMemberDAO {
 	// 신청자 정보 db에 넣기
 	public int insert(MeetingMemberDTO dto) throws Exception {
 		
-		String sql = "insert into meeting_member values(meetmem_seq.nextval, ?, meet_seq.nextval, ?, ?, sysdate";
+		String sql = "insert into meeting_member values(meeting_member_seq.nextval, ?, ?, ?, ?, sysdate)";
 		
-		return jdbc.update(sql, Integer.class, dto.getMem_id(), dto.getMeetmem_contents(), dto.getMeetmem_status());
+		return jdbc.update(sql, dto.getMem_id(), dto.getMeet_seq(), dto.getMeetmem_contents(), dto.getMeetmem_status());
 	}
 }
