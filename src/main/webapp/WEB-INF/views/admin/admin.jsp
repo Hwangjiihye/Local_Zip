@@ -291,14 +291,14 @@ body {
 				</button>
 			</div>
 		</div>
-
+		
+	
 		<div class="menuDiv">
-
 			<div class="members menuDetail">
 				<div class="membersIcon"><i class="fa-solid fa-user"></i></div>
 				<div class="allMembersDiv">
 					<div class="allMembers">총 회원</div>
-					<div class="membersCount">1,234</div>
+					<div class="membersCount">${memberCount}</div>
 				</div>
 			</div>
 			
@@ -314,13 +314,11 @@ body {
 				<div class="askIcon"><i class="fa-solid fa-headset"></i></div>
 				<div class="askDiv">
 					<div class="allAsk">대기 문의</div>
-					<div class="askCount">12</div>
+					<div class="askCount">${qaCount}</div>
 				</div>
 			</div>
-
-
 		</div>
-
+	
 		<div class="visit-wrap">
 			<div class="visitText">일별 방문자</div>
 			<div class="chart-box visit-box">
