@@ -11,5 +11,10 @@ public class FeedBackController {
 	public String feedbackHome() {
 	    return "feedback/feedbackHome";
 	}
+	
+	@RequestMapping("/feedbackWrite")
+	public String feedbackWrite() {
+	    return "feedback/feedbackHome";
+	}
 
 }
