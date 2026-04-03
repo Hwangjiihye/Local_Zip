@@ -108,12 +108,12 @@ body {
 	transition: all 0.2s ease;
 }
 
-.categoryBtnAll:hover, .navicon:hover, .topBtn:hover {
+.categoryBtnAll:hover, .navicon:hover, .topBtn:hover, .join-btn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.categoryBtnAll:active, .navicon:active, .topBtn:active{
+.categoryBtnAll:active, .navicon:active, .topBtn:active, .join-btn:active {
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -391,6 +391,31 @@ body {
 			$(document).on("click", ".join-btn, .reportIcon", function (e) {
 				e.stopPropagation();
 			});
+			
+			$(".join-btn").on("click", function(){
+				
+				// 팝업창 크기
+				const width = 800;
+			    const height = 400;
+	
+			    // window.screenX : 브라우저가 모니터에서 시작하는 위치
+			    // window.outerWidth / 2 : 브라우저의 가운데 위치
+			    // width / 2 : 팝업의 절반
+			    const left = window.screenX + (window.outerWidth / 2) - (width / 2);
+			    const top = window.screenY + 80; // 상단에서 80px
+
+			    const popup = window.open(
+			        "/apply/applyForm",
+			        "",
+			        `width=${width},height=${height}`
+			    );
+
+			    if (popup) {
+			        popup.resizeTo(width, height);
+			        popup.moveTo(left, top);
+			        popup.focus();
+			    } 
+			})
 	</script>
 </body>
 </html>

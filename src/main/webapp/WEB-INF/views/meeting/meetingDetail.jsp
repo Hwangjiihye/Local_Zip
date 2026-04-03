@@ -195,7 +195,7 @@ body {
 	<div class="container">
 		<div class="top-section">
 			<div class="mainTitle">
-			<span>모임 상세</span>
+				<span>모임 상세</span>
 			</div>
 			
 			
