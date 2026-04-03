@@ -53,11 +53,8 @@
 
         .container {
             position: relative;
-            top: 100px;
 
             width: 100%;
-            min-height: 100vh;
-            /* 최소 높이 지정 : 브라우저 */
 
             border: 1px solid black;
             background-color: #fbe5c0;
@@ -129,14 +126,14 @@
             transition: 0.3s;
         }
 
-        .bodyBox {
+         .bodyBox { 
             width: 100%;
-            min-height: 100vh;
-            /* 최소 높이 지정 : 브라우저 */
-
-            margin-top: -40px;
+            min-height: 80vh;
+			
+			position:relative;
+            top: 120px;
             color: #5e361a;
-        }
+         }
 
 /* 바디박스 수정 */
 
@@ -170,7 +167,7 @@
             height: auto;
 
             margin: auto;
-            margin-top: 30px;
+/*             margin-top: 30px; */
 
             border-radius: 10px;
             
