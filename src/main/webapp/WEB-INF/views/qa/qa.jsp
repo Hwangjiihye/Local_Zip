@@ -143,6 +143,7 @@
         padding: 20px;
         font-size: 18px;
         color: #A66A3F;
+        transform: translateX(-20px);
     }
     .pageBox span { margin: 0 10px; cursor: pointer; }
 
