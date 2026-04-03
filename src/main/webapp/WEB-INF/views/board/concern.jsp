@@ -195,11 +195,6 @@
 
             border-radius: 10px;
         }
-
-        .orderNew {
-            display: none;
-        }
-
         .orderBtn {
             border: none;
             border-radius: 30%;
@@ -541,11 +536,11 @@
 		        <div class="bodyBox">
 		
 		            <div class="orderBox">
-		                <button class="orderNew orderBtn" type="button" onclick="location.href='/board/concern?sort=latest'">최신순</button>
-		                <button class="orderPopular orderBtn" type="button" onclick="location.href='/board/concern?sort=like'">인기순</button>
+<!-- 		            버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
+		                <button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
 		            </div>
 				<c:forEach var="i" items="${list}">
-		            <div class="postBox" onclick="location.href='/board/postDetail'">
+		            <div class="postBox" onclick="location.href='/board/postDetail?post_seq=${i.post_seq }'">
 		
 		                <div class="postUpBox">
 		
@@ -629,16 +624,16 @@
 
     <script>
 
-        // 최신순, 인기순 버튼
-        $(".orderNew").on("click", function () {
-            $(".orderNew").css({ "display": "none" });
-            $(".orderPopular").css({ "display": "inline" });
-        })
-
-        $(".orderPopular").on("click", function () {
-            $(".orderNew").css({ "display": "inline" });
-            $(".orderPopular").css({ "display": "none" });
-        })
+        $(".sortBtn").on("click",function(){
+        	
+        	let currentSort = "${sort}";
+        	
+        	if(currentSort == "latest"){
+        		location.href = "/board/concern?sort=like";
+        	}else{
+        		location.href = "/board/concern?sort=latest";
+        	}
+        });
 
 
         // 좋아요 버튼

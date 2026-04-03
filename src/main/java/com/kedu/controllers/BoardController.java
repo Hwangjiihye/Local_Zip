@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kedu.dao.BoardDAO;
+import com.kedu.dao.ReplyDAO;
 import com.kedu.dto.BoardDTO;
 
 @Controller
@@ -23,7 +24,8 @@ public class BoardController {
 
 	@Autowired
 	private BoardDAO dao;
-	
+	@Autowired
+	private ReplyDAO Replydao;
 	
 	@RequestMapping("/lifeInfo")
 	public String lifeInfo() {
@@ -33,7 +35,8 @@ public class BoardController {
 	@RequestMapping("/concern")
 	public String concern(String sort, Model model) throws Exception {
 		
-		if(sort == null){
+		// 기본 정렬
+		if(sort == null) {
 			sort = "latest";
 		}
 	    List<BoardDTO> list;
@@ -41,7 +44,7 @@ public class BoardController {
 	    // 출력을 어떤 종류를 기준으로 할 지 검사
 	    if ("like".equals(sort)) {
 	        list = dao.list_concern_like();
-	    } else {
+	    }else {
 	        list = dao.list_concern_latest();
 	    }
 
@@ -82,7 +85,11 @@ public class BoardController {
 	
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
-	public String postDetail() {
+	public String postDetail(Model model, int post_seq) throws Exception{
+		
+		BoardDTO dto = dao.selectByPost_seq(post_seq);
+		model.addAttribute("dto",dto);
+		
 		return "board/postDetail";
 	}
 }
