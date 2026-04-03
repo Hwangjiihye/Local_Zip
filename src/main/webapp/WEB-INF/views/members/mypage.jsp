@@ -265,6 +265,7 @@
 			    	</div>
 	 	        </div>
 	 	    </a>
+	 	    <a href="/members/myPosts">
 	    	<div class="myWrite">
 	    		<div class="myWriteIcon"><img src="/resources/images/text1.png" class="icon"></div>
 	    		<div class="myWriteContents">
@@ -272,6 +273,7 @@
 	    			<div class="myWriteNum">10</div>
 	    		</div>
 	    	</div>
+	    	</a>
 	    	<div class="myLike">
 	    		<div class="myLikeIcon"><img src="/resources/images/love.png" class="icon"></div>
 	    		<div class="myLikeContents">
