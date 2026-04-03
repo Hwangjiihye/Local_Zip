@@ -56,6 +56,7 @@ body {
 .container {
 	width: 100%;
 	min-height: 100vh;
+	padding-top: 160px;
 }
 
 .top-section {
@@ -134,25 +135,25 @@ body {
 	gap: 200px;
 }
 
-.qaReplyDiv{
-	background-color: #fbe5c0;
-	border-radius:20px;
-	margin: 190px auto 0 auto;
-	width: 90%;
-	box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-	overflow: hidden;
-}
+/* .qaReplyDiv{ */
+/* 	background-color: #fbe5c0; */
+/* 	border-radius:20px; */
+/* 	margin: 190px auto 0 auto; */
+/* 	width: 90%; */
+/* 	box-shadow: 0 4px 10px rgba(0,0,0,0.3); */
+/* 	overflow: hidden; */
+/* } */
 
 .categoryAndWriterDiv{
-	width: 100%;
-	background-color:#F2D3A2;
-	display:flex;
-	justify-content: space-between;
-	align-items: center;
-	font-size: 14px;
-	border:none;
-	padding: 10px 15px;
-	margin:0;
+ 	width: 100%; 
+ 	background-color:#F2D3A2;
+ 	display:flex;
+ 	justify-content: space-between;
+ 	align-items: center;
+ 	font-size: 14px;
+ 	border:none;
+ 	padding: 10px 15px;
+ 	margin:0;
 }
 
 .replyAdminId{
@@ -160,105 +161,180 @@ body {
 }
 
 .categoryAndWriter{
-	display:flex;
-	gap:20px;
-	align-items: center;
+ 	display:flex;
+ 	gap:20px;
+ 	align-items: center;
 }
 
-.content{
-	background-color:#F2D3A2;
-}
+/* .content{ */
+/* 	background-color:#F2D3A2; */
+/* } */
 
-.title{
-	font-size: 25px;
-	padding: 20px 5px 10px 5px;
-	margin: 0 40px 0 40px;
-}
+/* .title{ */
+/* 	font-size: 25px; */
+/* 	padding: 20px 5px 10px 5px; */
+/* 	margin: 0 40px 0 40px; */
+/* } */
 
-.content{
-	font-size: 18px;
-	padding: 10px 5px 10px 5px;
-	margin: 0 40px 0 40px;
-	border-radius: 10px;
-}
+/* .content{ */
+/* 	font-size: 18px; */
+/* 	padding: 10px 5px 10px 5px; */
+/* 	margin: 0 40px 0 40px; */
+/* 	border-radius: 10px; */
+/* } */
 
 .inputQaReply{
-	padding:5px;
-	background-color: #fbe5c0;
-	border-radius: 10px;
-	border: 1px dotted #ffb300;
-	font-size:15px;
-	width: 700px;
-	height: 40%;
-	margin: 0 0 7px 10px;
-	word-break: break-all;
-	white-space: normal; 
-	resize: none;
-	outline: none;
-	font-family: 'GMarketSans';
+ 	padding:5px;
+ 	background-color: #fbe5c0;
+ 	border-radius: 10px;
+ 	border: 1px dotted #ffb300;
+ 	font-size:15px;
+ 	width: 700px;
+ 	height: 40%;
+ 	margin: 0 0 7px 10px;
+ 	word-break: break-all;
+ 	white-space: normal;
+ 	resize: none;
+ 	outline: none;
+ 	font-family: 'GMarketSans';
 }
 
 .replyBtn{
-	 margin: 0 0 7px 20px;
-	 background-color: #ffb300;
-     color: #286708;
+ 	 margin: 0 0 7px 20px;
+ 	 background-color: #ffb300;
+     color: #5e361a;
      border: 1px solid #ffb300;
      border-radius: 10px;
      width: 100px;
-	 height: 40px;
-	 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+ 	 height: 40px;
+ 	 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+ 	 font-size:15px;
 }
 
 .replyTextAndBtn{
-	display:flex;
-	align-items: center;
+ 	display:flex;
+ 	align-items: center;
 }
 
 .qaReply{
 	padding: 10px;
-	margin: 10px 10px 10px 15px;
+	margin: 0 10px 10px 15px;
 	border-radius: 10px;
 }
 
 .adminProfileDiv{
-	display:flex;
-	align-items:center;
-	gap: 21px;
+ 	display:flex;
+ 	align-items:center;
+ 	gap: 21px; */
 }
 
 .category{
-	font-size:14px;
-    height: 25px;
-	background-color: #FFB300;
+ 	font-size:14px;
+     height: 25px;
+ 	background-color: #FFB300;
 	border-radius: 10px;
-	border: 1px solid #FFB300;
-	color: #3e5e40;
-	align-items: center;
-	vertical-align: middle;
-	line-height: 17px;
-	padding:5px;
+ 	border: 1px solid #FFB300;
+ 	color: #3e5e40;
+ 	align-items: center;
+ 	vertical-align: middle;
+ 	line-height: 17px;
+ 	padding:5px;
 }
 
-.contentProfile{
-   	margin-top: 4px;
-    width: 80px;
-    height: 80px;
-    border-radius: 70%;
-    object-fit: cover;
-}
+/* .contentProfile{ */
+/*    	margin-top: 4px; */
+/*     width: 80px; */
+/*     height: 80px; */
+/*     border-radius: 70%; */
+/*     object-fit: cover; */
+/* } */
 
-.profileImg{
-   	margin-top: 4px;
-    width: 80px;
-    height: 80px;
-    border-radius: 70%;
-    object-fit: cover;
-}
+/* .profileImg{ */
+/*    	margin-top: 4px; */
+/*     width: 80px; */
+/*     height: 80px; */
+/*     border-radius: 70%; */
+/*     object-fit: cover; */
+/* } */
+
+
+.postBox {
+        width: 95%;
+        max-width: 1000px;
+        margin: 20px auto 0 auto;
+        background-color: #fbe5c0; /* 와이어프레임의 흰색 배경 느낌 */
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    .postHeader {
+        background-color: #F2D3A2;
+        padding: 10px 15px;
+        font-size: 14px;
+        border-bottom: 1px solid #A66A3F;
+        color: #A66A3F;
+    }
+
+    .postBody {
+        padding: 15px;
+    }
+
+    .rowItem1 {
+        border: 0px solid #ccc;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #F2D3A2;
+    }
+
+    .rowItem2 {
+        border: 0px solid #ccc;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    
+    .labelName {
+        font-size: 12px;
+        color: #5e361a;;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .titleContent { font-weight: bold; font-size: 18px; color: #5e361a; }
+    .textContent { font-size: 15px; color: #444; min-height: 60px; color: #5e361a;}
+
+    /* 답변 영역 (와이어프레임의 하단 칸) */
+    .answerBox {
+        background-color: #F2D3A2;
+        border-top: 1px solid #A66A3F;
+        padding: 15px;
+        color : #5e361a;
+    }
+    .answerLabel {
+        font-weight: bold;
+        color: #5e361a;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    /* 하단 페이지네이션 */
+    .pageBox {
+        text-align: center;
+        padding: 20px;
+        font-size: 18px;
+        color: #A66A3F;
+    }
+    .pageBox span { margin: 0 10px; cursor: pointer; }
+
+ 
 </style>
 </head>
 
 <body>
-
+	
 	<div class="container">
 		<div class="top-section">
 			<div class="mainTitle">관리자.zip</div>
@@ -279,38 +355,51 @@ body {
 		</div>
 		
 		
-		<div class="qaReplyDiv">
-				<div class="categoryAndWriterDiv">
-		            <div class="categoryAndWriter">
-		            <div class="postProfile">
-                        <img class="contentProfile" src="/resources/images/user1.png" width="60px">
-                    </div>
-		           		<div class="writer">작성자:홍길동</div> 
-		             	<div class="category">문의유형</div>
+		<c:forEach var="i" items="${list}">
+			<div class="postBox">
+		        <div class="postHeader">
+		        <div class="categoryAndWriter">
+		           
+		           		<div class="writer">작성자: ${i.mem_id}</div> 
+		             	<div class="category">${i.qa_category}</div>
 		             	
 		           	</div>
 		           	
-		           	<div class="writeData">작성일시</div> 
-	           	</div>
-		           	
-		        
-				<div class="titleAndContent">
-	                <div class="title">제목</div>
-	                <div class="content">내용</div>
-	            </div>
-	             
-	        <div class="qaReply">
+		           	<div class="writeData">${i.qa_create_date}</div> 
+
+		        </div>
+        	<div class="postBody">
+            	<div class="rowItem1">
+	                <span class="labelName">제목</span>
+	                <div class="titleContent">앱 결제 오류 관련</div>
+            	</div>
+           		<div class="rowItem2">
+                	<span class="labelName">내용</span>
+	                <div class="textContent">
+	                    카드 결제 시 자꾸 튕기는 현상이 발생합니다.
+	                </div>
+            	</div>
+        		</div>
+        	<div class="qaReply">
 	        	<div class="adminProfileDiv">
 	        		<div class="replyProfile"><img src="/resources/images/adminProfile.png" width="60px" class="profileImg"></div>
-	        		<div class="replyAdminId">관리자</div>
+	        		<div class="replyAdminId">${i.mem_admin_id}</div>
         		</div>
         		<div class="replyTextAndBtn">
 	            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply"></textarea>
 					<button class="replyBtn" type="button">등록</button>
 				</div>
-	        	</div>      
-			</div>
-
+	        </div>  
+    		</div>
+   			
+   			  
+		</c:forEach>
+		<div class="pageBox">
+		        <i class="fa-solid fa-chevron-left"></i>
+		        <span>1</span> <span>2</span> <span>3</span>
+		        <i class="fa-solid fa-chevron-right"></i>
+    	</div>
+    	
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
