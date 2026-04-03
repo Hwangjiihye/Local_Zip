@@ -1,6 +1,9 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +19,12 @@ public class UserQaDAO {
 	private AdminQaDAO adao;
 	
 	public void insert(QaDTO dto) {
-		String sql = "insert into qa values(qa_seq.nextval,?,?,?,?,sysdate,?,null,null,null)";
+		String sql = "insert into qa values(qa_seq.nextval,?,?,?,?,sysdate,?)";
 		jdbc.update(sql,dto.getMem_id(),dto.getQa_title(),dto.getQa_contents(),dto.getQa_category(),dto.getQa_status());
+	}
+	
+	public List<QaDTO> getPostList(){
+		String sql = "select * from qa";
+		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class));
 	}
 }
