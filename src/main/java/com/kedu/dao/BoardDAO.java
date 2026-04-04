@@ -48,6 +48,18 @@ public class BoardDAO {
 		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),post_seq);
 	}
 	
+	//게시글 삭제
+	public int deletePost(int post_seq) {
+		String sql = "delete from post where post_seq = ?";
+		return jdbc.update(sql, post_seq);
+	}
+	
+	//게시글 수정
+	public int updatePost(int post_seq, BoardDTO dto) {
+		String sql = "update post set post_title = ?, post_contents = ? where post_seq = ?";
+		return jdbc.update(sql, dto.getPost_title(), dto.getPost_contents(), post_seq);
+	}
+	
 	public List<CategoryVisitDTO> getCategoryCount(){
 		String sql = "select post_category as postCategory, count(*) as count "
 				+ "from post "

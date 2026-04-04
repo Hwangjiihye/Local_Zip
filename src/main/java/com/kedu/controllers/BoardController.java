@@ -104,8 +104,8 @@ public class BoardController {
 	
 	// 게시글 삭제
 	@RequestMapping("/deletePost")
-	public String deletePost(int seq, BoardDTO dto) {
-		dao.deletePost(seq);
+	public String deletePost(int post_seq, BoardDTO dto) {
+		dao.deletePost(post_seq);
 		
 		String post_category = dto.getPost_category();
 		
@@ -119,8 +119,8 @@ public class BoardController {
 	
 	// 게시글 수정
 	@RequestMapping("/updatePost")
-	public String updatePost(int seq, BoardDTO dto) {
-		dao.updatePost(seq, dto);
+	public String updatePost(int post_seq, BoardDTO dto) {
+		dao.updatePost(post_seq, dto);
 		
 		String post_category = dto.getPost_category();
 		
