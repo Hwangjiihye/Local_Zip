@@ -104,10 +104,10 @@ public class BoardController {
 		
 		String loginId = (String)session.getAttribute("loginId");
 		   
-//		   if(loginId != null) {
-//		      String category = dao.getCategoryBySeq(post_seq);
-//		      vdao.postClickVisit(loginId, category);
-//		   }
+		   if(loginId != null) {
+		      String category = dao.getCategoryBySeq(post_seq);
+		      vdao.postClickVisit(loginId, category);
+		   }
 		   
 		return "board/postDetail";
 	}

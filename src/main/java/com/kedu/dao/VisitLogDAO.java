@@ -96,6 +96,15 @@ public class VisitLogDAO {
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<AgeVisitDTO>(AgeVisitDTO.class));	
 	}
+	
+	public int postClickVisit(String mem_id, String post_category) {
+		String sql = "insert into visit_log(visit_seq, mem_id, post_category, "
+				+ "mem_gender, mem_ssn, visit_date) "
+				+ "select visit_log_seq.nextval, mem_id, ? , mem_gender, mem_ssn, sysdate "
+				+ "from members where mem_id = ?";
+		
+		return jdbc.update(sql, post_category, mem_id);
+	}
 }
 
 
