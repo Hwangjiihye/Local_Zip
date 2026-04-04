@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.ReplyDAO;
 import com.kedu.dto.BoardDTO;
+import com.kedu.dto.ReplyDTO;
 
 @Controller
 @RequestMapping("/board")
@@ -25,7 +26,7 @@ public class BoardController {
 	@Autowired
 	private BoardDAO dao;
 	@Autowired
-	private ReplyDAO Replydao;
+	private ReplyDAO ReplyDao;
 	
 	@RequestMapping("/lifeInfo")
 	public String lifeInfo() {
@@ -68,6 +69,14 @@ public class BoardController {
 		System.out.println(mem_dong);
 		dao.insert(dto, mem_id, mem_nickname, mem_dong);
 		
+		String post_category = dto.getPost_category();
+		
+		if("lifeInfo".equals(post_category)) {
+			return "redirect:/board/life-info";
+		}else if("talk".equals(post_category)) {
+			return "redirect:/board/concern";
+		}
+		
 		return "redirect:/";
 	}
 	
@@ -92,4 +101,45 @@ public class BoardController {
 		
 		return "board/postDetail";
 	}
+	
+	// 게시글 삭제
+	@RequestMapping("/deletePost")
+	public String deletePost(int seq, BoardDTO dto) {
+		dao.deletePost(seq);
+		
+		String post_category = dto.getPost_category();
+		
+		if("lifeInfo".equals(post_category)) {
+			return "redirect:/board/life-info";
+		}else if("talk".equals(post_category)) {
+			return "redirect:/board/concern";
+		}
+		return "redirect:/";
+	}
+	
+	// 게시글 수정
+	@RequestMapping("/updatePost")
+	public String updatePost(int seq, BoardDTO dto) {
+		dao.updatePost(seq, dto);
+		
+		String post_category = dto.getPost_category();
+		
+		if("lifeInfo".equals(post_category)) {
+			return "redirect:/board/life-info";
+		}else if("talk".equals(post_category)) {
+			return "redirect:/board/concern";
+		}
+		return "redirect:/";
+	}
+	
+	// 댓글 리스트 출력
+	@ResponseBody
+	@RequestMapping("/reply")
+	public String reply() {
+		List<ReplyDTO> list = ReplyDao.selectAll();
+		String result = gson.toJson(list);
+		return result;
+	}
+	
+	
 }
