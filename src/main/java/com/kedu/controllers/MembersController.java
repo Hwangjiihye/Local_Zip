@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.kedu.dao.MembersDAO;
+import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.MembersDTO;
 
 @Controller
@@ -21,6 +22,8 @@ public class MembersController {
 	private MembersDAO dao;
 	@Autowired
 	private Gson gson;
+	@Autowired
+	private VisitLogDAO vdao;	
 	
 	// 회원가입 창으로 이동 클릭 시
 	@RequestMapping("/join")
@@ -82,6 +85,11 @@ public class MembersController {
 			session.setAttribute("loginId", mem_id); 
 			session.setAttribute("nickname", nickname);
 			session.setAttribute("dong", dong);// 로그인 아이디로 주소 저장(00동 출력용)
+			
+			int exists = vdao.existsToday(mem_id); // 총 방문수 통계 구하는 로직
+				if(exists == 0) {
+					vdao.insertTodayVisit(mem_id);
+				}
 			return "redirect:/";
 		} else if(result == 2){
 			String nickname = dao.nickname(mem_id);

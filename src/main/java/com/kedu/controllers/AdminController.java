@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kedu.dao.AdminQaDAO;
 import com.kedu.dao.UserQaDAO;
+import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.QaDTO;
 
 @Controller
@@ -23,13 +24,18 @@ public class AdminController {
 	@Autowired
 	private UserQaDAO udao;
 	
+	@Autowired
+	private VisitLogDAO vdao;
+	
 	@RequestMapping("/adminPage")
-	public String test(HttpSession session) {
+	public String test(HttpSession session, Model model) {
 		int qaCount = dao.qaCount();
 		int memberCount = dao.activityMemberCount();
 		
 		session.setAttribute("qaCount", qaCount);
 		session.setAttribute("memberCount", memberCount);
+		model.addAttribute("todayVisitCount", vdao.getTodayVisitCount());
+		
 		return "admin/admin";
 	}
 	

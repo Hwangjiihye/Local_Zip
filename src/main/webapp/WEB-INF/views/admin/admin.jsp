@@ -306,7 +306,7 @@ body {
 				<div class="visitantIcon"><i class="fa-solid fa-chart-column"></i></div>
 				<div class="visitantDiv">
 					<div class="allVisitant">오늘 방문자</div>
-					<div class="visitantCount">750</div>
+					<div class="visitantCount">${todayVisitCount}</div>
 				</div>
 			</div>
 			
