@@ -49,12 +49,14 @@ public class AdminController {
 		
 		List<QaDTO> list = dao.selectById();
 		model.addAttribute("list", list);
-		session.getAttribute("qaCount");
+		
+		int qaCount = dao.qaCount();
 		int qaDoneCount = dao.qaDoneCount();
 		int qaAllCount = dao.qaAllCount();
 
-		session.setAttribute("qaAllCount", qaAllCount);
+		session.setAttribute("qaCount", qaCount);
 		session.setAttribute("qaDoneCount", qaDoneCount);
+		session.setAttribute("qaAllCount", qaAllCount);
 		return "admin/adminQ&A";
 	}
 

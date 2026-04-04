@@ -313,7 +313,6 @@ body {
  
  .answerBtnDiv{
  	margin: 30px auto 0 auto;
- 	border:1px solid black;
  	display: flex;
  	justify-content: center;
  	align-items: center;
@@ -321,13 +320,13 @@ body {
  }
  
  .answerBtnDiv>button{
- 	 background-color: #ffb300;
+ 	 background-color: #fbe5c0;
      color: #5e361a;
-     border: 1px solid #ffb300;
-     border-radius: 10px;
+     font-weight: bold;
+     border:none;
      width: 100px;
  	 height: 40px;
- 	 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+/*  	 box-shadow: 0 4px 10px rgba(0,0,0,0.3); */
  	 font-size:15px;
  } 
 </style>
@@ -439,11 +438,32 @@ body {
 	</div>
 	
 	<script>
-			$(".inputQaReply").on("input", function(){
+			$(".document").on("input", ".inputQaReply", function(){
 			    this.style.height = "auto";              // 초기화
 			    this.style.height = this.scrollHeight + "px";  // 내용만큼 늘림
 			});
-	
+			
+			$(document).on("click", ".filterBtn", function(){
+				
+				let status = $(this).data("status");
+				
+				$.ajax({
+					url : "/admin/qaList",
+					type : "get",
+					data : {
+						status : status
+					},
+					dataType : "json",
+					success : function(resp){
+						drawQaList(resp);
+					},
+					
+					error : function(){
+						alert("목록 불러오기 실패");
+					}
+				});
+			});
+			
 			function drawQaList(list){
 				$("#qaListWrap").empty();
 				
@@ -456,6 +476,8 @@ body {
 					return;
 				}
 				for(let i of list){
+					
+					let categoryText = "";
 					
 					if(i.qa_category == 0){
 						categoryText = "계정/로그인";
@@ -492,7 +514,9 @@ body {
 				        			<div class="adminProfileDiv">
 				        				<div class="replyAdminId">관리자</div>
 			        				</div>
-				            			<div class="answerDiv">${escapeHtml(i.admin_answer == null ? "" : i.admin_answer)}</div>
+				            			<div class="answerDiv">\${i.admin_answer}</div>
+				            			<button class="updateBtn" type="submit">수정</button>
+				            			<button class="deleteBtn" type="button">등록</button>
 		        				</div>
 		        			</div>
 	        			`;
@@ -502,59 +526,31 @@ body {
 						<div class="postBox" data-status="${i.qa_status}">
 				        	<div class="postHeader">
 				       			<div class="categoryAndWriter">
-				           			<div class="writer">작성자: ${i.mem_id}</div> 
-			           				<div class="category">${categoryText}</div>
+				           			<div class="writer">작성자: \${i.mem_id}</div> 
+			           				<div class="category">\${categoryText}</div>
 				           		</div>
 				           	
-				           	<div class="writeData">${i.qa_create_date}</div> 
+				           			<div class="writeData">\${i.qa_create_date}</div> 
 		
-				        </div>
-		        	<div class="postBody">
-		            	<div class="rowItem1">
-			                <span class="labelName">제목</span>
-			                <div class="titleContent">${i.qa_title}</div>
-		            	</div>
-		           		<div class="rowItem2">
-		                	<span class="labelName">내용</span>
-			                <div class="textContent">
-			                  ${i.qa_contents}
-			                </div>
-		            	</div>
-		        		</div>
-					</div>
-						
+				        	</div>
+				        	
+		        			<div class="postBody">
+		            			<div class="rowItem1">
+					                <span class="labelName">제목</span>
+					                <div class="titleContent">\${i.qa_title}</div>
+		            			</div>
+		           				<div class="rowItem2">
+				                	<span class="labelName">내용</span>
+					                <div class="textContent">\${i.qa_contents} </div>
+		            			</div>
+		        			</div>
+		        			\${replyHtml}
+						</div>
+					`;
+					
+					$("#qaListWrap").append(html);
 				}
 			}
-			
-			
-			$(document).on("click", ".filterBtn", function(){
-				
-				let status = $(this).data("status");
-				
-				$.ajax({
-					url : "/admin/qaList",
-					type : "get",
-					data : {
-						status : status
-					},
-					dataType : "json",
-					success : function(resp){
-						drawQaList(resp);
-					},
-					
-					error : function(){
-						alert("목록 불러오기 실패");
-					}
-				});
-			});
-			
-			
-			
-			
-			
-			
-			
-			
 	</script>
 </body>
 </html>
