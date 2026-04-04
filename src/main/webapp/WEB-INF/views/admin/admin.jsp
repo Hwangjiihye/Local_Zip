@@ -404,16 +404,23 @@ body {
 			    }
 			});
 		
+			let ageLabels = [];
+			let ageData = [];
+			
+			<c:forEach var="i" items="${ageCount}">
+				ageLabels.push("${i.ageGroup}");
+				ageData.push(${i.count});
+			</c:forEach>
 			
 			let ageCtx = document.getElementById('ageChart'); // 연령대 도넛 차트
 			
 			new Chart(ageCtx, {
 			    type: 'doughnut',
 			    data: {
-			        labels: ["10대","20대","30대","40대"],
+			        labels: ageLabels ,
 			        datasets: [{
-			            data: [12, 35, 30, 23],
-			            backgroundColor: ['#F7E1AE', '#F6BD60', '#F4A261', '#E76F51']
+			            data: ageData,
+			            backgroundColor: ['#F7E1AE', '#F6BD60', '#F4A261', '#E76F51', '#D1495B']
 			        }]
 			    },
 			    options: {

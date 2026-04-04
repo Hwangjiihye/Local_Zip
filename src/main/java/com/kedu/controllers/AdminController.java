@@ -37,7 +37,7 @@ public class AdminController {
 		model.addAttribute("todayVisitCount", vdao.getTodayVisitCount()); // 일별방문자수
 		model.addAttribute("dailyCount", vdao.getDailyVisitCount()); // 기존회원,신규회원 방문수
 		model.addAttribute("genderCount", vdao.getGenderCount());
-		
+		model.addAttribute("ageCount", vdao.getAgeCount());
 		return "admin/admin";
 	}
 	
