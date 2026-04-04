@@ -5,14 +5,17 @@ public class ReplyDTO {
 	private int reply_seq;
 	private int post_seq;
 	private String mem_id;
+	private String mem_nickname;
 	private String reply_contents;
 	private String reply_date;
 	
 	public ReplyDTO() {}
-	public ReplyDTO(int reply_seq, int post_seq, String mem_id, String reply_contents, String reply_date) {
+	public ReplyDTO(int reply_seq, int post_seq, String mem_id, String mem_nickname, String reply_contents,
+			String reply_date) {
 		this.reply_seq = reply_seq;
 		this.post_seq = post_seq;
 		this.mem_id = mem_id;
+		this.mem_nickname = mem_nickname;
 		this.reply_contents = reply_contents;
 		this.reply_date = reply_date;
 	}
@@ -33,6 +36,12 @@ public class ReplyDTO {
 	}
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
+	}
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
 	}
 	public String getReply_contents() {
 		return reply_contents;

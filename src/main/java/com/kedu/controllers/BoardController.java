@@ -113,42 +113,29 @@ public class BoardController {
 	}
 	
 	// 게시글 삭제
+	@ResponseBody
 	@RequestMapping("/deletePost")
-	public String deletePost(int post_seq, BoardDTO dto) {
+	public String deletePost(int post_seq) {
 		dao.deletePost(post_seq);
 		
-		String post_category = dto.getPost_category();
-		
-		if("lifeInfo".equals(post_category)) {
-			return "redirect:/board/life-info";
-		}else if("talk".equals(post_category)) {
-			return "redirect:/board/concern";
-		}
-		return "redirect:/";
+		return "success";
 	}
 	
 	// 게시글 수정
+	@ResponseBody
 	@RequestMapping("/updatePost")
-	public String updatePost(int post_seq, BoardDTO dto) {
-		dao.updatePost(post_seq, dto);
+	public String updatePost(int post_seq, String post_title, String post_contents) {
+		dao.updatePost(post_seq, post_title, post_contents);
 		
-		String post_category = dto.getPost_category();
-		
-		if("lifeInfo".equals(post_category)) {
-			return "redirect:/board/life-info";
-		}else if("talk".equals(post_category)) {
-			return "redirect:/board/concern";
-		}
-		return "redirect:/";
+		return "success";
 	}
 	
 	// 댓글 리스트 출력
 	@ResponseBody
-	@RequestMapping("/reply")
-	public String reply() {
-		List<ReplyDTO> list = ReplyDao.selectAll();
-		String result = gson.toJson(list);
-		return result;
+	@RequestMapping("/replyList")
+	public String replyList(int post_seq) {
+		List<ReplyDTO> list = ReplyDao.selectByPostSeq(post_seq);
+		return  gson.toJson(list);
 	}
 	
 	
