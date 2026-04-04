@@ -33,9 +33,9 @@ public class AdminQaDAO {
 		return jdbc.update(sql, qa_seq);
 	}
 	
-	public int answerUpdateBySeq(int qa_seq) {
-		String sql = "update qa set admin_answer, admin_answer_date = sysdate where qa_seq = ?";
-		return jdbc.update(sql, qa_seq);
+	public int answerUpdateBySeq(String admin_answer, int qa_seq) {
+		String sql = "update qa set admin_answer =? , admin_answer_date = sysdate where qa_seq = ?";
+		return jdbc.update(sql, admin_answer, qa_seq);
 	}
 	
 	public int qaAllCount() {
@@ -52,13 +52,6 @@ public class AdminQaDAO {
 		String sql = "select count(*) from qa where qa_status = 1";
 		return jdbc.queryForObject(sql, Integer.class);
 	}
-	
-//	public List<QaDTO> selectByStatus(int status, int start, int end){
-//		String sql = "select * from (select row_number() over(order by qa_create_date "
-//				+ "desc as rn, q.* from qa q where qa_status =?) where rn between ? and ?";
-//	
-//		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class), start, end);
-//	}
 	
 	public List<QaDTO> selectAll(){
 		String sql = "select * from qa order by qa_create_date desc";

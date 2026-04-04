@@ -131,16 +131,6 @@ body {
 	border-radius: 20px;
 }
 
-.menuDetail:hover{
-    transform: translateY(-3px); /* 살짝 위로 뜸 */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-}
-
-.menuDetail:active{
-    transform: translateY(2px); /* 아래로 눌림 */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
 .chart-box {
 	width: 80%;
 	height: 400px;

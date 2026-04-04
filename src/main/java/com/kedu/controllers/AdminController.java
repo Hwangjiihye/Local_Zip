@@ -107,9 +107,9 @@ public class AdminController {
 	
 	@ResponseBody
 	@RequestMapping("/answerUpdate")
-	public String answerUpdate(int qa_seq) {
+	public String answerUpdate(String admin_answer, int qa_seq) {
 		
-		dao.answerUpdateBySeq(qa_seq);
+		dao.answerUpdateBySeq(admin_answer, qa_seq);
 		
 		return "redirect:/admin/adminQ&A?seq=" + qa_seq;
 	}

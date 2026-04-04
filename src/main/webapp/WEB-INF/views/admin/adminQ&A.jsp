@@ -170,7 +170,7 @@ body {
  	margin: 0 0 5px 0;
  	font-size:15px;
  	width:100%;
- 	min-height: 40px;
+ 	height: 40px;
  	word-break: break-all;
  	white-space: normal;
  	resize: none;
@@ -186,6 +186,7 @@ body {
  	border:none;
  	margin: 0 0 5px 0;
  	font-size: 15px;
+ 	height: 40px;
  	flex:1;
  	width:auto;
  	min-width:0;
@@ -213,7 +214,6 @@ body {
 
 .qaReply{
 	padding: 10px 15px;
-/* 	margin: 0 10px 10px 15px; */
 	border-radius: 10px;
 }
 
@@ -244,7 +244,7 @@ body {
         width: 95%;
         max-width: 1000px;
         margin: 20px auto 0 auto;
-        background-color: #fbe5c0; /* 와이어프레임의 흰색 배경 느낌 */
+        background-color: #fbe5c0;
         border-radius: 5px;
         overflow: hidden;
         box-shadow: 0 4px 6px rgba(0,0,0,0.3);
@@ -303,7 +303,7 @@ body {
         display: block;
     }
 
-    /* 하단 페이지네이션 */
+
 .pageBox {
         text-align: center;
         padding: 20px;
@@ -328,7 +328,6 @@ body {
      border:none;
      width: 100px;
  	 height: 40px;
-/*  	 box-shadow: 0 4px 10px rgba(0,0,0,0.3); */
  	 font-size:15px;
  } 
  
@@ -385,7 +384,11 @@ body {
     font-weight:bold;
 }
 
-
+.answerDiv.editing {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+}
 </style>
 </head>
 
@@ -498,12 +501,7 @@ body {
 			    }
 			    $(".pageBox").html(html);
 			}
-			
-			$(document).on("input", ".inputQaReply", function(){
-			    this.style.height = "auto";              // 초기화
-			    this.style.height = this.scrollHeight + "px";  // 내용만큼 늘림
-			});
-			
+
 			function drawQaList(list){
 				$("#qaListWrap").empty();
 				
@@ -538,7 +536,7 @@ body {
 					        			<div class="replyAdminId">관리자</div>
 				        			</div>
 			        				<form action="/admin/answer" method="post">
-			        					<input type="hidden" name="qa_seq" value="${i.qa_seq}">
+			        					<input type="hidden" name="qa_seq" value="\${i.qa_seq}">
 			        			
 				        				<div class="replyTextAndBtn">
 							            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply" name="admin_answer"></textarea>
@@ -560,7 +558,7 @@ body {
 					            		<div class="adminBtnArea">
 					            			<button class="adminBtn updateBtn" type="button" data-seq="\${i.qa_seq}">수정</button>
 					            			<button class="adminBtn deleteBtn" type="button" data-seq="\${i.qa_seq}">삭제</button>
-					            			<button class="UpdateBtn saveBtn replyBtn" type="submit" data-seq="\${i.qa_seq}" style="display:none">저장</button>
+					            			<button class="UpdateBtn saveBtn replyBtn" type="button" data-seq="\${i.qa_seq}" style="display:none">저장</button>
 					            			<button class="UpdateBtn cenBtn replyBtn" type="button" data-seq="\${i.qa_seq}" style="display:none">취소</button>
 						            	</div>
 				            		</div>
@@ -602,27 +600,39 @@ body {
 			$(document).on("click", ".updateBtn", function(){
 				let parentRow = $(this).closest(".replyTextAndBtn");
 				let answerDiv = parentRow.find(".answerDiv");
-				let originText = answerDiv.text();
+				let originText = answerDiv.text().trim();
 				let seq = $(this).data("seq");
 				
+				answerDiv.data("origin", originText);
+				
+				answerDiv.addClass("editing");
 				answerDiv.html(`
-					<textarea class="inputQaReply inputUpdate" id="inputUpdate_\${seq}">\${originText}</textarea>		
+					<textarea class="inputQaReply inputUpdate" id="inputUpdate_\${seq}" data-origin="\${originText}" style="height:40px">\${originText}</textarea>		
 				`);
 				
 				let textarea = $("#inputUpdate_" + seq)[0];
 				textarea.style.height = "auto";
-			    textarea.style.height = textarea.scrollHeight + "px";
+			    textarea.style.height = 40+"px";
 			    
 					parentRow.find(".adminBtn").hide();
 					parentRow.find(".UpdateBtn").show();
 				});
 			
 				$(document).on("click", ".cenBtn", function(){
-					location.reload();
+					let parentRow = $(this).closest(".replyTextAndBtn");
+				    let answerDiv = parentRow.find(".answerDiv");
+				    
+				    let originalText = answerDiv.data("origin");
+				    answerDiv.html(originalText);
+				    answerDiv.removeClass("editing");
+				    
+				    parentRow.find(".saveBtn, .cenBtn").hide();
+				    parentRow.find(".updateBtn, .deleteBtn").show();
 				});
 				
 				$(document).on("click", ".saveBtn", function(){
-					let seq = $(this).data("seq");
+					let btn = $(this);
+					let seq = btn.data("seq");
 					let updateContents = $("#inputUpdate_" + seq).val();
 					
 					if(updateContents.trim() == ""){
@@ -638,10 +648,17 @@ body {
 							admin_answer : updateContents
 						},
 						success : function(resp){
-							if(resp > 0){
+							
+								let parentRow = btn.closest(".replyTextAndBtn");
+							    let answerDiv = parentRow.find(".answerDiv");
+							    
 								alert("수정되었습니다.");
-								location.reload();
-							}
+								answerDiv.removeClass("editing");
+								answerDiv.html(updateContents);
+								
+								parentRow.find(".saveBtn, .cenBtn").hide();
+				                parentRow.find(".updateBtn, .deleteBtn").show();
+							
 						},
 						error : function(){
 							alert("수정 실패");
