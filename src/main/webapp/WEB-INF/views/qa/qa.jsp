@@ -254,7 +254,12 @@ body, html {
 					</div>
 					<div class="answerBox">
 						<span class="answerLabel">답변 댓글</span>
-						<div class="answerText">현재 해당 지역 확인 중이며, 다음 주 내로 조치 예정입니다.</div>
+						<c:choose>
+						<c:when test="${i.qa_status == 1}">
+						<div class="answerText">${i.admin_answer}</div>
+						</c:when>
+						<c:otherwise>답변 대기중 입니다.</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 				</c:forEach>
@@ -275,11 +280,11 @@ body, html {
 		</button>
 
 		<div class="bottomBox">
-			<i class="fa-solid fa-house fa-2xl"></i> <i
-				class="fa-solid fa-map-location-dot fa-2xl"></i> <i
-				class="fa-solid fa-people-group fa-2xl"></i> <i
-				class="fa-solid fa-bullhorn fa-2xl"></i> <i
-				class="fa-solid fa-user fa-2xl"></i>
+			<a href="/"><i class="fa-solid fa-house fa-2xl"></i></a>
+			<a href="/map/test"><i class="fa-solid fa-map-location-dot fa-2xl"></i></a>
+			<a href="/meeting/list"><i class="fa-solid fa-people-group fa-2xl"></i></a>
+			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl"></i> </a>
+			<a href="/members/mypage"><i class="fa-solid fa-user fa-2xl"></i></a>
 		</div>
 	</div>
 
