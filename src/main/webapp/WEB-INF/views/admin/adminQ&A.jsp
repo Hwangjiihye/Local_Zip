@@ -151,7 +151,8 @@ body {
 .replyAdminId{
 	padding-bottom: 10px;
 	font-size: 14px;
-	color: #A66A3F;
+	color: #5e361a;
+	font-weight: bold;
 }
 
 .categoryAndWriter{
