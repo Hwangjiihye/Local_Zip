@@ -47,4 +47,6 @@ public class UserQaController {
 		
 		return "redirect:/qa/toQa";
 	}
+	
+	
 }
