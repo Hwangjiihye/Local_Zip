@@ -31,7 +31,7 @@ public class MeetingController {
 		String loginId = (String)session.getAttribute("loginId"); 
 		
 		if(loginId == null) { // 로그인을 안한 상태면 로그인 화면으로 보내기
-			return "redirect:/login";
+			return "redirect:/members/loginUi";
 		}
 			
 		return "meeting/meeting";

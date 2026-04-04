@@ -131,16 +131,6 @@ body {
 	border-radius: 20px;
 }
 
-.menuDetail:hover{
-    transform: translateY(-3px); /* 살짝 위로 뜸 */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-}
-
-.menuDetail:active{
-    transform: translateY(2px); /* 아래로 눌림 */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
 .chart-box {
 	width: 80%;
 	height: 400px;
@@ -353,7 +343,7 @@ body {
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> 
-			<a><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 	</div>
@@ -463,6 +453,7 @@ body {
 			
 			let categoryLabels = [];
 			let categoryData = [];
+			let visitData = [];
 			
 			<c:forEach var="i" items="${categoryCount}">
 				<c:choose>
@@ -480,6 +471,7 @@ body {
 					</c:when>
 				</c:choose>
 				categoryData.push(${i.count});
+				visitData.push(${i.visitCount});
 			</c:forEach>
 			
 			let categoryCtx = document.getElementById('categoryChart'); // 카테고리별 게시글 현황
@@ -492,23 +484,27 @@ body {
 			            {
 			                label: '게시글 수',
 			                data: categoryData,
-			                backgroundColor: '#F4A261'
+			                backgroundColor: '#F7E1AE',
+			                categoryPercentage: 0.7,
+			                barPercentage: 0.7
 			            },
 			            {
-			                label: '신청 수',
-			                data: categoryData,
-			                backgroundColor: '#F7E1AE'
-			            },
-			            {
-			                label: '신고 수',
-			                data: categoryData,
-			                backgroundColor: '#E76F51'
+			                label: '유입 방문자 수',
+			                data: visitData,
+			                backgroundColor: '#E76F51',
+			                categoryPercentage: 0.7,
+			                barPercentage: 0.7
 			            }
 			        ]
 			    },
 			    options: {
 			        responsive: true,
-			        maintainAspectRatio: false
+			        maintainAspectRatio: false,
+	                scales: {
+	    	            y: {
+	    	                beginAtZero: true
+	    	            }
+	    	        }
 			    }
 			});
 </script>

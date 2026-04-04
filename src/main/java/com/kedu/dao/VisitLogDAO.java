@@ -106,26 +106,3 @@ public class VisitLogDAO {
 		return jdbc.update(sql, post_category, mem_id);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

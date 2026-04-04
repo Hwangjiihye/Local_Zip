@@ -169,8 +169,8 @@ body {
  	border:none;
  	margin: 0 0 5px 0;
  	font-size:15px;
- 	width: 835px;
- 	height: 40%;
+ 	width:100%;
+ 	height: 40px;
  	word-break: break-all;
  	white-space: normal;
  	resize: none;
@@ -186,8 +186,11 @@ body {
  	border:none;
  	margin: 0 0 5px 0;
  	font-size: 15px;
- 	width: 970px;
- 	height: 40%;
+ 	height: 40px;
+ 	flex:1;
+ 	width:auto;
+ 	min-width:0;
+ 	min-height: 40px;
  	font-family: 'GMarketSans';
 }
 
@@ -205,13 +208,12 @@ body {
 
 .replyTextAndBtn{
  	display:flex;
- 	align-items: center;
+ 	align-items:flex-start;
  	gap:10px;
 }
 
 .qaReply{
 	padding: 10px 15px;
-/* 	margin: 0 10px 10px 15px; */
 	border-radius: 10px;
 }
 
@@ -242,13 +244,13 @@ body {
         width: 95%;
         max-width: 1000px;
         margin: 20px auto 0 auto;
-        background-color: #fbe5c0; /* 와이어프레임의 흰색 배경 느낌 */
+        background-color: #fbe5c0;
         border-radius: 5px;
         overflow: hidden;
         box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
 
-    .postHeader {
+.postHeader {
         background-color: #F2D3A2;
         padding: 10px 15px;
         font-size: 14px;
@@ -258,11 +260,11 @@ body {
         justify-content: space-between;
     }
 
-    .postBody {
+.postBody {
         padding: 15px 15px 5px 15px;
     }
 
-    .rowItem1 {
+.rowItem1 {
         border: 0px solid #ccc;
         margin-bottom: 10px;
         padding: 10px;
@@ -270,47 +272,123 @@ body {
         background-color: #F2D3A2;
     }
 
-    .rowItem2 {
+.rowItem2 {
         border: 0px solid #ccc;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         padding: 10px;
         border-radius: 5px;
     }
     
-    .labelName {
+.labelName {
         font-size: 12px;
         color: #5e361a;;
         display: block;
         margin-bottom: 5px;
     }
 
-    .titleContent { font-weight: bold; font-size: 18px; color: #5e361a; }
-    .textContent { font-size: 15px; color: #444; min-height: 60px; color: #5e361a;}
+.titleContent { font-weight: bold; font-size: 18px; color: #5e361a; }
+.textContent { font-size: 15px; color: #444; min-height: 60px; color: #5e361a;}
 
     /* 답변 영역 (와이어프레임의 하단 칸) */
-    .answerBox {
+.answerBox {
         background-color: #F2D3A2;
         border-top: 1px solid #A66A3F;
         padding: 15px;
         color : #5e361a;
     }
-    .answerLabel {
+.answerLabel {
         font-weight: bold;
         color: #5e361a;
         margin-bottom: 5px;
         display: block;
     }
 
-    /* 하단 페이지네이션 */
-    .pageBox {
+
+.pageBox {
         text-align: center;
         padding: 20px;
         font-size: 18px;
         color: #A66A3F;
         transform: translateX(-20px);
     }
-    .pageBox span { margin: 0 10px; cursor: pointer; }
+.pageBox span { margin: 0 10px; cursor: pointer; }
  
+.answerBtnDiv{
+ 	margin: 30px auto 0 auto;
+ 	display: flex;
+ 	justify-content: center;
+ 	align-items: center;
+ 	gap: 100px;
+ }
+ 
+.answerBtnDiv>button{
+ 	 background-color: #fbe5c0;
+     color: #5e361a;
+     font-weight: bold;
+     border:none;
+     width: 100px;
+ 	 height: 40px;
+ 	 font-size:15px;
+ } 
+ 
+.adminBtnArea{
+ 	display:flex;
+	gap:10px;
+	flex-shrink:0;
+ }
+.adminBtn, .replyBtn{
+ 	margin: 0 0 7px 15px;
+ 	background-color: #ffb300;
+    color: #5e361a;
+    border: 1px solid #ffb300;
+    border-radius: 10px;
+    width: 100px;
+ 	height: 40px;
+ 	box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+ 	font-size:15px;
+ }
+ 
+.pageBox{
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #A66A3F;
+}
+
+.pageBox a{
+    display: inline-block;
+    min-width:35px;
+    padding:6px 10px;
+    margin: 0 8px;
+    text-decoration: none;
+    color: #A66A3F;
+    border-radius:6px;
+    transition:0.2s;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.pageBox a.active{
+	background-color:#FFB300;
+    font-weight: bold;
+    color: #5e361a;
+}
+
+.pageBox a:hover{
+    background-color:#F2D3A2;
+}
+
+.pageBox a.active{
+    background-color:#FFB300;
+    color:#5e361a;
+    font-weight:bold;
+}
+
+.answerDiv.editing {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+}
 </style>
 </head>
 
@@ -335,73 +413,15 @@ body {
 			</div>
 		</div>
 		
+		<div class="answerBtnDiv">
+				<button class="navicon filterBtn" data-status="all">전체 ${qaAllCount}</button>
+				<button class="navicon filterBtn" data-status="0">답변대기 ${qaCount}</button>
+				<button class="navicon filterBtn" data-status="1">답변완료 ${qaDoneCount}</button>
+		</div>
 		
-		<c:forEach var="i" items="${list}">
-			<div class="postBox">
-		        <div class="postHeader">
-		        <div class="categoryAndWriter">
-		           
-		           		<div class="writer">작성자: ${i.mem_id}</div> 
-	           		<c:choose>
-	           			<c:when test="${i.qa_category == 0}"><div class="category">계정/로그인</div></c:when>
-	           			<c:when test="${i.qa_category == 1}"><div class="category">이용문의</div></c:when>
-	           			<c:when test="${i.qa_category == 2}"><div class="category">기타</div></c:when>
-	             	</c:choose>
-		           	</div>
-		           	
-		           	<div class="writeData">${i.qa_create_date}</div> 
-
-		        </div>
-        	<div class="postBody">
-            	<div class="rowItem1">
-	                <span class="labelName">제목</span>
-	                <div class="titleContent">${i.qa_title}</div>
-            	</div>
-           		<div class="rowItem2">
-                	<span class="labelName">내용</span>
-	                <div class="textContent">
-	                  ${i.qa_contents}
-	                </div>
-            	</div>
-        		</div>
-      	<c:choose>
-      		<c:when test="${i.qa_status == 0}">
-        	<div class="qaReply">
-        			<div class="qaReplyRow">
-			        	<div class="adminProfileDiv">
-			        		<div class="replyAdminId">관리자</div>
-		        		</div>
-	        		<form action="/admin/answer" method="post">
-	        			<input type="hidden" name="qa_seq" value="${i.qa_seq}">
-	        			
-		        		<div class="replyTextAndBtn">
-			            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply" name="admin_answer"></textarea>
-							<button class="replyBtn" type="submit">등록</button>
-						</div>
-					</form>
-	        		</div>  
-	        	</div> 
-        	</c:when>
-        	<c:when test="${i.qa_status == 1}">
-	        	<div class="qaReply">
-        			<div class="qaReplyRow">
-			        	<div class="adminProfileDiv">
-			        		<div class="replyAdminId">관리자</div>
-		        		</div>
-			            	<div class="answerDiv">${i.admin_answer}</div>
-	        		</div>  
-	        	</div> 
-        	</c:when>
-        	</c:choose>
-    		</div>
-   			
-  		
-		</c:forEach>
-		<div class="pageBox">
-		        <i class="fa-solid fa-chevron-left"></i>
-		        <span>1</span> <span>2</span> <span>3</span>
-		        <i class="fa-solid fa-chevron-right"></i>
-    	</div>
+		<div id="qaListWrap"></div>
+		
+		<div class="pageBox"></div>
     	
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
@@ -413,11 +433,253 @@ body {
 	</div>
 	
 	<script>
-			$(".inputQaReply").on("input", function(){
-			    this.style.height = "auto";              // 초기화
-			    this.style.height = this.scrollHeight + "px";  // 내용만큼 늘림
-			});
+			let currentStatus = "all";
 	
+			$(function(){
+			    loadQaList("all", 1);
+			});
+			
+			
+			function loadQaList(status,cpage){
+				currentStatus = status;
+				
+			    $.ajax({
+			        url : "/admin/qaList",
+			        type : "get",
+			        data : { 
+			        	status : status,
+			        	cpage : cpage
+			        },
+			        dataType : "json",
+			        success : function(resp){
+			        	console.log(resp);
+			            console.log(resp.pageNavi);
+			            drawQaList(resp.list);
+			            drawPageNavi(resp.pageNavi);
+			        }
+			    });
+			}
+			
+			$(document).on("click", ".filterBtn", function(){
+			    let status = $(this).data("status");
+			    loadQaList(status, 1);
+			});
+			
+			$(document).on("click", ".pageLink", function(){
+			    let page = $(this).data("page");
+			    loadQaList(currentStatus, page);
+			});
+			
+			function drawPageNavi(pageNavi){
+			    $(".pageBox").empty();
+			    let html = "";
+			    
+			    if(pageNavi.needPrev){
+			    	html += `
+			            <a href="javascript:void(0)" class="pageLink" data-page="\${pageNavi.startNavi - 1}">
+			                <i class="fa-solid fa-chevron-left"></i>
+			            </a>
+			        `;
+			    }
+
+			    for(let i = pageNavi.startNavi; i <= pageNavi.endNavi; i++){
+			        let activeClass = (i == pageNavi.cpage) ? "active" : "";
+
+			        html += `
+			            <a href="javascript:void(0)" class="pageLink \${activeClass}" data-page="\${i}">
+			                \${i}
+			            </a>
+			        `;
+			    }
+
+			    if(pageNavi.needNext){
+			    	html += `
+			            <a href="javascript:void(0)" class="pageLink" data-page="\${pageNavi.endNavi + 1}">
+			                <i class="fa-solid fa-chevron-right"></i>
+			            </a>
+			        `;
+			    }
+			    $(".pageBox").html(html);
+			}
+
+			function drawQaList(list){
+				$("#qaListWrap").empty();
+				
+				if(list.length == 0){
+					$("#qaListWrap").append(`
+						<div class="postBox">
+							<div class="postBody">문의글이 없습니다.</div>
+						</div>		
+					`);
+					return;
+				}
+				
+				for(let i of list){
+					
+					let categoryText = "";
+					
+					if(i.qa_category == 0){
+						categoryText = "계정/로그인";
+					}else if(i.qa_category == 1){
+						categoryText = "이용문의";
+					}else if(i.qa_category == 2){
+						categoryText = "기타";
+					}
+					
+					let replyHtml = "";
+					
+					if(i.qa_status == 0){
+						replyHtml = `
+							<div class="qaReply">
+		        				<div class="qaReplyRow">
+					        		<div class="adminProfileDiv">
+					        			<div class="replyAdminId">관리자</div>
+				        			</div>
+			        				<form action="/admin/answer" method="post">
+			        					<input type="hidden" name="qa_seq" value="\${i.qa_seq}">
+			        			
+				        				<div class="replyTextAndBtn">
+							            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply" name="admin_answer"></textarea>
+											<button class="replyBtn" type="submit">등록</button>
+										</div>
+									</form>
+			        			</div>  
+			        		</div> 
+			        	`;
+					}else {
+						replyHtml = `
+							<div class="qaReply">
+	        					<div class="qaReplyRow">
+				        			<div class="adminProfileDiv">
+				        				<div class="replyAdminId">관리자</div>
+			        				</div>
+			        				<div class="replyTextAndBtn">
+				            			<div class="answerDiv">\${i.admin_answer}</div>
+					            		<div class="adminBtnArea">
+					            			<button class="adminBtn updateBtn" type="button" data-seq="\${i.qa_seq}">수정</button>
+					            			<button class="adminBtn deleteBtn" type="button" data-seq="\${i.qa_seq}">삭제</button>
+					            			<button class="UpdateBtn saveBtn replyBtn" type="button" data-seq="\${i.qa_seq}" style="display:none">저장</button>
+					            			<button class="UpdateBtn cenBtn replyBtn" type="button" data-seq="\${i.qa_seq}" style="display:none">취소</button>
+						            	</div>
+				            		</div>
+				            	</div>
+		        			</div>
+	        			`;
+					}
+					
+					let html = `
+						<div class="postBox" data-status="${i.qa_status}">
+				        	<div class="postHeader">
+				       			<div class="categoryAndWriter">
+				           			<div class="writer">작성자: \${i.mem_id}</div> 
+			           				<div class="category">\${categoryText}</div>
+				           		</div>
+				           	
+				           			<div class="writeData">\${i.qa_create_date}</div> 
+		
+				        	</div>
+				        	
+		        			<div class="postBody">
+		            			<div class="rowItem1">
+					                <span class="labelName">제목</span>
+					                <div class="titleContent">\${i.qa_title}</div>
+		            			</div>
+		           				<div class="rowItem2">
+				                	<span class="labelName">내용</span>
+					                <div class="textContent">\${i.qa_contents} </div>
+		            			</div>
+		        			</div>
+		        			\${replyHtml}
+						</div>
+					`;
+					
+					$("#qaListWrap").append(html);
+				}
+			}
+			
+			$(document).on("click", ".updateBtn", function(){
+				let parentRow = $(this).closest(".replyTextAndBtn");
+				let answerDiv = parentRow.find(".answerDiv");
+				let originText = answerDiv.text().trim();
+				let seq = $(this).data("seq");
+				
+				answerDiv.data("origin", originText);
+				
+				answerDiv.addClass("editing");
+				answerDiv.html(`
+					<textarea class="inputQaReply inputUpdate" id="inputUpdate_\${seq}" data-origin="\${originText}" style="height:40px">\${originText}</textarea>		
+				`);
+				
+				let textarea = $("#inputUpdate_" + seq)[0];
+				textarea.style.height = "auto";
+			    textarea.style.height = 40+"px";
+			    
+					parentRow.find(".adminBtn").hide();
+					parentRow.find(".UpdateBtn").show();
+				});
+			
+				$(document).on("click", ".cenBtn", function(){
+					let parentRow = $(this).closest(".replyTextAndBtn");
+				    let answerDiv = parentRow.find(".answerDiv");
+				    
+				    let originalText = answerDiv.data("origin");
+				    answerDiv.html(originalText);
+				    answerDiv.removeClass("editing");
+				    
+				    parentRow.find(".saveBtn, .cenBtn").hide();
+				    parentRow.find(".updateBtn, .deleteBtn").show();
+				});
+				
+				$(document).on("click", ".saveBtn", function(){
+					let btn = $(this);
+					let seq = btn.data("seq");
+					let updateContents = $("#inputUpdate_" + seq).val();
+					
+					if(updateContents.trim() == ""){
+						alert("내용을 입력해 주세요.");
+						return;
+					}
+					
+					$.ajax({
+						url : "/admin/answerUpdate",
+						type : "post",
+						data : {
+							qa_seq : seq,
+							admin_answer : updateContents
+						},
+						success : function(resp){
+							
+								let parentRow = btn.closest(".replyTextAndBtn");
+							    let answerDiv = parentRow.find(".answerDiv");
+							    
+								alert("수정되었습니다.");
+								answerDiv.removeClass("editing");
+								answerDiv.html(updateContents);
+								
+								parentRow.find(".saveBtn, .cenBtn").hide();
+				                parentRow.find(".updateBtn, .deleteBtn").show();
+							
+						},
+						error : function(){
+							alert("수정 실패");
+						}
+					});
+				});
+				
+			$(document).on("click", ".deleteBtn", function(){
+				let seq = $(this).data("seq");
+				if(confirm("정말 삭제하시겠습니까?")){
+					$.ajax({
+						url : "/admin/answerReset",
+						type : "post",
+						data : {qa_seq : seq},
+						success : function(resp){
+							alert("삭제되었습니다.");
+							location.reload();
+						}
+					});
+				}
+			});
 	</script>
 </body>
 </html>
