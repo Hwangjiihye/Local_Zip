@@ -61,21 +61,21 @@ public class BoardDAO {
 	}
 	
 	public List<CategoryVisitDTO> getCategoryCount(){
-		String sql = "sselect p.post_category as postCategory, \"\r\n"
-				+ "         + \"p.post_count as count, \"\r\n"
-				+ "         + \"nvl(v.visit_count, 0) as visitCount \"\r\n"
-				+ "         + \"from ( \"\r\n"
-				+ "         + \"    select post_category, count(*) as post_count \"\r\n"
-				+ "         + \"    from post \"\r\n"
-				+ "         + \"    group by post_category \"\r\n"
-				+ "         + \") p \"\r\n"
-				+ "         + \"left join ( \"\r\n"
-				+ "         + \"    select post_category, count(distinct mem_id) as visit_count \"\r\n"
-				+ "         + \"    from visit_log \"\r\n"
-				+ "         + \"    where post_category <> 'LOGIN' \"\r\n"
-				+ "         + \"    group by post_category \"\r\n"
-				+ "         + \") v \"\r\n"
-				+ "         + \"on p.post_category = v.post_category";
+		String sql = "select p.post_category as postCategory, "
+				+ "p.post_count as count, "
+				+ "nvl(v.visit_count, 0) as visitCount "
+				+ "from ( "
+				+ "select post_category, count(*) as post_count "
+				+ "from post "
+				+ "group by post_category "
+				+ ") p "
+				+ "left join ( "
+				+ "select post_category, count(distinct mem_id) as visit_count "
+				+ "from visit_log "
+				+ "where post_category <> 'LOGIN' "
+				+ "group by post_category "
+				+ ") v "
+				+ "on p.post_category = v.post_category";
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<CategoryVisitDTO>(CategoryVisitDTO.class));
 	}
