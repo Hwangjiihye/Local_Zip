@@ -25,13 +25,13 @@ public class ReplyDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReplyDTO>(ReplyDTO.class));
 	}
 	
-	public int deleteReply(int seq) {
-		String sql = "delete from reply where seq = ?";
-		return jdbc.update(sql, seq);
+	public int deleteReply(int reply_seq) {
+		String sql = "delete from reply where reply_seq = ?";
+		return jdbc.update(sql, reply_seq);
 	}
 	
-	public int updateReply(int seq, String contents) {
-		String sql = "update reply set contents = ? where seq = ?";
-		return jdbc.update(sql, contents, seq);
+	public int updateReply(int reply_seq, String reply_contents) {
+		String sql = "update reply set reply_contents = ? where reply_seq = ?";
+		return jdbc.update(sql, reply_contents, reply_seq);
 	}
 }
