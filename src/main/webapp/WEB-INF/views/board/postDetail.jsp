@@ -188,7 +188,6 @@
     		margin-left: 20px;
 		}
         .postInfoUp,
-        .postInfoDown,
         .replyInfoUp{
             display: flex;
         }
@@ -341,14 +340,32 @@
         }
 
         .navicon:hover,
-        .applyBtn:hover {
+        .applyBtn:hover,
+        .backBtn:hover,
+        .updateBtn:hover,
+        .deleteBtn:hover,
+        .completeBtn:hover,
+        .cancelBtn:hover,
+        .upBtn:hover,
+        .delBtn:hover,
+        .OBtn:hover,
+        .XBtn:hover {
             transform: translateY(-3px);
             /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
         .navicon:active,
-        .applyBtn:active {
+        .applyBtn:active,
+        .backBtn:active,
+        .updateBtn:active,
+        .deleteBtn:active,
+        .completeBtn:active,
+        .cancelBtn:active,
+        .upBtn:active,
+        .delBtn:active,
+        .OBtn:active,
+        .XBtn:active {
             transform: translateY(2px);
             /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -444,6 +461,39 @@
     		height: 40px;
     		font-size: medium;
      	}
+     	.backBtnDiv{
+     		height: 20px;
+     	}
+     	.backBtn{
+     		background-color: #ffb300;
+	        color: #5e361a;
+	        border: 1px solid #ffb300;
+	        border-radius: 10px;
+	        font-weight: bold;
+	        margin-left: 1630px;
+	        margin-top: 15px;
+     	}
+     	.btnDiv{
+     		width: 95px;
+     	}
+     	.deleteBtn, .cancelBtn, .delBtn, .XBtn{
+     		margin-left: 5px;
+     	}
+     	
+     	.updateBtn, .deleteBtn, .completeBtn, .cancelBtn, .upBtn, .delBtn, .OBtn, .XBtn{
+     		background-color: #ffb300;
+	        color: #5e361a;
+	        border: 1px solid #ffb300;
+	        border-radius: 10px;
+	        font-weight: bold;
+     	}
+     	.completeBtn, .cancelBtn, .OBtn, .XBtn{
+       		display: none;
+     	}
+     	.editCompleteDiv{
+     		position: relative;
+     		
+     	}
      	.writerName{
      		margin-top: 10px;
      	}
@@ -460,7 +510,7 @@
 	<div class="container">
 
         <div class="headBox">게시글 자세히보기</div>
-
+		<div class="backBtnDiv"><a href="/board/concern"><input class="backBtn" type="button" value="목록으로"></a></div>
         <div class="bodyBox">
 	            <div class="postBox">
 	
@@ -474,10 +524,23 @@
 	                        <div class="postInfoUp">
 	                            <div class="profileName profileInfo" style="color: #5e361a;">${dto.mem_nickname }</div>
 	                            <div class="profileLocal profileInfo" style="color: #5e361a;">${dto.mem_dong }</div>
+	                            
 	                        </div>
 	
 	                        <div class="postInfoDown">
 	                            <div class="profileTime profileInfo" style="color: #5e361a;">${dto.post_date }</div>
+	                            <c:if test="${dto.mem_id == loginId}">
+		                            <div class="btnDiv">
+		                            	<div class="editDiv">
+			                            	<input class="updateBtn" type="button" value="수정">
+			                            	<input class="deleteBtn" type="button" value="삭제">
+		                            	</div>
+		                            	<div class="editCompleteDiv">
+			                            	<input class="completeBtn" type="button" value="완료">
+			                            	<input class="cancelBtn" type="button" value="취소">
+		                            	</div>
+		                            </div>
+		                        </c:if>
 	                        </div>
 	                    </div>
 	                </div>
@@ -512,7 +575,7 @@
 					<div class="replyBox">
 						<div class="newReplyBox">
 							<div class="newReplyDiv">
-								<textarea class="newReply" type="text" placeholder="댓글을 입력하세요."></textarea>
+								<textarea class="newReply" type="text" placeholder="댓글을 입력하세요." maxlength="300"></textarea>
 							</div>
 							<div class="applyBtnDiv">
 								<input class="applyBtn" type="submit" value="등록">
@@ -527,16 +590,32 @@
 		                        <div class="replyInfoUp">
 		                            <div class="writerName replyInfo" style="color: #5e361a;">댓글작성자</div>
 		                            <div class="writeTime replyInfo" style="color: #5e361a;">00시간 전</div>
-		                            <div class="reportArea">
-									<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px"></img>
-			                        <select class="reportSelect" name="reports_reason">
-			                            <option value="" disabled selected>신고 사유</option>
-			                            <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
-			                            <option value="badWord" class="reportOption">욕설/비방</option>
-			                            <option value="AD" class="reportOption">광고/스팸</option>
-			                        </select>
-			                        <input class="reportBtn" type="submit" value="신고하기">
-			                    </div>
+		                            <c:choose>
+		                            	<c:when test="${} == loginId">
+			                            	<div class="btnDiv">
+				                            	<div class="replyEditDiv">
+					                            	<input class="upBtn" type="button" value="수정">
+					                            	<input class="delBtn" type="button" value="삭제">
+				                            	</div>
+				                            	<div class="replyEditCompleteDiv">
+					                            	<input class="OBtn" type="button" value="완료">
+					                            	<input class="XBtn" type="button" value="취소">
+				                            	</div>
+			                            	</div>
+		                            	</c:when>
+		                            	<c:otherwise>
+			                            	<div class="reportArea">
+												<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px"></img>
+						                        <select class="reportSelect" name="reports_reason">
+						                            <option value="" disabled selected>신고 사유</option>
+						                            <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
+						                            <option value="badWord" class="reportOption">욕설/비방</option>
+						                            <option value="AD" class="reportOption">광고/스팸</option>
+						                        </select>
+						                        <input class="reportBtn" type="submit" value="신고하기">
+				                   			</div>
+		                            	</c:otherwise>
+		                            </c:choose>
 		                        </div>
 		                        <div class="replyInfoDown">
 		                            <div class="replyContents replyInfo" style="color: #5e361a;">댓글 내용</div>
@@ -570,6 +649,11 @@
             $(".reportSelect").css({ "display": "inline" });
             $(".reportBtn").css({"display": "inline"});
         })
+        
+        $(".newReply").on("input", function(){
+		    this.style.height = "auto";              // 초기화
+		    this.style.height = this.scrollHeight + "px";  // 내용만큼 늘림
+		});
     </script>
 </body>
 </html>
