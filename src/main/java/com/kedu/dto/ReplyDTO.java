@@ -10,7 +10,6 @@ public class ReplyDTO {
 	
 	public ReplyDTO() {}
 	public ReplyDTO(int reply_seq, int post_seq, String mem_id, String reply_contents, String reply_date) {
-		super();
 		this.reply_seq = reply_seq;
 		this.post_seq = post_seq;
 		this.mem_id = mem_id;

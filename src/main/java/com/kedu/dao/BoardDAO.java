@@ -48,12 +48,40 @@ public class BoardDAO {
 		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),post_seq);
 	}
 	
+	//게시글 삭제
+	public int deletePost(int post_seq) {
+		String sql = "delete from post where post_seq = ?";
+		return jdbc.update(sql, post_seq);
+	}
+	
+	//게시글 수정
+	public int updatePost(int post_seq, BoardDTO dto) {
+		String sql = "update post set post_title = ?, post_contents = ? where post_seq = ?";
+		return jdbc.update(sql, dto.getPost_title(), dto.getPost_contents(), post_seq);
+	}
+	
 	public List<CategoryVisitDTO> getCategoryCount(){
-		String sql = "select post_category as postCategory, count(*) as count "
-				+ "from post "
-				+ "group by post_category "
-				+ "order by post_category ";
+		String sql = "sselect p.post_category as postCategory, \"\r\n"
+				+ "         + \"p.post_count as count, \"\r\n"
+				+ "         + \"nvl(v.visit_count, 0) as visitCount \"\r\n"
+				+ "         + \"from ( \"\r\n"
+				+ "         + \"    select post_category, count(*) as post_count \"\r\n"
+				+ "         + \"    from post \"\r\n"
+				+ "         + \"    group by post_category \"\r\n"
+				+ "         + \") p \"\r\n"
+				+ "         + \"left join ( \"\r\n"
+				+ "         + \"    select post_category, count(distinct mem_id) as visit_count \"\r\n"
+				+ "         + \"    from visit_log \"\r\n"
+				+ "         + \"    where post_category <> 'LOGIN' \"\r\n"
+				+ "         + \"    group by post_category \"\r\n"
+				+ "         + \") v \"\r\n"
+				+ "         + \"on p.post_category = v.post_category";
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<CategoryVisitDTO>(CategoryVisitDTO.class));
+	}
+	
+	public String getCategoryBySeq(int seq) {
+		String sql = "select post_category from post where post_seq = ?";
+		return jdbc.queryForObject(sql, String.class, seq);
 	}
 }
