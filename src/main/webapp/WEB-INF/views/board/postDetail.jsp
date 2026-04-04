@@ -692,28 +692,28 @@
 		
 		$(function(){
 			$.ajax({
-				url:"/boards/replyList",
-				dataType:"json"
+				url:"/board/replyList",
+				dataType:"json",
+				data: { post_seq: post_seq }
 			}).done(function(resp){
 				
 				for(let i of resp){
-					if(post_seq == i.post_seq){
 						let replyUpBox = $("<div>").addClass("replyUpBox");
 						
 						let replyProfileBox = $("<div>").addClass("replyProfileBox");
 						
 						let replyProfile = $("<img>").addClass("replyProfile");
 						replyProfile.attr("src","/resources/images/birdprofile.png");
-						replyProfile.css({"width": "80px";});
+						replyProfile.css({"width": "80px"});
 						replyProfileBox.append(replyProfile);
 						
 						let replyInfoBox = $("<div>").addClass("replyInfoBox");
 						let replyInfoUp = $("<div>").addClass("replyInfoUp");
 						let writerName = $("<div>").addClass("writerName replyInfo");
-						writerName.css({"color": "#5e361a";});
+						writerName.css({"color": "#5e361a"});
 						writerName.html(i.mem_nickname);
 						let writeTime = $("<div>").addClass("writeTime replyInfo");
-						writeTime.css({"color": "#5e361a";});
+						writeTime.css({"color": "#5e361a"});
 						writeTime.html(i.reply_date);
 						
 						replyInfoUp.append(writerName, writeTime);
@@ -737,9 +737,9 @@
 							let reportIcon = $("<img>").addClass("reportIcon");
 							reportIcon.attr("src","/resources/images/free-icon-siren1.png");
 							reportIcon.css({
-								"width": "25px";
-								"height": "25px";
-								"margin-bottom": "5px";
+								"width": "25px",
+								"height": "25px",
+								"margin-bottom": "5px"
 							});
 							let reportSelect = $("<select>").addClass("reportSelect")
 							reportSelect.append(
@@ -756,16 +756,14 @@
 						
 						let replyInfoDown = $("<div>").addClass("replyInfoDown");
 						replyInfoDown.append(
-							$("<div>").addClass("replyContents replyInfo").css({"color":"#5e361a";}).html(i.reply_contents);		
+							$("<div>").addClass("replyContents replyInfo").css({"color":"#5e361a"}).html(i.reply_contents)
 						);
 						
 						replyInfoBox.append(replyInfoUp, replyInfoDown);
 						replyUpBox.append(replyProfileBox, replyInfoBox);
 						
 						let hr = $("<hr>").addClass("hr")
-						$(".postInfoBox").append(replyUpBox,hr);
-						
-					}
+						$(".replyBox").append(replyUpBox, hr);
 				}
 			});
 		});
@@ -776,15 +774,38 @@
         });
 
         // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
-        $(".reportIcon").on("click", function () {
-            $(".reportSelect").css({ "display": "inline" });
-            $(".reportBtn").css({"display": "inline"});
-        })
+        $(document).on("click", ".reportIcon", function () {
+		    $(this).siblings(".reportSelect").css("display", "inline");
+		    $(this).siblings(".reportBtn").css("display", "inline");
+		});
         
         $(".newReply").on("input", function(){
 		    this.style.height = "auto";              // 초기화
 		    this.style.height = this.scrollHeight + "px";  // 내용만큼 늘림
 		});
+        
+        $(".applyBtn").on("click",function(){
+        	
+        	let reply = $(".newReply").val();
+        	
+        	if(reply.trim() == ""){
+        		alert("내용을 입력해주세요.");
+        		return;
+        	}
+        	
+        	$.ajax({
+        		url:"/reply/insertReply",
+        		data: {
+        			reply_contents: reply,
+                    post_seq: post_seq
+        		},
+        		type:"post"
+        	}).done(function(){
+        		location.reload();
+        	})
+        	
+        	console.log(post_seq);
+        });
     </script>
 </body>
 </html>

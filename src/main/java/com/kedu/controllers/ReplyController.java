@@ -17,13 +17,14 @@ public class ReplyController {
 	private ReplyDAO dao;
 	
 	// 댓글 입력
+	@ResponseBody
 	@RequestMapping("/insertReply")
 	public String insert(HttpSession session,String reply_contents,int post_seq) {
 		String mem_nickname = (String)session.getAttribute("nickname");
 		String mem_id = (String)session.getAttribute("loginId");
 		
 		dao.insertReply(post_seq,mem_id, mem_nickname,reply_contents);
-		return "redirect:/board/postDetail?post_seq="+post_seq;
+		return "success";
 	}
 	
 	// 댓글 삭제
