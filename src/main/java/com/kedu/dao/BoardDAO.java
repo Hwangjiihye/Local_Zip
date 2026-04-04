@@ -55,9 +55,9 @@ public class BoardDAO {
 	}
 	
 	//게시글 수정
-	public int updatePost(int post_seq, BoardDTO dto) {
+	public int updatePost(int post_seq, String post_title, String post_contents) {
 		String sql = "update post set post_title = ?, post_contents = ? where post_seq = ?";
-		return jdbc.update(sql, dto.getPost_title(), dto.getPost_contents(), post_seq);
+		return jdbc.update(sql, post_title, post_contents, post_seq);
 	}
 	
 	public List<CategoryVisitDTO> getCategoryCount(){

@@ -15,14 +15,14 @@ public class ReplyDAO {
 	@Autowired
 	private JdbcTemplate jdbc;
 	
-	public int insertReply(int post_seq,String mem_nickname,String reply_contents) {
-		String sql = "insert into reply values(reply_seq.nextval,?,?,?,sysdate)";
-		return jdbc.update(sql, post_seq, mem_nickname, reply_contents);
+	public int insertReply(int post_seq,String mem_id,String mem_nickname,String reply_contents) {
+		String sql = "insert into reply values(reply_seq.nextval,?,?,?,?,sysdate)";
+		return jdbc.update(sql, post_seq, mem_id, mem_nickname, reply_contents);
 	};
 	
-	public List<ReplyDTO> selectAll() {
-		String sql = "select * from reply";
-		return jdbc.query(sql, new BeanPropertyRowMapper<ReplyDTO>(ReplyDTO.class));
+	public List<ReplyDTO> selectByPostSeq(int post_seq) {
+		String sql = "select * from reply where post_seq = ? order by reply_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<ReplyDTO>(ReplyDTO.class), post_seq);
 	}
 	
 	public int deleteReply(int reply_seq) {
