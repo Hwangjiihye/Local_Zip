@@ -311,6 +311,25 @@ body {
     }
     .pageBox span { margin: 0 10px; cursor: pointer; }
  
+ .answerBtnDiv{
+ 	margin: 30px auto 0 auto;
+ 	border:1px solid black;
+ 	display: flex;
+ 	justify-content: center;
+ 	align-items: center;
+ 	gap: 100px;
+ }
+ 
+ .answerBtnDiv>button{
+ 	 background-color: #ffb300;
+     color: #5e361a;
+     border: 1px solid #ffb300;
+     border-radius: 10px;
+     width: 100px;
+ 	 height: 40px;
+ 	 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+ 	 font-size:15px;
+ } 
 </style>
 </head>
 
@@ -335,68 +354,75 @@ body {
 			</div>
 		</div>
 		
+		<div class="answerBtnDiv">
+				<button class="navicon filterBtn" data-status="all">전체 ${qaAllCount}</button>
+				<button class="navicon filterBtn" data-status="0">답변대기 ${qaCount}</button>
+				<button class="navicon filterBtn" data-status="1">답변완료 ${qaDoneCount}</button>
+		</div>
 		
-		<c:forEach var="i" items="${list}">
-			<div class="postBox">
-		        <div class="postHeader">
-		        <div class="categoryAndWriter">
-		           
-		           		<div class="writer">작성자: ${i.mem_id}</div> 
-	           		<c:choose>
-	           			<c:when test="${i.qa_category == 0}"><div class="category">계정/로그인</div></c:when>
-	           			<c:when test="${i.qa_category == 1}"><div class="category">이용문의</div></c:when>
-	           			<c:when test="${i.qa_category == 2}"><div class="category">기타</div></c:when>
-	             	</c:choose>
-		           	</div>
-		           	
-		           	<div class="writeData">${i.qa_create_date}</div> 
-
-		        </div>
-        	<div class="postBody">
-            	<div class="rowItem1">
-	                <span class="labelName">제목</span>
-	                <div class="titleContent">${i.qa_title}</div>
-            	</div>
-           		<div class="rowItem2">
-                	<span class="labelName">내용</span>
-	                <div class="textContent">
-	                  ${i.qa_contents}
-	                </div>
-            	</div>
-        		</div>
-      	<c:choose>
-      		<c:when test="${i.qa_status == 0}">
-        	<div class="qaReply">
-        			<div class="qaReplyRow">
-			        	<div class="adminProfileDiv">
-			        		<div class="replyAdminId">관리자</div>
-		        		</div>
-	        		<form action="/admin/answer" method="post">
-	        			<input type="hidden" name="qa_seq" value="${i.qa_seq}">
-	        			
-		        		<div class="replyTextAndBtn">
-			            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply" name="admin_answer"></textarea>
-							<button class="replyBtn" type="submit">등록</button>
-						</div>
-					</form>
-	        		</div>  
-	        	</div> 
-        	</c:when>
-        	<c:when test="${i.qa_status == 1}">
-	        	<div class="qaReply">
-        			<div class="qaReplyRow">
-			        	<div class="adminProfileDiv">
-			        		<div class="replyAdminId">관리자</div>
-		        		</div>
-			            	<div class="answerDiv">${i.admin_answer}</div>
-	        		</div>  
-	        	</div> 
-        	</c:when>
-        	</c:choose>
-    		</div>
-   			
-  		
-		</c:forEach>
+		<div id="qaListWrap">
+			<c:forEach var="i" items="${list}">
+				<div class="postBox" data-status="${i.qa_status}">
+			        <div class="postHeader">
+			        <div class="categoryAndWriter">
+			           
+			           		<div class="writer">작성자: ${i.mem_id}</div> 
+		           		<c:choose>
+		           			<c:when test="${i.qa_category == 0}"><div class="category">계정/로그인</div></c:when>
+		           			<c:when test="${i.qa_category == 1}"><div class="category">이용문의</div></c:when>
+		           			<c:when test="${i.qa_category == 2}"><div class="category">기타</div></c:when>
+		             	</c:choose>
+			           	</div>
+			           	
+			           	<div class="writeData">${i.qa_create_date}</div> 
+	
+			        </div>
+	        	<div class="postBody">
+	            	<div class="rowItem1">
+		                <span class="labelName">제목</span>
+		                <div class="titleContent">${i.qa_title}</div>
+	            	</div>
+	           		<div class="rowItem2">
+	                	<span class="labelName">내용</span>
+		                <div class="textContent">
+		                  ${i.qa_contents}
+		                </div>
+	            	</div>
+	        		</div>
+	        		
+	      	<c:choose>
+	      		<c:when test="${i.qa_status == 0}">
+	        			<div class="qaReply">
+	        				<div class="qaReplyRow">
+				        		<div class="adminProfileDiv">
+				        			<div class="replyAdminId">관리자</div>
+			        			</div>
+		        				<form action="/admin/answer" method="post">
+		        					<input type="hidden" name="qa_seq" value="${i.qa_seq}">
+		        			
+			        				<div class="replyTextAndBtn">
+						            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply" name="admin_answer"></textarea>
+										<button class="replyBtn" type="submit">등록</button>
+									</div>
+								</form>
+		        			</div>  
+		        		</div> 
+	        		</c:when>
+	        		<c:when test="${i.qa_status == 1}">
+		        		<div class="qaReply">
+	        				<div class="qaReplyRow">
+				        		<div class="adminProfileDiv">
+				        			<div class="replyAdminId">관리자</div>
+			        			</div>
+				            		<div class="answerDiv">${i.admin_answer}</div>
+		        				</div>  
+		        			</div> 
+	        			</c:when>
+	        		</c:choose>
+	    		</div>
+			</c:forEach>
+		</div>
+		
 		<div class="pageBox">
 		        <i class="fa-solid fa-chevron-left"></i>
 		        <span>1</span> <span>2</span> <span>3</span>
@@ -418,6 +444,117 @@ body {
 			    this.style.height = this.scrollHeight + "px";  // 내용만큼 늘림
 			});
 	
+			function drawQaList(list){
+				$("#qaListWrap").empty();
+				
+				if(list.length == 0){
+					$("#qaListWrap").append(`
+						<div class="postBox">
+							<div class="postBody">문의글이 없습니다.</div>
+						</div>		
+					`);
+					return;
+				}
+				for(let i of list){
+					
+					if(i.qa_category == 0){
+						categoryText = "계정/로그인";
+					}else if(i.qa_category == 1){
+						categoryText = "이용문의";
+					}else if(i.qa_category == 2){
+						categoryText = "기타";
+					}
+					
+					let replyHtml = "";
+					
+					if(i.qa_status == 0){
+						replyHtml = `
+							<div class="qaReply">
+		        				<div class="qaReplyRow">
+					        		<div class="adminProfileDiv">
+					        			<div class="replyAdminId">관리자</div>
+				        			</div>
+			        				<form action="/admin/answer" method="post">
+			        					<input type="hidden" name="qa_seq" value="${i.qa_seq}">
+			        			
+				        				<div class="replyTextAndBtn">
+							            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply" name="admin_answer"></textarea>
+											<button class="replyBtn" type="submit">등록</button>
+										</div>
+									</form>
+			        			</div>  
+			        		</div> 
+			        	`;
+					}else {
+						replyHtml = `
+							<div class="qaReply">
+	        					<div class="qaReplyRow">
+				        			<div class="adminProfileDiv">
+				        				<div class="replyAdminId">관리자</div>
+			        				</div>
+				            			<div class="answerDiv">${escapeHtml(i.admin_answer == null ? "" : i.admin_answer)}</div>
+		        				</div>
+		        			</div>
+	        			`;
+					}
+					
+					let html = `
+						<div class="postBox" data-status="${i.qa_status}">
+				        	<div class="postHeader">
+				       			<div class="categoryAndWriter">
+				           			<div class="writer">작성자: ${i.mem_id}</div> 
+			           				<div class="category">${categoryText}</div>
+				           		</div>
+				           	
+				           	<div class="writeData">${i.qa_create_date}</div> 
+		
+				        </div>
+		        	<div class="postBody">
+		            	<div class="rowItem1">
+			                <span class="labelName">제목</span>
+			                <div class="titleContent">${i.qa_title}</div>
+		            	</div>
+		           		<div class="rowItem2">
+		                	<span class="labelName">내용</span>
+			                <div class="textContent">
+			                  ${i.qa_contents}
+			                </div>
+		            	</div>
+		        		</div>
+					</div>
+						
+				}
+			}
+			
+			
+			$(document).on("click", ".filterBtn", function(){
+				
+				let status = $(this).data("status");
+				
+				$.ajax({
+					url : "/admin/qaList",
+					type : "get",
+					data : {
+						status : status
+					},
+					dataType : "json",
+					success : function(resp){
+						drawQaList(resp);
+					},
+					
+					error : function(){
+						alert("목록 불러오기 실패");
+					}
+				});
+			});
+			
+			
+			
+			
+			
+			
+			
+			
 	</script>
 </body>
 </html>

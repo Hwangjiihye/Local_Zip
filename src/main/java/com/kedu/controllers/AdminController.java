@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.AdminQaDAO;
 import com.kedu.dao.BoardDAO;
@@ -44,12 +45,28 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/adminQA")
-	public String adminQA(Model model) {
+	public String adminQA(Model model, HttpSession session) {
 		
 		List<QaDTO> list = dao.selectById();
 		model.addAttribute("list", list);
-		
+		session.getAttribute("qaCount");
+		int qaDoneCount = dao.qaDoneCount();
+		int qaAllCount = dao.qaAllCount();
+
+		session.setAttribute("qaAllCount", qaAllCount);
+		session.setAttribute("qaDoneCount", qaDoneCount);
 		return "admin/adminQ&A";
+	}
+
+	@ResponseBody
+	@RequestMapping("/qaList")
+	public List<QaDTO> qaList(String status){
+		
+		if("all".equals(status)) {
+			return dao.selectAll();
+		}else {
+			return dao.selectByStatus(Integer.parseInt(status));
+		}
 	}
 	
 	@RequestMapping("/answer")
