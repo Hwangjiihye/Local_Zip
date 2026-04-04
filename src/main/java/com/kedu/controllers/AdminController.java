@@ -34,7 +34,9 @@ public class AdminController {
 		
 		session.setAttribute("qaCount", qaCount);
 		session.setAttribute("memberCount", memberCount);
-		model.addAttribute("todayVisitCount", vdao.getTodayVisitCount());
+		model.addAttribute("todayVisitCount", vdao.getTodayVisitCount()); // 일별방문자수
+		model.addAttribute("dailyCount", vdao.getDailyVisitCount()); // 기존회원,신규회원 방문수
+		model.addAttribute("genderCount", vdao.getGenderCount());
 		
 		return "admin/admin";
 	}

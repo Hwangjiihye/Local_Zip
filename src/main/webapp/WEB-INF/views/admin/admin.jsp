@@ -359,30 +359,35 @@ body {
 	</div>
 
 	<script>
+			let labels = [];
+			let totalData = [];
+			let newData = [];
+			
+			<c:forEach var="i" items="${dailyCount}">
+				labels.push("${i.day}일");
+				totalData.push(${i.totalCount});
+				newData.push(${i.newCount});
+			</c:forEach>
+	
+	
 			let visitCtx = document.getElementById('visitChart'); // 선 차트
 			
 			new Chart(visitCtx, {
 			    type: 'line',
 			    data: {
-			        labels: [
-			        	 '1일','2일','3일','4일','5일','6일','7일',
-			             '8일','9일','10일','11일','12일','13일','14일',
-			             '15일','16일','17일','18일','19일','20일','21일',
-			             '22일','23일','24일','25일','26일','27일','28일',
-			             '29일','30일','31일'
-			        ],
+			        labels: labels,
 			        datasets: [
 			            {
 			                label: '총 방문자',
-			                data: [12, 18, 25, 30, 42, 50, 65, 78, 72, 81, 76, 69, 55, 60, 70, 85, 90, 88, 77, 66, 58, 62, 75, 80, 82, 79, 68, 64, 72, 85, 91],
+			                data: totalData,
 			                borderColor: '#E76F51',
 			                backgroundColor: 'rgba(85,85,85,0.2)',
 			                tension: 0.3
 			            },
 			            {
 			                label: '신규 방문자',
-			                data: [8, 14, 21, 26, 38, 47, 56, 51, 49, 62, 71, 86, 60, 55, 68, 72, 80, 79, 65, 60, 52, 58, 63, 70, 75, 78, 66, 61, 69, 73, 88],
-			                borderColor: '#F6BD60',
+			                data: newData,
+							borderColor: '#F6BD60',
 			                backgroundColor: 'rgba(180,180,180,0.2)',
 			                tension: 0.3
 			            }
@@ -390,16 +395,22 @@ body {
 			    },
 			    options: {
 			        responsive: true,
-			        maintainAspectRatio: false
+			        maintainAspectRatio: false,
+			        scales:{ 
+			        	y: {
+			        		beginAtZero: true
+			        	}			        	
+			        }
 			    }
 			});
-	
+		
+			
 			let ageCtx = document.getElementById('ageChart'); // 연령대 도넛 차트
 			
 			new Chart(ageCtx, {
 			    type: 'doughnut',
 			    data: {
-			        labels: ['10대', '20대', '30대', '40대'],
+			        labels: ["10대","20대","30대","40대"],
 			        datasets: [{
 			            data: [12, 35, 30, 23],
 			            backgroundColor: ['#F7E1AE', '#F6BD60', '#F4A261', '#E76F51']
@@ -411,14 +422,29 @@ body {
 			    }
 			});
 			
-			let genderCtx = document.getElementById('genderChart'); // 연령대 성별 차트
+			let genderLabels = [];
+			let genderData = [];
+			
+			<c:forEach var="i" items="${genderCount}">
+				<c:choose>
+					<c:when test="${i.gender == 1}">
+						genderLabels.push("남");
+					</c:when>
+					<c:otherwise>
+						genderLabels.push("여");
+					</c:otherwise>
+				</c:choose>
+				genderData.push(${i.count});
+			</c:forEach>
+			
+			let genderCtx = document.getElementById('genderChart'); // 성별 도넛 차트
 
 			new Chart(genderCtx, {
 			    type: 'doughnut',
 			    data: {
-			        labels: ['남성', '여성'],
+			        labels: genderLabels,
 			        datasets: [{
-			            data: [420, 580],
+			            data: genderData,
 			            backgroundColor: ['#F4A261', '#E76F51']
 			        }]
 			    },
