@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
+import com.kedu.dto.CategoryVisitDTO;
 
 @Repository
 public class BoardDAO {
@@ -45,5 +46,14 @@ public class BoardDAO {
 	public BoardDTO selectByPost_seq(int post_seq) throws Exception{
 		String sql = "select * from post where post_seq = ?";
 		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),post_seq);
+	}
+	
+	public List<CategoryVisitDTO> getCategoryCount(){
+		String sql = "select post_category as postCategory, count(*) as count "
+				+ "from post "
+				+ "group by post_category "
+				+ "order by post_category ";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<CategoryVisitDTO>(CategoryVisitDTO.class));
 	}
 }

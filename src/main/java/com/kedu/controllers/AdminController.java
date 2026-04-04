@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kedu.dao.AdminQaDAO;
-import com.kedu.dao.UserQaDAO;
+import com.kedu.dao.BoardDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.QaDTO;
 
@@ -22,10 +22,10 @@ public class AdminController {
 	private AdminQaDAO dao;
 	
 	@Autowired
-	private UserQaDAO udao;
+	private VisitLogDAO vdao;
 	
 	@Autowired
-	private VisitLogDAO vdao;
+	private BoardDAO bdao;
 	
 	@RequestMapping("/adminPage")
 	public String test(HttpSession session, Model model) {
@@ -36,8 +36,10 @@ public class AdminController {
 		session.setAttribute("memberCount", memberCount);
 		model.addAttribute("todayVisitCount", vdao.getTodayVisitCount()); // 일별방문자수
 		model.addAttribute("dailyCount", vdao.getDailyVisitCount()); // 기존회원,신규회원 방문수
-		model.addAttribute("genderCount", vdao.getGenderCount());
-		model.addAttribute("ageCount", vdao.getAgeCount());
+		model.addAttribute("genderCount", vdao.getGenderCount()); // 성별 도넛차트 통계
+		model.addAttribute("ageCount", vdao.getAgeCount()); // 연령대별 도넛차트 통계
+		model.addAttribute("categoryCount", bdao.getCategoryCount());
+		
 		return "admin/admin";
 	}
 	

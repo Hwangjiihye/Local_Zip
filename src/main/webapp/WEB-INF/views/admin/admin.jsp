@@ -461,26 +461,47 @@ body {
 			    }
 			});
 			
+			let categoryLabels = [];
+			let categoryData = [];
+			
+			<c:forEach var="i" items="${categoryCount}">
+				<c:choose>
+					<c:when test="${i.postCategory == 'lifeInfo'}">
+						categoryLabels.push("생활정보");
+					</c:when>
+					<c:when test="${i.postCategory == 'food'}">
+						categoryLabels.push("맛집/카페");
+					</c:when>
+					<c:when test="${i.postCategory == 'talk'}">
+						categoryLabels.push("고민/이야기");
+					</c:when>
+					<c:when test="${i.postCategory == 'beauty'}">
+						categoryLabels.push("미용/패션");
+					</c:when>
+				</c:choose>
+				categoryData.push(${i.count});
+			</c:forEach>
+			
 			let categoryCtx = document.getElementById('categoryChart'); // 카테고리별 게시글 현황
 
 			new Chart(categoryCtx, {
 			    type: 'bar',
 			    data: {
-			        labels: ['운동', '스터디', '취미', '문화'],
+			        labels: categoryLabels,
 			        datasets: [
 			            {
 			                label: '게시글 수',
-			                data: [21, 18, 27, 15],
+			                data: categoryData,
 			                backgroundColor: '#F4A261'
 			            },
 			            {
 			                label: '신청 수',
-			                data: [17, 15, 21, 10],
+			                data: categoryData,
 			                backgroundColor: '#F7E1AE'
 			            },
 			            {
 			                label: '신고 수',
-			                data: [7, 6, 5, 6],
+			                data: categoryData,
 			                backgroundColor: '#E76F51'
 			            }
 			        ]
