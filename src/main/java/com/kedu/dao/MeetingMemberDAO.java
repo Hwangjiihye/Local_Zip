@@ -197,7 +197,29 @@ public class MeetingMemberDAO {
 	
 	
 	
+	public List<ManageMeetingDTO> selectApplyList(String loginId) {
+
+	    String sql =
+	        "select " +
+	        " m.meeting_meet_seq as meet_seq, " +
+	        " m.meet_title, " +
+	        " mm.meetingmember_meetmem_seq as meetmem_seq, " +
+	        " mm.mem_id, " +
+	        " mm.meetmem_contents, " +
+	        " mm.meetmem_status " +
+	        "from meeting m " +
+	        "join meeting_member mm " +
+	        "on m.meeting_meet_seq = mm.meeting_meet_seq " +
+	        "where m.mem_id = ? and mm.meetmem_status = 0";
+
+	    return jdbc.query(sql,new BeanPropertyRowMapper<ManageMeetingDTO>(ManageMeetingDTO.class),loginId);
+	}
 	
-	
-	
+	public int updateStatus(int meetmem_seq, int status) {
+
+	    String sql =
+	        "update meeting_member set meetmem_status = ? where meetingmember_meetmem_seq = ?";
+
+	    return jdbc.update(sql, status, meetmem_seq);
+	}
 }

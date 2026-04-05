@@ -268,10 +268,14 @@
 							
 							<div class="card-footer">
 								<button class="meetingDetail" type="button">자세히 보기</button>
-								<c:if test="${i.mem_id == sessionScope.loginId}">
-									<button class="deleteBtn" type="button">모임 삭제</button>
-								</c:if>
-								<button class="outBtn" type="button">모임 탈퇴</button>
+								<c:choose>
+									<c:when test="${i.mem_id == sessionScope.loginId}">
+										<button class="deleteBtn" type="button">모임 삭제</button>
+									</c:when>
+									<c:otherwise>
+										<button class="outBtn" type="button">모임 탈퇴</button>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 		 			</c:forEach>

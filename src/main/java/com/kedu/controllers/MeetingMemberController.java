@@ -201,5 +201,19 @@ public class MeetingMemberController {
 	
 	
 
+	@ResponseBody
+	@RequestMapping("/applyList")
+	public List<ManageMeetingDTO> applyList(HttpSession session) {
+
+	    String loginId = (String)session.getAttribute("loginId");
+
+	    return dao.selectApplyList(loginId);
+	}
 	
+	@ResponseBody
+	@RequestMapping("/updateStatus")
+	public int updateStatus(int seq, int status) {
+
+	    return dao.updateStatus(seq, status);
+	}
 }

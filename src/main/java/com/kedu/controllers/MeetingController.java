@@ -276,5 +276,15 @@ public class MeetingController {
 	    return "myPage/myMeeting";
 	}
 	
-	
+	@RequestMapping("/myMeeting")
+	public String myMeeting(HttpSession session, Model model) {
+
+	    String loginId = (String)session.getAttribute("loginId");
+
+	    List<MeetingDTO> list = dao.selectMyAllMeeting(loginId);
+
+	    model.addAttribute("list", list);
+
+	    return "myPage/myMeeting";
+	}
 }

@@ -288,8 +288,11 @@
 		    let seq = $(this).closest(".meeting-card").data("seq");
 
 		    $.ajax({
-		        url:"/meetingMember/accept",
-		        data:{ meetmem_seq: seq }
+		        url:"/meetingMember/updateStatus",
+		        data:{
+		        	seq: seq,
+		        	status: 1
+		        }
 		    }).done(function(){
 		        location.reload();
 		    });
@@ -301,8 +304,11 @@
 		    let seq = $(this).closest(".meeting-card").data("seq");
 		
 		    $.ajax({
-		        url:"/meetingMember/reject",
-		        data:{ meetmem_seq: seq }
+		        url:"/meetingMember/updateStatus",
+		        data:{
+		        	seq: seq,
+		        	status: 2
+		        }
 		    }).done(function(){
 		        location.reload();
 		    });
