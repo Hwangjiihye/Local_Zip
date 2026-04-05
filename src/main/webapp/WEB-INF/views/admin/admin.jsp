@@ -131,16 +131,6 @@ body {
 	border-radius: 20px;
 }
 
-.menuDetail:hover{
-    transform: translateY(-3px); /* 살짝 위로 뜸 */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-}
-
-.menuDetail:active{
-    transform: translateY(2px); /* 아래로 눌림 */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
 .chart-box {
 	width: 80%;
 	height: 400px;
@@ -306,7 +296,7 @@ body {
 				<div class="visitantIcon"><i class="fa-solid fa-chart-column"></i></div>
 				<div class="visitantDiv">
 					<div class="allVisitant">오늘 방문자</div>
-					<div class="visitantCount">750</div>
+					<div class="visitantCount">${todayVisitCount}</div>
 				</div>
 			</div>
 			
@@ -353,36 +343,41 @@ body {
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> 
-			<a><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 	</div>
 
 	<script>
+			let labels = [];
+			let totalData = [];
+			let newData = [];
+			
+			<c:forEach var="i" items="${dailyCount}">
+				labels.push("${i.day}일");
+				totalData.push(${i.totalCount});
+				newData.push(${i.newCount});
+			</c:forEach>
+	
+	
 			let visitCtx = document.getElementById('visitChart'); // 선 차트
 			
 			new Chart(visitCtx, {
 			    type: 'line',
 			    data: {
-			        labels: [
-			        	 '1일','2일','3일','4일','5일','6일','7일',
-			             '8일','9일','10일','11일','12일','13일','14일',
-			             '15일','16일','17일','18일','19일','20일','21일',
-			             '22일','23일','24일','25일','26일','27일','28일',
-			             '29일','30일','31일'
-			        ],
+			        labels: labels,
 			        datasets: [
 			            {
 			                label: '총 방문자',
-			                data: [12, 18, 25, 30, 42, 50, 65, 78, 72, 81, 76, 69, 55, 60, 70, 85, 90, 88, 77, 66, 58, 62, 75, 80, 82, 79, 68, 64, 72, 85, 91],
+			                data: totalData,
 			                borderColor: '#E76F51',
 			                backgroundColor: 'rgba(85,85,85,0.2)',
 			                tension: 0.3
 			            },
 			            {
 			                label: '신규 방문자',
-			                data: [8, 14, 21, 26, 38, 47, 56, 51, 49, 62, 71, 86, 60, 55, 68, 72, 80, 79, 65, 60, 52, 58, 63, 70, 75, 78, 66, 61, 69, 73, 88],
-			                borderColor: '#F6BD60',
+			                data: newData,
+							borderColor: '#F6BD60',
 			                backgroundColor: 'rgba(180,180,180,0.2)',
 			                tension: 0.3
 			            }
@@ -390,19 +385,32 @@ body {
 			    },
 			    options: {
 			        responsive: true,
-			        maintainAspectRatio: false
+			        maintainAspectRatio: false,
+			        scales:{ 
+			        	y: {
+			        		beginAtZero: true
+			        	}			        	
+			        }
 			    }
 			});
-	
+		
+			let ageLabels = [];
+			let ageData = [];
+			
+			<c:forEach var="i" items="${ageCount}">
+				ageLabels.push("${i.ageGroup}");
+				ageData.push(${i.count});
+			</c:forEach>
+			
 			let ageCtx = document.getElementById('ageChart'); // 연령대 도넛 차트
 			
 			new Chart(ageCtx, {
 			    type: 'doughnut',
 			    data: {
-			        labels: ['10대', '20대', '30대', '40대'],
+			        labels: ageLabels ,
 			        datasets: [{
-			            data: [12, 35, 30, 23],
-			            backgroundColor: ['#F7E1AE', '#F6BD60', '#F4A261', '#E76F51']
+			            data: ageData,
+			            backgroundColor: ['#F7E1AE', '#F6BD60', '#F4A261', '#E76F51', '#D1495B']
 			        }]
 			    },
 			    options: {
@@ -411,14 +419,29 @@ body {
 			    }
 			});
 			
-			let genderCtx = document.getElementById('genderChart'); // 연령대 성별 차트
+			let genderLabels = [];
+			let genderData = [];
+			
+			<c:forEach var="i" items="${genderCount}">
+				<c:choose>
+					<c:when test="${i.gender == 1}">
+						genderLabels.push("남");
+					</c:when>
+					<c:otherwise>
+						genderLabels.push("여");
+					</c:otherwise>
+				</c:choose>
+				genderData.push(${i.count});
+			</c:forEach>
+			
+			let genderCtx = document.getElementById('genderChart'); // 성별 도넛 차트
 
 			new Chart(genderCtx, {
 			    type: 'doughnut',
 			    data: {
-			        labels: ['남성', '여성'],
+			        labels: genderLabels,
 			        datasets: [{
-			            data: [420, 580],
+			            data: genderData,
 			            backgroundColor: ['#F4A261', '#E76F51']
 			        }]
 			    },
@@ -428,33 +451,60 @@ body {
 			    }
 			});
 			
+			let categoryLabels = [];
+			let categoryData = [];
+			let visitData = [];
+			
+			<c:forEach var="i" items="${categoryCount}">
+				<c:choose>
+					<c:when test="${i.postCategory == 'lifeInfo'}">
+						categoryLabels.push("생활정보");
+					</c:when>
+					<c:when test="${i.postCategory == 'food'}">
+						categoryLabels.push("맛집/카페");
+					</c:when>
+					<c:when test="${i.postCategory == 'talk'}">
+						categoryLabels.push("고민/이야기");
+					</c:when>
+					<c:when test="${i.postCategory == 'beauty'}">
+						categoryLabels.push("미용/패션");
+					</c:when>
+				</c:choose>
+				categoryData.push(${i.count});
+				visitData.push(${i.visitCount});
+			</c:forEach>
+			
 			let categoryCtx = document.getElementById('categoryChart'); // 카테고리별 게시글 현황
 
 			new Chart(categoryCtx, {
 			    type: 'bar',
 			    data: {
-			        labels: ['운동', '스터디', '취미', '문화'],
+			        labels: categoryLabels,
 			        datasets: [
 			            {
 			                label: '게시글 수',
-			                data: [21, 18, 27, 15],
-			                backgroundColor: '#F4A261'
+			                data: categoryData,
+			                backgroundColor: '#F7E1AE',
+			                categoryPercentage: 0.7,
+			                barPercentage: 0.7
 			            },
 			            {
-			                label: '신청 수',
-			                data: [17, 15, 21, 10],
-			                backgroundColor: '#F7E1AE'
-			            },
-			            {
-			                label: '신고 수',
-			                data: [7, 6, 5, 6],
-			                backgroundColor: '#E76F51'
+			                label: '유입 방문자 수',
+			                data: visitData,
+			                backgroundColor: '#E76F51',
+			                categoryPercentage: 0.7,
+			                barPercentage: 0.7
 			            }
 			        ]
 			    },
 			    options: {
 			        responsive: true,
-			        maintainAspectRatio: false
+			        maintainAspectRatio: false,
+	                scales: {
+	    	            y: {
+	    	                beginAtZero: true
+	    	            }
+	    	        }
 			    }
 			});
 </script>

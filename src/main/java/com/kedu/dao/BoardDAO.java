@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
+import com.kedu.dto.CategoryVisitDTO;
 
 @Repository
 public class BoardDAO {
@@ -45,5 +46,42 @@ public class BoardDAO {
 	public BoardDTO selectByPost_seq(int post_seq) throws Exception{
 		String sql = "select * from post where post_seq = ?";
 		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),post_seq);
+	}
+	
+	//게시글 삭제
+	public int deletePost(int post_seq) {
+		String sql = "delete from post where post_seq = ?";
+		return jdbc.update(sql, post_seq);
+	}
+	
+	//게시글 수정
+	public int updatePost(int post_seq, String post_title, String post_contents) {
+		String sql = "update post set post_title = ?, post_contents = ? where post_seq = ?";
+		return jdbc.update(sql, post_title, post_contents, post_seq);
+	}
+	
+	public List<CategoryVisitDTO> getCategoryCount(){
+		String sql = "select p.post_category as postCategory, "
+				+ "p.post_count as count, "
+				+ "nvl(v.visit_count, 0) as visitCount "
+				+ "from ( "
+				+ "select post_category, count(*) as post_count "
+				+ "from post "
+				+ "group by post_category "
+				+ ") p "
+				+ "left join ( "
+				+ "select post_category, count(distinct mem_id) as visit_count "
+				+ "from visit_log "
+				+ "where post_category <> 'LOGIN' "
+				+ "group by post_category "
+				+ ") v "
+				+ "on p.post_category = v.post_category";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<CategoryVisitDTO>(CategoryVisitDTO.class));
+	}
+	
+	public String getCategoryBySeq(int seq) {
+		String sql = "select post_category from post where post_seq = ?";
+		return jdbc.queryForObject(sql, String.class, seq);
 	}
 }

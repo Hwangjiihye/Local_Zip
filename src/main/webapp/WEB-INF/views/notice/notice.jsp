@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>고객지원(Q&A)</title>
+<title>공지사항</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -230,12 +230,8 @@ body, html {
 <body>
 
 	<div class="container">
-		<div class="headBox">고객지원(Q&A)</div>
+		<div class="headBox">공지사항</div>
 
-		<div class="userInfoSection">
-			<i class="fa-solid fa-circle-user userIcon"></i> <span
-				class="userName">${nickname}</span>
-		</div>
 
 		<c:choose>
 			<c:when test="${not empty list}">
@@ -252,32 +248,24 @@ body, html {
 							<div class="textContent">${i.qa_contents}</div>
 						</div>
 					</div>
-					<div class="answerBox">
-						<span class="answerLabel">답변 댓글</span>
-						<c:choose>
-						<c:when test="${i.qa_status == 1}">
-						<div class="answerText">${i.admin_answer}</div>
-						</c:when>
-						<c:otherwise>답변 대기중 입니다.</c:otherwise>
-						</c:choose>
-					</div>
 				</div>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				<div class="emptyBox">등록된 게시글이 없습니다.</div>
+				<div class="emptyBox">등록된 공지사항이 없습니다.</div>
 			</c:otherwise>
 		</c:choose>
 
 		<div class="pageBox">
 			 <span class="page"></span>
 		</div>
-
+		
+		<c:if test="${role==0}">
 		<button class="writeBtn" type="button"
 			onclick="location.href='/qa/toWrite'">
 			<i class="fa-solid fa-pencil"></i>
 		</button>
-
+		</c:if>
 		<div class="bottomBox">
 			<a href="/"><i class="fa-solid fa-house fa-2xl"></i></a>
 			<a href="/map/test"><i class="fa-solid fa-map-location-dot fa-2xl"></i></a>

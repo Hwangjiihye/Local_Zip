@@ -1,6 +1,8 @@
 package com.kedu.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -31,7 +33,7 @@ public class MeetingController {
 		String loginId = (String)session.getAttribute("loginId"); 
 		
 		if(loginId == null) { // 로그인을 안한 상태면 로그인 화면으로 보내기
-			return "redirect:/login";
+			return "redirect:/members/loginUi";
 		}
 			
 		return "meeting/meeting";
@@ -62,5 +64,191 @@ public class MeetingController {
 		dao.insert(dto);
 		
 		return "redirect:/meeting/list";
+	}
+	
+	// 마이페이지에서 모임을 눌렀을 때
+	@RequestMapping("/myMeeting")
+	public String myMeeting() throws Exception{
+		return "myPage/myMeeting";
+	}
+	
+	public Map<String, Object> getPageNaviAll(int cpage){
+
+	    int recordCountPerPage = 8;
+	    int naviCountPerPage = 10;
+
+	    int recordTotalCount = dao.getAllCount();
+	    int pageTotalCount = 0;
+
+	    if(recordTotalCount % recordCountPerPage > 0){
+	        pageTotalCount = recordTotalCount / recordCountPerPage + 1;
+	    }else{
+	        pageTotalCount = recordTotalCount / recordCountPerPage;
+	    }
+
+	    if(pageTotalCount == 0) {
+	        pageTotalCount = 1;
+	    }
+
+	    if(cpage < 1) cpage = 1;
+	    if(cpage > pageTotalCount) cpage = pageTotalCount;
+
+	    int startNavi = ((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
+	    int endNavi = startNavi + (naviCountPerPage - 1);
+
+	    if(endNavi > pageTotalCount){
+	        endNavi = pageTotalCount;
+	    }
+
+	    boolean needPrev = true;
+	    boolean needNext = true;
+
+	    if(startNavi == 1){
+	        needPrev = false;
+	    }
+	    if(endNavi == pageTotalCount){
+	        needNext = false;
+	    }
+
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("cpage", cpage);
+	    map.put("startNavi", startNavi);
+	    map.put("endNavi", endNavi);
+	    map.put("needPrev", needPrev);
+	    map.put("needNext", needNext);
+
+	    return map;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping("/manageMeeting")
+	public String manageMeeting() throws Exception{
+		return "myPage/manageMeeting";
 	}
 }

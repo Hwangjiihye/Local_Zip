@@ -55,6 +55,8 @@ body {
 	display: grid;
 	grid-template-columns:repeat(4, 1fr);
 	gap:20px;
+	padding: 200px 0 0 0;
+	box-sizing: border-box;
 }
 
 .top-section {
@@ -108,12 +110,12 @@ body {
 	transition: all 0.2s ease;
 }
 
-.categoryBtnAll:hover, .navicon:hover, .topBtn:hover, .join-btn:hover {
+.categoryBtnAll:hover, .navicon:hover, .topBtn:hover, .join-btn:hover, .reportBtn:active{
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.categoryBtnAll:active, .navicon:active, .topBtn:active, .join-btn:active {
+.categoryBtnAll:active, .navicon:active, .topBtn:active, .join-btn:active, .reportBtn:active{
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -151,13 +153,12 @@ body {
 }
 
 .meeting-card {
-    width: 330px;
+    width: 300px;
     border: 2px solid #A66A3F;
     border-radius: 10px;
     background-color: #fbe5c0;
     padding: 35px;
-    margin-left: 30px;
-    margin-top: 220px;
+    margin: 0 0 40px 40px;
 }
 
 .card-header {
@@ -189,7 +190,7 @@ body {
     margin-bottom: 10px;
     background-color: #FFB300;
     height: 20px;
-    color: #5e361a;
+    color: #286708;
 }
 
 .desc {
@@ -218,6 +219,18 @@ body {
     color: #5e361a;
 }
 
+
+.closing-btn {
+	width: 100%;
+    height: 40px;
+    border:none;
+    border-radius: 10px;
+    background-color: #E5D3B3;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
 .report{
 	display:none;
 	position: absolute;
@@ -233,7 +246,6 @@ body {
     background-color: #F2D3A2;
     color: #A66A3F;
     font-size: 12px;
-    padding: 2px;
     outline: none;
 }
 
@@ -295,6 +307,19 @@ body {
             cursor: pointer;
             transition: 0.3s;
         }
+        
+.reportBtn{
+	background-color: #ffb300;
+    color: #5e361a;
+    border: 1px solid #ffb300;
+    border-radius: 10px;
+	font-weight: bold;
+	display: none;
+	position: absolute;
+	top: 60px;
+	left: 0;
+	width: 90px;
+}
 
 </style>
 </head>
@@ -327,18 +352,21 @@ body {
 		</div>
 			
 			<c:forEach var="i" items="${list}">
-				<div class="meeting-card" data-seq="${i.meet_seq}">
+				<div class="meeting-card" data-seq="${i.meet_seq}" data-writer="${i.mem_id}">
 					<div class="card-header">
 						<div class="title">${i.meet_title}</div>
+						<c:if test="${i.mem_id != loginId}">
 							<div class="reportDiv">
-				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 								<select class="report">
 									<option class="report-menu" disabled selected>신고 사유</option>
-									<option class="report-menu">부적절한 컨텐츠</option>
-									<option class="report-menu">욕설/비방</option>
-									<option class="report-menu">광고/스팸</option>
+									<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
+									<option class="report-menu" value="badWord">욕설/비방</option>
+									<option class="report-menu" value="AD">광고/스팸</option>
 								</select>
+								<button type="button" class="reportBtn">신고하기</button>
 							</div>
+						</c:if>
 					</div>
 				
 					<div class="category">${i.meet_category}</div>
@@ -347,45 +375,64 @@ body {
 					
 					<div class="info">	
 						<div class="location">📍 ${i.mem_address1}</div>	
-						<div class="count">👥 ${i.meet_maxpeople}</div>
+						<div class="count">👥 ${i.meet_currentpeople}</div>
 					</div>
 					
+					<c:choose>
+					    <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
+					        <c:set var="percent" value="100" />
+					    </c:when>
+					    <c:otherwise>
+					        <c:set var="percent" value="${(i.meet_currentpeople * 100) / i.meet_maxpeople}" />
+					    </c:otherwise>
+					</c:choose>
+
 					<div class="card-footer">
 						<div class="gauge-wrap">
-							<div class="gauge-bar" style="width: 60%;"></div>
+							<div class="gauge-bar" style="width: ${percent}%;"></div>
 						</div>
-						<div class="gauge-text">6 / 10명 참여중</div>
-						<button class="join-btn">참여신청</button>
+						<div class="gauge-text">${i.meet_currentpeople} / ${i.meet_maxpeople}명 참여중</div>
+						<c:choose>
+					        <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
+					            <button class="closing-btn" disabled>모집마감</button>
+					        </c:when>
+					        <c:otherwise>
+								<button class="join-btn" data-seq="${i.meet_seq}">참여신청</button>
+							 </c:otherwise>
+    					</c:choose>
 					</div>
 				</div>
 		</c:forEach>
 		
 	</div>
 		<div class="bottomBar">
-		<c:choose>
-		<c:when test="${role == 1}">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-			<a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-		</c:when>
-		<c:otherwise>
-			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-			<a><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+			
 		
-		</c:otherwise>
+		<c:choose>
+	        <c:when test="${loginId == null}">
+	        	<a href="/members/loginUi"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+			</c:when>
+			<c:when test="${role == 1}">
+	        	<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+			</c:when>
+			<c:otherwise>
+				<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+			</c:otherwise>
 		</c:choose>
 		
 		</div>
 		
 	<script>
+
+	
 			$(".reportIcon").on("click", function (e) {
 			    e.stopPropagation();
 			    $(this).siblings(".report").css("display", "block");
+			    $(this).siblings(".reportBtn").css("display","inline")
 			});
 			
 			$(".report").on("click", function (e) {
@@ -394,6 +441,7 @@ body {
 			
 			$(document).on("click", function () {
 			    $(".report").hide();
+			    $(".reportBtn").hide();
 			});
 			
 			$(document).on("click", ".meeting-card", function(){
@@ -401,9 +449,46 @@ body {
 			    location.href = "/meeting/meetingDetail?seq=" + seq;
 			});
 			
-			$(document).on("click", ".join-btn, .reportIcon", function (e) {
+			$(document).on("click", ".join-btn, .reportBtn, .reportIcon", function (e) {
 				e.stopPropagation();
 			});
+			
+			$(document).on("click", ".reportBtn", function(e){
+				e.stopPropagation();
+				
+				let card = $(this).closest(".meeting-card");
+				let targetSeq = card.data("seq")
+				let targetId = card.data("writer");
+				let reportReason = card.find(".report").val();
+				
+				if(!reportReason){
+					alert("신고 사유를 선택해 주세요.");
+					return;
+				}
+				
+				$.ajax({
+					url : "/report/insert",
+					type : "post",
+					data : {
+						target_seq : targetSeq,
+						target_id : targetId,
+						reports_type : 0,
+						reports_reason : reportReason
+					},
+					success : function(resp){
+						if(resp == "success"){
+							alert("신고가 접수되었습니다.");
+							card.find(".report").hide();
+							card.find(".reportBtn").hide();
+						}else if(resp == "fail"){
+							alert("이미 신고한 모임입니다.");
+							card.find(".report").hide();
+							card.find(".reportBtn").hide();
+						}
+					}
+				})
+			});
+			
 			
 			$(".join-btn").on("click", function(){
 				
@@ -416,9 +501,11 @@ body {
 			    // width / 2 : 팝업의 절반
 			    const left = window.screenX + (window.outerWidth / 2) - (width / 2);
 			    const top = window.screenY + 80; // 상단에서 80px
-
+	
+			    let seq = $(this).data("seq");
 			    const popup = window.open(
-			        "/apply/applyForm",
+			    		
+			        "/apply/applyForm?meet_seq=" + seq ,
 			        "",
 			        `width=${width},height=${height}`
 			    );

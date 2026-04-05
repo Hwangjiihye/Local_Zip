@@ -22,9 +22,16 @@ public class UserQaController {
 	UserQaDAO uDAO;
 
 	@RequestMapping("/toQa")
-	public String toQa(Model model) {
-		List<QaDTO> list = uDAO.getPostList();
+	public String toQa(Model model,int cPage) {
+		//5개씩 가져오기(recordcountperpage)
+		int start = (cPage-1)*5+1;
+		int end = cPage*5;
+		List<QaDTO> list = uDAO.getPostList(start,end);
+		//게시글 전체 개수 가져오기
+		int totalCount = uDAO.getTotalCount();
 		model.addAttribute("list", list);
+		model.addAttribute("cPage",cPage);
+		model.addAttribute("totalCount", totalCount);
 		return "/qa/qa";
 	}
 	
@@ -45,6 +52,8 @@ public class UserQaController {
 		uDAO.insert(new QaDTO(0,id,title,contents,category,"",0,"","",""));
 		
 		
-		return "redirect:/qa/toQa";
+		return "redirect:/qa/toQa?cPage=1";
 	}
+	
+	
 }

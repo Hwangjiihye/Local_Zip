@@ -62,28 +62,41 @@
             background-color: #fbe5c0;
         }
 
-
-        .headBox {
+        .headBoxDiv {
             position: fixed;
             top: 0;
             left: 0;
-
             width: 100%;
             height: 100px;
-
             padding-left: 20px;
-
-            font-weight: bold;
-            font-size: 50px;
-            color: #A66A3F;
             background-color: #F2D3A2;
             border-bottom: 2px solid #A66A3F;
-            /* 아래쪽만 줄 그음 */
-
             line-height: 100px;
             z-index: 1000;
-
+            display: flex;
         }
+        
+        .headBox{
+        	font-weight: bold;
+            font-size: 50px;
+            color: #A66A3F;
+        }
+        
+     	.backBtnDiv{
+     		width: 90px;
+     		height: 50px;
+	        margin-left: 1390px;
+	        margin-top: 12px;
+     	}
+     	     	
+     	.backBtn{
+     		background-color: #ffb300;
+	        color: #5e361a;
+	        border: 1px solid #ffb300;
+	        border-radius: 10px;
+	        font-weight: bold;
+	        height: 30px;
+     	}
 
         .topBtn {
             height: 25px;
@@ -188,7 +201,6 @@
     		margin-left: 20px;
 		}
         .postInfoUp,
-        .postInfoDown,
         .replyInfoUp{
             display: flex;
         }
@@ -284,7 +296,7 @@
             margin-top: 5px;
         }
 
-        .postContent {
+        .postContents {
             margin: auto;
 
             width: 95%;
@@ -341,14 +353,32 @@
         }
 
         .navicon:hover,
-        .applyBtn:hover {
+        .applyBtn:hover,
+        .backBtn:hover,
+        .updateBtn:hover,
+        .deleteBtn:hover,
+        .completeBtn:hover,
+        .cancelBtn:hover,
+        .upBtn:hover,
+        .delBtn:hover,
+        .OBtn:hover,
+        .XBtn:hover {
             transform: translateY(-3px);
             /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
         .navicon:active,
-        .applyBtn:active {
+        .applyBtn:active,
+        .backBtn:active,
+        .updateBtn:active,
+        .deleteBtn:active,
+        .completeBtn:active,
+        .cancelBtn:active,
+        .upBtn:active,
+        .delBtn:active,
+        .OBtn:active,
+        .XBtn:active {
             transform: translateY(2px);
             /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -444,6 +474,28 @@
     		height: 40px;
     		font-size: medium;
      	}
+
+     	.btnDiv{
+     		width: 95px;
+     	}
+     	.deleteBtn, .cancelBtn, .delBtn, .XBtn{
+     		margin-left: 5px;
+     	}
+     	
+     	.updateBtn, .deleteBtn, .completeBtn, .cancelBtn, .upBtn, .delBtn, .OBtn, .XBtn{
+     		background-color: #ffb300;
+	        color: #5e361a;
+	        border: 1px solid #ffb300;
+	        border-radius: 10px;
+	        font-weight: bold;
+     	}
+     	.completeBtn, .cancelBtn, .OBtn, .XBtn{
+       		display: none;
+     	}
+     	.editCompleteDiv{
+     		position: relative;
+     		
+     	}
      	.writerName{
      		margin-top: 10px;
      	}
@@ -459,8 +511,14 @@
 <body>
 	<div class="container">
 
-        <div class="headBox">게시글 자세히보기</div>
-
+        <div class="headBoxDiv">
+        	<div class="headBox">게시글 자세히보기</div>
+        	<div class="backBtnDiv">
+        		<a href="/board/concern">
+        			<input class="backBtn" type="button" value="목록으로">
+        		</a>
+        	</div>
+        </div>
         <div class="bodyBox">
 	            <div class="postBox">
 	
@@ -469,15 +527,27 @@
 	                    <div class="postProfile">
 	                        <img class="contentProfile" src="/resources/images/Profile.png" style="width: 60px;">
 	                    </div>
-	
 	                    <div class="postInfoBox">
 	                        <div class="postInfoUp">
 	                            <div class="profileName profileInfo" style="color: #5e361a;">${dto.mem_nickname }</div>
 	                            <div class="profileLocal profileInfo" style="color: #5e361a;">${dto.mem_dong }</div>
+	                            
 	                        </div>
 	
 	                        <div class="postInfoDown">
 	                            <div class="profileTime profileInfo" style="color: #5e361a;">${dto.post_date }</div>
+	                            <c:if test="${dto.mem_id == loginId}">
+		                            <div class="btnDiv">
+		                            	<div class="editDiv">
+			                            	<input class="updateBtn" type="button" value="수정">
+			                            	<input class="deleteBtn" type="button" value="삭제">
+		                            	</div>
+		                            	<div class="editCompleteDiv">
+			                            	<input class="completeBtn" type="button" value="완료">
+			                            	<input class="cancelBtn" type="button" value="취소">
+		                            	</div>
+		                            </div>
+		                        </c:if>
 	                        </div>
 	                    </div>
 	                </div>
@@ -485,7 +555,7 @@
 	                <div class="postMidBox">
 	
 	                    <div class="postTitle">${dto.post_title }</div>
-	                    <div class="postContent">${dto.post_contents }</div>
+	                    <div class="postContents">${dto.post_contents }</div>
 	
 	                </div>
 	
@@ -512,39 +582,13 @@
 					<div class="replyBox">
 						<div class="newReplyBox">
 							<div class="newReplyDiv">
-								<textarea class="newReply" type="text" placeholder="댓글을 입력하세요."></textarea>
+								<textarea class="newReply" type="text" placeholder="댓글을 입력하세요." maxlength="300"></textarea>
 							</div>
 							<div class="applyBtnDiv">
 								<input class="applyBtn" type="submit" value="등록">
 							</div>
 						</div>
-						<div class="replyUpBox">
-							<div class="replyProfileBox">
-			                	<img class="replyProfile" src="/resources/images/birdprofile.png" style="width: 80px;">
-			                </div>
-		
-		                    <div class="replyInfoBox">
-		                        <div class="replyInfoUp">
-		                            <div class="writerName replyInfo" style="color: #5e361a;">댓글작성자</div>
-		                            <div class="writeTime replyInfo" style="color: #5e361a;">00시간 전</div>
-		                            <div class="reportArea">
-									<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px"></img>
-			                        <select class="reportSelect" name="reports_reason">
-			                            <option value="" disabled selected>신고 사유</option>
-			                            <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
-			                            <option value="badWord" class="reportOption">욕설/비방</option>
-			                            <option value="AD" class="reportOption">광고/스팸</option>
-			                        </select>
-			                        <input class="reportBtn" type="submit" value="신고하기">
-			                    </div>
-		                        </div>
-		                        <div class="replyInfoDown">
-		                            <div class="replyContents replyInfo" style="color: #5e361a;">댓글 내용</div>
-		                        </div>
-								
-		                    </div>
-		                 </div>
-		                 <hr>
+
 					</div>
 				</div>
 	        <div class="bottomBox">
@@ -559,17 +603,209 @@
     </div>
 
     <script>
+		
+		let loginId = "${loginId}";
+		let post_seq = "${dto.post_seq}"
+		let postTitle = $(".postTitle");
+		let postContents = $(".postContents");
+		
+		
+		// 게시글 수정 버튼 클릭 시
+		$(".updateBtn").on("click",function(){
+			// 기존 내용 저장
+			postTitle.data("originTitle", postTitle.text());
+		    postContents.data("originContents", postContents.text());
+		    
+			$(".completeBtn").css({"display":"inline"});
+			$(".cancelBtn").css({"display":"inline"});
+			$(".updateBtn").css({"display":"none"});
+			$(".deleteBtn").css({"display":"none"});
+			
+			$(".postTitle").attr("contenteditable","true");
+			$(".postContents").attr("contenteditable","true");
+			
+			$(".postTitle").css({"border":"1px solid #F2D3A2"});
+			$(".postContents").css({"border":"1px solid #F2D3A2"});
+		});
+		
+		// 게시글 수정 완료 버튼 클릭 시
+		$(".completeBtn").on("click",function(){
+			
+			let post_title = $(".postTitle").text();
+			let post_contents = $(".postContents").text();
+		    
+		    if(postTitle.text() == "" || postContents.text() == ""){
+		        alert("내용을 입력해주세요.");
+		        return;
+		    }
+		    
+			$.ajax({
+				url:"/board/updatePost",
+				data:{
+					post_seq: post_seq,
+					post_title: post_title,
+					post_contents: post_contents
+				},
+				type: "post"
+			}).done(function(){
+				alert("수정 완료!");
+				location.reload();
+			});
+		});
+		
+		// 게시글 삭제 버튼 클릭 시
+		$(".deleteBtn").on("click",function(){
+			
+			if(!confirm("정말 삭제하시겠습니까?")) return;
+			
+		    $.ajax({
+		        url: "/board/deletePost",
+		        data: { post_seq: post_seq },
+		        type: "post"
+		    }).done(function(){
+		    	alert("삭제 완료!");
+ 		        location.href = "/board/concern";
+		    });
+		});
+		
+		// 게시글 수정 취소 버튼 클릭 시
+		$(".cancelBtn").on("click",function(){
+			
+			let originTitle = postTitle.data("originTitle");
+			let originContents = postContents.data("originContents");
 
+		    postTitle.text(originTitle);
+		    postContents.text(originContents);
+		    
+		    $(".completeBtn").css({"display":"none"});
+			$(".cancelBtn").css({"display":"none"});
+			$(".updateBtn").css({"display":"inline"});
+			$(".deleteBtn").css({"display":"inline"});
+			
+			postTitle.removeAttr("contenteditable");
+			postContents.removeAttr("contenteditable");
+			
+			postTitle.css({"border":"none"});
+			postContents.css({"border":"none"});
+		    
+		});
+		
+		$(function(){
+			$.ajax({
+				url:"/board/replyList",
+				dataType:"json",
+				data: { post_seq: post_seq }
+			}).done(function(resp){
+				
+				for(let i of resp){
+						let replyUpBox = $("<div>").addClass("replyUpBox");
+						
+						let replyProfileBox = $("<div>").addClass("replyProfileBox");
+						
+						let replyProfile = $("<img>").addClass("replyProfile");
+						replyProfile.attr("src","/resources/images/birdprofile.png");
+						replyProfile.css({"width": "80px"});
+						replyProfileBox.append(replyProfile);
+						
+						let replyInfoBox = $("<div>").addClass("replyInfoBox");
+						let replyInfoUp = $("<div>").addClass("replyInfoUp");
+						let writerName = $("<div>").addClass("writerName replyInfo");
+						writerName.css({"color": "#5e361a"});
+						writerName.html(i.mem_nickname);
+						let writeTime = $("<div>").addClass("writeTime replyInfo");
+						writeTime.css({"color": "#5e361a"});
+						writeTime.html(i.reply_date);
+						
+						replyInfoUp.append(writerName, writeTime);
+						
+						if(i.mem_id == loginId){
+							let btnDiv = $("<div>").addClass("btnDiv");
+							let replyEditDiv = $("<div>").addClass("replyEditDiv");
+							replyEditDiv.append(
+								$("<input>").attr("type","button").addClass("upBtn").val("수정"),
+								$("<input>").attr("type","button").addClass("delBtn").val("삭제").attr("data-reply_seq", i.reply_seq)
+							);
+							let replyEditCompleteDiv = $("<div>").addClass("replyEditCompleteDiv");
+							replyEditCompleteDiv.append(
+								$("<input>").attr("type","button").addClass("OBtn").val("완료"),
+								$("<input>").attr("type","button").addClass("XBtn").val("취소").attr("data-reply_seq", i.reply_seq)		
+							);
+							btnDiv.append(replyEditDiv, replyEditCompleteDiv);
+							replyInfoUp.append(btnDiv);
+						}else{
+							let reportArea = $("<div>").addClass("reportArea");
+							let reportIcon = $("<img>").addClass("reportIcon");
+							reportIcon.attr("src","/resources/images/free-icon-siren1.png");
+							reportIcon.css({
+								"width": "25px",
+								"height": "25px",
+								"margin-bottom": "5px"
+							});
+							let reportSelect = $("<select>").addClass("reportSelect")
+							reportSelect.append(
+								$("<option>").html("신고 사유"),
+								$("<option>").addClass("reportOption").html("부적절한 콘텐츠").val("badContents"),
+								$("<option>").addClass("reportOption").html("욕설/비방").val("badWord"),
+								$("<option>").addClass("reportOption").html("광고/스팸").val("AD")
+							);
+							let reportBtn = $("<input>").attr("type","button").addClass("reportBtn").val("신고하기");
+							
+							reportArea.append(reportIcon, reportSelect, reportBtn);
+							replyInfoUp.append(reportArea);
+						}
+						
+						let replyInfoDown = $("<div>").addClass("replyInfoDown");
+						replyInfoDown.append(
+							$("<div>").addClass("replyContents replyInfo").css({"color":"#5e361a"}).html(i.reply_contents)
+						);
+						
+						replyInfoBox.append(replyInfoUp, replyInfoDown);
+						replyUpBox.append(replyProfileBox, replyInfoBox);
+						
+						let hr = $("<hr>").addClass("hr")
+						$(".replyBox").append(replyUpBox, hr);
+				}
+			});
+		});
+		
         // 좋아요 버튼
         $(".postLikeBox").on("click", function () {
             $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
         });
 
         // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
-        $(".reportIcon").on("click", function () {
-            $(".reportSelect").css({ "display": "inline" });
-            $(".reportBtn").css({"display": "inline"});
-        })
+        $(document).on("click", ".reportIcon", function () {
+		    $(this).siblings(".reportSelect").css("display", "inline");
+		    $(this).siblings(".reportBtn").css("display", "inline");
+		});
+        
+        $(".newReply").on("input", function(){
+		    this.style.height = "auto";              // 초기화
+		    this.style.height = this.scrollHeight + "px";  // 내용만큼 늘림
+		});
+        
+        $(".applyBtn").on("click",function(){
+        	
+        	let reply = $(".newReply").val();
+        	
+        	if(reply.trim() == ""){
+        		alert("내용을 입력해주세요.");
+        		return;
+        	}
+        	
+        	$.ajax({
+        		url:"/reply/insertReply",
+        		data: {
+        			reply_contents: reply,
+                    post_seq: post_seq
+        		},
+        		type:"post"
+        	}).done(function(){
+        		location.reload();
+        	})
+        	
+        	console.log(post_seq);
+        });
     </script>
 </body>
 </html>

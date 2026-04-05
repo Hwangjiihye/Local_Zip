@@ -244,7 +244,13 @@
      	
      	a{
      		color: #5e361a;
-     	}
+     		text-decoration: none; /* div에 밑줄 숨기기 */
+     	}    	
+
+		a:visited{
+		    color: #5e361a;
+		}
+     	
 </style>
 </head>
 <body>
@@ -281,30 +287,45 @@
 		    		<div class="myLikeNum">15</div>
 		    	</div>
 	    	</div>
-	    	<div class="myClub">
-	    		<div class="myClubIcon"><img src="/resources/images/people.png" class="icon"></div>
-	    		<div class="myClubContents">
-		    		<div class="myClubTitle">모임</div>
-		    		<div class="myClubNum">3</div>
+	    	<a href="/meeting/myMeeting">
+		    	<div class="myClub">
+		    		<div class="myClubIcon"><img src="/resources/images/people.png" class="icon"></div>
+		    		<div class="myClubContents">
+			    		<div class="myClubTitle">모임</div>
+			    		<div class="myClubNum">3</div>
+			    	</div>
 		    	</div>
-	    	</div>
+		    </a>	
 	    </div>
 	    
 	    <div class="FAQTitle">· 고객센터</div>
 	    <div class="FAQDiv">
-	    	<div class="CS">고객지원 ></div>
+	    	<a href="/qa/toQa?cPage=1"><div class="CS">고객지원 ></div></a>
 	    	<div class="notice">공지사항 ></div>
 	    </div>
 	    
     </div>
     	<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
     	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
-    <div class="bottomBar" style="box-shadow: 0 4px 10px rgba(0,0,0,0.2);"> <!-- 하단바 -->
-    	<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 홈 이모지-->
-        <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 지도 이모지-->
-        <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color:#A66A3F"></i></a> <!-- 하단바 모임 이모지-->
-        <i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i> <!-- 하단바 건의사항 이모지-->
-        <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a> <!-- 하단바 마이페이지 이모지-->
-    </div>
+    	
+	<div class="bottomBar">
+         <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
+         <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
+         <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+         <a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+           
+      <c:choose>
+           <c:when test="${loginId == null}">
+              <a href="/members/loginUi"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+         </c:when>
+         <c:when test="${role == 1}">
+              <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+         </c:when>
+         <c:otherwise>
+            <a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+         </c:otherwise>
+      </c:choose>
+      
+      </div>
 </body>
 </html>

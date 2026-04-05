@@ -519,7 +519,7 @@
         <div class="categoryBtnBox">
             <div class="categoryBtns">
                 <a href="/"><button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
-                <a href="/board/lifeInfo"><button class="categoryBtn topBtn" type="button"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
+                <a href="/board/list_lifeInfo"><button class="categoryBtn topBtn" type="button"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
                 <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
                 <a href="/board/concern"><button class="categoryBtn nowBtn" type="button"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
                 <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
