@@ -217,8 +217,7 @@ public class MeetingMemberDAO {
 	
 	public int updateStatus(int meetmem_seq, int status) {
 
-	    String sql =
-	        "update meeting_member set meetmem_status = ? where meetingmember_meetmem_seq = ?";
+	    String sql = "update meeting_member set meetmem_status = ? where meetmem_seq = ?";
 
 	    return jdbc.update(sql, status, meetmem_seq);
 	}
