@@ -29,7 +29,7 @@ public class MeetingMemberController {
 		
 		String loginId = (String)session.getAttribute("loginId");
 		dto.setMem_id(loginId);
-		System.out.println(dto.getMeet_seq());
+		
 		dao.insert(dto);
 		
 		return "meeting/applySuccess";

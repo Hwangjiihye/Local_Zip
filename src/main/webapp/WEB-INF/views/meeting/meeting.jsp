@@ -351,7 +351,7 @@ body {
 		</div>
 			
 			<c:forEach var="i" items="${list}">
-				<div class="meeting-card" data-seq="${i.meet_seq}">
+				<div class="meeting-card" data-seq="${i.meet_seq}" data-writer="${i.mem_id}">
 					<div class="card-header">
 						<div class="title">${i.meet_title}</div>
 							<div class="reportDiv">
@@ -424,20 +424,7 @@ body {
 		</div>
 		
 	<script>
-	
-// 	$(".reportIcon").on("click", function () {
-//  $(".reportSelect").css({ "display": "inline" });
-//  $(".reportBtn").css({"display": "inline"}); -> 추가
-//  })
 
-//  <img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-// 	<select class="report">
-// 	<option class="report-menu" disabled selected>신고 사유</option>
-// 	<option class="report-menu">부적절한 컨텐츠</option>
-// 	<option class="report-menu">욕설/비방</option>
-// 	<option class="report-menu">광고/스팸</option>
-// 	</select>
-// 	<button type="submit" class="reportBtn">신고하기</button>
 	
 			$(".reportIcon").on("click", function (e) {
 			    e.stopPropagation();
@@ -459,13 +446,46 @@ body {
 			    location.href = "/meeting/meetingDetail?seq=" + seq;
 			});
 			
-			$(document).on("click", ".join-btn, .reportIcon", function (e) {
+			$(document).on("click", ".join-btn, .reportBtn, .reportIcon", function (e) {
 				e.stopPropagation();
 			});
 			
-			$(document).on("click", ".reportBtn", function(){
-				let 
+			$(document).on("click", ".reportBtn", function(e){
+				e.stopPropagation();
+				
+				let card = $(this).closest(".meeting-card");
+				let targetSeq = card.data("seq")
+				let targetId = card.data("writer");
+				let reportReason = card.find(".report").val();
+				
+				if(!reportReason){
+					alert("신고 사유를 선택해 주세요.");
+					return;
+				}
+				
+				$.ajax({
+					url : "/report/insert",
+					type : "post",
+					data : {
+						target_seq : targetSeq,
+						target_id : targetId,
+						reports_type : 0,
+						reports_reason : reportReason
+					},
+					success : function(resp){
+						if(resp == "success"){
+							alert("신고가 접수되었습니다.");
+							card.find(".report").hide();
+							card.find(".reportBtn").hide();
+						}else if(resp == "fail"){
+							alert("이미 신고한 모임입니다.");
+							card.find(".report").hide();
+							card.find(".reportBtn").hide();
+						}
+					}
+				})
 			});
+			
 			
 			$(".join-btn").on("click", function(){
 				
