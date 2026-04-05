@@ -611,7 +611,7 @@ body, html {
 										</div>
 
 
-										<c:if test="${loginId != null}">
+										<c:if test="${loginId != null && loginId != i.mem_id}">
 											<div class="reportArea">
 												<!-- <i class="fa-solid fa-flag reportIcon"></i> -->
 												<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
