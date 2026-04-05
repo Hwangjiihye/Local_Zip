@@ -111,14 +111,37 @@ body {
 }
 
 .categoryBtnAll:hover, .navicon:hover {
-	transform: translateY(-3px); /* 살짝 위로 뜸 */
+transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-}
+} 
 
 .categoryBtnAll:active, .navicon:active {
-	transform: translateY(2px); /* 아래로 눌림 */
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+transform: translateY(2px); /*아래로 눌림*/
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }
+
+/* .nowBtn{ */
+/*     background-color: #fecc56; */
+/*     color: #A66A3F; */
+
+/*     transform: translateY(-3px); */
+/*     /* 살짝 위로 뜸 */ */
+/*     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); */
+
+/*     height: 30px; */
+
+/*     border-radius: 10px; */
+/*     border: 1px solid #FFB300; */
+
+/*     align-items: center; */
+/*     /* 수직 중앙 정렬 */ */
+
+/*     vertical-align: middle; */
+/*     /* 버튼들끼리 줄이 안 맞을 때를 대비 */ */
+
+/*     cursor: pointer; */
+/*     transition: 0.3s; */
+/* } */
 
 .bottomBar {
 	border: 1px solid #A66A3F;
@@ -369,19 +392,13 @@ body {
 }
 
 .pageBox a.active{
-	background-color:#FFB300;
+	background-color:#fecc56;
     font-weight: bold;
     color: #5e361a;
 }
 
 .pageBox a:hover{
     background-color:#F2D3A2;
-}
-
-.pageBox a.active{
-    background-color:#FFB300;
-    color:#5e361a;
-    font-weight:bold;
 }
 
 .answerDiv.editing {
@@ -426,13 +443,15 @@ body {
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/meeting/test"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> 
 			<a><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 	</div>
 	
 	<script>
+	
+
 			let currentStatus = "all";
 	
 			$(function(){

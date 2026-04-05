@@ -24,11 +24,28 @@ public class MeetingController {
 	
 	// 모임 신청 폼 출력
 	@RequestMapping("/list")
-	public String list(Model model, HttpSession session) throws Exception {
+	public String list(Model model, HttpSession session, String category, Integer cpage) throws Exception {
 			
-		List<MeetingDTO> list = dao.selectAll();
-			
+		List<MeetingDTO> list;
+		
+		if(cpage == null) {
+	        cpage = 1;
+	    }
+
+	    int start = (cpage - 1) * 8 + 1;
+	    int end = cpage * 8;
+		
+		if(category.equals("all")) {
+			list = dao.selectAllByPage(start, end);
+		}else {
+			list = dao.selectByPage(category, start, end);
+		}
+		
+
+		Map<String, Object> navi = this.getPageNaviAll(category, cpage);
+	    model.addAttribute("navi", navi);
 		model.addAttribute("list", list);
+		model.addAttribute("category", category);
 		
 		String loginId = (String)session.getAttribute("loginId"); 
 		
@@ -59,58 +76,53 @@ public class MeetingController {
 		
 		String loginId = (String)session.getAttribute("loginId");
 		
-		dto.setMem_id(loginId);
+		// 한 id당 모임 3개 이상 생성 금지
+		int count = dao.countMeetingByWriter(loginId);
 		
+		if(count >= 3) {
+			session.setAttribute("msg", "over");
+			return "redirect:/meeting/list?category=all";
+		}
+		dto.setMem_id(loginId);
 		dao.insert(dto);
 		
-		return "redirect:/meeting/list";
+		return "redirect:/meeting/list?category=all";
 	}
 	
-	// 마이페이지에서 모임을 눌렀을 때
-	@RequestMapping("/myMeeting")
-	public String myMeeting() throws Exception{
-		return "myPage/myMeeting";
-	}
-	
-	public Map<String, Object> getPageNaviAll(int cpage){
+	// 페이지네비게이터
+	public Map<String, Object> getPageNaviAll(String category, int cpage){
 
-	    int recordCountPerPage = 8;
+		int recordCountPerPage = 8;
 	    int naviCountPerPage = 10;
 
-	    int recordTotalCount = dao.getAllCount();
-	    int pageTotalCount = 0;
-
-	    if(recordTotalCount % recordCountPerPage > 0){
-	        pageTotalCount = recordTotalCount / recordCountPerPage + 1;
-	    }else{
-	        pageTotalCount = recordTotalCount / recordCountPerPage;
+	    int recordTotalCount;
+	    
+	    if(category == null || category.equals("all")) {
+	        recordTotalCount = dao.getAllCount();
+	    } else {
+	    	recordTotalCount = dao.getCategoryCount(category);
 	    }
+	    
+	    int pageTotalCount =
+	        (recordTotalCount + recordCountPerPage - 1) / recordCountPerPage;
 
-	    if(pageTotalCount == 0) {
-	        pageTotalCount = 1;
-	    }
+	    if(pageTotalCount == 0) pageTotalCount = 1;
 
 	    if(cpage < 1) cpage = 1;
 	    if(cpage > pageTotalCount) cpage = pageTotalCount;
 
-	    int startNavi = ((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
-	    int endNavi = startNavi + (naviCountPerPage - 1);
+	    int startNavi =
+	        ((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
 
-	    if(endNavi > pageTotalCount){
-	        endNavi = pageTotalCount;
-	    }
+	    int endNavi = startNavi + naviCountPerPage - 1;
 
-	    boolean needPrev = true;
-	    boolean needNext = true;
+	    if(endNavi > pageTotalCount) endNavi = pageTotalCount;
 
-	    if(startNavi == 1){
-	        needPrev = false;
-	    }
-	    if(endNavi == pageTotalCount){
-	        needNext = false;
-	    }
+	    boolean needPrev = startNavi != 1;
+	    boolean needNext = endNavi != pageTotalCount;
 
 	    Map<String, Object> map = new HashMap<>();
+
 	    map.put("cpage", cpage);
 	    map.put("startNavi", startNavi);
 	    map.put("endNavi", endNavi);

@@ -15,7 +15,7 @@ import com.kedu.dto.ManageMeetingDTO;
 import com.kedu.dto.MeetingMemberDTO;
 
 @Controller
-@RequestMapping("/apply")
+@RequestMapping("/meetingMember")
 public class MeetingMemberController {
 	
 	@Autowired
