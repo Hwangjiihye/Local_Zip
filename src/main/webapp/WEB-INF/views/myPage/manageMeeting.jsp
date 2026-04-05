@@ -253,33 +253,37 @@
 		
 		// 승인 대기중인 리스트 출력
 		$(function(){
-			$.ajax({
-				url:"/meetingMember/applyList",
-				dataType:"json"
-			}).done(function(resp){
-				for(let i of resp){
-					let meeting-card = $("<div>").addClass("meeting-card");
-					
-					let btnDiv = $("<div>").addClass("btnDiv");
-					let acceptBtn = $("<button>").attr("type","button").addClass("acceptBtn").html("승인");
-					let check = $("<i>").addClass("fa-solid fa-circle-check fa-lg").css({"color":"#f5f5f5"});
-					acceptBtn.prepend(check);
-					let rejectBtn = $("<button>").attr("type","button").addClass("rejectBtn").html("거절");
-					let xmark = $("<i>").addClass("fa-solid fa-circle-xmark fa-lg").css({"color":"#f5f5f5"});
-					rejectBtn.prepend(xmark);
-					btnDiv.append(acceptBtn, rejectBtn);
-					
-					meeting-card.append(
-						$("<div>").addClass("nickname").html("신청자 닉네임"),
-						$("<div>").addClass("title").html("모임 제목"),
-						$("<div>").addClass("info").html("신청자 한 줄 소개"),
-						btnDiv
-					);
-					
-					$(".meetingListDiv").append(meeting-card);
-				}
-				
-			});
+		    $.ajax({
+		        url:"/meetingMember/applyList",
+		        dataType:"json"
+		    }).done(function(resp){
+		
+		        for(let i of resp){
+		
+		            let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq);
+		
+		            let btnDiv = $("<div>").addClass("btnDiv");
+		
+		            let acceptBtn = $("<button>").attr("type","button").addClass("acceptBtn").text(" 승인");
+		            let check = $("<i>").addClass("fa-solid fa-circle-check fa-lg").css({"color":"#f5f5f5"});
+		            acceptBtn.prepend(check);
+		
+		            let rejectBtn = $("<button>").attr("type","button").addClass("rejectBtn").text(" 거절");
+		            let xmark = $("<i>").addClass("fa-solid fa-circle-xmark fa-lg").css({"color":"#f5f5f5"});
+		            rejectBtn.prepend(xmark);
+		
+		            btnDiv.append(acceptBtn, rejectBtn);
+		
+		            meetingCard.append(
+		                $("<div>").addClass("nickname").text(i.mem_id),
+		                $("<div>").addClass("title").text(i.meet_title),
+		                $("<div>").addClass("info").text(i.meetmem_contents),
+		                btnDiv
+		            );
+		
+		            $(".meetingListDiv").append(meetingCard);
+		        }
+		    });
 		});
 		
 		// 승인 버튼 클릭 시
@@ -323,7 +327,7 @@
 				dataType:"json"
 			}).done(function(resp){
 				for(let i of resp){
-					let completeMeeting-card = $("<div>").addClass("completeMeeting-card")
+					let completeMeetingCard = $("<div>").addClass("completeMeeting-card")
 					let comBtnDiv = $("<div>").addClass("comBtnDiv")
 					let acceptedBtn = $("<button>").attr("type","button").addClass("acceptedBtn").html("승인됨");
 					let check = $("<i>").addClass("fa-solid fa-circle-check fa-lg").css({"color":"#f5f5f5"});
@@ -335,7 +339,7 @@
 					// 조건식 필요(승인인지, 거절인지)
 					comBtnDiv.append(acceptedBtn);
 					
-					completeMeeting-card.append(
+					completeMeetingCard.append(
 						$("<div>").addClass("com_nickname").html("신청자 닉네임"),
 						$("<div>").addClass("com_title").html("모임 제목"),
 						$("<div>").addClass("com_info").html("신청자 한 줄 소개"),
