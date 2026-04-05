@@ -4,23 +4,24 @@ public class MeetingMemberDTO {
 	
 	private int meetmem_seq;
 	private String mem_id;
+	private String mem_nickname;
 	private int meet_seq;
 	private String meetmem_contents;
 	private int meetmem_status;
 	private String meetmem_joindate;
 	
 	public MeetingMemberDTO() {}
-	public MeetingMemberDTO(int meetmem_seq, String mem_id, int meet_seq, String meetmem_contents, int meetmem_status,
-			String meetmem_joindate) {
+	public MeetingMemberDTO(int meetmem_seq, String mem_id, String mem_nickname, int meet_seq, String meetmem_contents,
+			int meetmem_status, String meetmem_joindate) {
 		super();
 		this.meetmem_seq = meetmem_seq;
 		this.mem_id = mem_id;
+		this.mem_nickname = mem_nickname;
 		this.meet_seq = meet_seq;
 		this.meetmem_contents = meetmem_contents;
 		this.meetmem_status = meetmem_status;
 		this.meetmem_joindate = meetmem_joindate;
 	}
-	
 	public int getMeetmem_seq() {
 		return meetmem_seq;
 	}
@@ -32,6 +33,12 @@ public class MeetingMemberDTO {
 	}
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
+	}
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
 	}
 	public int getMeet_seq() {
 		return meet_seq;

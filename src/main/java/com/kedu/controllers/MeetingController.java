@@ -263,4 +263,28 @@ public class MeetingController {
 	public String manageMeeting() throws Exception{
 		return "myPage/manageMeeting";
 	}
+	
+	@RequestMapping("/myMeetingList")
+	public String myMeetingList(HttpSession session, Model model) {
+
+	    String loginId = (String)session.getAttribute("loginId");
+
+	    List<MeetingDTO> list = dao.selectMyAllMeeting(loginId);
+
+	    model.addAttribute("list", list);
+
+	    return "myPage/myMeeting";
+	}
+	
+	@RequestMapping("/myMeeting")
+	public String myMeeting(HttpSession session, Model model) {
+
+	    String loginId = (String)session.getAttribute("loginId");
+
+	    List<MeetingDTO> list = dao.selectMyAllMeeting(loginId);
+
+	    model.addAttribute("list", list);
+
+	    return "myPage/myMeeting";
+	}
 }

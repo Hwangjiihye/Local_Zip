@@ -144,10 +144,6 @@
 		    height: 20px;
 		    color: #286708;
 		}
-		.isLeader{
-			display: none;
-		}
-		
 		.desc {
 		    margin-bottom: 10px;
 		    color: #5e361a;
@@ -183,7 +179,6 @@
 		    border:none;
 		    border-radius: 10px;
 		    color: #5e361a;
-		    display:none;
 		}
 		
 		.outBtn{
@@ -225,6 +220,16 @@
 		.manageBtn{
 		 	background-color: #E5D3B3;
 		}
+		.emptyMeeting{
+			width: 100%;
+  			height: 600px;
+  			
+  			font-size: 25px;
+  			
+  			color: #5e361a;
+  			
+  			text-align: center;
+		}
 </style>
 </head>
 <body>
@@ -237,32 +242,45 @@
 				<input class="manageBtn" type="button" value="신청 관리">
 			</div>
 		</div>
-	<%--     	<c:forEach var="i" items="${list}"> --%>
-	<%--  data-seq="${i.meet_seq}" 아래 태그에 추가하기--%>
-					<div class="meeting-card">
-						<div class="card-header">
-							<div class="title">모임 제목</div>
+			<c:choose>
+				<c:when test="${empty list }">
+					<div class="emptyMeeting">관리 중인 모임이 없습니다.</div>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="i" items="${list}">
+						<div class="meeting-card" data-seq="${i.meet_seq}">
+							<div class="card-header">
+								<div class="title">${i.meet_title }</div>
+							</div>
+							<div class="tagDiv">
+								<div class="category">${i.meet_category }</div>
+								<c:if test="${i.mem_id == sessionScope.loginId}">
+									<div class="isLeader">관리자</div>
+								</c:if>
+							</div>
+							
+							<div class="desc">${i.meet_introcontents }</div>
+							
+							<div class="info">
+								<div class="location">📍 ${i.mem_address1 }</div>	
+								<div class="count">👥 ${i.meet_maxpeople }</div>
+							</div>
+							
+							<div class="card-footer">
+								<button class="meetingDetail" type="button">자세히 보기</button>
+								<c:choose>
+									<c:when test="${i.mem_id == sessionScope.loginId}">
+										<button class="deleteBtn" type="button">모임 삭제</button>
+									</c:when>
+									<c:otherwise>
+										<button class="outBtn" type="button">모임 탈퇴</button>
+									</c:otherwise>
+								</c:choose>
+							</div>
 						</div>
-						<div class="tagDiv">
-							<div class="category">카테고리</div>
-							<div class="isLeader">관리자</div>
-						</div>
-						
-						<div class="desc">한줄소개</div>
-						
-						<div class="info">
-							<div class="location">📍 위치</div>	
-							<div class="count">👥 정원수</div>
-						</div>
-						
-						<div class="card-footer">
-							<button class="meetingDetail" type="button">자세히 보기</button>
-							<button class="deleteBtn" type="button">모임 삭제</button>
-							<button class="outBtn" type="button">모임 탈퇴</button>
-						</div>
-					</div>
-	<%-- 		</c:forEach> --%>
-			
+		 			</c:forEach>
+				</c:otherwise>
+			</c:choose>
 	</div>
 	<div class="bottomBar">
 		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
@@ -273,8 +291,10 @@
 	</div>
 		
 	<script>
-			$(".meetingDetail").on("click", function(){
-			    let seq = $(this).data("seq");
+			$(document).on("click", ".meetingDetail", function(){
+		
+			    let seq = $(this).closest(".meeting-card").data("seq");
+		
 			    location.href = "/meeting/meetingDetail?seq=" + seq;
 			});
 			

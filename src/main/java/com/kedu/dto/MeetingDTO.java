@@ -4,6 +4,7 @@ public class MeetingDTO {
 	
 	private int meet_seq;
 	private String mem_id;
+	private String mem_nickname;
 	private String meet_title;
 	private String meet_category;
 	private String meet_introcontents;
@@ -17,12 +18,13 @@ public class MeetingDTO {
 	private String meet_date;
 	
 	public MeetingDTO() {}
-	public MeetingDTO(int meet_seq, String mem_id, String meet_title, String meet_category, String meet_introcontents,
-			String meet_detailcontents, int meet_maxpeople, int meet_currentpeople, String mem_address1,
-			String meet_kakaolink, String meet_kakaopw, int meet_status, String meet_date) {
+	public MeetingDTO(int meet_seq, String mem_id, String mem_nickname, String meet_title, String meet_category,
+			String meet_introcontents, String meet_detailcontents, int meet_maxpeople, int meet_currentpeople,
+			String mem_address1, String meet_kakaolink, String meet_kakaopw, int meet_status, String meet_date) {
 		super();
 		this.meet_seq = meet_seq;
 		this.mem_id = mem_id;
+		this.mem_nickname = mem_nickname;
 		this.meet_title = meet_title;
 		this.meet_category = meet_category;
 		this.meet_introcontents = meet_introcontents;
@@ -35,7 +37,6 @@ public class MeetingDTO {
 		this.meet_status = meet_status;
 		this.meet_date = meet_date;
 	}
-	
 	public int getMeet_seq() {
 		return meet_seq;
 	}
@@ -47,6 +48,12 @@ public class MeetingDTO {
 	}
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
+	}
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
 	}
 	public String getMeet_title() {
 		return meet_title;
@@ -114,4 +121,6 @@ public class MeetingDTO {
 	public void setMeet_date(String meet_date) {
 		this.meet_date = meet_date;
 	}
+	
+	
 }
