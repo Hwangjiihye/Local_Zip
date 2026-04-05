@@ -189,7 +189,7 @@ body {
     margin-bottom: 10px;
     background-color: #FFB300;
     height: 20px;
-    color: #5e361a;
+    color: #286708;
 }
 
 .desc {

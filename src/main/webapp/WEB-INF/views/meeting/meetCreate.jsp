@@ -88,7 +88,7 @@
 		    color: #5e361a;
 		}
 		
-		.titleDiv, .categoryDiv, .descDiv, .locationDiv, .descTextDiv{
+		.titleDiv, .categoryDiv, .descDiv, .locationDiv, .descTextDiv, .peopleNumDiv{
 			padding:10px;
 			border-bottom: 1px dotted #A66A3F;
 		}
@@ -112,7 +112,7 @@
 			padding-left: 2px;
 		}
 		
-		.title, .category, .desc, .location, .openChatLink, .openChatPw{
+		.title, .category, .desc, .location, .openChatLink, .openChatPw, .peopleNum{
 			font-weight: bold;
 		    font-size: 23px;
 		    color: #5e361a;
@@ -253,6 +253,10 @@
 		    padding: 2px;
 		    outline: none;
 		}
+		
+		#peopleNumber{
+			width: 200px;
+		}
 	
 	</style>
 <body><!-- /meeting/test -->
@@ -283,19 +287,24 @@
 							</select>
 					</div>
 					
+					<div class="peopleNumDiv">	
+						<div class="peopleNum">정원수</div>	
+						<div class="peopleNumDetail"><input id="peopleNumber" name="meet_maxpeople" class="clubName" type="number" min="5" max="30" step="1" style="border: #fbe5c0" placeholder="모임의 정원수를 선택해 주세요."></div>
+					</div>
+					
 					<div class="descDiv">
 						<div class="desc">간단한 한 줄 소개</div>
-						<div class="descDetail"><input id="intro" name="meet_introcontents" class="clubName" maxlength="100" style="border: #fbe5c0" type="text" placeholder="한 줄 소개를 작성해주세요"></div>
+						<div class="descDetail"><input id="intro" name="meet_introcontents" class="clubName" maxlength="100" style="border: #fbe5c0" type="text" placeholder="한 줄 소개를 작성해 주세요"></div>
 					</div>
 					
 					<div class="descTextDiv">
 						<div class="descText">자세한 소개글</div>
-						<div class="descTextDetail"><textarea id="detail" name="meet_detailcontents" class="detailContent" maxlength="1000" style="border: #fbe5c0" type="text" placeholder="모임을 소개해주세요"></textarea></div>
+						<div class="descTextDetail"><textarea id="detail" name="meet_detailcontents" class="detailContent" maxlength="1000" style="border: #fbe5c0" type="text" placeholder="모임을 소개해 주세요"></textarea></div>
 					</div>
 					
 					<div class="locationDiv">	
 						<div class="location">활동지역</div>	
-						<div class="locationDetail"><input id="address" name="mem_address1" class="clubName" maxlength="33" type="text" style="border: #fbe5c0" placeholder="활동지역을 입력해주세요"></div>
+						<div class="locationDetail"><input id="address" name="mem_address1" class="clubName" maxlength="33" type="text" style="border: #fbe5c0" placeholder="활동지역을 입력해 주세요"></div>
 					</div>
 					
 					<div class="openChatWrapper">
