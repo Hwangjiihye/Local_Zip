@@ -24,6 +24,20 @@ public class BoardDAO {
 				dto.getPost_hit(),dto.getPost_title(), dto.getPost_contents(), dto.getPost_like());
 	}
 	
+	// 카테고리 별 최신순, 인기순 정렬 후 > 리스트 출력 메서드 ------------------------------
+	
+	//홈(=전체) 리스트 출력(최신순)
+	public List<BoardDTO> list_home_latest() throws Exception{
+		String sql = "select * from post where order by post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
+	//홈(=전체) 리스트 출력(인기순)
+	public List<BoardDTO> list_home_like() throws Exception{
+		String sql = "select * from post where order by post_like desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
 	//db에 생활정보 리스트 출력(최신순)
 	public List<BoardDTO> list_lifeInfo() throws Exception{
 		String sql = "select * from post where post_category = 'lifeInfo' order by post_seq desc";
@@ -41,6 +55,8 @@ public class BoardDAO {
 		String sql = "select * from post where post_category = 'talk' order by post_like desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
+	
+	//----------------------------------------------------------------------
 	
 	//게시글 상세 내용 출력
 	public BoardDTO selectByPost_seq(int post_seq) throws Exception{

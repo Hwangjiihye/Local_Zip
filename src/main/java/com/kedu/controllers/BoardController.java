@@ -63,6 +63,7 @@ public class BoardController {
 		return "board/write";
 	}
 	
+	// 모든 글쓰기
 	@RequestMapping("/insert")
 	public String insert(BoardDTO dto, HttpSession session) throws Exception{
 	    
