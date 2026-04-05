@@ -19,9 +19,9 @@ public class FeedBackDAO {
 	// 건의사항 게시글 db에 넣기
 	public int insert(FeedBackDTO dto) throws Exception {
 		
-		String sql = "insert into suggestion values(suggestion_seq.nextval, ?, ?, ?, sysdate, ?, ?)";
+		String sql = "insert into suggestion values(suggestion_seq.nextval, ?, ?, ?, ?, ?, sysdate, ?, ?)";
 		
-		return jdbc.update(sql, dto.getMem_id(), dto.getSuggestion_title(), dto.getSuggestion_contents(),
+		return jdbc.update(sql, dto.getMem_id(), dto.getMem_nickname(), dto.getMem_dong(), dto.getSuggestion_title(), dto.getSuggestion_contents(),
 				dto.getSuggestion_like(), dto.getSuggestion_unlike());
 	}
 	

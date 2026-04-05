@@ -369,7 +369,7 @@
 	
 	                    <div class="postInfoBox">
 	                        <div class="postInfoUp">
-	                            <div class="profileName profileInfo" style=color:#5e361a;>${i.mem_id}</div>
+	                            <div class="profileName profileInfo" style=color:#5e361a;>${i.mem_nickname}</div>
 	                        </div>
 	
 	                        <div class="postInfoDown">

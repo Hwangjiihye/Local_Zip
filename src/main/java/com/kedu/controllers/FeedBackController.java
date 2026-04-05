@@ -44,9 +44,19 @@ public class FeedBackController {
 	@RequestMapping("/feedbackInsert")
 	public String feedbackWrite(FeedBackDTO dto, HttpSession session) throws Exception {
 		
+		String nickname = (String)session.getAttribute("mem_nickname");
+		String dong = (String)session.getAttribute("mem_dong");
 		String loginId = (String)session.getAttribute("loginId");
 		
+		System.out.println("loginId : " + loginId);
+	    System.out.println("nickname : " + nickname);
+	    System.out.println("dong : " + dong);
+		
+		dto.setMem_nickname(nickname);
+		dto.setMem_dong(dong);
 		dto.setMem_id(loginId);
+		
+		
 		
 		dao.insert(dto);
 		
