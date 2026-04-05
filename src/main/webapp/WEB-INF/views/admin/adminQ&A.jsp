@@ -111,36 +111,26 @@ body {
 }
 
 .categoryBtnAll:hover, .navicon:hover {
-transform: translateY(-3px); /* 살짝 위로 뜸 */
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 } 
 
 .categoryBtnAll:active, .navicon:active {
-transform: translateY(2px); /*아래로 눌림*/
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+	transform: translateY(2px); /*아래로 눌림*/
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }
 
 .nowBtn{
-background-color: #fecc56;
-color: #A66A3F;
-
-transform: translateY(-3px);
-/* 살짝 위로 뜸 */ 
-box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-
-height: 30px;
-
-border-radius: 10px;
-/border: 1px solid #FFB300;
-
- align-items: center;
-/* 수직 중앙 정렬 */ 
-
-vertical-align: middle;
-/* 버튼들끼리 줄이 안 맞을 때를 대비 */
-
-cursor: pointer;
-transition: 0.3s;
+	background-color: #fecc56;
+	color: #A66A3F;
+	transform: translateY(-3px);
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	height: 30px;
+	border: 1px solid #FFB300;
+	align-items: center;
+	vertical-align: middle;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .categoryBtnAll:active{
@@ -419,7 +409,7 @@ transition: 0.3s;
 		<div class="top-section">
 			<div class="mainTitle">관리자.zip</div>
 			<div class="categoryDiv">
-				<a href="/admin/adminPage"><button class="categoryBtnAll ${dash == 'dashBoard' ? 'nowBtn' : ''}">
+				<a href="/admin/adminPage"><button class="categoryBtnAll ${menu == 'dashboard' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
 				<button class="categoryBtnAll"> 
@@ -454,7 +444,22 @@ transition: 0.3s;
 	</div>
 	
 	<script>
-	
+			$(document).on("click", ".filterBtn", function(){
+			    // 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
+			    $(".filterBtn").removeClass("nowBtn");
+			    
+			    // 2. 클릭한 버튼에만 활성화 클래스 추가
+			    $(this).addClass("nowBtn");
+		
+			    let status = $(this).data("status");
+			    loadQaList(status, 1);
+			});
+
+	// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
+			$(function(){
+			    $(".filterBtn[data-status='all']").addClass("nowBtn");
+			    loadQaList("all", 1);
+			});
 
 			let currentStatus = "all";
 	
