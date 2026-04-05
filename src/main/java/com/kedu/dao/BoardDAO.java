@@ -38,9 +38,21 @@ public class BoardDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
 	
-	//db에 생활정보 리스트 출력(최신순)
-	public List<BoardDTO> list_lifeInfo() throws Exception{
+//	//db에 생활정보 리스트 출력(최신순)
+//	public List<BoardDTO> list_lifeInfo() throws Exception{
+//		String sql = "select * from post where post_category = 'lifeInfo' order by post_seq desc";
+//		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+//	}
+	
+	//생활정보 리스트 출력(최신순)
+	public List<BoardDTO> list_lifeInfo_latest() throws Exception{
 		String sql = "select * from post where post_category = 'lifeInfo' order by post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
+	//생활정보 리스트 출력(인기순)
+	public List<BoardDTO> list_lifeInfo_like() throws Exception{
+		String sql = "select * from post where post_category = 'lifeInfo' order by post_like desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
 	
