@@ -53,8 +53,8 @@ body, html {
 
 .container {
 	width: 100%;
-	min-height: 100vh;
-	padding-bottom: 80px;
+	min-height: 95vh;
+	padding-bottom: 60px;
 }
 
 .topBar { /* 상단바 고정 */
@@ -199,9 +199,10 @@ body, html {
 .orderBtn {
 	border: none;
 	background-color: transparent;
-    border-radius: 30%;
-    font-size: 15px;
-    color: #A66A3F;
+	border-radius: 30%;
+	font-size: 15px;
+	color: #A66A3F;
+	font-size: 15px;
 }
 
 .orderBtn:hover {
@@ -263,9 +264,19 @@ body, html {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.navBar {
-	background-color: #fbe5c0;
-	text-align: center;
+.pageBox {
+	width: 100%;
+	text-align: center; /* 가운데 정렬 */
+	/* 	padding: 20px 0; /* 상하 여백 */ */
+	/* 	margin-bottom: 80px; /* 중요: 하단 바에 가려지지 않도록 아래쪽 여백 확보 */ */
+	font-size: 18px;
+	color: #A66A3F;
+	font-weight: bold;
+	/* 위쪽 여백은 늘리고(50px), 아래쪽 여백은 확 줄였습니다(10px) */
+	padding: 50px 0 10px 0;
+	/* 하단 바에 너무 붙지 않게 최소한의 마진만 부여 */
+	margin-bottom: 10px;
+	clear: both;
 }
 
 .welcome2 {
@@ -331,7 +342,7 @@ body, html {
 	display: flex;
 	align-items: center;
 	font-size: 14px;
-	color: #333;
+	color: #5e361a;
 }
 
 /* 신고 영역 스타일 */
@@ -374,18 +385,27 @@ body, html {
 	margin: auto;
 	width: 95%;
 	height: 40px;
-	font-size: 25px;
-	margin-bottom: 10px;
+	font-size: 20px;
+	margin-top: 5px;
+	line-height: 40px;
+	color: #5e361a;
 }
 
 .postContent {
+	color: #5e361a;
 	margin: auto;
 	width: 95%;
-	min-height: 40px;
-	height: auto;
-	font-size: 18px;
+	height: 1.5em; /* 한 줄 높이만큼 고정 */
+	line-height: 1.5em;
+	font-size: 15px;
 	background-color: #f0d8af;
 	border-radius: 5px;
+	
+	padding: 0 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+	display: block;
 }
 
 .postDownBox {
@@ -403,6 +423,14 @@ body, html {
 	gap: 10px;
 	cursor: pointer;
 	transition: 0.3s;
+}
+
+.infoCount {
+	color: #5e361a;
+}
+
+.beforeHeart, .comment {
+	color: #5e361a;
 }
 
 .beforeHeart:hover, .afterHeart:hover, .comment:hover {
@@ -536,87 +564,97 @@ body, html {
 								style="border-radius: 10px;" width="100%;" height="100%;">
 						</div>
 					</div>
-					<div class="orderBy">
-<!-- 		            버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
-		                <button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
-					</div>
-					<!-- 게시글영역 -->
-					<div class="postBox">
-						<div class="postUpBox">
 
-							<div class="postProfile">
-								<img class="contentProfile" src="/resources/images/user1.png" width="60px">
+					<c:choose>
+						<c:when test="${empty list}">
+							<div class="emptyBox">등록된 게시글이 없습니다.</div>
+						</c:when>
+						<c:otherwise>
+
+							<div class="orderBy">
+								<!-- 		            버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
+								<button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
 							</div>
 
-							<div class="postInfoBox">
-								<div class="postInfoUp">
-									<div class="profileName profileInfo">홍길동</div>
-									<div class="profileLocal profileInfo">지역(동)</div>
-									<div class="profileCatagory profileInfo">
-										<button class="topBtn">카테고리</button>
+							<!-- 게시글영역 -->
+							<c:forEach var="i" items="${list}">
+								<div class="postBox">
+									<div class="postUpBox">
+
+										<div class="postProfile">
+											<img class="contentProfile" src="/resources/images/user1.png" width="60px">
+										</div>
+
+										<div class="postInfoBox">
+											<div class="postInfoUp">
+												<div class="profileName profileInfo">${i.mem_nickname}</div>
+												<div class="profileLocal profileInfo">${i.mem_dong}</div>
+												<div class="profileCatagory profileInfo">
+													<button class="topBtn">${i.post_category}</button>
+												</div>
+											</div>
+
+											<div class="postInfoDown">
+												<div class="profileTime profileInfo">${i.post_date}</div>
+											</div>
+										</div>
+
+
+										<div class="reportArea">
+											<!-- <i class="fa-solid fa-flag reportIcon"></i> -->
+											<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
+												style="width: 25px; height: 25px; margin-bottom: 5px"></img> <select class="reportSelect">
+												<option value="" disabled selected>신고 사유</option>
+												<option value="1" class="reportOption">부적절한 콘텐츠</option>
+												<option value="2" class="reportOption">욕설/비방</option>
+												<option value="3" class="reportOption">광고/스팸</option>
+											</select>
+										</div>
+
+
+									</div>
+
+									<div class="postMidBox">
+
+										<div class="postTitle">${i.post_title}</div>
+										<div class="postContent">${i.post_contents}</div>
+
+									</div>
+
+									<div class="postDownBox">
+
+										<div class="postLikeBox">
+											<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
+
+											<div class="likeCount infoCount">갯수</div>
+										</div>
+
+										<div class="postCommentBox">
+											<i class="fa-regular fa-comment fa-xl comment"></i>
+
+											<div class="commentCount infoCount">갯수</div>
+										</div>
+
 									</div>
 								</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 
-								<div class="postInfoDown">
-									<div class="profileTime profileInfo">00시간 전</div>
-								</div>
-							</div>
-
-
-							<div class="reportArea">
-								<!-- <i class="fa-solid fa-flag reportIcon"></i> -->
-								<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
-									style="width: 25px; height: 25px; margin-bottom: 5px"></img> <select class="reportSelect">
-									<option value="" disabled selected>신고 사유</option>
-									<option value="1" class="reportOption">부적절한 콘텐츠</option>
-									<option value="2" class="reportOption">욕설/비방</option>
-									<option value="3" class="reportOption">광고/스팸</option>
-								</select>
-							</div>
-
-
-						</div>
-
-						<div class="postMidBox">
-
-							<div class="postTitle">제목이 들어가는 곳</div>
-							<div class="postContent">내용들이 들어가는 곳</div>
-
-						</div>
-
-						<div class="postDownBox">
-
-							<div class="postLikeBox">
-								<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
-
-								<div>갯수</div>
-							</div>
-
-							<div class="postCommentBox">
-								<i class="fa-regular fa-comment fa-xl comment"></i>
-
-								<div>갯수</div>
-							</div>
-
-						</div>
-					</div>
-					<div class="postBox">게시글 영역</div>
-					<div class="postBox">게시글 영역</div>
-					<div class="postBox">게시글 영역</div>
-					<div class="postBox">게시글 영역</div>
-					<div class="postBox">게시글 영역</div>
-					<div class="postBox">게시글 영역</div>
-					<div class="postBox">게시글 영역</div>
-					<div class="navBar">1 2 3 4 5 6 7 8 9 10</div>
 				</div>
 
 				<div class="rightBox">
 					<img src="/resources/images/localCafe.jpg" style="border-radius: 10px;" width="298px" height="498px">
 				</div>
+
 				<a href="/board/write"><button type="button" class="writeBtn">
 						<i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i>
 					</button></a>
 			</div>
+
+			<c:if test="${not empty list }">
+				<div class="pageBox">1 2 3</div>
+			</c:if>
 		</div>
 
 		<div class="bottomBar">
@@ -642,57 +680,84 @@ body, html {
 	</div>
 
 	<script>
-        $(".loginBtn").on("click", function(){
-            $(".loginBtn").css({"display" : "none"});
-            $(".joinBtn").css({"display" : "none"});
-            $(".logoutArea").css({"display" : "flex"});
-        })
+		$(".loginBtn").on("click", function() {
+			$(".loginBtn").css({
+				"display" : "none"
+			});
+			$(".joinBtn").css({
+				"display" : "none"
+			});
+			$(".logoutArea").css({
+				"display" : "flex"
+			});
+		})
 
-        $(".logoutArea").on("click", function(){
-            $(".loginBtn").css({"display" : "inline"});
-            $(".joinBtn").css({"display" : "inline"});
-            $(".logoutArea").css({"display" : "none"});
-        })
+		$(".logoutArea").on("click", function() {
+			$(".loginBtn").css({
+				"display" : "inline"
+			});
+			$(".joinBtn").css({
+				"display" : "inline"
+			});
+			$(".logoutArea").css({
+				"display" : "none"
+			});
+		})
 
-        let index = 0;
-        let slideBanner = $(".slideBanner"); // class가 slide인 요소 전부 가져와
+		// 배너 이미지 변경되는 코드
+		let index = 0;
+		let slideBanner = $(".slideBanner"); // class가 slide인 요소 전부 가져와
 
-        setInterval(function(){ // setInterval : 3초마다 코드 반복 실행
-            slideBanner.eq(index).removeClass("active"); // 지금 보이는 이미지에서 active 제거
-            // eq(index) 배열에서 index번째 가져옴
+		setInterval(function() { // setInterval : 3초마다 코드 반복 실행
+			slideBanner.eq(index).removeClass("active"); // 지금 보이는 이미지에서 active 제거
+			// eq(index) 배열에서 index번째 가져옴
 
-            index = (index + 1) % slideBanner.length; // 다음 이미지로 이동
+			index = (index + 1) % slideBanner.length; // 다음 이미지로 이동
 
-            slideBanner.eq(index).addClass("active"); // 다음 이미지에 active 붙여서 보여줌
-        }, 3000);
-        
-        // 좋아요 버튼
-        $(".postLikeBox").on("click", function () {
-            $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
-        });
+			slideBanner.eq(index).addClass("active"); // 다음 이미지에 active 붙여서 보여줌
+		}, 3000);
 
-        // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
-        $(".reportIcon").on("click", function () {
-            $(".reportSelect").css({ "display": "inline" });
-        })
+		// 최신순, 인기순 버튼을 눌렀을 때 스위치 시켜주는 코드
+		$(".sortBtn").on("click", function() {
 
-        // let recordTotalCount = ${recordTotalCount}
+			let currentSort = "${sort}";
+
+			if (currentSort == "latest") {
+				location.href = "/?sort=like"; // home으로 보내야 하므로, /만 입력함.
+			} else {
+				location.href = "/?sort=latest";
+			}
+		});
+
+		// 좋아요 버튼
+		$(".postLikeBox").on("click", function() {
+			$(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
+		});
+
+		// 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
+		$(".reportIcon").on("click", function() {
+			$(".reportSelect").css({
+				"display" : "inline"
+			});
+		})
+
+		// let recordTotalCount = ${recordTotalCount}
 		// let recordCountPerPage = ${recordCountPerPage}
 		// let naviCountPerPage = ${naviCountPerPage}
 		// let currentPage = ${currentPage}
 		// // js에서는 정수와 실수를 구분하지 않는다. (캐스팅 필요없음)
 		// let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
-		
+
 		// let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
 		// let endNavi = startNavi + naviCountPerPage - 1;
-		
+
 		// if(endNavi > pageTotalCount) {
 		// 	endNavi = pageTotalCount;
 		// }
-		
+
 		// let needPrev = true; // <<
 		// let needNext = true; // >>
-		
+
 		// if(startNavi == 1) {needPrev = false;}
 		// if(endNavi == pageTotalCount) {needNext = false;}
 		// console.log("데이터 몇 개? : " + recordTotalCount);
@@ -708,7 +773,7 @@ body, html {
 		// 	prev.html("<< ");
 		// 	$(".page").append(prev);
 		// }
-			
+
 		// for(let i = startNavi; i <= endNavi; i++) {
 		// 	let navi = $("<a>");
 		// 	navi.attr("href", "/boards/list?cPage="+i); // 현재 페이지가 i씩 넘어감
@@ -721,7 +786,7 @@ body, html {
 		// 	next.html(">>");
 		// 	$(".page").append(next);
 		// }
-    </script>
+	</script>
 
 </body>
 </html>

@@ -44,6 +44,8 @@ public class HomeController {
 	        list = dao.list_home_latest();
 	    }
 
+	    System.out.println(list.size());
+	    
 	    model.addAttribute("list", list);
 	    model.addAttribute("sort",sort);
 		

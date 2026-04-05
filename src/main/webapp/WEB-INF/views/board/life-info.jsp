@@ -369,7 +369,7 @@
             height: 1.5em;       /* 한 줄 높이만큼 고정 */
     		line-height: 1.5em;
 
-            font-size: 18px;
+            font-size: 15px;
 
             background-color: #f0d8af;
             border-radius: 5px;
