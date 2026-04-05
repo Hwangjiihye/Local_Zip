@@ -56,6 +56,16 @@ public class BoardDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
 	
+	// 좋아요 수, 댓글 수 출력하는 메서드----------------------------------------------
+	
+	// **주의: post_hit 컬럼은 현재 댓글 수를 저장하는 용도로 사용 중
+	
+	// replyDAO에서 count로 뽑아낸 댓글 수를 board 테이블(post_hit)에 반영
+	public int setCommentCount(int count, int post_seq) { 
+		String sql = "update post set post_hit = ? where post_seq = ?";
+		return jdbc.update(sql, count, post_seq);
+	}
+	
 	//----------------------------------------------------------------------
 	
 	//게시글 상세 내용 출력

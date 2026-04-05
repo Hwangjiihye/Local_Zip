@@ -632,7 +632,7 @@ body, html {
 										<div class="postCommentBox">
 											<i class="fa-regular fa-comment fa-xl comment"></i>
 
-											<div class="commentCount infoCount">갯수</div>
+											<div class="commentCount infoCount">${i.post_hit}</div>
 										</div>
 
 									</div>
