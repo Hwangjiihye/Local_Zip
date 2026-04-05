@@ -611,17 +611,19 @@ body, html {
 										</div>
 
 
-										<div class="reportArea">
-											<!-- <i class="fa-solid fa-flag reportIcon"></i> -->
-											<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
-												style="width: 25px; height: 25px; margin-bottom: 5px"></img> <select class="reportSelect">
-												<option value="" disabled selected>신고 사유</option>
-												<option value="1" class="reportOption">부적절한 콘텐츠</option>
-												<option value="2" class="reportOption">욕설/비방</option>
-												<option value="3" class="reportOption">광고/스팸</option>
-											</select>
-										</div>
-
+										<c:if test="${loginId != null}">
+											<div class="reportArea">
+												<!-- <i class="fa-solid fa-flag reportIcon"></i> -->
+												<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
+													style="width: 25px; height: 25px; margin-bottom: 5px"></img> 
+												<select class="reportSelect">
+													<option value="" disabled selected>신고 사유</option>
+													<option value="1" class="reportOption">부적절한 콘텐츠</option>
+													<option value="2" class="reportOption">욕설/비방</option>
+													<option value="3" class="reportOption">광고/스팸</option>
+												</select>
+											</div>
+										</c:if>
 
 									</div>
 
@@ -632,6 +634,7 @@ body, html {
 
 									</div>
 
+								<c:if test="${loginId != null}">
 									<div class="postDownBox">
 
 										<div class="postLikeBox">
@@ -647,6 +650,8 @@ body, html {
 										</div>
 
 									</div>
+								</c:if>
+									
 								</div>
 							</c:forEach>
 						</c:otherwise>
@@ -714,7 +719,24 @@ body, html {
 				"display" : "none"
 			});
 		})
+		
+		
+		// 비로그인시 게시글 클릭 시 상세 페이지 이동 제어
+		$(".postBox").on("click", function() {
+		    let loginId = "${loginId}";
+		
+		    if (loginId === "") { // 
+		        alert("로그인 후 이용 가능합니다.");
+		        location.href = "/members/loginUi"; // 로그인 페이지로 리다이렉트
+		        return; // 함수 종료 (이동 막기)
+		    }
+		
+		    // 로그인 상태일 때 상세 페이지로 이동
+		    let post_seq = $(this).data("seq");
+		    location.href = "/postDetail?post_seq=" + post_seq;
+		});
 
+		
 		// 배너 이미지 변경되는 코드
 		let index = 0;
 		let slideBanner = $(".slideBanner"); // class가 slide인 요소 전부 가져와
@@ -728,6 +750,7 @@ body, html {
 			slideBanner.eq(index).addClass("active"); // 다음 이미지에 active 붙여서 보여줌
 		}, 3000);
 
+		
 		// 최신순, 인기순 버튼을 눌렀을 때 스위치 시켜주는 코드
 		$(".sortBtn").on("click", function() {
 
