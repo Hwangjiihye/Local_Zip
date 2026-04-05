@@ -55,7 +55,7 @@
         .container {
             position: relative;
             padding-top: 100px;
-
+ 			padding-bottom: 90px;
             width: 100%;
             min-height: 100vh;
             /* 최소 높이 지정 : 브라우저 */
@@ -385,7 +385,7 @@
 	                               <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
 	                               <option value="badWord" class="reportOption">욕설/비방</option>
 	                               <option value="AD" class="reportOption">광고/스팸</option>
-	                           </select>
+	                           	</select>
 		                        <input class="reportBtn" type="submit" value="신고하기">
 		                    </div>
 						</form>
@@ -395,14 +395,14 @@
 	                <div class="postMidBox">
 	
 	                    <div class="postTitle">${i.suggestion_title}</div>
-	                    <div class="postContent">${i.suggestion_contents}내용</div>
+	                    <div class="postContent">${i.suggestion_contents}</div>
 	
 	                </div>
 	
-	                <div class="postDownBox">
+	                <div class="postDownBox" data-seq="${i.suggestion_seq}">
 	
 	                    <div class="postLikeBox">
-							<i class="navicon2 fa-regular fa-thumbs-up fa-2xl agreeIcon" style="color: #5e361a;"></i> 동의해요
+							<i class="navicon2 fa-regular fa-thumbs-up fa-2xl agreeIcon"></i> 동의해요
 							<span class="agreeCount">${i.suggestion_like}</span>
 	                    </div>
 	
@@ -418,53 +418,97 @@
 		 <div class="bottomBox">
             <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+            <a href="/meeting/ㅣlist?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
         </div>
     
     <script>
         // 좋아요 버튼
+        // container가 감시하고 있다가 postLikeBox가 눌리면 함수를 실행
         $(".postLikeBox").on("click", function () {
         	
-        	let icon = $(this).find(".agreeIcon");
-            let count = $(this).find(".agreeCount");
-
-            let current = parseInt(count.text());
-
-            if(icon.hasClass("fa-regular")) {
-                icon.removeClass("fa-regular").addClass("fa-solid");
-                icon.css("color", "#FFB300");
-                count.text(current + 1);
-            } else {
-                icon.removeClass("fa-solid").addClass("fa-regular");
-                icon.css("color", "#5e361a");
-                count.text(current - 1);
-            }
-        });
-        
-		$(".postCommentBox").on("click", function () {
+        	let btn = $(this).off("click");
+        	// this : .postLikeBox 자기 자신
+			// ex) this는 그 5번째 게시글 안의 .postLikeBox가 됨.
+			// closest(".postBox") : 나를 감싸는 가장 가까운 .postBox를 찾아라
+        	let postDownBox = $(this).closest(".postDownBox");
+			
+			// suggestion_seq : 지금 클릭한 게시글 번호 들어감
+			let suggestion_seq = postDownBox.data("seq");
+			
+            let countSpan = $(this).find(".agreeCount");
+			
+			console.log("글번호:", suggestion_seq);
         	
-        	let icon = $(this).find(".noIcon");
-            let count = $(this).find(".noCount");
+        	// jqeury의 ajax함수 시작
+        	// 페이지 새로고침 없이 서버랑 통신하겠다는 의미
+        	$.ajax({
+        		url: "/feedback/like",  // 좋아요 버튼을 누르면 /feedback/like로 요청을 보냄
+        		type: "post",
+        		data: {
+        			suggestion_seq: suggestion_seq
+        		},
+        		success: function(resp) { // 서버가 성공적으로 응답했을때, resp: 서버가 돌려준 결과값
+        			console.log("서버응답:", resp);
+        			
+        			// ⭐ 숫자 +1
+                    let current = Number(countSpan.text());
+                    countSpan.text(current + 1);
+                    
+                 	// 아이콘 변경 ⭐
+                    btn.find("i")
+                       .removeClass("fa-regular")
+                       .addClass("fa-solid")
+                       .css("color", "#5e361a");
 
-            let current = parseInt(count.text());
-
-            if(icon.hasClass("fa-regular")) {
-                icon.removeClass("fa-regular").addClass("fa-solid");
-                icon.css("color", "#5e361a");
-                count.text(current + 1);
-            } else {
-                icon.removeClass("fa-solid").addClass("fa-regular");
-                icon.css("color", "#5e361a");
-                count.text(current - 1);
+                    // ⭐ 중복 클릭 방지
+                    btn.off("click");
+                },
+            error: function() {
+                alert("에러 발생");
             }
-        });
+        });	
+    });
+        	
+        	$(".postCommentBox").on("click", function(){
+        		let btn = $(this).off("click");
+        		let postDownBox = $(this).closest(".postDownBox");
+        		let suggestion_seq = postDownBox.data("seq");
+        		let countSpan = $(this).find(".noCount");
+        		console.log("글번호 :", suggestion_seq);
+        		
+        		$.ajax({
+        			url: "/feedback/unlike",
+        			type: "post",
+        			data: {
+        				suggestion_seq: suggestion_seq
+        			},
+        			success: function(resp) {
+        				console.log("서버응답", resp);
+        				
+        				// ⭐ 숫자 +1
+                        let current = Number(countSpan.text());
+                        countSpan.text(current + 1);
+                        
+                     	// 아이콘 변경 ⭐
+                        btn.find("i")
+                           .removeClass("fa-regular")
+                           .addClass("fa-solid")
+                           .css("color", "#5e361a");
 
-        // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
+                        // ⭐ 중복 클릭 방지
+                        btn.off("click");
+        			},
+        			error: function(){
+        				alert("에러 발생");
+        			}
+        		});
+        	});
+
+        // 신고버튼을 눌렀을 때, 내가 누른 게시글 신고버튼만 눌림
         $(".reportIcon").on("click", function () {
-            $(".reportSelect").css({ "display": "inline" });
-            $(".reportBtn").css({"display": "inline"});
+        	$(this).siblings(".reportSelect, .reportBtn").css({"display" : "inline"});
         })
         
         // 좋아요 버튼, 신고버튼 클릭 시에는 페이지 이동 X

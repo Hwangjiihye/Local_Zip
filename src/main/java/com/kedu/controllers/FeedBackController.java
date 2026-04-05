@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kedu.dao.FeedBackDAO;
 import com.kedu.dto.FeedBackDTO;
 
@@ -18,6 +20,9 @@ public class FeedBackController {
 	
 	@Autowired
 	public FeedBackDAO dao;
+	
+	@Autowired
+	public Gson gson;
 	
 	// 건의사항 작성글 출력
 	@RequestMapping("/feedbackHome")
@@ -47,5 +52,29 @@ public class FeedBackController {
 		
 	    return "redirect:/feedback/feedbackHome";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/like")
+	public String like(int suggestion_seq) {
+		System.out.println("컨트롤러 들어옴");
+	    System.out.println("받은 글번호: " + suggestion_seq);
+
+	    int result = dao.plusLike(suggestion_seq);
+	    System.out.println("update 결과: " + result);
+	    return "ok";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/unlike")
+	public String unlike(int suggestion_seq) {
+		System.out.println("컨트롤러 들어옴");
+		System.out.println("받은 글번호:" + suggestion_seq);
+		
+		int result = dao.plusUnLike(suggestion_seq);
+		System.out.println("update 결과 : " + result);
+		return "ok";
+	}
+	
+	
 	
 }

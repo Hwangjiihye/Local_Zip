@@ -3,12 +3,12 @@ package com.kedu.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.FeedBackDTO;
-import com.kedu.dto.MeetingDTO;
 
 @Repository
 public class FeedBackDAO {
@@ -32,4 +32,20 @@ public class FeedBackDAO {
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class));
 	}
+	
+	// 좋아요 db에 넣기
+	public int plusLike(int suggestion_seq) {
+		 System.out.println("DAO 들어옴 / suggestion_seq = " + suggestion_seq);
+	    String sql = "update suggestion set suggestion_like = suggestion_like + 1 where suggestion_seq = ?";
+	    return jdbc.update(sql, suggestion_seq);
+	}
+	
+	// 싫어요 db에 넣기
+	public int plusUnLike(int suggestion_seq) {
+		System.out.println("DAO 들어옴 / suggestion_seq = " + suggestion_seq);
+		String sql = "update suggestion set suggestion_unlike = suggestion_unlike + 1 where suggestion_seq = ?";
+		return jdbc.update(sql, suggestion_seq);
+	}
+	
+	
 }
