@@ -108,12 +108,12 @@ body {
 	transition: all 0.2s ease;
 }
 
-.categoryBtnAll:hover, .navicon:hover, .topBtn:hover, .join-btn:hover {
+.categoryBtnAll:hover, .navicon:hover, .topBtn:hover, .join-btn:hover, .reportBtn:active{
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.categoryBtnAll:active, .navicon:active, .topBtn:active, .join-btn:active {
+.categoryBtnAll:active, .navicon:active, .topBtn:active, .join-btn:active, .reportBtn:active{
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -245,7 +245,6 @@ body {
     background-color: #F2D3A2;
     color: #A66A3F;
     font-size: 12px;
-    padding: 2px;
     outline: none;
 }
 
@@ -307,6 +306,19 @@ body {
             cursor: pointer;
             transition: 0.3s;
         }
+        
+.reportBtn{
+	background-color: #ffb300;
+    color: #5e361a;
+    border: 1px solid #ffb300;
+    border-radius: 10px;
+	font-weight: bold;
+	display: none;
+	position: absolute;
+	top: 60px;
+	left: 0;
+	width: 90px;
+}
 
 </style>
 </head>
@@ -346,10 +358,11 @@ body {
 				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 								<select class="report">
 									<option class="report-menu" disabled selected>신고 사유</option>
-									<option class="report-menu">부적절한 컨텐츠</option>
-									<option class="report-menu">욕설/비방</option>
-									<option class="report-menu">광고/스팸</option>
+									<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
+									<option class="report-menu" value="badWord">욕설/비방</option>
+									<option class="report-menu" value="AD">광고/스팸</option>
 								</select>
+								<button type="button" class="reportBtn">신고하기</button>
 							</div>
 					</div>
 				
@@ -411,9 +424,25 @@ body {
 		</div>
 		
 	<script>
+	
+// 	$(".reportIcon").on("click", function () {
+//  $(".reportSelect").css({ "display": "inline" });
+//  $(".reportBtn").css({"display": "inline"}); -> 추가
+//  })
+
+//  <img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+// 	<select class="report">
+// 	<option class="report-menu" disabled selected>신고 사유</option>
+// 	<option class="report-menu">부적절한 컨텐츠</option>
+// 	<option class="report-menu">욕설/비방</option>
+// 	<option class="report-menu">광고/스팸</option>
+// 	</select>
+// 	<button type="submit" class="reportBtn">신고하기</button>
+	
 			$(".reportIcon").on("click", function (e) {
 			    e.stopPropagation();
 			    $(this).siblings(".report").css("display", "block");
+			    $(this).siblings(".reportBtn").css("display","inline")
 			});
 			
 			$(".report").on("click", function (e) {
@@ -422,6 +451,7 @@ body {
 			
 			$(document).on("click", function () {
 			    $(".report").hide();
+			    $(".reportBtn").hide();
 			});
 			
 			$(document).on("click", ".meeting-card", function(){
@@ -431,6 +461,10 @@ body {
 			
 			$(document).on("click", ".join-btn, .reportIcon", function (e) {
 				e.stopPropagation();
+			});
+			
+			$(document).on("click", ".reportBtn", function(){
+				let 
 			});
 			
 			$(".join-btn").on("click", function(){
