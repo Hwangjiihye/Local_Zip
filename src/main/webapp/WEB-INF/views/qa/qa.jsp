@@ -270,8 +270,7 @@ body, html {
 		</c:choose>
 
 		<div class="pageBox">
-			<i class="fa-solid fa-chevron-left"></i> <span>1</span> <span>2</span>
-			<span>3</span> <i class="fa-solid fa-chevron-right"></i>
+			 <span class="page"></span>
 		</div>
 
 		<button class="writeBtn" type="button"
@@ -287,6 +286,57 @@ body, html {
 			<a href="/members/mypage"><i class="fa-solid fa-user fa-2xl"></i></a>
 		</div>
 	</div>
+	<script>
+	let recordTotalCount = ${totalCount};
+	let recordCountPerPage = 5;
+	let naviCountPerPage = 5;
+	let currentPage = ${cPage};
 
+	let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
+	
+	let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
+	let endNavi = startNavi*naviCountPerPage;
+	
+	if(endNavi > pageTotalCount) {
+		endNavi = pageTotalCount;
+	}
+	$(".page").empty();	
+	
+	let needPrev = true; // <<
+	let needNext = true; // >>
+	
+	if(startNavi == 1) {needPrev = false;}
+	if(endNavi == pageTotalCount) {needNext = false;}
+	
+	
+	
+	if(needPrev) {
+		let prev = $("<a>"); 
+		prev.attr("href", "/qa/toQa?cPage="+(startNavi-1)); 
+		prev.html("<i class='fa-solid fa-chevron-left'></i>");
+		$(".page").append(prev);
+	}else{
+		$(".page").append("<i class='fa-solid fa-chevron-left'></i>");
+	}
+		
+	for(let i = startNavi; i <= endNavi; i++) {
+		let navi = $("<a>");
+		navi.attr("href", "/qa/toQa?cPage="+i);
+		navi.html(i + " ");
+		if (i === currentPage) {
+	        navi.css({"font-weight": "bold"}); 
+	    }
+		$(".page").append(navi);
+	}
+	if(needNext) {
+		let next = $("<a>");
+		next.attr("href", "/qa/toQa?cPage="+(endNavi+1));
+		next.html("<i class='fa-solid fa-chevron-right'></i>");
+		$(".page").append(next);
+	}else{
+		$(".page").append("<i class='fa-solid fa-chevron-right'></i>");
+	}
+	</script>
+	
 </body>
 </html>

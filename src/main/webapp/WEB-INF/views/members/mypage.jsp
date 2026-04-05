@@ -298,7 +298,7 @@
 	    
 	    <div class="FAQTitle">· 고객센터</div>
 	    <div class="FAQDiv">
-	    	<a href="/qa/toQa"><div class="CS">고객지원 ></div></a>
+	    	<a href="/qa/toQa?cPage=1"><div class="CS">고객지원 ></div></a>
 	    	<div class="notice">공지사항 ></div>
 	    </div>
 	    
