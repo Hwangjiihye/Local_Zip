@@ -93,8 +93,10 @@ public class MembersController {
 			return "redirect:/";
 		} else if(result == 2){
 			String nickname = dao.nickname(mem_id);
+			
 			session.setAttribute("loginId", mem_id);
 			session.setAttribute("nickname", nickname);
+			
 			return "redirect:/admin/adminPage";
 		} else if(result == 0){
 			rttr.addFlashAttribute("msg", "pwFail");
