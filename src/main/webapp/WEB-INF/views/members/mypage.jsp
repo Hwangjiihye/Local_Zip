@@ -287,13 +287,15 @@
 		    		<div class="myLikeNum">15</div>
 		    	</div>
 	    	</div>
-	    	<div class="myClub">
-	    		<div class="myClubIcon"><img src="/resources/images/people.png" class="icon"></div>
-	    		<div class="myClubContents">
-		    		<div class="myClubTitle">모임</div>
-		    		<div class="myClubNum">3</div>
+	    	<a href="/meeting/myMeeting">
+		    	<div class="myClub">
+		    		<div class="myClubIcon"><img src="/resources/images/people.png" class="icon"></div>
+		    		<div class="myClubContents">
+			    		<div class="myClubTitle">모임</div>
+			    		<div class="myClubNum">3</div>
+			    	</div>
 		    	</div>
-	    	</div>
+		    </a>	
 	    </div>
 	    
 	    <div class="FAQTitle">· 고객센터</div>
