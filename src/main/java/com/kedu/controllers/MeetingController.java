@@ -259,12 +259,13 @@ public class MeetingController {
 	
 	
 	
-	
+	// 마이페이지 모임 탭 (신청 관리)
 	@RequestMapping("/manageMeeting")
 	public String manageMeeting() throws Exception{
 		return "myPage/manageMeeting";
 	}
 	
+	// 마이페이지 모임 탭 (참여중인 모임)
 	@RequestMapping("/myMeeting")
 	public String myMeeting(HttpSession session, Model model) {
 
@@ -275,5 +276,23 @@ public class MeetingController {
 	    model.addAttribute("list", list);
 
 	    return "myPage/myMeeting";
+	}
+	
+	// 참여중인 모임 탭 > 자세히 보기 클릭 시
+	@RequestMapping("/myMeetingDetail")
+	public String myMeetingDetail(int seq, Model model) throws Exception{
+		
+		List<MeetingDTO> list = dao.selectBySeq(seq);
+		
+		model.addAttribute("list", list);
+		
+		return "myPage/myMeetingDetail";
+	}
+	
+	// 참여중인 모임 탭 > 모임 삭제 버튼 클릭 시
+	@RequestMapping("/deleteMeeting")
+	public int deleteMeeting(int seq, int status) throws Exception{
+		
+		return dao.deleteMeeting(seq, status);
 	}
 }

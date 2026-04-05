@@ -189,6 +189,7 @@
 			background-color: #F2D3A2;
 			margin-top: 50px;
 			color: #5e361a;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.3);
 		}
 		.meeting-card, .completeMeeting-card{
 			width: 80%;
@@ -241,7 +242,7 @@
 	<div class="bottomBar">
 		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 		<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
 		<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 		<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 	</div>
@@ -257,12 +258,12 @@
 		        url:"/meetingMember/applyList",
 		        dataType:"json"
 		    }).done(function(resp){
-		
+				if(resp.length == 0){
+					let emptyMeeting = $("<div>").addClass("emptyMeeting").text("관리 중인 모임이 없습니다.");
+					$(".meetingListDiv").append(emptyMeeting);
+				}
 		        for(let i of resp){
-					if(resp.length == 0){
-						let emptyMeeting = $("<div>").addClass("emptyMeeting").text("관리 중인 모임이 없습니다.");
-						$(".meetingListDiv").append(emptyMeeting);
-					}
+					
 		            let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq);
 		
 		            let btnDiv = $("<div>").addClass("btnDiv");
@@ -325,31 +326,38 @@
 		$(function(){
 			
 			$.ajax({
-				url:"/meetingMember/accept",
+				url:"/meetingMember/completeList",
 				type:"post",
 				dataType:"json"
 			}).done(function(resp){
+				if(resp.length == 0){
+					let emptyMeeting = $("<div>").addClass("emptyMeeting").text("아직 처리된 모임이 없습니다.");
+					$(".completeMeeting").append(emptyMeeting);
+				}
 				for(let i of resp){
 					let completeMeetingCard = $("<div>").addClass("completeMeeting-card")
 					let comBtnDiv = $("<div>").addClass("comBtnDiv")
-					let acceptedBtn = $("<button>").attr("type","button").addClass("acceptedBtn").html("승인됨");
-					let check = $("<i>").addClass("fa-solid fa-circle-check fa-lg").css({"color":"#f5f5f5"});
-					acceptedBtn.prepend(check);
-					let rejectedBtn = $("<button>").attr("type","button").addClass("rejectedBtn").html("거절됨");
-					let xmark = $("<i>").addClass("fa-solid fa-circle-xmark fa-lg").css({"color":"#f5f5f5"});
-					rejectedBtn.prepend(xmark);
 					
-					// 조건식 필요(승인인지, 거절인지)
-					comBtnDiv.append(acceptedBtn);
+					if(i.meetmem_status == 1){
+						let acceptedBtn = $("<button>").attr("type","button").addClass("acceptedBtn").html(" 승인됨");
+						let check = $("<i>").addClass("fa-solid fa-circle-check fa-lg").css({"color":"#f5f5f5"});
+						acceptedBtn.prepend(check);
+						comBtnDiv.append(acceptedBtn);
+					}else if(i.meetmem_status == 2){
+						let rejectedBtn = $("<button>").attr("type","button").addClass("rejectedBtn").html(" 거절됨");
+						let xmark = $("<i>").addClass("fa-solid fa-circle-xmark fa-lg").css({"color":"#f5f5f5"});
+						rejectedBtn.prepend(xmark);
+						comBtnDiv.append(rejectedBtn);
+					}
 					
 					completeMeetingCard.append(
-						$("<div>").addClass("com_nickname").html("신청자 닉네임"),
-						$("<div>").addClass("com_title").html("모임 제목"),
-						$("<div>").addClass("com_info").html("신청자 한 줄 소개"),
+						$("<div>").addClass("com_nickname").text(i.mem_nickname),
+						$("<div>").addClass("com_title").text(i.meet_title),
+						$("<div>").addClass("com_info").text(i.meetmem_contents),
 						comBtnDiv
 					);
 					
-					$(".completeMeeting").append(completeMeeting-card);
+					$(".completeMeeting").append(completeMeetingCard);
 				}
 				
 			})

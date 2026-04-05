@@ -144,18 +144,46 @@
 		    height: 20px;
 		    color: #286708;
 		}
-		.desc {
-		    margin-bottom: 10px;
-		    color: #5e361a;
+		.isLeader{
+			background-color: #7BB8C9;
+			color: #5e361a;
 		}
-		
 		.info {
 		    font-size: 13px;
 		    color: #555;
 		    margin-bottom: 20px;
 		    color: #5e361a;
 		}
-		
+		.category {
+		    display: inline-block;
+		    line-height : 23px;
+		    font-size: 12px;
+		    padding: 3px 8px;
+		    border-radius: 5px;
+		    margin-top: 18px;
+		    margin-bottom: 10px;
+		    background-color: #FFB300;
+		    height: 20px;
+		    color: #286708;
+		    max-width:120px;
+		    white-space:nowrap;
+		    overflow:hidden;
+		    text-overflow:ellipsis;
+		}
+		.desc {
+		    margin-bottom: 10px;
+		    color: #5e361a;
+		   	overflow:hidden;
+		   	white-space:nowrap;
+		    overflow:hidden;
+		    text-overflow:ellipsis;
+		}
+		.category-row {
+		    display:flex;
+		    align-items:center;
+		    gap:8px;
+		    margin-bottom:10px;
+		}
 		.card-footer {
 		    display:flex;
 		    gap: 8px;
@@ -175,19 +203,19 @@
 		.deleteBtn{
 			width: 47%;
 		    height: 30px;
-		    background-color: #FFB300;
+		    background-color: #8B4F1D;
 		    border:none;
 		    border-radius: 10px;
-		    color: #5e361a;
+		    color: #f5f5f5;
 		}
 		
 		.outBtn{
 			width: 47%;
 		    height: 30px;
-		    background-color: #FFB300;
+		    background-color: #8B4F1D;
 		    border:none;
 		    border-radius: 10px;
-		    color: #5e361a;
+		    color: #f5f5f5;
 		}
 		.tagDiv{
 			display: flex;
@@ -223,11 +251,20 @@
 		.emptyMeeting{
 			width: 100%;
   			height: 600px;
-  			font-size: 25px;
+  			font-weight: bold;
+  			font-size: large;
   			margin-left: 630px;
   			text-align: center;
   			color: #5e361a;
 		}
+		.title{
+		    max-width:280px;
+		    white-space:nowrap;
+		    overflow:hidden;
+		    text-overflow:ellipsis;
+		}
+		
+
 </style>
 </head>
 <body>
@@ -253,7 +290,7 @@
 							<div class="tagDiv">
 								<div class="category">${i.meet_category }</div>
 								<c:if test="${i.mem_id == loginId}">
-									<div class="isLeader">관리자</div>
+									<div class="isLeader"><i class="fa-solid fa-crown" style="color: rgb(255, 212, 59);"></i> 관리자</div>
 								</c:if>
 							</div>
 							
@@ -283,7 +320,7 @@
 	<div class="bottomBar">
 		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 		<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
 		<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 		<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 	</div>
@@ -293,12 +330,30 @@
 		
 			    let seq = $(this).closest(".meeting-card").data("seq");
 		
-			    location.href = "/meeting/meetingDetail?seq=" + seq;
+			    location.href = "/meeting/myMeetingDetail?seq=" + seq;
 			});
 			
 			$(".manageBtn").on("click", function(){
 			    location.href = "/meeting/manageMeeting";
 			});
+			
+			$(".deleteBtn").on("click",function(){
+				
+				let seq = $(this).closest(".meeting-card").data("seq");
+				if(!confirm("정말로 삭제하시겠습니까?")){
+					return;
+				}
+				
+				$.ajax({
+					url:"/meeting/deleteMeeting",
+					data:{
+						seq: seq,
+						status: 2
+					}
+				}).done(function(){
+					location.reload();
+				})
+			})
 	</script>
 </body>
 </html>

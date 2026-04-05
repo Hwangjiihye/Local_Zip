@@ -222,4 +222,23 @@ public class MeetingMemberDAO {
 
 	    return jdbc.update(sql, status, meetmem_seq);
 	}
+	
+	public List<ManageMeetingDTO> selectCompleteList(String loginId) {
+
+	    String sql =
+	        "select " +
+	        " m.meet_seq, " +
+	        " m.meet_title, " +
+	        " mm.meetmem_seq, " +
+	        " mm.mem_id, " +
+	        " mm.mem_nickname, " +
+	        " mm.meetmem_contents, " +
+	        " mm.meetmem_status " +
+	        "from meeting m " +
+	        "join meeting_member mm " +
+	        "on m.meet_seq = mm.meet_seq " +
+	        "where m.mem_id = ? and mm.meetmem_status in (1,2)";
+
+	    return jdbc.query(sql,new BeanPropertyRowMapper<ManageMeetingDTO>(ManageMeetingDTO.class),loginId);
+	}
 }
