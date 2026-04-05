@@ -26,8 +26,13 @@ public class UserQaDAO {
 	}
 	
 	// qa게시글 리스트 뽑기
-	public List<QaDTO> getPostList(){
-		String sql = "select * from qa order by qa_create_date desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class));
+	public List<QaDTO> getPostList(int start,int end){	
+		String sql = "SELECT * FROM (SELECT qa.*, ROW_NUMBER() OVER (ORDER BY qa_create_date DESC) a FROM qa) WHERE a BETWEEN ? AND ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class),start,end);
+	}
+	
+	public int getTotalCount(){
+		String sql = "select count(*) from qa";
+		return jdbc.queryForObject(sql,Integer.class);
 	}
 }
