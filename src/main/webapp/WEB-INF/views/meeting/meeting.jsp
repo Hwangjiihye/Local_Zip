@@ -459,7 +459,7 @@ body {
 					            <button class="closing-btn" disabled>모집마감</button>
 					        </c:when>
 					        <c:otherwise>
-								<button class="join-btn" data-seq="${i.meet_seq}">참여신청</button>
+								<button class="join-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">참여신청</button>
 							 </c:otherwise>
     					</c:choose>
 					</div>
@@ -584,9 +584,10 @@ body {
 			    const top = window.screenY + 80; // 상단에서 80px
 	
 			    let seq = $(this).data("seq");
+			    let nickName = $(this).data("nickname");
 			    const popup = window.open(
 			    		
-			        "/meetingMember/applyForm?meet_seq=" + seq ,
+			        "/meetingMember/applyForm?meet_seq=" + seq + "&nickname=" + nickName,
 			        "",
 			        `width=${width},height=${height}`
 			    );

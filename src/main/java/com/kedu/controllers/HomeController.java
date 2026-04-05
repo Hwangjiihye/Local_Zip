@@ -50,8 +50,6 @@ public class HomeController {
 			list = dao.list_home_latest();
 		}
 
-		System.out.println("post에 등록된 게시글 수 :" + list.size());
-
 		//--------------------------------------------------------------
 		// 좋아요와 댓글 수 출력 -> post_seq : 게시글에 달린 등록된 수를 기준으로 조회.
 
@@ -67,7 +65,7 @@ public class HomeController {
 			// *(좋아요)
 			// post_seq를 기준으로 post_likeDAO에서 count된 개수를 세야할거 같음.
 
-			//	    	System.out.println("해당 게시글에 좋아요 수 :" + like.size());
+			// System.out.println("해당 게시글에 좋아요 수 :" + like.size());
 			System.out.println("해당 게시글에 댓글 수 :" + commentCount);
 
 		}
@@ -75,8 +73,6 @@ public class HomeController {
 
 		model.addAttribute("list", list);
 		model.addAttribute("sort",sort);
-
-		session.setAttribute("listAll", list);
 		
 		return "home";
 	}

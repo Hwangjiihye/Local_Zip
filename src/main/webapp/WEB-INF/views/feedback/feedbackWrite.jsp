@@ -263,7 +263,7 @@
 	
 				<div class="TextDiv">
 					<div class="TextTitle">내용</div>
-					<textarea name="suggestioin_contents" class="TextDetail" type="text" placeholder="내용을 작성해주세요" maxlength="1000" style="border: #fbe5c0"></textarea>
+					<textarea name="suggestion_contents" class="TextDetail" type="text" placeholder="내용을 작성해주세요" maxlength="1000" style="border: #fbe5c0"></textarea>
 				</div>
 	
 			</div>
