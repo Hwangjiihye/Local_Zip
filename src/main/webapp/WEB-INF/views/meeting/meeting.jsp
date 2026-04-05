@@ -55,6 +55,8 @@ body {
 	display: grid;
 	grid-template-columns:repeat(4, 1fr);
 	gap:20px;
+	padding: 200px 0 0 0;
+	box-sizing: border-box;
 }
 
 .top-section {
@@ -151,13 +153,12 @@ body {
 }
 
 .meeting-card {
-    width: 330px;
+    width: 300px;
     border: 2px solid #A66A3F;
     border-radius: 10px;
     background-color: #fbe5c0;
     padding: 35px;
-    margin-left: 30px;
-    margin-top: 220px;
+    margin: 0 0 40px 40px;
 }
 
 .card-header {
@@ -354,8 +355,9 @@ body {
 				<div class="meeting-card" data-seq="${i.meet_seq}" data-writer="${i.mem_id}">
 					<div class="card-header">
 						<div class="title">${i.meet_title}</div>
+						<c:if test="${i.mem_id != loginId}">
 							<div class="reportDiv">
-				<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 								<select class="report">
 									<option class="report-menu" disabled selected>신고 사유</option>
 									<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
@@ -364,6 +366,7 @@ body {
 								</select>
 								<button type="button" class="reportBtn">신고하기</button>
 							</div>
+						</c:if>
 					</div>
 				
 					<div class="category">${i.meet_category}</div>

@@ -42,12 +42,10 @@ public class MeetingDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), seq);
 	}
 	
-	
-	
-	
-	
-	
-	
+	public int getAllCount() {
+		String sql = "select count(*) from meeting";
+		return jdbc.queryForObject(sql, Integer.class);
+	}
 	
 	
 	
