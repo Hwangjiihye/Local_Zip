@@ -24,6 +24,20 @@ public class BoardDAO {
 				dto.getPost_hit(),dto.getPost_title(), dto.getPost_contents(), dto.getPost_like());
 	}
 	
+	// 카테고리 별 최신순, 인기순 정렬 후 > 리스트 출력 메서드 ------------------------------
+	
+	//홈(=전체) 리스트 출력(최신순)
+	public List<BoardDTO> list_home_latest() throws Exception{
+		String sql = "select * from post order by post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
+	//홈(=전체) 리스트 출력(인기순)
+	public List<BoardDTO> list_home_like() throws Exception{
+		String sql = "select * from post order by post_like desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
 	//db에 생활정보 리스트 출력(최신순)
 	public List<BoardDTO> list_lifeInfo() throws Exception{
 		String sql = "select * from post where post_category = 'lifeInfo' order by post_seq desc";
@@ -41,6 +55,18 @@ public class BoardDAO {
 		String sql = "select * from post where post_category = 'talk' order by post_like desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
+	
+	// 좋아요 수, 댓글 수 출력하는 메서드----------------------------------------------
+	
+	// **주의: post_hit 컬럼은 현재 댓글 수를 저장하는 용도로 사용 중
+	
+	// replyDAO에서 count로 뽑아낸 댓글 수를 board 테이블(post_hit)에 반영
+	public int setCommentCount(int count, int post_seq) { 
+		String sql = "update post set post_hit = ? where post_seq = ?";
+		return jdbc.update(sql, count, post_seq);
+	}
+	
+	//----------------------------------------------------------------------
 	
 	//게시글 상세 내용 출력
 	public BoardDTO selectByPost_seq(int post_seq) throws Exception{

@@ -369,7 +369,7 @@
             height: 1.5em;       /* 한 줄 높이만큼 고정 */
     		line-height: 1.5em;
 
-            font-size: 18px;
+            font-size: 15px;
 
             background-color: #f0d8af;
             border-radius: 5px;
@@ -555,7 +555,7 @@
 	            </div>
 	
 			<c:forEach var="i" items="${lifeInfo}">
-	            <div class="postBox">
+	            <div class="postBox" onclick="location.href='/postDetail?post_seq=${i.post_seq }'">
 				
 	                <div class="postUpBox">
 	

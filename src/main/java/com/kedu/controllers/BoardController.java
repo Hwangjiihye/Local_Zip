@@ -63,6 +63,7 @@ public class BoardController {
 		return "board/write";
 	}
 	
+	// 모든 글쓰기
 	@RequestMapping("/insert")
 	public String insert(BoardDTO dto, HttpSession session) throws Exception{
 	    
@@ -109,7 +110,7 @@ public class BoardController {
 		      vdao.postClickVisit(loginId, category);
 		   }
 		   
-		return "board/postDetail";
+		return "board/postDetail?seq="+post_seq;
 	}
 	
 	// 게시글 삭제
