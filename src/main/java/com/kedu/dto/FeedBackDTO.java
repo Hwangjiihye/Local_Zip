@@ -4,18 +4,22 @@ public class FeedBackDTO {
 	
 	private int suggestion_seq;
 	private String mem_id;
+	private String mem_nickname;
+	private String mem_dong;
 	private String suggestion_title;
 	private String suggestion_contents;
 	private String suggestion_writedate;
 	private int suggestion_like;
 	private int suggestion_unlike;
 	
-	public FeedBackDTO() {}
-	public FeedBackDTO(int suggestion_seq, String mem_id, String suggestion_title, String suggestion_contents,
-			String suggestion_writedate, int suggestion_like, int suggestion_unlike) {
+	public FeedBackDTO () {}
+	public FeedBackDTO(int suggestion_seq, String mem_id, String mem_nickname, String mem_dong, String suggestion_title,
+			String suggestion_contents, String suggestion_writedate, int suggestion_like, int suggestion_unlike) {
 		super();
 		this.suggestion_seq = suggestion_seq;
 		this.mem_id = mem_id;
+		this.mem_nickname = mem_nickname;
+		this.mem_dong = mem_dong;
 		this.suggestion_title = suggestion_title;
 		this.suggestion_contents = suggestion_contents;
 		this.suggestion_writedate = suggestion_writedate;
@@ -34,6 +38,18 @@ public class FeedBackDTO {
 	}
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
+	}
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
+	}
+	public String getMem_dong() {
+		return mem_dong;
+	}
+	public void setMem_dong(String mem_dong) {
+		this.mem_dong = mem_dong;
 	}
 	public String getSuggestion_title() {
 		return suggestion_title;

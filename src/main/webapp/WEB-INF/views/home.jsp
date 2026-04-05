@@ -741,14 +741,22 @@ body, html {
 		});
 		
 		// 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
-		$(".reportIcon").on("click", function() {
+		$(".reportIcon").on("click", function(e) {
+			e.stopPropagation(); // ★부모(.postBox)의 클릭 이벤트X
+			
 			$(".reportSelect").css({
 				"display" : "inline"
+			});
+			
+			// 신고 사유 선택창 클릭 시 ★부모(.postBox)의 클릭 이벤트X
+			$(".reportSelect").on("click", function(e) {
+			    e.stopPropagation(); // 상세페이지 이동 방지
 			});
 		})
 
 		// 좋아요 버튼
-		$(".postLikeBox").on("click", function() {
+		$(".postLikeBox").on("click", function(e) {
+			e.stopPropagation(); // ★부모(.postBox)의 클릭 이벤트X
 			$(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
 		});
 

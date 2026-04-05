@@ -87,12 +87,25 @@ public class BoardController {
 	
 	//생활정보 jsp에 생활정보 카테고리 list만 출력
 	@RequestMapping("/list_lifeInfo")
-	public String list_lifeInfo(Model model) throws Exception{
+	public String list_lifeInfo(String sort, Model model) throws Exception{
 		
-		List<BoardDTO> list = dao.list_lifeInfo();
 		
-		model.addAttribute("lifeInfo", list);
-		
+		// 기본 정렬
+		if(sort == null) {
+			sort = "latest";
+		}
+	    List<BoardDTO> list;
+	    
+	    // 출력을 어떤 종류를 기준으로 할 지 검사
+	    if ("like".equals(sort)) {
+	        list = dao.list_lifeInfo_like();
+	    }else {
+	        list = dao.list_lifeInfo_latest();
+	    }
+
+	    model.addAttribute("lifeInfo", list);
+	    model.addAttribute("sort",sort);
+
 		return "board/life-info";
 	}
 	
