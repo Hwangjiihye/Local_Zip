@@ -134,7 +134,7 @@
 		.emptyMeeting{
 			font-weight: bold;
 			font-size: large;
-			border: 1px solid red;
+			text-align: center;
 		}
 		.meetingListDiv{
 			margin-top: 230px;
@@ -259,8 +259,8 @@
 		    }).done(function(resp){
 		
 		        for(let i of resp){
-					if(resp == ""){
-						let emptyMeeting = $("<div>").addClass=("emptyMeeting").text("참여 중인 모임이 없습니다.");
+					if(resp.length == 0){
+						let emptyMeeting = $("<div>").addClass("emptyMeeting").text("관리 중인 모임이 없습니다.");
 						$(".meetingListDiv").append(emptyMeeting);
 					}
 		            let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq);

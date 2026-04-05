@@ -223,12 +223,10 @@
 		.emptyMeeting{
 			width: 100%;
   			height: 600px;
-  			
   			font-size: 25px;
-  			
-  			color: #5e361a;
-  			
+  			margin-left: 630px;
   			text-align: center;
+  			color: #5e361a;
 		}
 </style>
 </head>
