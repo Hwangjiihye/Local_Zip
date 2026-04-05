@@ -285,28 +285,32 @@ body {
 }
 
 .nowBtn{
-          	background-color: #fecc56;
-            color: #A66A3F;
+    background-color: #fecc56;
+    color: #A66A3F;
 
-            transform: translateY(-3px);
-            /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            
-            
-            height: 30px;
+    transform: translateY(-3px);
+    /* 살짝 위로 뜸 */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 
-            border-radius: 10px;
-            border: 1px solid #FFB300;
+    height: 30px;
 
-            align-items: center;
-            /* 수직 중앙 정렬 */
+    border-radius: 10px;
+    border: 1px solid #FFB300;
 
-            vertical-align: middle;
-            /* 버튼들끼리 줄이 안 맞을 때를 대비 */
+    align-items: center;
+    /* 수직 중앙 정렬 */
 
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    vertical-align: middle;
+    /* 버튼들끼리 줄이 안 맞을 때를 대비 */
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.categoryBtnAll:active{
+
+    transform: translateY(2px);
+}
         
 .reportBtn{
 	background-color: #ffb300;
@@ -388,19 +392,19 @@ body {
 				<c:remove var="msg" scope="session"/>
 				
 			<div class="categoryDiv">
-				<a href="/meeting/list?category=all"><button class="categoryBtnAll">
+				<a href="/meeting/list?category=all"><button class="categoryBtnAll ${category == 'all' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-house fa-lg"></i> 전체
 				</button></a>
-				<a href="/meeting/list?category=운동"><button class="categoryBtnAll">
+				<a href="/meeting/list?category=운동"><button class="categoryBtnAll ${category == '운동' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-dumbbell fa-lg"></i> 운동
 				</button></a>
-				<a href="/meeting/list?category=문화"><button class="categoryBtnAll">
+				<a href="/meeting/list?category=문화"><button class="categoryBtnAll ${category == '문화' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-film fa-lg"></i> 문화
 				</button></a>
-				<a href="/meeting/list?category=취미"><button class="categoryBtnAll">
+				<a href="/meeting/list?category=취미"><button class="categoryBtnAll ${category == '취미' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-palette fa-lg"></i> 취미
 				</button></a>
-				<a href="/meeting/list?category=스터디"><button class="categoryBtnAll">
+				<a href="/meeting/list?category=스터디"><button class="categoryBtnAll ${category == '스터디' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-book fa-lg"></i> 스터디
 				</button></a>
 			</div>
@@ -501,8 +505,11 @@ body {
 		</div>
 		
 	<script>
-
-	
+			$(".categoryBtnAll").on("click", function(){
+			    $(".categoryBtnAll").removeClass("nowBtn");
+			    $(this).addClass("nowBtn");
+			});
+			
 			$(".reportIcon").on("click", function (e) {
 			    e.stopPropagation();
 			    $(this).siblings(".report").css("display", "block");

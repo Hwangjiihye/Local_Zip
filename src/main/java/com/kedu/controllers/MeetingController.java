@@ -89,12 +89,6 @@ public class MeetingController {
 		return "redirect:/meeting/list?category=all";
 	}
 	
-	// 마이페이지에서 모임을 눌렀을 때
-	@RequestMapping("/myMeeting")
-	public String myMeeting() throws Exception{
-		return "myPage/myMeeting";
-	}
-	
 	// 페이지네비게이터
 	public Map<String, Object> getPageNaviAll(String category, int cpage){
 

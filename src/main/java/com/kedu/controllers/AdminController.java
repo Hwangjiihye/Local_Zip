@@ -43,6 +43,7 @@ public class AdminController {
 		model.addAttribute("ageCount", vdao.getAgeCount()); // 연령대별 도넛차트 통계
 		model.addAttribute("categoryCount", bdao.getCategoryCount());
 		
+		model.addAttribute("menu", "qa");
 		return "admin/admin";
 	}
 	
