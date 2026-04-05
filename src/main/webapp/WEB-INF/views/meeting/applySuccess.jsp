@@ -12,7 +12,7 @@
 
 	<script>
 		alert("신청이 완료되었습니다.");
-		window.opener.location.href="/meeting/list";
+		window.opener.location.href="/meeting/list?category=all";
 		window.close();
 	</script>
 
