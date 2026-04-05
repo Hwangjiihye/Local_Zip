@@ -48,9 +48,12 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
-	public List<MeetingDTO> selectAllByPage(int start, int end) {
+	public List<MeetingDTO> selectAllByPage(int start, int end) { // + 게이지바 포함
 		String sql = "select * from (select row_number() over(order by meet_seq desc) rn, "
-				+ "meeting.* from meeting) where rn between ? and ?";
+				+ "meeting.*, (select count(*) from meeting_member "
+				+ "where meeting_member.meet_seq = meeting.meet_seq "
+				+ "and meeting_member.meetmem_status = 1 ) "
+				+ "as meet_currentpeople from meeting) where rn between ? and ?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(MeetingDTO.class), start, end);
 	}
 	
