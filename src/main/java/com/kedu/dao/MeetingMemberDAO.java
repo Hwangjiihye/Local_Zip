@@ -1,9 +1,13 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kedu.dto.ManageMeetingDTO;
 import com.kedu.dto.MeetingMemberDTO;
 
 @Repository
@@ -19,8 +23,6 @@ public class MeetingMemberDAO {
 		
 		return jdbc.update(sql, dto.getMem_id(), dto.getMeet_seq(), dto.getMeetmem_contents(), dto.getMeetmem_status());
 	}
-	
-	
 	
 	
 	

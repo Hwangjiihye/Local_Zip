@@ -175,12 +175,12 @@
 		.acceptedBtn{
 			background-color: #7BB8C9;
 			margin-left: 150px;
-			display: none;
+/* 			display: none; */
 		}
 		.rejectedBtn{
 			background-color: #FF000080;
 			margin-left: 150px;
-			display: none;
+/* 			display: none; */
 		}
 		.completeComments{
 			font-weight: bold;
@@ -233,40 +233,10 @@
 				<input class="manageBtn" type="button" value="신청 관리">
 			</div>
 		</div>
-		<div class="meetingListDiv">
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test=""><div class="emptyMeeting">관리 중인 모임이 없습니다.</div></c:when> --%>
-<%-- 			</c:choose> --%>
-			<div class="meeting-card">
-				<div class="nickname">신청자 닉네임</div>
-				<div class="title">모임 제목</div>
-				<div class="info">신청자 한 줄 소개</div>
-				<div class="btnDiv">
-					<button class="acceptBtn" type="button"><i class="fa-solid fa-circle-check fa-lg" style="color: #f5f5f5"></i> 승인</button>
-					<button class="rejectBtn" type="button"><i class="fa-solid fa-circle-xmark fa-lg" ></i> 거절</button>
-				</div>
-			</div>
-		</div>
+<!--  		<div class="emptyMeeting">관리 중인 모임이 없습니다.</div> -->
+		<div class="meetingListDiv"></div>
 		<div class="completeComments">처리 완료</div>
-		<div class="completeMeeting">
-			<div class="completeMeeting-card">
-				<div class="com_nickname">신청자 닉네임</div>
-				<div class="com_title">모임 제목</div>
-				<div class="com_info">신청자 한 줄 소개</div>
-				<div class="comBtnDiv">
-					<div class="acceptedBtnDiv">
-						<button class="acceptedBtn" type="button">
-							<i class="fa-solid fa-circle-check fa-lg" style="color: #f5f5f5"></i> 승인됨
-						</button>
-					</div>
-					<div class="rejectedBtnDiv">
-						<button class="rejectedBtn" type="button">
-							<i class="fa-solid fa-circle-xmark fa-lg" ></i> 거절됨
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div class="completeMeeting"></div>
 	</div>
 	<div class="bottomBar">
 		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
@@ -277,9 +247,101 @@
 	</div>
 	
 	<script>
-		$(".myMeetingBtn").on("click", function(){
+		$(document).on("click", ".myMeetingBtn", function(){
 		    location.href = "/meeting/myMeeting";
 		});
+		
+		// 승인 대기중인 리스트 출력
+		$(function(){
+			$.ajax({
+				url:"/meetingMember/applyList",
+				dataType:"json"
+			}).done(function(resp){
+				for(let i of resp){
+					let meeting-card = $("<div>").addClass("meeting-card");
+					
+					let btnDiv = $("<div>").addClass("btnDiv");
+					let acceptBtn = $("<button>").attr("type","button").addClass("acceptBtn").html("승인");
+					let check = $("<i>").addClass("fa-solid fa-circle-check fa-lg").css({"color":"#f5f5f5"});
+					acceptBtn.prepend(check);
+					let rejectBtn = $("<button>").attr("type","button").addClass("rejectBtn").html("거절");
+					let xmark = $("<i>").addClass("fa-solid fa-circle-xmark fa-lg").css({"color":"#f5f5f5"});
+					rejectBtn.prepend(xmark);
+					btnDiv.append(acceptBtn, rejectBtn);
+					
+					meeting-card.append(
+						$("<div>").addClass("nickname").html("신청자 닉네임"),
+						$("<div>").addClass("title").html("모임 제목"),
+						$("<div>").addClass("info").html("신청자 한 줄 소개"),
+						btnDiv
+					);
+					
+					$(".meetingListDiv").append(meeting-card);
+				}
+				
+			});
+		});
+		
+		// 승인 버튼 클릭 시
+		$(document).on("click", ".acceptBtn", function(){
+
+		    let seq = $(this).closest(".meeting-card").data("seq");
+
+		    $.ajax({
+		        url:"/meetingMember/accept",
+		        data:{ meetmem_seq: seq }
+		    }).done(function(){
+		        location.reload();
+		    });
+		});
+		
+		// 거절 버튼 클릭 시
+		$(document).on("click", ".rejectBtn", function(){
+		
+		    let seq = $(this).closest(".meeting-card").data("seq");
+		
+		    $.ajax({
+		        url:"/meetingMember/reject",
+		        data:{ meetmem_seq: seq }
+		    }).done(function(){
+		        location.reload();
+		    });
+		});
+		
+		// 처리된 리스트 출력
+		$(function(){
+			
+			$.ajax({
+				url:"/meetingMember/accept",
+				type:"post",
+				dataType:"json"
+			}).done(function(resp){
+				for(let i of resp){
+					let completeMeeting-card = $("<div>").addClass("completeMeeting-card")
+					let comBtnDiv = $("<div>").addClass("comBtnDiv")
+					let acceptedBtn = $("<button>").attr("type","button").addClass("acceptedBtn").html("승인됨");
+					let check = $("<i>").addClass("fa-solid fa-circle-check fa-lg").css({"color":"#f5f5f5"});
+					acceptedBtn.prepend(check);
+					let rejectedBtn = $("<button>").attr("type","button").addClass("rejectedBtn").html("거절됨");
+					let xmark = $("<i>").addClass("fa-solid fa-circle-xmark fa-lg").css({"color":"#f5f5f5"});
+					rejectedBtn.prepend(xmark);
+					
+					// 조건식 필요(승인인지, 거절인지)
+					comBtnDiv.append(acceptedBtn);
+					
+					completeMeeting-card.append(
+						$("<div>").addClass("com_nickname").html("신청자 닉네임"),
+						$("<div>").addClass("com_title").html("모임 제목"),
+						$("<div>").addClass("com_info").html("신청자 한 줄 소개"),
+						comBtnDiv
+					);
+					
+					$(".completeMeeting").append(completeMeeting-card);
+				}
+				
+			})
+			
+		})
 	</script>
 </body>
 </html>
