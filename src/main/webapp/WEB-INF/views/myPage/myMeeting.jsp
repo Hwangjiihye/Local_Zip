@@ -96,26 +96,30 @@
         
         .meetingDetail:hover,
         .deleteBtn:hover,
-        .outBtn:hover{
+        .outBtn:hover,
+        .myMeetingBtn:hover,
+        .manageBtn:hover{
             transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
 
         .meetingDetail:active,
         .deleteBtn:active,
-        .outBtn:active{
+        .outBtn:active,
+        .myMeetingBtn:active,
+        .manageBtn:active{
             transform: translateY(2px); /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
         .meeting-card {
-		    width: 330px;
+		    width: 300px;
 		    border: 2px solid #A66A3F;
 		    border-radius: 10px;
 		    background-color: #fbe5c0;
 		    padding: 35px;
 		    margin-left: 30px;
-		    margin-top: 200px;
+		    margin-top: 230px;
 		}
 		
 		.card-header {
@@ -148,18 +152,19 @@
 		.info {
 		    font-size: 13px;
 		    color: #555;
-		    margin-bottom: 10px;
+		    margin-bottom: 20px;
 		    color: #5e361a;
 		}
 		
 		.card-footer {
 		    display:flex;
-		    gap: 5px;
+		    gap: 8px;
 		    color: #5e361a;
+		    font-weight: bold;
 		}
 		
 		.meetingDetail {
-		    width: 45%;
+		    width: 47%;
 		    height: 30px;
 		    background-color: #FFB300;
 		    border:none;
@@ -168,7 +173,7 @@
 		}
 		
 		.deleteBtn{
-			width: 45%;
+			width: 47%;
 		    height: 30px;
 		    background-color: #FFB300;
 		    border:none;
@@ -192,11 +197,29 @@
 		
 		.manageMeeting{
 			display: flex;
-			gap: 5px;
+			gap: 20px;
+			align-items: center;
 		}
 		
 		.myMeetingBtn, .manageBtn{
-			
+			width: 48%;
+		    height: 70px;
+		    border: none;
+		    color: #5e361a;
+		    font-weight: bold;
+		    font-size: x-large;
+		    border-radius: 10px;
+		    margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		.myMeetingBtn{
+			margin-left: 30px;
+			background-color: #A66A3F;
+			color: white;
+		}
+		.manageBtn{
+		 	background-color: #E5D3B3;
+		 	color: #5e361a;
 		}
 </style>
 </head>
