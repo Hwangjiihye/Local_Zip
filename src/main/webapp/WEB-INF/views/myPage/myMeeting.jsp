@@ -50,13 +50,6 @@
 			background-color: #fbe5c0;
 		}
 		
-		.container {
-			width: 100%;
-			display: grid;
-			grid-template-columns:repeat(4, 1fr);
-			gap:20px;
-		}
-		
 		.top-section {
 			position: fixed;
 			top: 0;
@@ -65,7 +58,25 @@
 			z-index: 1000;
 			border-bottom: 2px solid #A66A3F;
 		}
+		.container {
+		   width: 100%;
+		   display: grid;
+		   grid-template-columns:repeat(4, 1fr);
+		   gap:20px;
+		   padding: 200px 0 0 0;
+		   box-sizing: border-box;
+		   margin-bottom: 200px;
+		}
 		
+		.meeting-card {
+		    width: 300px;
+		    border: 2px solid #A66A3F;
+		    border-radius: 10px;
+		    background-color: #fbe5c0;
+		    padding: 35px;
+		    margin: 20px 0 20px 50px;
+/* 		     위 오른쪽 아래 왼쪽 */
+		}
 		.mainTitle {
 			width: 100%;
 			font-weight: bold;
@@ -111,16 +122,6 @@
             transform: translateY(2px); /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        
-        .meeting-card {
-		    width: 300px;
-		    border: 2px solid #A66A3F;
-		    border-radius: 10px;
-		    background-color: #fbe5c0;
-		    padding: 35px;
-		    margin-left: 30px;
-		    margin-top: 230px;
-		}
 		
 		.card-header {
 		    display: flex;
@@ -202,6 +203,7 @@
 			display: flex;
 			gap: 20px;
 			align-items: center;
+			background-color: #fbe5c0;
 		}
 		
 		.myMeetingBtn, .manageBtn{

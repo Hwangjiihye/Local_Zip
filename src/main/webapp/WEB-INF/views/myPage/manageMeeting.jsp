@@ -109,6 +109,7 @@
 			display: flex;
 			gap: 20px;
 			align-items: center;
+			background-color: #fbe5c0;
 		}
 		
 		.myMeetingBtn, .manageBtn{
@@ -152,7 +153,7 @@
 		    border:none;
 		    border-radius: 10px;
 		    font-size: large;
-		    color: white;
+		    color: #f5f5f5;
 		}
 		.acceptBtn{
 			margin-left: 155px;
@@ -168,7 +169,7 @@
 		    border:none;
 		    border-radius: 10px;
 		    font-size: large;
-		    color: white;
+		    color: #f5f5f5;
 		    width: 80%;
 		}
 		.acceptedBtn{
@@ -241,7 +242,7 @@
 				<div class="title">모임 제목</div>
 				<div class="info">신청자 한 줄 소개</div>
 				<div class="btnDiv">
-					<button class="acceptBtn" type="button"><i class="fa-solid fa-circle-check fa-lg" style="color: white"></i> 승인</button>
+					<button class="acceptBtn" type="button"><i class="fa-solid fa-circle-check fa-lg" style="color: #f5f5f5"></i> 승인</button>
 					<button class="rejectBtn" type="button"><i class="fa-solid fa-circle-xmark fa-lg" ></i> 거절</button>
 				</div>
 			</div>
@@ -255,7 +256,7 @@
 				<div class="comBtnDiv">
 					<div class="acceptedBtnDiv">
 						<button class="acceptedBtn" type="button">
-							<i class="fa-solid fa-circle-check fa-lg" style="color: white"></i> 승인됨
+							<i class="fa-solid fa-circle-check fa-lg" style="color: #f5f5f5"></i> 승인됨
 						</button>
 					</div>
 					<div class="rejectedBtnDiv">
