@@ -159,6 +159,8 @@ body {
     background-color: #fbe5c0;
     padding: 35px;
     margin: 0 0 40px 40px;
+    display:flex;
+    flex-direction:column;
 }
 
 .card-header {
@@ -179,6 +181,12 @@ body {
 }
 
 
+.title{
+    max-width:280px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+} 
 
 .category {
     display: inline-block;
@@ -191,11 +199,26 @@ body {
     background-color: #FFB300;
     height: 20px;
     color: #286708;
+    max-width:120px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .desc {
     margin-bottom: 10px;
     color: #5e361a;
+	overflow:hidden;
+	white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.category-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
 }
 
 .info {
@@ -208,28 +231,19 @@ body {
 .card-footer {
     text-align: center;
     color: #5e361a;
+    margin-top:auto;
 }
 
-.join-btn {
+.join-btn, .joinTwo-btn{
     width: 100%;
     height: 40px;
     background-color: #FFB300;
     border:none;
     border-radius: 10px;
     color: #5e361a;
+    margin-top: auto;
 }
 
-
-.closing-btn {
-	width: 100%;
-    height: 40px;
-    border:none;
-    border-radius: 10px;
-    background-color: #E5D3B3;
-    color: #666;
-    cursor: not-allowed;
-    box-shadow: none;
-}
 
 .report{
 	display:none;
@@ -239,7 +253,6 @@ body {
     width: 150px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     z-index: 10;
-    
     font-family: 'GMarketSans';
     border: 1px solid #A66A3F;
     border-radius: 5px;
@@ -287,28 +300,18 @@ body {
 .nowBtn{
     background-color: #fecc56;
     color: #A66A3F;
-
     transform: translateY(-3px);
-    /* 살짝 위로 뜸 */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-
     height: 30px;
-
     border-radius: 10px;
     border: 1px solid #FFB300;
-
     align-items: center;
-    /* 수직 중앙 정렬 */
-
     vertical-align: middle;
-    /* 버튼들끼리 줄이 안 맞을 때를 대비 */
-
     cursor: pointer;
     transition: 0.3s;
 }
 
 .categoryBtnAll:active{
-
     transform: translateY(2px);
 }
         
@@ -357,7 +360,6 @@ body {
 }
 
 
-
 .manage-btn{
 	height: 26px;
 	display: inline-block;
@@ -370,6 +372,52 @@ body {
     margin-bottom: 10px;
     background-color: #7BB8C9;
     color: #5e361a;
+    flex-shrink:0; 
+}
+
+
+.closing-btn {
+	width: 100%;
+    height: 40px;
+    border:none;
+    border-radius: 10px;
+    background-color: #FF9D6E;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.recruitment-Btn{
+	width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f3d9a6;
+    color: #5e361a;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.applied-Btn{
+	width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: #bebebe;
+    color: #5e361a;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.joined-Btn{
+	width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f3d9a6;
+    color: #5e361a;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 </style>
@@ -427,11 +475,12 @@ body {
 							</div>
 						</c:if>
 					</div>
-				
+				<div class="category-row">
 					<div class="category">${i.meet_category}</div>
 							<c:if test="${i.mem_id == loginId}">
 	        					<button type="button" class="manage-btn" data-seq="${i.meet_seq}"><i class="fa-solid fa-crown" style="color: rgb(255, 212, 59);"></i> 관리자</button>
 	    					</c:if>
+    					</div>
 					<div class="desc">${i.meet_introcontents}</div>
 					
 					
@@ -454,14 +503,29 @@ body {
 							<div class="gauge-bar" style="width: ${percent}%;"></div>
 						</div>
 						<div class="gauge-text">${i.meet_currentpeople} / ${i.meet_maxpeople}명 참여중</div>
+					
+					
 						<c:choose>
 					        <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
 					            <button class="closing-btn" disabled>모집마감</button>
+					        </c:when>
+					        <c:when test="${i.mem_id == loginId}">
+					            <button class="recruitment-Btn" disabled>모집중</button>
+					        </c:when>
+					         <c:when test="${joinedSet.contains(i.meet_seq)}">
+					            <button class="joined-Btn" disabled>참여중</button>
+					        </c:when>
+					        <c:when test="${companionSet.contains(i.meet_seq)}">
+					        	<button class="joinTwo-btn">참여신청</button>
+					        </c:when>
+					        <c:when test="${appliedSet.contains(i.meet_seq)}">
+					            <button class="applied-Btn" disabled>승인대기중</button>
 					        </c:when>
 					        <c:otherwise>
 								<button class="join-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">참여신청</button>
 							 </c:otherwise>
     					</c:choose>
+   					
 					</div>
 				</div>
 			</c:forEach>

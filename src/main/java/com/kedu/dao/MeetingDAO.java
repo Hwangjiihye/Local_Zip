@@ -1,6 +1,7 @@
 package com.kedu.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -68,6 +69,21 @@ public class MeetingDAO {
 	public int countMeetingByWriter(String loginId) {
 		String sql = "select count(*) from meeting where mem_id = ?";
 		return jdbc.queryForObject(sql, Integer.class, loginId);
+	}
+	
+	public List<Map<String, Object>> isApplied(String loginId) {
+		String sql = "select meet_seq from meeting_member where mem_id = ?";
+		return jdbc.queryForList(sql, loginId);
+	}
+	
+	public List<Map<String, Object>> joinMeet(String loginId){ // 1, 승인 상태
+		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 1";
+		return jdbc.queryForList(sql, loginId);
+	}
+	
+	public List<Map<String, Object>> companionMeet(String loginId){ // 2, 거절 상태
+		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 2";
+		return jdbc.queryForList(sql, loginId);
 	}
 	
 	

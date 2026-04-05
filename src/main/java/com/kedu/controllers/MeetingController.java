@@ -1,8 +1,10 @@
 package com.kedu.controllers;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,8 +27,11 @@ public class MeetingController {
 	// 모임 신청 폼 출력
 	@RequestMapping("/list")
 	public String list(Model model, HttpSession session, String category, Integer cpage) throws Exception {
-			
-		List<MeetingDTO> list;
+		String loginId = (String)session.getAttribute("loginId"); 
+		
+		if(loginId == null) { // 로그인을 안한 상태면 로그인 화면으로 보내기
+			return "redirect:/members/loginUi";
+		}
 		
 		if(cpage == null) {
 	        cpage = 1;
@@ -34,25 +39,46 @@ public class MeetingController {
 
 	    int start = (cpage - 1) * 8 + 1;
 	    int end = cpage * 8;
-		
+	    
+	    List<MeetingDTO> list;
 		if(category.equals("all")) {
 			list = dao.selectAllByPage(start, end);
 		}else {
 			list = dao.selectByPage(category, start, end);
 		}
 		
+		List<Map<String, Object>> vlist = dao.isApplied(loginId);
+		Set<Integer> appliedSet = new HashSet<>();
 
+		for(Map<String,Object> m : vlist){
+			appliedSet.add(((Number)m.get("meet_seq")).intValue());
+		}
+		
+		List<Map<String, Object>> jlist = dao.joinMeet(loginId);
+		Set<Integer> joinedSet = new HashSet<>();
+
+		for(Map<String,Object> m : jlist){
+			joinedSet.add(((Number)m.get("meet_seq")).intValue());
+		}
+		
+		List<Map<String, Object>> clist = dao.companionMeet(loginId);
+		Set<Integer> companionSet = new HashSet<>();
+
+		for(Map<String,Object> m : clist){
+			companionSet.add(((Number)m.get("meet_seq")).intValue());
+		}
 		Map<String, Object> navi = this.getPageNaviAll(category, cpage);
+		
 	    model.addAttribute("navi", navi);
 		model.addAttribute("list", list);
 		model.addAttribute("category", category);
+		model.addAttribute("appliedSet", appliedSet);
+		model.addAttribute("joinedSet", joinedSet);
+		model.addAttribute("companionSet", companionSet);
 		
-		String loginId = (String)session.getAttribute("loginId"); 
-		
-		if(loginId == null) { // 로그인을 안한 상태면 로그인 화면으로 보내기
-			return "redirect:/members/loginUi";
-		}
-			
+		System.out.println(appliedSet);
+		System.out.println(joinedSet);
+		System.out.println(companionSet);
 		return "meeting/meeting";
 	}
 	
