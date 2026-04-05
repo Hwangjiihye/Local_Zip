@@ -35,7 +35,7 @@ public class MeetingController {
 	    int start = (cpage - 1) * 8 + 1;
 	    int end = cpage * 8;
 		
-		if(category.equals("전체")) {
+		if(category.equals("all")) {
 			list = dao.selectAll();
 		}else {
 			list = dao.selectByPage(category, start, end);
@@ -76,11 +76,17 @@ public class MeetingController {
 		
 		String loginId = (String)session.getAttribute("loginId");
 		
-		dto.setMem_id(loginId);
+		// 한 id당 모임 3개 이상 생성 금지
+		int count = dao.countMeetingByWriter(loginId);
 		
+		if(count >= 3) {
+			session.setAttribute("msg", "over");
+			return "redirect:/meeting/list?category=all";
+		}
+		dto.setMem_id(loginId);
 		dao.insert(dto);
 		
-		return "redirect:/meeting/list";
+		return "redirect:/meeting/list?category=all";
 	}
 	
 	// 마이페이지에서 모임을 눌렀을 때

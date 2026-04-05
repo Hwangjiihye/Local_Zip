@@ -59,6 +59,11 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class, category);
 	}
 	
+	public int countMeetingByWriter(String loginId) {
+		String sql = "select count(*) from meeting where mem_id = ?";
+		return jdbc.queryForObject(sql, Integer.class, loginId);
+	}
+	
 	
 	
 	

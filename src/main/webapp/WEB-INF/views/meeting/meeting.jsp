@@ -377,9 +377,16 @@ body {
 			<a href="/meeting/meetCreate"><button class="topBtn" type="button">+ 모임 만들기</button></a>
 			</div>
 			
-		
+				
+				<c:if test="${msg == 'over'}">
+					<script>
+					alert("모임은 최대 3개까지만 생성할 수 있습니다.");
+					</script>
+					</c:if>
+				<c:remove var="msg" scope="session"/>
+				
 			<div class="categoryDiv">
-				<a href="/meeting/list?category=전체"><button class="categoryBtnAll nowBtn">
+				<a href="/meeting/list?category=all"><button class="categoryBtnAll nowBtn">
 					<i class="fa-solid fa-house fa-lg"></i> 전체
 				</button></a>
 				<a href="/meeting/list?category=운동"><button class="categoryBtnAll">
@@ -473,7 +480,7 @@ body {
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/meeting/list?category=전체"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 			
 		
