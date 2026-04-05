@@ -59,6 +59,8 @@ public class AdminController {
 		session.setAttribute("qaCount", qaCount);
 		session.setAttribute("qaDoneCount", qaDoneCount);
 		session.setAttribute("qaAllCount", qaAllCount);
+		
+		model.addAttribute("menu", "qa");
 		return "admin/adminQ&A";
 	}
 

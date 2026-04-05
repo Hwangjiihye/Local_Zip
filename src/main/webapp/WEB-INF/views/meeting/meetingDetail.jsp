@@ -243,7 +243,7 @@ body {
 	</div>
 		<div class="bottomBtn">
 				<button class="requestBtn" type="submit">신청하기</button>
-			<a href="/meeting/list"><button class="backBtn" type="button">뒤로가기</button></a>
+			<a href="/meeting/list?category=all"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>
 		
 		<script>

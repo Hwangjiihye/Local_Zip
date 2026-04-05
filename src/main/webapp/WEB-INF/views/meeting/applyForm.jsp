@@ -111,7 +111,7 @@
 	</style>
 </head>
 <body>
-<form action="/apply/insert" class="frm" method="post">
+<form action="/meetingMember/insert" class="frm" method="post">
 	<div class="container">
 		<div class="top-section">
 			<div class="title">
