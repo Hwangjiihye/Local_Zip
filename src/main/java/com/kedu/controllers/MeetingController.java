@@ -75,7 +75,7 @@ public class MeetingController {
 	public String meetCreateFrom(MeetingDTO dto, HttpSession session) throws Exception {
 		
 		String loginId = (String)session.getAttribute("loginId");
-		
+		String nickname = (String)session.getAttribute("nickname");
 		// 한 id당 모임 3개 이상 생성 금지
 		int count = dao.countMeetingByWriter(loginId);
 		
@@ -84,6 +84,7 @@ public class MeetingController {
 			return "redirect:/meeting/list?category=all";
 		}
 		dto.setMem_id(loginId);
+		dto.setMem_nickname(nickname);
 		dao.insert(dto);
 		
 		return "redirect:/meeting/list?category=all";

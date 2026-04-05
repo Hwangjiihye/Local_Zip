@@ -119,6 +119,7 @@
 			</div>
 		</div>
 		<input type="hidden" name="meet_seq" value="${meet_seq}">
+		<input type="hidden" name="mem_nickname" value="${nickname}">
 		<div class="centerBoxTitle">한 줄 소개  <i class="fa-solid fa-file-pen" style="color: #A66A3F"></i></div>
 		<div class="centerBox">
 			<div><textarea id="intro" name="meetmem_contents" class="introWrite" minlength="30" maxlength="100" style=" border: 0px solid #fbe5c0" placeholder="모임 주최자에게 보낼 한 줄 소개를 작성해주세요"></textarea></div>
