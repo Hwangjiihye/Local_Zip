@@ -355,7 +355,7 @@ body {
 							<div class="gauge-bar" style="width: 60%;"></div>
 						</div>
 						<div class="gauge-text">6 / 10명 참여중</div>
-						<button class="join-btn">참여신청</button>
+						<button class="join-btn" data-seq="${i.meet_seq}">참여신청</button>
 					</div>
 				</div>
 		</c:forEach>
@@ -416,9 +416,11 @@ body {
 			    // width / 2 : 팝업의 절반
 			    const left = window.screenX + (window.outerWidth / 2) - (width / 2);
 			    const top = window.screenY + 80; // 상단에서 80px
-
+	
+			    let seq = $(this).data("seq");
 			    const popup = window.open(
-			        "/apply/applyForm",
+			    		
+			        "/apply/applyForm?meet_seq=" + seq ,
 			        "",
 			        `width=${width},height=${height}`
 			    );
