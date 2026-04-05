@@ -267,7 +267,8 @@
 			<span>새 모임 만들기</span>
 			</div>
 			
-			
+			<input type="hidden" name="mem_id" value="${loginId}">
+			<input type="hidden" name="mem_nickname" value="${nickname}">
 			</div>
 			
 				<div class="meetingDetail">
