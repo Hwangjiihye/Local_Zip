@@ -1,6 +1,8 @@
 package com.kedu.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -70,6 +72,53 @@ public class MeetingController {
 		return "myPage/myMeeting";
 	}
 	
+	public Map<String, Object> getPageNaviAll(int cpage){
+
+	    int recordCountPerPage = 8;
+	    int naviCountPerPage = 10;
+
+	    int recordTotalCount = dao.getAllCount();
+	    int pageTotalCount = 0;
+
+	    if(recordTotalCount % recordCountPerPage > 0){
+	        pageTotalCount = recordTotalCount / recordCountPerPage + 1;
+	    }else{
+	        pageTotalCount = recordTotalCount / recordCountPerPage;
+	    }
+
+	    if(pageTotalCount == 0) {
+	        pageTotalCount = 1;
+	    }
+
+	    if(cpage < 1) cpage = 1;
+	    if(cpage > pageTotalCount) cpage = pageTotalCount;
+
+	    int startNavi = ((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
+	    int endNavi = startNavi + (naviCountPerPage - 1);
+
+	    if(endNavi > pageTotalCount){
+	        endNavi = pageTotalCount;
+	    }
+
+	    boolean needPrev = true;
+	    boolean needNext = true;
+
+	    if(startNavi == 1){
+	        needPrev = false;
+	    }
+	    if(endNavi == pageTotalCount){
+	        needNext = false;
+	    }
+
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("cpage", cpage);
+	    map.put("startNavi", startNavi);
+	    map.put("endNavi", endNavi);
+	    map.put("needPrev", needPrev);
+	    map.put("needNext", needNext);
+
+	    return map;
+	}
 	
 	
 	
@@ -198,4 +247,8 @@ public class MeetingController {
 	
 	
 	
+	@RequestMapping("/manageMeeting")
+	public String manageMeeting() throws Exception{
+		return "myPage/manageMeeting";
+	}
 }

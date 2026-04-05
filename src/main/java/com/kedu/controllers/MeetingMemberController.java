@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kedu.dao.MeetingMemberDAO;
@@ -17,7 +18,8 @@ public class MeetingMemberController {
 	public MeetingMemberDAO dao;
 	
 	@RequestMapping("/applyForm")
-	public String applyform() {
+	public String applyform(int meet_seq, Model model) {
+		model.addAttribute("meet_seq", meet_seq);
 		return "meeting/applyForm";
 	}
 	
@@ -26,13 +28,9 @@ public class MeetingMemberController {
 	public String insert(MeetingMemberDTO dto, HttpSession session) throws Exception {
 		
 		String loginId = (String)session.getAttribute("loginId");
-		
 		dto.setMem_id(loginId);
 		
 		dao.insert(dto);
-		
-		String meetmem_contents = (String)session.getAttribute("meetmem_contents");
-		dto.setMeetmem_contents(meetmem_contents);
 		
 		return "meeting/applySuccess";
 	}
@@ -176,6 +174,7 @@ public class MeetingMemberController {
 	
 	
 	
+
 	
 	
 	
@@ -197,5 +196,6 @@ public class MeetingMemberController {
 	
 	
 	
-	
+
+
 }
