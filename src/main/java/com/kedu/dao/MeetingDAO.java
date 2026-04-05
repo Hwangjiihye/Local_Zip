@@ -71,8 +71,8 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class, loginId);
 	}
 	
-	public List<Map<String, Object>> isApplied(String loginId) {
-		String sql = "select meet_seq from meeting_member where mem_id = ?";
+	public List<Map<String, Object>> isApplied(String loginId) { // 0, 승인 대기 상태
+		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 0";
 		return jdbc.queryForList(sql, loginId);
 	}
 	

@@ -515,8 +515,8 @@ body {
 					         <c:when test="${joinedSet.contains(i.meet_seq)}">
 					            <button class="joined-Btn" disabled>참여중</button>
 					        </c:when>
-					        <c:when test="${companionSet.contains(i.meet_seq)}">
-					        	<button class="joinTwo-btn">참여신청</button>
+					        <c:when test="${companionSet.contains(i.meet_seq)} ">
+					        	<button class="joinTwo-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">참여신청</button>
 					        </c:when>
 					        <c:when test="${appliedSet.contains(i.meet_seq)}">
 					            <button class="applied-Btn" disabled>승인대기중</button>
@@ -525,7 +525,6 @@ body {
 								<button class="join-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">참여신청</button>
 							 </c:otherwise>
     					</c:choose>
-   					
 					</div>
 				</div>
 			</c:forEach>
@@ -594,7 +593,7 @@ body {
 			    location.href = "/meeting/meetingDetail?seq=" + seq;
 			});
 			
-			$(document).on("click", ".join-btn, .reportBtn, .reportIcon", function (e) {
+			$(document).on("click", ".join-btn, .reportBtn, .reportIcon", ".joinTwo-btn", function (e) {
 				e.stopPropagation();
 			});
 			
@@ -610,6 +609,10 @@ body {
 					alert("신고 사유를 선택해 주세요.");
 					return;
 				}
+				
+				if(!confirm("정말 이 모임을 신고하시겠습니까?")){
+			        return;
+			    }
 				
 				$.ajax({
 					url : "/report/insert",

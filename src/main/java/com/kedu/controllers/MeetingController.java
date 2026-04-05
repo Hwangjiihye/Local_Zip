@@ -75,10 +75,6 @@ public class MeetingController {
 		model.addAttribute("appliedSet", appliedSet);
 		model.addAttribute("joinedSet", joinedSet);
 		model.addAttribute("companionSet", companionSet);
-		
-		System.out.println(appliedSet);
-		System.out.println(joinedSet);
-		System.out.println(companionSet);
 		return "meeting/meeting";
 	}
 	
