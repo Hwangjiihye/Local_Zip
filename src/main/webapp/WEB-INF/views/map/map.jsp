@@ -117,6 +117,33 @@ body {
 	margin-left: 25px;
 }
 
+.nowBtn{
+background-color: #fecc56;
+color: #A66A3F;
+
+transform: translateY(-3px);
+/* 살짝 위로 뜸 */ 
+box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+
+height: 30px;
+
+border-radius: 10px;
+/border: 1px solid #FFB300;
+
+ align-items: center;
+/* 수직 중앙 정렬 */ 
+
+vertical-align: middle;
+/* 버튼들끼리 줄이 안 맞을 때를 대비 */
+
+cursor: pointer;
+transition: 0.3s;
+}
+
+.categoryBtnAll:active{
+    transform: translateY(2px);
+}
+
 .mapDiv {
 	border: 1px solid #A66A3F;
 	margin: 15px auto;
@@ -277,7 +304,7 @@ body {
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 			
 		
@@ -404,21 +431,26 @@ body {
 		        }).fail(function () {
 		            alert("시설 데이터를 불러오지 못했습니다.");
 		        });
-		
-		        $(".categoryBtnAll").eq(0).on("click", function () {
-		            renderFacilities("전체");
-		        });
-		
-		        $(".categoryBtnAll").eq(1).on("click", function () {
-		            renderFacilities("치안시설");
-		        });
-		
-		        $(".categoryBtnAll").eq(2).on("click", function () {
-		            renderFacilities("대피소");
-		        });
-		
-		        $(".categoryBtnAll").eq(3).on("click", function () {
-		            renderFacilities("공중화장실");
+		        
+		        $(".categoryDiv").on("click", ".categoryBtnAll", function() {
+		            // 1. 모든 버튼에서 활성화 클래스 제거
+		            $(".categoryBtnAll").removeClass("nowBtn");
+		            
+		            // 2. 현재 클릭한 버튼에 활성화 클래스 추가
+		            $(this).addClass("nowBtn");
+		            
+		            // 3. 버튼 텍스트나 인덱스에 따라 시설 렌더링
+		            let btnText = $(this).text().trim();
+		            
+		            if (btnText.includes("전체")) {
+		                renderFacilities("전체");
+		            } else if (btnText.includes("치안")) {
+		                renderFacilities("치안시설");
+		            } else if (btnText.includes("대피소")) {
+		                renderFacilities("대피소");
+		            } else if (btnText.includes("공중화장실")) {
+		                renderFacilities("공중화장실");
+		            }
 		        });
 		    });
 		    

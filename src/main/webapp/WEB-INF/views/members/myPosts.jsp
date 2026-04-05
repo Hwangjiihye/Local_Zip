@@ -342,15 +342,15 @@ button, body {
 			</div>
 
 			<c:choose>
-				<c:when test="${empty lifeInfo}">
+				<c:when test="${empty listAll}">
 
 					<div class="emptyBox">등록된 게시글이 없습니다.</div>
 
 				</c:when>
 
 				<c:otherwise>
-
-					<c:forEach var="i" items="${lifeInfo}">
+	
+					<c:forEach var="i" items="${listAll}">
 
 						<div class="postBox">
 
@@ -360,7 +360,15 @@ button, body {
 									<div class="postInfoUp">
 
 										<div class="profileCatagory profileInfo">
-											<button class="topBtn" type="button">카테고리</button>
+											<button class="topBtn" type="button">
+												<c:choose>
+													<c:when test="${i.post_category == 'lifeInfo'}">생활정보</c:when>
+													<c:when test="${i.post_category == 'food'}">맛집/카페</c:when>
+													<c:when test="${i.post_category == 'talk'}">고민/이야기</c:when>
+													<c:when test="${i.post_category == 'beauty'}">미용/패션</c:when>
+													<c:otherwise>${i.post_category}</c:otherwise>
+												</c:choose>
+											</button>
 										</div>
 									</div>
 
