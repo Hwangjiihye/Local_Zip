@@ -120,28 +120,32 @@ transform: translateY(2px); /*아래로 눌림*/
 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }
 
-/* .nowBtn{ */
-/*     background-color: #fecc56; */
-/*     color: #A66A3F; */
+.nowBtn{
+background-color: #fecc56;
+color: #A66A3F;
 
-/*     transform: translateY(-3px); */
-/*     /* 살짝 위로 뜸 */ */
-/*     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); */
+transform: translateY(-3px);
+/* 살짝 위로 뜸 */ 
+box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 
-/*     height: 30px; */
+height: 30px;
 
-/*     border-radius: 10px; */
-/*     border: 1px solid #FFB300; */
+border-radius: 10px;
+/border: 1px solid #FFB300;
 
-/*     align-items: center; */
-/*     /* 수직 중앙 정렬 */ */
+ align-items: center;
+/* 수직 중앙 정렬 */ 
 
-/*     vertical-align: middle; */
-/*     /* 버튼들끼리 줄이 안 맞을 때를 대비 */ */
+vertical-align: middle;
+/* 버튼들끼리 줄이 안 맞을 때를 대비 */
 
-/*     cursor: pointer; */
-/*     transition: 0.3s; */
-/* } */
+cursor: pointer;
+transition: 0.3s;
+}
+
+.categoryBtnAll:active{
+    transform: translateY(2px);
+}
 
 .bottomBar {
 	border: 1px solid #A66A3F;
@@ -415,13 +419,13 @@ box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 		<div class="top-section">
 			<div class="mainTitle">관리자.zip</div>
 			<div class="categoryDiv">
-				<a href="/admin/adminPage"><button class="categoryBtnAll">
+				<a href="/admin/adminPage"><button class="categoryBtnAll ${dash == 'dashBoard' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
-				<button class="categoryBtnAll">
+				<button class="categoryBtnAll"> 
 					<i class="fa-solid fa-user fa-lg"></i> 회원관리
 				</button>
-				<a href="/admin/adminQA"><button class="categoryBtnAll">
+				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>
 				<button class="categoryBtnAll">
