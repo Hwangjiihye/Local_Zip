@@ -254,7 +254,7 @@
 							</div>
 							<div class="tagDiv">
 								<div class="category">${i.meet_category }</div>
-								<c:if test="${i.mem_id == sessionScope.loginId}">
+								<c:if test="${i.mem_id == loginId}">
 									<div class="isLeader">관리자</div>
 								</c:if>
 							</div>
@@ -263,13 +263,13 @@
 							
 							<div class="info">
 								<div class="location">📍 ${i.mem_address1 }</div>	
-								<div class="count">👥 ${i.meet_maxpeople }</div>
+								<div class="count">👥 정원 ${i.meet_maxpeople }명</div>
 							</div>
 							
 							<div class="card-footer">
 								<button class="meetingDetail" type="button">자세히 보기</button>
 								<c:choose>
-									<c:when test="${i.mem_id == sessionScope.loginId}">
+									<c:when test="${i.mem_id == loginId}">
 										<button class="deleteBtn" type="button">모임 삭제</button>
 									</c:when>
 									<c:otherwise>

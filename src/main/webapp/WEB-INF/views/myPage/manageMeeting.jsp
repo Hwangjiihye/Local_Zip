@@ -132,9 +132,9 @@
 		 	background-color: #FFB300;
 		}
 		.emptyMeeting{
-			text-align: center;
 			font-weight: bold;
 			font-size: large;
+			border: 1px solid red;
 		}
 		.meetingListDiv{
 			margin-top: 230px;
@@ -233,7 +233,7 @@
 				<input class="manageBtn" type="button" value="신청 관리">
 			</div>
 		</div>
-<!--  		<div class="emptyMeeting">관리 중인 모임이 없습니다.</div> -->
+
 		<div class="meetingListDiv"></div>
 		<div class="completeComments">처리 완료</div>
 		<div class="completeMeeting"></div>
@@ -259,7 +259,10 @@
 		    }).done(function(resp){
 		
 		        for(let i of resp){
-		
+					if(resp == ""){
+						let emptyMeeting = $("<div>").addClass=("emptyMeeting").text("참여 중인 모임이 없습니다.");
+						$(".meetingListDiv").append(emptyMeeting);
+					}
 		            let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq);
 		
 		            let btnDiv = $("<div>").addClass("btnDiv");
@@ -275,7 +278,7 @@
 		            btnDiv.append(acceptBtn, rejectBtn);
 		
 		            meetingCard.append(
-		                $("<div>").addClass("nickname").text(i.mem_id),
+		                $("<div>").addClass("nickname").text(i.mem_nickname),
 		                $("<div>").addClass("title").text(i.meet_title),
 		                $("<div>").addClass("info").text(i.meetmem_contents),
 		                btnDiv

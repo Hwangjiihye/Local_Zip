@@ -205,6 +205,7 @@ public class MeetingMemberDAO {
 	        " m.meet_title, " +
 	        " mm.meetmem_seq, " +
 	        " mm.mem_id, " +
+	        " mm.mem_nickname, " +
 	        " mm.meetmem_contents, " +
 	        " mm.meetmem_status " +
 	        "from meeting m " +
