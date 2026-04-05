@@ -400,7 +400,6 @@ body, html {
 	font-size: 15px;
 	background-color: #f0d8af;
 	border-radius: 5px;
-	
 	padding: 0 10px;
 	white-space: nowrap;
 	overflow: hidden;
@@ -572,13 +571,14 @@ body, html {
 						<c:otherwise>
 
 							<div class="orderBy">
-								<!-- 		            버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
+								<!-- 버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
 								<button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
 							</div>
 
 							<!-- 게시글영역 -->
 							<c:forEach var="i" items="${list}">
-								<div class="postBox">
+								<div class="postBox" data-seq="${i.post_seq}" onclick="location.href='/postDetail?post_seq=${i.post_seq}'">
+								<!-- data-seq는 ajax로 댓글 수 표시할 때 해당 게시글 번호를 기억하기 위해 달아놓음.	 -->
 									<div class="postUpBox">
 
 										<div class="postProfile">
@@ -589,9 +589,20 @@ body, html {
 											<div class="postInfoUp">
 												<div class="profileName profileInfo">${i.mem_nickname}</div>
 												<div class="profileLocal profileInfo">${i.mem_dong}</div>
+
 												<div class="profileCatagory profileInfo">
-													<button class="topBtn">${i.post_category}</button>
+													<!-- 카테고리에서 영어로 불러와지는걸 한글로 변환 -->
+													<button class="topBtn">
+														<c:choose>
+															<c:when test="${i.post_category == 'lifeInfo'}">생활정보</c:when>
+															<c:when test="${i.post_category == 'food'}">맛집/카페</c:when>
+															<c:when test="${i.post_category == 'talk'}">고민/이야기</c:when>
+															<c:when test="${i.post_category == 'beauty'}">미용/패션</c:when>
+															<c:otherwise>${i.post_category}</c:otherwise>
+														</c:choose>
+													</button>
 												</div>
+
 											</div>
 
 											<div class="postInfoDown">
@@ -659,7 +670,7 @@ body, html {
 
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
-				class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list"><i
+				class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
 				class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
 				class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 
@@ -728,18 +739,42 @@ body, html {
 				location.href = "/?sort=latest";
 			}
 		});
-
-		// 좋아요 버튼
-		$(".postLikeBox").on("click", function() {
-			$(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
-		});
-
+		
 		// 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
 		$(".reportIcon").on("click", function() {
 			$(".reportSelect").css({
 				"display" : "inline"
 			});
 		})
+
+		// 좋아요 버튼
+		$(".postLikeBox").on("click", function() {
+			$(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
+		});
+
+		
+		// 댓글 수 바로 반영되도록 하는 ajax
+		$(function(){
+			
+			// each : ajax의 반복문(for-Each)임
+			// postBox에 게시물이 여러개 있으니까 똑같이 for문 돌리면서 댓글 수가 변경된 게시글의 수를 ajax로 반영할 거임.
+			$(".postBox").each(function(){
+				let postBox = $(this);
+				let post_seq = postBox.data("seq"); // 위쪽에서 postBox에 작성한 data-seq 값 담기
+				
+				$.ajax({
+					url: "/board/getCommentCount",
+					data: { post_seq : post_seq}, // key값 실제 value값
+					type: "get"
+				}).done(function(count){ // 서버에서 넘겨받은 숫자 : count
+					postBox.find(".commentCount").html(count); // 현재 postBox를 기준으로 댓글 수 값을 담고 있는 div에 count 값 넣기.
+				})
+				console.log(post_seq + "번 댓글 수 갱신")
+				
+			});
+			
+		});
+		
 
 		// let recordTotalCount = ${recordTotalCount}
 		// let recordCountPerPage = ${recordCountPerPage}

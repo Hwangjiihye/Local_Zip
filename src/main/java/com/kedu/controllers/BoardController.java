@@ -110,7 +110,9 @@ public class BoardController {
 		      vdao.postClickVisit(loginId, category);
 		   }
 		   
-		return "board/postDetail";
+		   session.setAttribute("post_seq", post_seq);
+		   
+		return "board/postDetail?seq="+post_seq;
 	}
 	
 	// 게시글 삭제

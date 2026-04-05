@@ -555,7 +555,7 @@
 	            </div>
 	
 			<c:forEach var="i" items="${lifeInfo}">
-	            <div class="postBox">
+	            <div class="postBox" onclick="location.href='/postDetail?post_seq=${i.post_seq }'">
 				
 	                <div class="postUpBox">
 	
