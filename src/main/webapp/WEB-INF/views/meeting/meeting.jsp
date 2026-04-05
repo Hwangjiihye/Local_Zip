@@ -321,6 +321,51 @@ body {
 	width: 90px;
 }
 
+.pageBox{
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #A66A3F;
+    margin-bottom: 55px;
+}
+
+.pageBox a{
+    display: inline-block;
+    min-width:35px;
+    padding:6px 10px;
+    margin: 0 8px;
+    text-decoration: none;
+    color: #A66A3F;
+    border-radius:6px;
+    transition:0.2s;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.pageBox a.active{
+	background-color:#FFB300;
+    font-weight: bold;
+    color: #5e361a;
+}
+
+.pageBox a:hover{
+    background-color:#F2D3A2;
+}
+
+.manage-btn{
+	height: 26px;
+	display: inline-block;
+    line-height : 23px;
+    font-size: 12px;
+    padding: 3px 8px;
+    border:none;
+    border-radius: 5px;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    background-color: #7BB8C9;
+    color: #5e361a;
+}
+
 </style>
 </head>
 <body>
@@ -332,26 +377,27 @@ body {
 			<a href="/meeting/meetCreate"><button class="topBtn" type="button">+ 모임 만들기</button></a>
 			</div>
 			
+		
 			<div class="categoryDiv">
-				<button class="categoryBtnAll nowBtn">
+				<a href="/meeting/list?category=전체"><button class="categoryBtnAll nowBtn">
 					<i class="fa-solid fa-house fa-lg"></i> 전체
-				</button>
-				<button class="categoryBtnAll">
+				</button></a>
+				<a href="/meeting/list?category=운동"><button class="categoryBtnAll">
 					<i class="fa-solid fa-dumbbell fa-lg"></i> 운동
-				</button>
-				<button class="categoryBtnAll">
+				</button></a>
+				<a href="/meeting/list?category=문화"><button class="categoryBtnAll">
 					<i class="fa-solid fa-film fa-lg"></i> 문화
-				</button>
-				<button class="categoryBtnAll">
+				</button></a>
+				<a href="/meeting/list?category=취미"><button class="categoryBtnAll">
 					<i class="fa-solid fa-palette fa-lg"></i> 취미
-				</button>
-				<button class="categoryBtnAll">
+				</button></a>
+				<a href="/meeting/list?category=스터디"><button class="categoryBtnAll">
 					<i class="fa-solid fa-book fa-lg"></i> 스터디
-				</button>
+				</button></a>
 			</div>
 		</div>
 			
-			<c:forEach var="i" items="${list}">
+			<c:forEach var="i" items="${list}">	
 				<div class="meeting-card" data-seq="${i.meet_seq}" data-writer="${i.mem_id}">
 					<div class="card-header">
 						<div class="title">${i.meet_title}</div>
@@ -370,6 +416,9 @@ body {
 					</div>
 				
 					<div class="category">${i.meet_category}</div>
+							<c:if test="${i.mem_id == loginId}">
+	        					<button type="button" class="manage-btn" data-seq="${i.meet_seq}"><i class="fa-solid fa-crown" style="color: rgb(255, 212, 59);"></i> 관리자</button>
+	    					</c:if>
 					<div class="desc">${i.meet_introcontents}</div>
 					
 					
@@ -402,13 +451,29 @@ body {
     					</c:choose>
 					</div>
 				</div>
-		</c:forEach>
-		
+			</c:forEach>
 	</div>
+
+		<div class="pageBox">
+
+			<c:if test="${navi.needPrev}">
+				<a href="/meeting/list?category=${category}&cpage=${navi.startNavi - 1}" class="naviArrow"><i class="fa-solid fa-chevron-left"></i></a>
+			</c:if>
+		
+			<c:forEach var="i" begin="${navi.startNavi}" end="${navi.endNavi}">
+				<a href="/meeting/list?category=${category}&cpage=${i}" class="${i == navi.cpage ? 'activeNavi' : 'naviNum'}">${i}</a>
+			</c:forEach>
+		
+			<c:if test="${navi.needNext}">
+				<a href="/meeting/list?category=${category}&cpage=${navi.endNavi + 1}" class="naviArrow"><i class="fa-solid fa-chevron-right"></i></a>
+			</c:if>
+	
+		</div>
+		
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/meeting/list?category=전체"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 			
 		
@@ -505,7 +570,7 @@ body {
 			    let seq = $(this).data("seq");
 			    const popup = window.open(
 			    		
-			        "/apply/applyForm?meet_seq=" + seq ,
+			        "/meetingMember/applyForm?meet_seq=" + seq ,
 			        "",
 			        `width=${width},height=${height}`
 			    );

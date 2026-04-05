@@ -47,17 +47,17 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
+	public List<MeetingDTO> selectByPage(String category, int start, int end){
+		String sql = "select * from (select row_number() "
+				+ "over(order by meet_seq desc) rn, "
+				+ "meeting.* from meeting where meet_category =? ) where rn between ? and ? ";
+		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), category, start, end);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public int getCategoryCount(String category) {
+		String sql = "select count(*) from meeting where meet_category = ?";
+		return jdbc.queryForObject(sql, Integer.class, category);
+	}
 	
 	
 	
