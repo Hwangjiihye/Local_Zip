@@ -218,6 +218,18 @@ body {
     color: #5e361a;
 }
 
+
+.closing-btn {
+	width: 100%;
+    height: 40px;
+    border:none;
+    border-radius: 10px;
+    background-color: #E5D3B3;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
 .report{
 	display:none;
 	position: absolute;
@@ -347,15 +359,31 @@ body {
 					
 					<div class="info">	
 						<div class="location">📍 ${i.mem_address1}</div>	
-						<div class="count">👥 ${i.meet_maxpeople}</div>
+						<div class="count">👥 ${i.meet_currentpeople}</div>
 					</div>
 					
+					<c:choose>
+					    <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
+					        <c:set var="percent" value="100" />
+					    </c:when>
+					    <c:otherwise>
+					        <c:set var="percent" value="${(i.meet_currentpeople * 100) / i.meet_maxpeople}" />
+					    </c:otherwise>
+					</c:choose>
+
 					<div class="card-footer">
 						<div class="gauge-wrap">
-							<div class="gauge-bar" style="width: 60%;"></div>
+							<div class="gauge-bar" style="width: ${percent}%;"></div>
 						</div>
-						<div class="gauge-text">6 / 10명 참여중</div>
-						<button class="join-btn" data-seq="${i.meet_seq}">참여신청</button>
+						<div class="gauge-text">${i.meet_currentpeople} / ${i.meet_maxpeople}명 참여중</div>
+						<c:choose>
+					        <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
+					            <button class="closing-btn" disabled>모집마감</button>
+					        </c:when>
+					        <c:otherwise>
+								<button class="join-btn" data-seq="${i.meet_seq}">참여신청</button>
+							 </c:otherwise>
+    					</c:choose>
 					</div>
 				</div>
 		</c:forEach>

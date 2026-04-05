@@ -28,7 +28,9 @@ public class MeetingDAO {
 	// 모임 생성 폼 조회
 	public List<MeetingDTO> selectAll() throws Exception {
 		
-		String sql = "select * from meeting order by meet_seq desc";
+		String sql = "select meeting.*, (select nvl(count(*), 0) from meeting_member "
+				+ "where meeting_member.meet_seq = meeting.meet_seq) as meet_currentpeople "
+				+ "from meeting order by meeting.meet_seq desc";
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class));
 	}
