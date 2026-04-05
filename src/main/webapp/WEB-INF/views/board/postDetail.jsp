@@ -540,7 +540,8 @@ hr {
 					<div class="postCommentBox">
 						<i class="fa-regular fa-comment fa-xl comment"></i>
 
-						<div>갯수</div>
+							<div class="commentCount infoCount">${dto.post_hit}</div>
+						
 					</div>
 
 				</div>

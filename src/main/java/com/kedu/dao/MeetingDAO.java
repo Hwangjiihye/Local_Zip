@@ -208,5 +208,26 @@ public class MeetingDAO {
 	
 	
 	
+	// 참여중인 모임 리스트 뽑기
+	public List<MeetingDTO> selectMyAllMeeting(String loginId) {
+
+	    String sql =
+	        "select distinct " +
+	        " m.meet_seq, " +
+	        " m.mem_id, " +
+	        " m.meet_title, " +
+	        " m.meet_category, " +
+	        " m.meet_introcontents, " +
+	        " m.mem_address1, " +
+	        " m.meet_maxpeople " +
+	        "from meeting m " +
+	        "left join meeting_member mm " +
+	        "on m.meet_seq = mm.meet_seq " +
+	        "where (mm.mem_id = ? and mm.meetmem_status = 1) " +
+	        "or m.mem_id = ?";
+
+	    return jdbc.query(sql,new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class),loginId, loginId);
+	}
+	
 	
 }
