@@ -110,8 +110,6 @@ public class BoardController {
 		      vdao.postClickVisit(loginId, category);
 		   }
 		   
-		   session.setAttribute("post_seq", post_seq);
-		   
 		return "board/postDetail?seq="+post_seq;
 	}
 	

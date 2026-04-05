@@ -34,7 +34,7 @@ public class HomeController {
 
 	// 전체 리스트 출력 내용 반영
 	@RequestMapping("/")
-	public String home(String sort, Model model, ReplyDTO rdto) throws Exception{
+	public String home(String sort, Model model, HttpSession session, ReplyDTO rdto) throws Exception{
 
 		// 기본 정렬
 		if(sort == null) {
@@ -76,6 +76,8 @@ public class HomeController {
 		model.addAttribute("list", list);
 		model.addAttribute("sort",sort);
 
+		session.setAttribute("listAll", list);
+		
 		return "home";
 	}
 
