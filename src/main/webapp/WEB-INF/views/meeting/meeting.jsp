@@ -343,7 +343,7 @@ body {
 }
 
 .pageBox a.active{
-	background-color:#FFB300;
+	background-color:#fecc56;
     font-weight: bold;
     color: #5e361a;
 }
@@ -351,6 +351,8 @@ body {
 .pageBox a:hover{
     background-color:#F2D3A2;
 }
+
+
 
 .manage-btn{
 	height: 26px;
@@ -386,7 +388,7 @@ body {
 				<c:remove var="msg" scope="session"/>
 				
 			<div class="categoryDiv">
-				<a href="/meeting/list?category=all"><button class="categoryBtnAll nowBtn">
+				<a href="/meeting/list?category=all"><button class="categoryBtnAll">
 					<i class="fa-solid fa-house fa-lg"></i> 전체
 				</button></a>
 				<a href="/meeting/list?category=운동"><button class="categoryBtnAll">
@@ -468,7 +470,7 @@ body {
 			</c:if>
 		
 			<c:forEach var="i" begin="${navi.startNavi}" end="${navi.endNavi}">
-				<a href="/meeting/list?category=${category}&cpage=${i}" class="${i == navi.cpage ? 'activeNavi' : 'naviNum'}">${i}</a>
+				<a href="/meeting/list?category=${category}&cpage=${i}" class="${i == navi.cpage ? 'active' : 'naviNum'}">${i}</a>
 			</c:forEach>
 		
 			<c:if test="${navi.needNext}">

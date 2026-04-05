@@ -369,19 +369,13 @@ body {
 }
 
 .pageBox a.active{
-	background-color:#FFB300;
+	background-color:#fecc56;
     font-weight: bold;
     color: #5e361a;
 }
 
 .pageBox a:hover{
     background-color:#F2D3A2;
-}
-
-.pageBox a.active{
-    background-color:#FFB300;
-    color:#5e361a;
-    font-weight:bold;
 }
 
 .answerDiv.editing {

@@ -36,7 +36,7 @@ public class MeetingController {
 	    int end = cpage * 8;
 		
 		if(category.equals("all")) {
-			list = dao.selectAll();
+			list = dao.selectAllByPage(start, end);
 		}else {
 			list = dao.selectByPage(category, start, end);
 		}
@@ -101,8 +101,14 @@ public class MeetingController {
 		int recordCountPerPage = 8;
 	    int naviCountPerPage = 10;
 
-	    int recordTotalCount = dao.getCategoryCount(category);
-
+	    int recordTotalCount;
+	    
+	    if(category == null || category.equals("all")) {
+	        recordTotalCount = dao.getAllCount();
+	    } else {
+	    	recordTotalCount = dao.getCategoryCount(category);
+	    }
+	    
 	    int pageTotalCount =
 	        (recordTotalCount + recordCountPerPage - 1) / recordCountPerPage;
 

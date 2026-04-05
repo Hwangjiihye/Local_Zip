@@ -47,6 +47,12 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
+	public List<MeetingDTO> selectAllByPage(int start, int end) {
+		String sql = "select * from (select row_number() over(order by meet_seq desc) rn, "
+				+ "meeting.* from meeting) where rn between ? and ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(MeetingDTO.class), start, end);
+	}
+	
 	public List<MeetingDTO> selectByPage(String category, int start, int end){
 		String sql = "select * from (select row_number() "
 				+ "over(order by meet_seq desc) rn, "
