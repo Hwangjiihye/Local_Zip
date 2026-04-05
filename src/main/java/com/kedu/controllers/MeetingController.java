@@ -197,5 +197,8 @@ public class MeetingController {
 	
 	
 	
-	
+	@RequestMapping("/manageMeeting")
+	public String manageMeeting() throws Exception{
+		return "myPage/manageMeeting";
+	}
 }

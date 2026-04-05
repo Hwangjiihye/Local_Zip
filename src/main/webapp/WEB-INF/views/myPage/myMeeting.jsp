@@ -143,6 +143,9 @@
 		    height: 20px;
 		    color: #286708;
 		}
+		.isLeader{
+			display: none;
+		}
 		
 		.desc {
 		    margin-bottom: 10px;
@@ -179,11 +182,11 @@
 		    border:none;
 		    border-radius: 10px;
 		    color: #5e361a;
+		    display:none;
 		}
 		
 		.outBtn{
-			display: none;
-			width: 45%;
+			width: 47%;
 		    height: 30px;
 		    background-color: #FFB300;
 		    border:none;
@@ -211,15 +214,14 @@
 		    border-radius: 10px;
 		    margin-top: 10px;
 			margin-bottom: 10px;
+			color: #5e361a;
 		}
 		.myMeetingBtn{
 			margin-left: 30px;
-			background-color: #A66A3F;
-			color: white;
+			background-color: #FFB300;
 		}
 		.manageBtn{
 		 	background-color: #E5D3B3;
-		 	color: #5e361a;
 		}
 </style>
 </head>
@@ -272,6 +274,10 @@
 			$(".meetingDetail").on("click", function(){
 			    let seq = $(this).data("seq");
 			    location.href = "/meeting/meetingDetail?seq=" + seq;
+			});
+			
+			$(".manageBtn").on("click", function(){
+			    location.href = "/meeting/manageMeeting";
 			});
 	</script>
 </body>
