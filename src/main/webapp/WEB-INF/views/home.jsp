@@ -376,6 +376,41 @@ body, html {
 	display: none;
 }
 
+.reportBtn {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+	display: none;
+	position: absolute;
+	top: 60px;
+	left: 0;
+	width: 90px;
+}
+
+.reportBtn:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reportBtn:active {
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.report-menu{
+	 font-family: 'GMarketSans';
+     border: 1px solid #A66A3F;
+     border-radius: 5px;
+     background-color: #F2D3A2;
+     color: #A66A3F;
+     font-size: 12px;
+     padding: 2px;
+     outline: none;
+}
+
 .postMidBox {
 	width: 100%;
 	height: auto;
@@ -577,7 +612,7 @@ body, html {
 
 							<!-- 게시글영역 -->
 							<c:forEach var="i" items="${list}">
-								<div class="postBox" data-seq="${i.post_seq}" onclick="location.href='/postDetail?post_seq=${i.post_seq}'">
+								<div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
 								<!-- data-seq는 ajax로 댓글 수 표시할 때 해당 게시글 번호를 기억하기 위해 달아놓음.	 -->
 									<div class="postUpBox">
 
@@ -617,11 +652,12 @@ body, html {
 												<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
 													style="width: 25px; height: 25px; margin-bottom: 5px"></img> 
 												<select class="reportSelect">
-													<option value="" disabled selected>신고 사유</option>
-													<option value="1" class="reportOption">부적절한 콘텐츠</option>
-													<option value="2" class="reportOption">욕설/비방</option>
-													<option value="3" class="reportOption">광고/스팸</option>
+													<option class="report-menu" disabled selected>신고 사유</option>
+													<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
+													<option class="report-menu" value="badWord">욕설/비방</option>
+													<option class="report-menu" value="AD">광고/스팸</option>
 												</select>
+												<button type="button" class="reportBtn">신고하기</button>
 											</div>
 										</c:if>
 
@@ -720,91 +756,122 @@ body, html {
 			});
 		})
 		
+		$(function() {
+		    // 1. 게시글 상세 페이지 이동 (통합 제어)
+		    // .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동
+		    $(document).on("click", ".postBox", function(e) {
+		        // 클릭한 타겟이 신고 아이콘, 신고 선택창, 신고 버튼, 좋아요 박스 내부에 있다면 이동 금지
+		        if ($(e.target).closest(".reportArea, .postLikeBox, .postCommentBox").length > 0) {
+		            return;
+		        }
 		
-		// 비로그인시 게시글 클릭 시 상세 페이지 이동 제어
-		$(".postBox").on("click", function() {
-		    let loginId = "${loginId}";
+		        // 게시글 상세보기 이동 제어
+		        let loginId = "${loginId}";
+		        if (loginId === "") {
+		            alert("로그인 후 이용 가능합니다.");
+		            location.href = "/members/loginUi";
+		            return;
+		        }
 		
-		    if (loginId === "") { // 
-		        alert("로그인 후 이용 가능합니다.");
-		        location.href = "/members/loginUi"; // 로그인 페이지로 리다이렉트
-		        return; // 함수 종료 (이동 막기)
-		    }
+		        let post_seq = $(this).data("seq");
+		        location.href = "/postDetail?post_seq=" + post_seq;
+		    });
 		
-		    // 로그인 상태일 때 상세 페이지로 이동
-		    let post_seq = $(this).data("seq");
-		    location.href = "/postDetail?post_seq=" + post_seq;
-		});
-
+		    // 신고 ---------------------------------------------
+		    // 신고 아이콘 클릭 시 메뉴 표시
+		    $(document).on("click", ".reportIcon", function(e) {
+		        e.stopPropagation(); // 부모인 .postBox로 이벤트가 퍼지는 것을 막음 (중요)
+		        
+		        // 클릭한 아이콘이 속한 그 영역의 메뉴만 토글
+		        let reportArea = $(this).closest(".reportArea");
+		        
+		        // (선택사항) 다른 게시글의 열려있는 신고창을 모두 닫고 싶다면 아래 주석 해제
+		        // $(".reportSelect, .reportBtn").not(reportArea.find(".reportSelect, .reportBtn")).hide();
+		        
+		        reportArea.find(".reportSelect, .reportBtn").toggle(); 
+		    });
 		
-		// 배너 이미지 변경되는 코드
-		let index = 0;
-		let slideBanner = $(".slideBanner"); // class가 slide인 요소 전부 가져와
-
-		setInterval(function() { // setInterval : 3초마다 코드 반복 실행
-			slideBanner.eq(index).removeClass("active"); // 지금 보이는 이미지에서 active 제거
-			// eq(index) 배열에서 index번째 가져옴
-
-			index = (index + 1) % slideBanner.length; // 다음 이미지로 이동
-
-			slideBanner.eq(index).addClass("active"); // 다음 이미지에 active 붙여서 보여줌
-		}, 3000);
-
+		    // 신고 사유 선택창 클릭 시 이동 방지
+		    $(document).on("click", ".reportSelect", function(e) {
+		        e.stopPropagation(); // 클릭 시 상세페이지 이동 방지
+		    });
 		
-		// 최신순, 인기순 버튼을 눌렀을 때 스위치 시켜주는 코드
-		$(".sortBtn").on("click", function() {
-
-			let currentSort = "${sort}";
-
-			if (currentSort == "latest") {
-				location.href = "/?sort=like"; // home으로 보내야 하므로, /만 입력함.
-			} else {
-				location.href = "/?sort=latest";
-			}
-		});
+		    // 신고 버튼 클릭 (AJAX)
+		    $(document).on("click", ".reportBtn", function(e) {
+		        e.stopPropagation(); // 클릭 시 상세페이지 이동 방지
+		        
+		        let card = $(this).closest(".postBox"); 
+		        let targetSeq = card.data("seq");
+		        let targetId = card.data("writer"); 
+		        let reportReason = card.find(".reportSelect").val(); 
+		        
+		        if(!reportReason || reportReason === "신고 사유"){
+		            alert("신고 사유를 선택해 주세요.");
+		            return;
+		        }
+		        
+		        $.ajax({
+		            url : "/report/insert",
+		            type : "post",
+		            data : {
+		                target_seq : targetSeq,
+		                target_id : targetId,
+		                reports_type : 0,
+		                reports_reason : reportReason
+		            }
+		        }).done(function(resp){
+		            if(resp == "success"){
+		                alert("신고가 접수되었습니다.");
+		                card.find(".reportSelect, .reportBtn").hide();
+		            } else {
+		                alert("이미 신고했거나 처리에 실패했습니다.");
+		                card.find(".reportSelect, .reportBtn").hide();
+		            }
+		        }).fail(function(){
+		            alert("서버와 통신 중 오류가 발생했습니다.");
+		        });
+		    });
 		
-		// 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
-		$(".reportIcon").on("click", function(e) {
-			e.stopPropagation(); // ★부모(.postBox)의 클릭 이벤트X
-			
-			$(".reportSelect").css({
-				"display" : "inline"
+		    // 좋아요 버튼을 눌렀을 때,
+		    $(document).on("click", ".postLikeBox", function(e) {
+		        e.stopPropagation(); 
+		        $(this).toggleClass("active");
+		    });
+		
+		    // 배너 애니메이션
+		    let index = 0;
+		    let slideBanner = $(".slideBanner");
+		    setInterval(function() {
+		        slideBanner.eq(index).removeClass("active");
+		        index = (index + 1) % slideBanner.length;
+		        slideBanner.eq(index).addClass("active");
+		    }, 3000);
+		
+		    // 댓글 수 갱신
+		    $(".postBox").each(function(){
+		        let postBox = $(this);
+		        let post_seq = postBox.data("seq");
+		        $.ajax({
+		            url: "/board/getCommentCount",
+		            data: { post_seq : post_seq},
+		            type: "get"
+		        }).done(function(count){
+		            postBox.find(".commentCount").html(count);
+		        	});
+		    	});
 			});
-			
-			// 신고 사유 선택창 클릭 시 ★부모(.postBox)의 클릭 이벤트X
-			$(".reportSelect").on("click", function(e) {
-			    e.stopPropagation(); // 상세페이지 이동 방지
-			});
-		})
-
-		// 좋아요 버튼
-		$(".postLikeBox").on("click", function(e) {
-			e.stopPropagation(); // ★부모(.postBox)의 클릭 이벤트X
-			$(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
-		});
-
 		
-		// 댓글 수 바로 반영되도록 하는 ajax
-		$(function(){
-			
-			// each : ajax의 반복문(for-Each)임
-			// postBox에 게시물이 여러개 있으니까 똑같이 for문 돌리면서 댓글 수가 변경된 게시글의 수를 ajax로 반영할 거임.
-			$(".postBox").each(function(){
-				let postBox = $(this);
-				let post_seq = postBox.data("seq"); // 위쪽에서 postBox에 작성한 data-seq 값 담기
-				
-				$.ajax({
-					url: "/board/getCommentCount",
-					data: { post_seq : post_seq}, // key값 실제 value값
-					type: "get"
-				}).done(function(count){ // 서버에서 넘겨받은 숫자 : count
-					postBox.find(".commentCount").html(count); // 현재 postBox를 기준으로 댓글 수 값을 담고 있는 div에 count 값 넣기.
-				})
-				console.log(post_seq + "번 댓글 수 갱신")
-				
-			});
-			
-		});
+		// 최신순 인기순 정렬
+        $(".sortBtn").on("click",function(){
+        	
+        	let currentSort = "${sort}";
+        	
+        	if(currentSort == "latest"){
+        		location.href = "/?sort=like";
+        	}else{
+        		location.href = "/?sort=latest";
+        	}
+        });
 		
 
 		// let recordTotalCount = ${recordTotalCount}
