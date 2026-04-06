@@ -217,4 +217,11 @@ public class MeetingMemberController {
 
 	    return dao.updateStatus(seq, status);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/completeList")
+	public List<ManageMeetingDTO> completeList(HttpSession session) {
+	    String loginId = (String)session.getAttribute("loginId");
+	    return dao.selectCompleteList(loginId);
+	}
 }

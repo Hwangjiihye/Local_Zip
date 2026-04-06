@@ -5,6 +5,7 @@ public class ManageMeetingDTO {
 	private String meet_title;
 	private int meetmem_seq;
 	private String mem_id;
+	private String mem_nickname;
 	private String meetmem_contents;
 	private int meetmem_status;
 	public int getMeet_seq() {
@@ -31,6 +32,12 @@ public class ManageMeetingDTO {
 	public void setMem_id(String mem_id) {
 		this.mem_id = mem_id;
 	}
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
+	}
 	public String getMeetmem_contents() {
 		return meetmem_contents;
 	}
@@ -43,6 +50,9 @@ public class ManageMeetingDTO {
 	public void setMeetmem_status(int meetmem_status) {
 		this.meetmem_status = meetmem_status;
 	}
-
+	
+	
+	
+	
     
 }
