@@ -77,6 +77,18 @@ public class BoardDAO {
 		String sql = "update post set post_hit = ? where post_seq = ?";
 		return jdbc.update(sql, count, post_seq);
 	}
+		
+	// 좋아요 눌렀을 때 +1 반영하기 위한 좋아요 누른 기록 저장용 메서드
+	public int setLike(int post_seq, String mem_id) {
+		String sql = "insert into post_like values(like_seq.nextval,?,?,sysdate)";
+		return jdbc.update(sql, post_seq, mem_id);
+	};
+	
+	// 좋아요 버튼을 다시 눌러서 취소했을 때, 취소된 기록을 보여주기 위한 메서드
+	public int deleteLike(int post_seq, String mem_id) {
+		String sql = "delete from post_like where post_seq = ? and mem_id = ?";
+		return jdbc.update(sql, post_seq, mem_id);
+	};
 	
 	//----------------------------------------------------------------------
 	
