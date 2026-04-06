@@ -475,6 +475,7 @@ body {
 							</div>
 						</c:if>
 					</div>
+					
 				<div class="category-row">
 					<div class="category">${i.meet_category}</div>
 							<c:if test="${i.mem_id == loginId}">
@@ -488,22 +489,16 @@ body {
 						<div class="location">📍 ${i.mem_address1}</div>	
 						<div class="count">👥 ${i.meet_currentpeople}</div>
 					</div>
-					
-					<c:choose>
-					    <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
-					        <c:set var="percent" value="100" />
-					    </c:when>
-					    <c:otherwise>
-					        <c:set var="percent" value="${(i.meet_currentpeople * 100) / i.meet_maxpeople}" />
-					    </c:otherwise>
-					</c:choose>
 
 					<div class="card-footer">
 						<div class="gauge-wrap">
-							<div class="gauge-bar" style="width: ${percent}%;"></div>
+						    <div class="gauge-bar" 
+						         style="width:${i.meet_maxpeople == 0 ? 0 :
+						         (i.meet_currentpeople >= i.meet_maxpeople ? 100 :
+						         (i.meet_currentpeople * 100) / i.meet_maxpeople)}%;">
+						    </div>
 						</div>
 						<div class="gauge-text">${i.meet_currentpeople} / ${i.meet_maxpeople}명 참여중</div>
-					
 					
 						<c:choose>
 					        <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">

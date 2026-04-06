@@ -264,7 +264,7 @@
 				}
 		        for(let i of resp){
 					
-		            let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq);
+		            let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq).attr("data-meet_seq", i.meet_seq);
 		
 		            let btnDiv = $("<div>").addClass("btnDiv");
 		
@@ -292,29 +292,35 @@
 		
 		// 승인 버튼 클릭 시
 		$(document).on("click", ".acceptBtn", function(){
-
-		    let seq = $(this).closest(".meeting-card").data("seq");
-
+			
+			let card = $(this).closest(".meeting-card");
+			let seq = card.data("seq");
+			let meetSeq = card.data("meet_seq");
+		    
+			console.log("seq : ", seq, "meetSeq : ", meetSeq);
 		    $.ajax({
 		        url:"/meetingMember/updateStatus",
 		        data:{
 		        	seq: seq,
+		        	meet_seq: meetSeq,
 		        	status: 1
 		        }
 		    }).done(function(){
-		        location.reload();
+		        	location.reload();
 		    });
 		});
-		
 		// 거절 버튼 클릭 시
 		$(document).on("click", ".rejectBtn", function(){
 		
-		    let seq = $(this).closest(".meeting-card").data("seq");
+			let card = $(this).closest(".meeting-card");
+			let seq = card.data("seq");
+			let meetSeq = card.data("meetSeq");
 		
 		    $.ajax({
 		        url:"/meetingMember/updateStatus",
 		        data:{
 		        	seq: seq,
+		        	meet_seq: meetSeq,
 		        	status: 2
 		        }
 		    }).done(function(){
