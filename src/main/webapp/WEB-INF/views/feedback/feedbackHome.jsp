@@ -512,7 +512,7 @@
         	
         	// 클릭한 버튼에서 값 가져옴
         	let target_seq = $(this).data("seq");
-        	let reports_type = 1; // 신고 종류(게시글)
+        	let reports_type = 0; // 신고 종류(게시글)
         	let target_id = $(this).data("targetid");
         	let reports_reason = $(this).closest(".postBox").find(".reportSelect").val();
         	// 신고 사유 가져오는 코드
