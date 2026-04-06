@@ -143,10 +143,12 @@ public class AdminController {
 	@PostMapping("/insertNotice")
 	public String insertNotice(HttpSession session,@RequestParam("post_title")String title,
 								@RequestParam("post_contents")String contents) {
+		System.out.println(session.getAttribute("role"));
 		String id =(String)session.getAttribute("loginId");
 		int role = (Integer)session.getAttribute("role");
+		System.out.println(role);
 		nDao.insertNotice(new NoticeDTO(0,id,role,title,contents,"0"));
 		
-		return "redirect:/notice/toNotice";
+		return "redirect:/notice/toNotice?cPage=1";
 	}
 }

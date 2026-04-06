@@ -210,7 +210,7 @@ button, body, div, input {
 	<div class="container">
 		<div class="headBox">공지사항</div>
 
-		<form action="/notice/insert" method="post" class="frm">
+		<form action="/admin/insertNotice" method="post" class="frm">
 			<div class="writeDetail">
 				<div class="titleDiv">
 					<div class="title">제목</div>

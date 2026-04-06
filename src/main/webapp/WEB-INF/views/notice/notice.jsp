@@ -221,7 +221,7 @@ body, html {
 	</div>
 	<script>
 	let recordTotalCount = ${totalCount};
-	let recordCountPerPage = 5;
+	let recordCountPerPage = 10;
 	let naviCountPerPage = 5;
 	let currentPage = ${cPage};
 
