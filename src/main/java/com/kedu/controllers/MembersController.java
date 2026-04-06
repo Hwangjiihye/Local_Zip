@@ -97,6 +97,9 @@ public class MembersController {
 			session.setAttribute("loginId", mem_id);
 			session.setAttribute("nickname", nickname);
 			
+			int role = dao.getRole(mem_id);
+			session.setAttribute("role", role);
+			
 			return "redirect:/admin/adminPage";
 		} else if(result == 0){
 			rttr.addFlashAttribute("msg", "pwFail");
