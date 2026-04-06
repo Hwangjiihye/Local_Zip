@@ -459,7 +459,7 @@ body {
 		</div>
 			
 			<c:forEach var="i" items="${list}">
-				<div class="meeting-card" data-seq="${i.meet_seq}" data-writer="${i.mem_id}">
+				<div class="meeting-card" data-seq="${i.meet_seq}" data-mem_id="${i.mem_id}">
 					<div class="card-header">
 						<div class="title">${i.meet_title}</div>
 						<c:if test="${i.mem_id != loginId}">
@@ -585,7 +585,9 @@ body {
 			
 			$(document).on("click", ".meeting-card", function(){
 			    let seq = $(this).data("seq");
+// 			    let mem_id = $(this).data("mem_id");
 			    location.href = "/meeting/meetingDetail?seq=" + seq;
+// 			    		+ "&mem_id=" + mem_id;
 			});
 			
 			$(document).on("click", ".join-btn, .reportBtn, .reportIcon, .joinTwo-btn", function (e) {

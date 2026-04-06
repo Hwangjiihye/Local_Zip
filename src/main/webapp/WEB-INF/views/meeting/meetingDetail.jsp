@@ -167,7 +167,7 @@ body {
     margin-bottom: 10px;
 }
 
-.requestBtn, .backBtn{
+.requestBtn, .backBtn, .myMeetingBtn{
 	width: 350px;
     height: 40px;
     background-color: #FFB300;
@@ -178,15 +178,21 @@ body {
     font-weight: bold;
 }
 
-.requestBtn:hover, .backBtn:hover {
+.requestBtn:hover, .backBtn:hover, .myMeetingBtn:hover{
 	transform: translateY(-3px);
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.requestBtn:active, .backBtn:active{
+.requestBtn:active, .backBtn:active, .myMeetingBtn:active{
 	transform: translateY(2px);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+p{
+	font-size:13px;
+	color: #5e361a;
+}
+
 
 </style>
 </head>
@@ -235,32 +241,49 @@ body {
 						
 						<div class="openChatPwDiv">
 							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
-							<div class="inputPw">${i.meet_kakaopw}</div>
+						<c:choose>
+							<c:when test="${admin == 1 or count == 1 or host == 1}">
+								<div class="inputPw">${i.meet_kakaopw}</div>
+							</c:when>
+							<c:when test="${admin == 0 or count == 0 or host == 0}">
+								<div class="inputPw">******</div>
+								<p>＊비밀번호 확인은 모임 승인 또는 참여 후 가능합니다.</p>
+							</c:when>
+						</c:choose>
 						</div>
 					</div>
 				</div>
+				<div class="bottomBtn">
+					<c:choose>
+						<c:when test="${loginId != i.mem_id}">
+							<button class="requestBtn" type="submit" data-meet-seq="${meet_seq}">신청하기</button>
+						</c:when>
+						<c:when test="${loginId == i.mem_id}">
+							<a href="/meeting/myMeeting"><button class="myMeetingBtn" type="button">내 모임으로 이동</button></a>
+						</c:when>
+					</c:choose>
+						<a href="/meeting/list?category=all&cpage=${cPage}"><button class="backBtn" type="button">뒤로가기</button></a>
+				</div>
 			</c:forEach>
-	</div>
-		<div class="bottomBtn">
-				<button class="requestBtn" type="submit">신청하기</button>
-			<a href="/meeting/list?category=all"><button class="backBtn" type="button">뒤로가기</button></a>
 		</div>
+		
 		
 		<script>
 			$(".requestBtn").on("click", function(){
-				
+				let meet_seq = $(this).data("meet-seq");
+				console.log("클락한 버튼의 seq : " , meet_seq);
 				// 팝업창 크기
-				const width = 800;
-			    const height = 400;
+				let width = 800;
+				let height = 400;
 	
 			    // window.screenX : 브라우저가 모니터에서 시작하는 위치
 			    // window.outerWidth / 2 : 브라우저의 가운데 위치
 			    // width / 2 : 팝업의 절반
-			    const left = window.screenX + (window.outerWidth / 2) - (width / 2);
-			    const top = window.screenY + 80; // 상단에서 80px
+			    let left = window.screenX + (window.outerWidth / 2) - (width / 2);
+			    let top = window.screenY + 80; // 상단에서 80px
 
-			    const popup = window.open(
-			        "/meetingMember/applyForm",
+			    let popup = window.open(
+			    	"/meetingMember/applyForm?meet_seq=" + meet_seq,
 			        "",
 			        `width=${width},height=${height}`
 			    );
@@ -270,7 +293,7 @@ body {
 			        popup.moveTo(left, top);
 			        popup.focus();
 			    } 
-			})
+			});
 		</script>
 </body>
 </html>
