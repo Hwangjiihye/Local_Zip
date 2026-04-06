@@ -260,7 +260,7 @@ body {
 			    const top = window.screenY + 80; // 상단에서 80px
 
 			    const popup = window.open(
-			        "/apply/applyForm",
+			        "/meetingMember/applyForm",
 			        "",
 			        `width=${width},height=${height}`
 			    );
