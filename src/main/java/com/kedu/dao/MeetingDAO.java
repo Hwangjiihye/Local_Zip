@@ -31,7 +31,7 @@ public class MeetingDAO {
 		
 		String sql = "select meeting.*, (select nvl(count(*), 0) from meeting_member "
 				+ "where meeting_member.meet_seq = meeting.meet_seq) as meet_currentpeople "
-				+ "from meeting order by meeting.meet_seq desc";
+				+ "from meeting order by meeting.meet_seq desc ";
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class));
 	}
@@ -50,18 +50,16 @@ public class MeetingDAO {
 	
 	public List<MeetingDTO> selectAllByPage(int start, int end) { // + 게이지바 포함
 		String sql = "select * from (select row_number() over(order by m.meet_seq desc) rn, "
-				+ "m.meet_seq, m.mem_nickname, m.meet_title, m.meet_category, "
-				+ "m.meet_introcontents, m.meet_maxpeople, m.meet_currentpeople, (select count(*) from meeting_member mm "
-				+ "where mm.meet_seq = m.meet_seq "
-				+ "and mm.meetmem_status = 1 ) "
-				+ "as meet_allpeople from meeting m) where rn between ? and ?";
+				+ "m.mem_id, m.meet_seq, m.mem_nickname, m.meet_title, m.meet_category, "
+				+ "m.meet_introcontents, m.meet_maxpeople, m.meet_currentpeople "
+				+ "from meeting m where m.meet_status in (0,1)) where rn between ? and ?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), start, end);
 	}
 	
 	public List<MeetingDTO> selectByPage(String category, int start, int end){
 		String sql = "select * from (select row_number() "
 				+ "over(order by m.meet_seq desc) rn, "
-				+ "meeting.* from meeting where meet_category =? ) where rn between ? and ? ";
+				+ "m.* from meeting m where m.meet_category =? and m.meet_status in (0,1)) where rn between ? and ? ";
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), category, start, end);
 	}
 	
@@ -70,9 +68,9 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class, category);
 	}
 	
-	public int countMeetingByWriter(String loginId) {
-		String sql = "select count(*) from meeting where mem_id = ?";
-		return jdbc.queryForObject(sql, Integer.class, loginId);
+	public int countMeetingByWriter(String loginId, int status) {
+		String sql = "select count(*) from meeting where mem_id = ? and meet_status = ?";
+		return jdbc.queryForObject(sql, Integer.class, loginId, status);
 	}
 	
 	public List<Map<String, Object>> isApplied(String loginId) { // 0, 승인 대기 상태
@@ -90,9 +88,9 @@ public class MeetingDAO {
 		return jdbc.queryForList(sql, loginId);
 	}
 	
-	public int currentUpdate(int meet_seq) { // 모임 승인시 참여인원 1 증가
+	public int currentUpdate(int meetSeq) { // 모임 승인시 참여인원 1 증가
 		String sql = "update meeting set meet_currentpeople = meet_currentpeople + 1 where meet_seq = ?";
-		return jdbc.update(sql,meet_seq);
+		return jdbc.update(sql,meetSeq);
 	}
 	
 	public int currentDelete(int meet_seq) { // 모임 거절시 참여인원 1 감소
@@ -100,6 +98,10 @@ public class MeetingDAO {
 		return jdbc.update(sql,meet_seq);
 	}
 	
+	public int deleteMeeting(int meet_seq) {
+		String sql = "delete from meeting where meet_seq = ?";
+		return jdbc.update(sql, meet_seq);
+	}
 	
 	
 	
