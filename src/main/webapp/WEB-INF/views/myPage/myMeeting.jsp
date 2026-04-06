@@ -283,6 +283,46 @@
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="i" items="${list}">
+						
+		 			</c:forEach>
+				</c:otherwise>
+			</c:choose>
+	</div>
+	<div class="bottomBar">
+		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+	</div>
+		
+	<script>
+	
+			$(function(){
+				$.ajax({
+					url:"/meeting/myMeeting",
+					dataType:"json"
+				}).done(function(resp){
+					if(resp.length == 0){
+						let emptyMeeting = $("<div>").addClass("emptyMeeting").text("관리 중인 모임이 없습니다.");
+						$(".container").append(emptyMeeting);
+					}
+					for(let i of resp){
+						let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq);
+						let cardHeader = $("<div>").addClass("card-header")
+						let title = $("<div>").addClass("title").text(i.meet_title);
+						cardHeader.append(title);
+						meetingCard.append(cardHeader);
+						
+						let tagDiv = $("<div>").addClass("tagDiv");
+						let category = $("<div>").addClass("category").text(i.meet_category);
+						tagDiv.append(category);
+						if(i.mem_id == loginId){
+							let isLeader = $("<div>").addClass("isLeader");
+							let leaderIcon = $("<div>").addClass("leaderIcon");
+						}
+						$(".container").append(meetingCard);
+						
 						<div class="meeting-card" data-seq="${i.meet_seq}">
 							<div class="card-header">
 								<div class="title">${i.meet_title }</div>
@@ -313,19 +353,11 @@
 								</c:choose>
 							</div>
 						</div>
-		 			</c:forEach>
-				</c:otherwise>
-			</c:choose>
-	</div>
-	<div class="bottomBar">
-		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-	</div>
-		
-	<script>
+					}
+				})
+			})
+			
+			
 			$(document).on("click", ".meetingDetail", function(){
 		
 			    let seq = $(this).closest(".meeting-card").data("seq");
