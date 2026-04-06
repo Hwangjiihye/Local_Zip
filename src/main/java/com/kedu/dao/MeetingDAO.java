@@ -1,6 +1,7 @@
 package com.kedu.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -47,9 +48,12 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
-	public List<MeetingDTO> selectAllByPage(int start, int end) {
+	public List<MeetingDTO> selectAllByPage(int start, int end) { // + 게이지바 포함
 		String sql = "select * from (select row_number() over(order by meet_seq desc) rn, "
-				+ "meeting.* from meeting) where rn between ? and ?";
+				+ "meeting.*, (select count(*) from meeting_member "
+				+ "where meeting_member.meet_seq = meeting.meet_seq "
+				+ "and meeting_member.meetmem_status = 1 ) "
+				+ "as meet_currentpeople from meeting) where rn between ? and ?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(MeetingDTO.class), start, end);
 	}
 	
@@ -68,6 +72,21 @@ public class MeetingDAO {
 	public int countMeetingByWriter(String loginId) {
 		String sql = "select count(*) from meeting where mem_id = ?";
 		return jdbc.queryForObject(sql, Integer.class, loginId);
+	}
+	
+	public List<Map<String, Object>> isApplied(String loginId) { // 0, 승인 대기 상태
+		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 0";
+		return jdbc.queryForList(sql, loginId);
+	}
+	
+	public List<Map<String, Object>> joinMeet(String loginId){ // 1, 승인 상태
+		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 1";
+		return jdbc.queryForList(sql, loginId);
+	}
+	
+	public List<Map<String, Object>> companionMeet(String loginId){ // 2, 거절 상태
+		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 2";
+		return jdbc.queryForList(sql, loginId);
 	}
 	
 	
