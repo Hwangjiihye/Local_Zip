@@ -19,11 +19,15 @@ import com.kedu.dto.MeetingMemberDTO;
 @RequestMapping("/meetingMember")
 public class MeetingMemberController {
 	
+	@Autowired 
+	MeetingDAO mdao;	
+	
 	@Autowired
 	public MeetingMemberDAO dao;
 	
 	@RequestMapping("/applyForm")
-	public String applyform(int meet_seq, Model model) {
+	public String applyform(int meet_seq, Model model, HttpSession session) {
+		session.setAttribute("meet_seq", meet_seq);
 		model.addAttribute("meet_seq", meet_seq);
 		return "meeting/applyForm";
 	}
@@ -32,7 +36,10 @@ public class MeetingMemberController {
 	@RequestMapping("/insert")
 	public String insert(MeetingMemberDTO dto, HttpSession session) throws Exception {
 		session.setAttribute("nickName", dto.getMem_nickname());
+		
 		String loginId = (String)session.getAttribute("loginId");
+		Integer meet_seq = (Integer)session.getAttribute("meet_seq");
+		System.out.println("meet_seq : " + meet_seq);
 		
 		
 		dto.setMem_id(loginId);
@@ -40,21 +47,7 @@ public class MeetingMemberController {
 		
 		return "meeting/applySuccess";
 	}
-	
-	
-	
-	
-	
-	
-	
-	@Autowired 
-	MeetingDAO mdao;	
-//		if(status == 1) {
-//			mdao.currentUpdate(seq);
-//		}else if(status == 2) {
-//			mdao.currentDelete(seq);
-//		}
-	
+
 	
 	
 	
@@ -223,9 +216,15 @@ public class MeetingMemberController {
 	// 요청 승인, 거절 처리
 	@ResponseBody
 	@RequestMapping("/updateStatus")
-	public int updateStatus(int seq, int status) {
-
-	    return dao.updateStatus(seq, status);
+	public int updateStatus(int seq, int meet_seq, int status) {
+		
+		int result = dao.updateStatus(seq, status);
+		
+		if(status == 1) {
+			mdao.currentUpdate(meet_seq);
+		}
+		
+	    return result;
 	}
 	
 	// 모임 탈퇴 클릭 시
