@@ -223,11 +223,17 @@ public class MeetingDAO {
 	        "from meeting m " +
 	        "left join meeting_member mm " +
 	        "on m.meet_seq = mm.meet_seq " +
-	        "where (mm.mem_id = ? and mm.meetmem_status = 1) " +
-	        "or m.mem_id = ?";
+	        "where (mm.mem_id = ? and mm.meetmem_status = 1 and m.meet_status in (0,1)) " +
+	        "or (m.mem_id = ? and m.meet_status in (0,1))";
 
 	    return jdbc.query(sql,new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class),loginId, loginId);
 	}
 	
-	
+	// 참여중인 모임 탭에서 모임 삭제 버튼 클릭 시
+	public int deleteMeeting(int meet_seq, int status) {
+
+	    String sql = "update meeting set meet_status = ? where meet_seq = ?";
+
+	    return jdbc.update(sql, status, meet_seq);
+	}
 }

@@ -144,18 +144,46 @@
 		    height: 20px;
 		    color: #286708;
 		}
-		.desc {
-		    margin-bottom: 10px;
-		    color: #5e361a;
+		.isLeader{
+			background-color: #7BB8C9;
+			color: #5e361a;
 		}
-		
 		.info {
 		    font-size: 13px;
 		    color: #555;
 		    margin-bottom: 20px;
 		    color: #5e361a;
 		}
-		
+		.category {
+		    display: inline-block;
+		    line-height : 23px;
+		    font-size: 12px;
+		    padding: 3px 8px;
+		    border-radius: 5px;
+		    margin-top: 18px;
+		    margin-bottom: 10px;
+		    background-color: #FFB300;
+		    height: 20px;
+		    color: #286708;
+		    max-width:120px;
+		    white-space:nowrap;
+		    overflow:hidden;
+		    text-overflow:ellipsis;
+		}
+		.desc {
+		    margin-bottom: 10px;
+		    color: #5e361a;
+		   	overflow:hidden;
+		   	white-space:nowrap;
+		    overflow:hidden;
+		    text-overflow:ellipsis;
+		}
+		.category-row {
+		    display:flex;
+		    align-items:center;
+		    gap:8px;
+		    margin-bottom:10px;
+		}
 		.card-footer {
 		    display:flex;
 		    gap: 8px;
@@ -175,19 +203,19 @@
 		.deleteBtn{
 			width: 47%;
 		    height: 30px;
-		    background-color: #FFB300;
+		    background-color: #8B4F1D;
 		    border:none;
 		    border-radius: 10px;
-		    color: #5e361a;
+		    color: #f5f5f5;
 		}
 		
 		.outBtn{
 			width: 47%;
 		    height: 30px;
-		    background-color: #FFB300;
+		    background-color: #8B4F1D;
 		    border:none;
 		    border-radius: 10px;
-		    color: #5e361a;
+		    color: #f5f5f5;
 		}
 		.tagDiv{
 			display: flex;
@@ -223,13 +251,20 @@
 		.emptyMeeting{
 			width: 100%;
   			height: 600px;
-  			
-  			font-size: 25px;
-  			
-  			color: #5e361a;
-  			
+  			font-weight: bold;
+  			font-size: large;
+  			margin-left: 630px;
   			text-align: center;
+  			color: #5e361a;
 		}
+		.title{
+		    max-width:280px;
+		    white-space:nowrap;
+		    overflow:hidden;
+		    text-overflow:ellipsis;
+		}
+		
+
 </style>
 </head>
 <body>
@@ -248,14 +283,54 @@
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="i" items="${list}">
+						
+		 			</c:forEach>
+				</c:otherwise>
+			</c:choose>
+	</div>
+	<div class="bottomBar">
+		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+		<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+	</div>
+		
+	<script>
+	
+			$(function(){
+				$.ajax({
+					url:"/meeting/myMeeting",
+					dataType:"json"
+				}).done(function(resp){
+					if(resp.length == 0){
+						let emptyMeeting = $("<div>").addClass("emptyMeeting").text("관리 중인 모임이 없습니다.");
+						$(".container").append(emptyMeeting);
+					}
+					for(let i of resp){
+						let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq);
+						let cardHeader = $("<div>").addClass("card-header")
+						let title = $("<div>").addClass("title").text(i.meet_title);
+						cardHeader.append(title);
+						meetingCard.append(cardHeader);
+						
+						let tagDiv = $("<div>").addClass("tagDiv");
+						let category = $("<div>").addClass("category").text(i.meet_category);
+						tagDiv.append(category);
+						if(i.mem_id == loginId){
+							let isLeader = $("<div>").addClass("isLeader");
+							let leaderIcon = $("<div>").addClass("leaderIcon");
+						}
+						$(".container").append(meetingCard);
+						
 						<div class="meeting-card" data-seq="${i.meet_seq}">
 							<div class="card-header">
 								<div class="title">${i.meet_title }</div>
 							</div>
 							<div class="tagDiv">
 								<div class="category">${i.meet_category }</div>
-								<c:if test="${i.mem_id == sessionScope.loginId}">
-									<div class="isLeader">관리자</div>
+								<c:if test="${i.mem_id == loginId}">
+									<div class="isLeader"><i class="fa-solid fa-crown" style="color: rgb(255, 212, 59);"></i> 관리자</div>
 								</c:if>
 							</div>
 							
@@ -263,13 +338,13 @@
 							
 							<div class="info">
 								<div class="location">📍 ${i.mem_address1 }</div>	
-								<div class="count">👥 ${i.meet_maxpeople }</div>
+								<div class="count">👥 정원 ${i.meet_maxpeople }명</div>
 							</div>
 							
 							<div class="card-footer">
 								<button class="meetingDetail" type="button">자세히 보기</button>
 								<c:choose>
-									<c:when test="${i.mem_id == sessionScope.loginId}">
+									<c:when test="${i.mem_id == loginId}">
 										<button class="deleteBtn" type="button">모임 삭제</button>
 									</c:when>
 									<c:otherwise>
@@ -278,29 +353,39 @@
 								</c:choose>
 							</div>
 						</div>
-		 			</c:forEach>
-				</c:otherwise>
-			</c:choose>
-	</div>
-	<div class="bottomBar">
-		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
-		<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-	</div>
-		
-	<script>
+					}
+				})
+			})
+			
+			
 			$(document).on("click", ".meetingDetail", function(){
 		
 			    let seq = $(this).closest(".meeting-card").data("seq");
 		
-			    location.href = "/meeting/meetingDetail?seq=" + seq;
+			    location.href = "/meeting/myMeetingDetail?seq=" + seq;
 			});
 			
 			$(".manageBtn").on("click", function(){
 			    location.href = "/meeting/manageMeeting";
 			});
+			
+			$(".deleteBtn").on("click",function(){
+				
+				let seq = $(this).closest(".meeting-card").data("seq");
+				if(!confirm("정말로 삭제하시겠습니까?")){
+					return;
+				}
+				
+				$.ajax({
+					url:"/meeting/deleteMeeting",
+					data:{
+						seq: seq,
+						status: 2
+					}
+				}).done(function(){
+					location.reload();
+				})
+			})
 	</script>
 </body>
 </html>
