@@ -277,16 +277,6 @@
 				<input class="manageBtn" type="button" value="신청 관리">
 			</div>
 		</div>
-			<c:choose>
-				<c:when test="${empty list }">
-					<div class="emptyMeeting">관리 중인 모임이 없습니다.</div>
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="i" items="${list}">
-						
-		 			</c:forEach>
-				</c:otherwise>
-			</c:choose>
 	</div>
 	<div class="bottomBar">
 		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
@@ -297,18 +287,18 @@
 	</div>
 		
 	<script>
-	
+			let loginId = "${loginId}";
 			$(function(){
 				$.ajax({
-					url:"/meeting/myMeeting",
+					url:"/meeting/myMeetingList",
 					dataType:"json"
 				}).done(function(resp){
 					if(resp.length == 0){
-						let emptyMeeting = $("<div>").addClass("emptyMeeting").text("관리 중인 모임이 없습니다.");
+						let emptyMeeting = $("<div>").addClass("emptyMeeting").text("참여 중인 모임이 없습니다.");
 						$(".container").append(emptyMeeting);
 					}
 					for(let i of resp){
-						let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq);
+						let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meet_seq);
 						let cardHeader = $("<div>").addClass("card-header")
 						let title = $("<div>").addClass("title").text(i.meet_title);
 						cardHeader.append(title);
@@ -331,7 +321,7 @@
 						info.append(location, count);
 						
 						let cardFooter = $("<div>").addClass("card-footer");
-						let meetingDetail = $("<button>").attr("type","button").text("자세히 보기");
+						let meetingDetail = $("<button>").attr("type","button").addClass("meetingDetail").text("자세히 보기");
 						cardFooter.append(meetingDetail);
 						
 						if(i.mem_id == loginId){

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.MeetingDAO;
 import com.kedu.dto.MeetingDTO;
@@ -289,15 +290,18 @@ public class MeetingController {
 	
 	// 마이페이지 모임 탭 (참여중인 모임)
 	@RequestMapping("/myMeeting")
-	public String myMeeting(HttpSession session, Model model) {
+	public String myMeeting() {
+	    return "myPage/myMeeting";
+	}
+	
+	// 참여중인 모임 리스트 출력
+	@ResponseBody
+	@RequestMapping("/myMeetingList")
+	public List<MeetingDTO> myMeetingList(HttpSession session, Model model) throws Exception{
 
 	    String loginId = (String)session.getAttribute("loginId");
 
-	    List<MeetingDTO> list = dao.selectMyAllMeeting(loginId);
-
-	    model.addAttribute("list", list);
-
-	    return "myPage/myMeeting";
+	    return dao.selectMyAllMeeting(loginId);
 	}
 	
 	// 참여중인 모임 탭 > 자세히 보기 클릭 시
@@ -312,6 +316,7 @@ public class MeetingController {
 	}
 	
 	// 참여중인 모임 탭 > 모임 삭제 버튼 클릭 시
+	@ResponseBody
 	@RequestMapping("/deleteMeeting")
 	public int deleteMeeting(int seq, int status) throws Exception{
 		
