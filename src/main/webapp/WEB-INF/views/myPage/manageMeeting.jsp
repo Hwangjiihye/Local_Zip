@@ -259,7 +259,7 @@
 		        dataType:"json"
 		    }).done(function(resp){
 				if(resp.length == 0){
-					let emptyMeeting = $("<div>").addClass("emptyMeeting").text("관리 중인 모임이 없습니다.");
+					let emptyMeeting = $("<div>").addClass("emptyMeeting").text("승인 대기 중인 모임이 없습니다.");
 					$(".meetingListDiv").append(emptyMeeting);
 				}
 		        for(let i of resp){
@@ -331,7 +331,7 @@
 				dataType:"json"
 			}).done(function(resp){
 				if(resp.length == 0){
-					let emptyMeeting = $("<div>").addClass("emptyMeeting").text("아직 처리된 모임이 없습니다.");
+					let emptyMeeting = $("<div>").addClass("emptyMeeting").text("처리 완료된 모임이 없습니다.");
 					$(".completeMeeting").append(emptyMeeting);
 				}
 				for(let i of resp){

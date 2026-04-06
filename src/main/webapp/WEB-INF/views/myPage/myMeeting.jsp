@@ -277,16 +277,6 @@
 				<input class="manageBtn" type="button" value="신청 관리">
 			</div>
 		</div>
-			<c:choose>
-				<c:when test="${empty list }">
-					<div class="emptyMeeting">관리 중인 모임이 없습니다.</div>
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="i" items="${list}">
-						
-		 			</c:forEach>
-				</c:otherwise>
-			</c:choose>
 	</div>
 	<div class="bottomBar">
 		<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
@@ -297,18 +287,18 @@
 	</div>
 		
 	<script>
-	
+			let loginId = "${loginId}";
 			$(function(){
 				$.ajax({
-					url:"/meeting/myMeeting",
+					url:"/meeting/myMeetingList",
 					dataType:"json"
 				}).done(function(resp){
 					if(resp.length == 0){
-						let emptyMeeting = $("<div>").addClass("emptyMeeting").text("관리 중인 모임이 없습니다.");
+						let emptyMeeting = $("<div>").addClass("emptyMeeting").text("참여 중인 모임이 없습니다.");
 						$(".container").append(emptyMeeting);
 					}
 					for(let i of resp){
-						let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meetmem_seq);
+						let meetingCard = $("<div>").addClass("meeting-card").attr("data-seq", i.meet_seq);
 						let cardHeader = $("<div>").addClass("card-header")
 						let title = $("<div>").addClass("title").text(i.meet_title);
 						cardHeader.append(title);
@@ -318,46 +308,36 @@
 						let category = $("<div>").addClass("category").text(i.meet_category);
 						tagDiv.append(category);
 						if(i.mem_id == loginId){
-							let isLeader = $("<div>").addClass("isLeader");
-							let leaderIcon = $("<div>").addClass("leaderIcon");
+							let isLeader = $("<div>").addClass("isLeader").text("관리자");
+							let leaderIcon = $("<i>").addClass("fa-solid fa-crown").css({"color":"rgb(255, 212, 59)"});
+							isLeader.prepend(leaderIcon);
+							tagDiv.append(isLeader);
 						}
-						$(".container").append(meetingCard);
 						
-						<div class="meeting-card" data-seq="${i.meet_seq}">
-							<div class="card-header">
-								<div class="title">${i.meet_title }</div>
-							</div>
-							<div class="tagDiv">
-								<div class="category">${i.meet_category }</div>
-								<c:if test="${i.mem_id == loginId}">
-									<div class="isLeader"><i class="fa-solid fa-crown" style="color: rgb(255, 212, 59);"></i> 관리자</div>
-								</c:if>
-							</div>
-							
-							<div class="desc">${i.meet_introcontents }</div>
-							
-							<div class="info">
-								<div class="location">📍 ${i.mem_address1 }</div>	
-								<div class="count">👥 정원 ${i.meet_maxpeople }명</div>
-							</div>
-							
-							<div class="card-footer">
-								<button class="meetingDetail" type="button">자세히 보기</button>
-								<c:choose>
-									<c:when test="${i.mem_id == loginId}">
-										<button class="deleteBtn" type="button">모임 삭제</button>
-									</c:when>
-									<c:otherwise>
-										<button class="outBtn" type="button">모임 탈퇴</button>
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
+						let desc = $("<div>").addClass("desc").text(i.meet_introcontents);
+						let info = $("<div>").addClass("info");
+						let location = $("<div>").addClass("location").text("📍 "+i.mem_address1);
+						let count = $("<div>").addClass("count").text("👥 정원 "+i.meet_maxpeople+"명");
+						info.append(location, count);
+						
+						let cardFooter = $("<div>").addClass("card-footer");
+						let meetingDetail = $("<button>").attr("type","button").addClass("meetingDetail").text("자세히 보기");
+						cardFooter.append(meetingDetail);
+						
+						if(i.mem_id == loginId){
+							let deleteBtn = $("<button>").attr("type","button").addClass("deleteBtn").text("모임 삭제");
+							cardFooter.append(deleteBtn);
+						}else {
+							let outBtn = $("<button>").attr("type","button").addClass("outBtn").text("모임 탈퇴");
+							cardFooter.append(outBtn);
+						}
+						meetingCard.append(tagDiv, desc, info, cardFooter)
+						$(".container").append(meetingCard);
 					}
-				})
-			})
+				});
+			});
 			
-			
+			// 자세히 보기 클릭 시
 			$(document).on("click", ".meetingDetail", function(){
 		
 			    let seq = $(this).closest(".meeting-card").data("seq");
@@ -365,17 +345,17 @@
 			    location.href = "/meeting/myMeetingDetail?seq=" + seq;
 			});
 			
-			$(".manageBtn").on("click", function(){
-			    location.href = "/meeting/manageMeeting";
-			});
+			// 신청 관리 탭 클릭 시
+			$(document).on("click", ".manageBtn", function(){
+				location.href = "/meeting/manageMeeting";
+			})
 			
-			$(".deleteBtn").on("click",function(){
-				
+			// 모임 삭제 버튼 클릭 시
+			$(document).on("click",".deleteBtn",function(){
 				let seq = $(this).closest(".meeting-card").data("seq");
 				if(!confirm("정말로 삭제하시겠습니까?")){
 					return;
 				}
-				
 				$.ajax({
 					url:"/meeting/deleteMeeting",
 					data:{
@@ -384,8 +364,9 @@
 					}
 				}).done(function(){
 					location.reload();
-				})
-			})
+				});
+				
+			});
 	</script>
 </body>
 </html>
