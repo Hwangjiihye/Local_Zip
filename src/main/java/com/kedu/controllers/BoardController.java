@@ -59,7 +59,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/write")
-	public String write_lifeInfo() {
+	public String write_lifeInfo(HttpSession session) {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		if(loginId == null) {
+			return "redirect:/members/loginUi";
+		}
+		
 		return "board/write";
 	}
 	
@@ -144,7 +151,7 @@ public class BoardController {
 		return "success";
 	}
 	
-	// 댓글 리스트 출력
+	// ajax 댓글 리스트 출력
 	@ResponseBody
 	@RequestMapping("/replyList")
 	public String replyList(int post_seq) {

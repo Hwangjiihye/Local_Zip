@@ -35,6 +35,8 @@ public class ReplyDAO {
 		return jdbc.update(sql, reply_contents, reply_seq);
 	}
 	
+	//-----------------------------------------------------------------
+	
 	// 댓글 수 출력하는 메서드 - post_seq를 기준으로, 해당게시글에 달린 댓글 수 조회
 	public int commentCount(int post_seq) {
 		String sql = "select count(*) from reply where post_seq = ?";
