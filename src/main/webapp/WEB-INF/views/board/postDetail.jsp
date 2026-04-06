@@ -544,6 +544,18 @@ a {
 hr {
 	border: 1px dotted #5e361a;
 }
+
+.replyContents[contenteditable="true"] {
+    border: 1px solid #FFB300;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.replyContents[contenteditable="true"]:focus {
+    outline: none;
+    border: 1px solid #FFB300;
+    background-color: #fbe5c0;
+}
 </style>
 
 </head>
@@ -717,7 +729,7 @@ hr {
 		        type: "post"
 		    }).done(function(){
 		    	alert("삭제 완료!");
- 		        location.href = "/board/concern";
+ 		        location.href = "/";
 		    });
 		});
 		
@@ -783,8 +795,8 @@ hr {
 							);
 							let replyEditCompleteDiv = $("<div>").addClass("replyEditCompleteDiv");
 							replyEditCompleteDiv.append(
-								$("<input>").attr("type","button").addClass("OBtn").val("완료"),
-								$("<input>").attr("type","button").addClass("XBtn").val("취소").attr("data-reply_seq", i.reply_seq)		
+								$("<input>").attr("type","button").addClass("OBtn").val("완료").attr("data-reply_seq", i.reply_seq),
+								$("<input>").attr("type","button").addClass("XBtn").val("취소")		
 							);
 							btnDiv.append(replyEditDiv, replyEditCompleteDiv);
 							replyInfoUp.append(btnDiv);
@@ -832,7 +844,6 @@ hr {
 		$(function() {
 		    loadReplyList();
 		});
-		
 		
         // 좋아요 버튼
         $(".postLikeBox").on("click", function () {
@@ -915,6 +926,87 @@ hr {
         	})
         	
         	console.log(post_seq);
+        });
+        
+        // upBtn, delBtn, OBtn, XBtn
+        // 댓글 수정 버튼을 눌렀을 때
+        $(document).on("click",".upBtn",function(){
+        	let replyUpBox = $(this).closest(".replyUpBox");
+        	
+        	let upBtn = replyUpBox.find(".upBtn").css({"display":"none"});
+        	let delBtn = replyUpBox.find(".delBtn").css({"display":"none"});
+        	let OBtn = replyUpBox.find(".OBtn").css({"display":"inline"});
+        	let XBtn = replyUpBox.find(".XBtn").css({"display":"inline"});
+        	
+        	let replyContents = replyUpBox.find(".replyContents");
+        	replyContents.data("origin", replyContents.html());
+        	
+        	replyContents.attr("contenteditable", "true");
+        });
+        
+        // 댓글 수정 취소 버튼을 눌렀을 때
+        $(document).on("click",".XBtn",function(){
+			let replyUpBox = $(this).closest(".replyUpBox");
+			
+        	let replyContents = replyUpBox.find(".replyContents");
+        	let origin = replyContents.data("origin");
+        	
+        	replyContents.html(origin);
+        	
+        	let upBtn = replyUpBox.find(".upBtn").css({"display":"inline"});
+        	let delBtn = replyUpBox.find(".delBtn").css({"display":"inline"});
+        	let OBtn = replyUpBox.find(".OBtn").css({"display":"none"});
+        	let XBtn = replyUpBox.find(".XBtn").css({"display":"none"});
+
+        	replyContents.removeAttr("contenteditable");
+        });
+        
+        // 댓글 삭제 버튼을 눌렀을 때
+        $(document).on("click",".delBtn",function(){
+        	
+        	let reply_seq = $(this).data("reply_seq");
+        	
+        	$.ajax({
+        		url: "/reply/deleteReply",
+        		data: {reply_seq : reply_seq}
+        	}).done(function(){
+        		if(!confirm("정말로 삭제하시겠습니까?")){
+        			return;
+        		}else{
+        			alert("삭제가 완료되었습니다!")
+        		}
+        		
+        		let countElement = $(".commentCount"); // 카운트한 값이 들어있는 div
+        		let currentCount = parseInt(countElement.text()); // div에 값만 빼와서 남기.
+        		countElement.text(currentCount - 1);
+        		loadReplyList();
+        	});
+        });
+        
+        // 댓글 수정 완료 버튼을 눌렀을 때
+        $(document).on("click",".OBtn",function(){
+        	
+			let replyUpBox = $(this).closest(".replyUpBox");
+        	
+        	let reply_seq = $(this).data("reply_seq");
+        	let reply_contents = replyUpBox.find(".replyContents").text();
+        	
+        	if(reply_contents.trim() == ""){
+		        alert("내용을 입력해주세요.");
+		        return;
+		    }
+        	
+        	$.ajax({
+        		url: "/reply/updateReply",
+        		data: {
+        			reply_seq : reply_seq,
+        			reply_contents : reply_contents
+        		},
+        		type: "post"
+        	}).done(function(){
+        		alert("수정이 완료되었습니다!");
+        		loadReplyList();
+        	});
         });
     </script>
 </body>

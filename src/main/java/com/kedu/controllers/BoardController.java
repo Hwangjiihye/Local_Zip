@@ -83,7 +83,7 @@ public class BoardController {
 		String post_category = dto.getPost_category();
 		
 		if("lifeInfo".equals(post_category)) {
-			return "redirect:/board/life-info";
+			return "redirect:/board/list_lifeInfo";
 		}else if("talk".equals(post_category)) {
 			return "redirect:/board/concern";
 		}
