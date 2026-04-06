@@ -68,9 +68,9 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class, category);
 	}
 	
-	public int countMeetingByWriter(String loginId) {
-		String sql = "select count(*) from meeting where mem_id = ?";
-		return jdbc.queryForObject(sql, Integer.class, loginId);
+	public int countMeetingByWriter(String loginId, int status) {
+		String sql = "select count(*) from meeting where mem_id = ? and meet_status = ?";
+		return jdbc.queryForObject(sql, Integer.class, loginId, status);
 	}
 	
 	public List<Map<String, Object>> isApplied(String loginId) { // 0, 승인 대기 상태
@@ -88,9 +88,9 @@ public class MeetingDAO {
 		return jdbc.queryForList(sql, loginId);
 	}
 	
-	public int currentUpdate(int meet_seq) { // 모임 승인시 참여인원 1 증가
+	public int currentUpdate(int meetSeq) { // 모임 승인시 참여인원 1 증가
 		String sql = "update meeting set meet_currentpeople = meet_currentpeople + 1 where meet_seq = ?";
-		return jdbc.update(sql,meet_seq);
+		return jdbc.update(sql,meetSeq);
 	}
 	
 	public int currentDelete(int meet_seq) { // 모임 거절시 참여인원 1 감소
@@ -98,6 +98,10 @@ public class MeetingDAO {
 		return jdbc.update(sql,meet_seq);
 	}
 	
+	public int deleteMeeting(int meet_seq) {
+		String sql = "delete from meeting where meet_seq = ?";
+		return jdbc.update(sql, meet_seq);
+	}
 	
 	
 	

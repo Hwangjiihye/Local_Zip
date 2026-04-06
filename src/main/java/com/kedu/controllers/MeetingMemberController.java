@@ -19,6 +19,9 @@ import com.kedu.dto.MeetingMemberDTO;
 @RequestMapping("/meetingMember")
 public class MeetingMemberController {
 	
+	@Autowired 
+	MeetingDAO mdao;	
+	
 	@Autowired
 	public MeetingMemberDAO dao;
 	
@@ -41,19 +44,6 @@ public class MeetingMemberController {
 		return "meeting/applySuccess";
 	}
 	
-	
-	
-	
-	
-	
-	
-	@Autowired 
-	MeetingDAO mdao;	
-//		if(status == 1) {
-//			mdao.currentUpdate(seq);
-//		}else if(status == 2) {
-//			mdao.currentDelete(seq);
-//		}
 	
 	
 	
@@ -223,9 +213,15 @@ public class MeetingMemberController {
 	// 요청 승인, 거절 처리
 	@ResponseBody
 	@RequestMapping("/updateStatus")
-	public int updateStatus(int seq, int status) {
-
-	    return dao.updateStatus(seq, status);
+	public int updateStatus(int seq, int meet_seq, int status) {
+		
+		int result = dao.updateStatus(seq, status);
+		
+		if(status == 1) {
+			mdao.currentUpdate(meet_seq);
+		}
+		
+	    return result;
 	}
 	
 	// 모임 탈퇴 클릭 시
