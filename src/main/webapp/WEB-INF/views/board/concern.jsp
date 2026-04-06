@@ -540,7 +540,7 @@
 		                <button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
 		            </div>
 				<c:forEach var="i" items="${list}">
-		            <div class="postBox" onclick="location.href='/postDetail?post_seq=${i.post_seq }'">
+		            <div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
 		
 		                <div class="postUpBox">
 		
@@ -564,14 +564,14 @@
 		
 							<c:if test="${loginId != null && loginId != i.mem_id}">
 			                    <div class="reportArea">
-										<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+									<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 			                        <select class="reportSelect">
 			                            <option disabled selected class="reportOption">신고 사유</option>
 			                            <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
 			                            <option value="badWord" class="reportOption">욕설/비방</option>
 			                            <option value="AD" class="reportOption">광고/스팸</option>
 			                        </select>
-			                        <input class="reportBtn" type="submit" value="신고하기">
+			                        <input class="reportBtn" type="button" value="신고하기">
 			                    </div>
 							</c:if>
 		
@@ -596,7 +596,7 @@
 			                    <div class="postCommentBox">
 			                        <i class="fa-regular fa-comment fa-xl comment"></i>
 			
-			                        <div>갯수</div>
+			                        <div class="commentCount infoCount">${i.post_hit }</div>
 			                    </div>
 			
 			                </div>
@@ -644,22 +644,95 @@
         		location.href = "/board/concern?sort=latest";
         	}
         });
-
-
-        // 좋아요 버튼
+    	
+    	// 게시글 상세 페이지 이동
+        $(function() {
+		    // .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동
+		    $(document).on("click", ".postBox", function(e) {
+		        // 클릭한 타겟이 신고 아이콘, 신고 선택창, 신고 버튼, 좋아요 박스 내부에 있다면 이동 금지
+		        if ($(e.target).closest(".reportArea, .postLikeBox").length > 0) {
+		            return;
+		        }
+		
+		        // 게시글 상세보기 이동 제어
+		        let loginId = "${loginId}";
+		        if (loginId === "") {
+		            alert("로그인 후 이용 가능합니다.");
+		            location.href = "/members/loginUi";
+		            return;
+		        }
+		
+		        let post_seq = $(this).data("seq");
+		        location.href = "/postDetail?post_seq=" + post_seq;
+		    });
+		
+		 // 신고 아이콘 클릭 시 메뉴 표시
+		    $(document).on("click", ".reportIcon", function(e) {
+		        e.stopPropagation();
+		        
+		        let reportArea = $(this).closest(".reportArea");
+		        reportArea.find(".reportSelect, .reportBtn").toggle(); 
+		    });
+		 
+		// 신고 사유 선택창 클릭 시 이동 방지
+		    $(document).on("click", ".reportSelect", function(e) {
+		        e.stopPropagation();
+		    });
+		
+        
+        
+     	// 신고 버튼 클릭 시
+	    $(document).on("click", ".reportBtn", function() {
+	        
+	        let card = $(this).closest(".postBox");
+	        let targetSeq = card.data("seq");
+	        let targetId = card.data("writer"); 
+	        let reportReason = card.find(".reportSelect").val(); 
+	        
+	        if(!reportReason || reportReason == "신고 사유"){
+	            alert("신고 사유를 선택해 주세요.");
+	            return;
+	        }
+	        
+	        $.ajax({
+	            url : "/report/insert",
+	            type : "post",
+	            data : {
+	                target_seq : targetSeq,
+	                target_id : targetId,
+	                reports_type : 0,
+	                reports_reason : reportReason
+	            }
+	        }).done(function(resp){
+	            if(resp == "success"){
+	                alert("신고가 접수되었습니다.");
+	                card.find(".reportSelect, .reportBtn").hide();
+	            } else {
+	                alert("이미 신고했거나 처리에 실패했습니다.");
+	                card.find(".reportSelect, .reportBtn").hide();
+	            }
+	        }).fail(function(){
+	            alert("서버와 통신 중 오류가 발생했습니다.");
+	        });
+	    });
+     	
+     // 좋아요 버튼
         $(".postLikeBox").on("click", function () {
             $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
         });
-
-        // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
-        $(".reportIcon").on("click", function () {
-            $(".reportSelect").css({ "display": "inline" });
-            $(".reportBtn").css({"display": "inline"});
-        })
-        
-        // 좋아요 버튼, 신고버튼 클릭 시에는 페이지 이동 X
-        $(".postLikeBox, .reportArea, .reportIcon, .reportSelect, .reportBtn").on("click", function (e) {
-		    e.stopPropagation();
+     
+	 // 댓글 수 갱신
+	    $(".postBox").each(function(){
+	        let postBox = $(this);
+	        let post_seq = postBox.data("seq");
+	        $.ajax({
+	            url: "/board/getCommentCount",
+	            data: { post_seq : post_seq},
+	            type: "get"
+	        }).done(function(count){
+	            postBox.find(".commentCount").html(count);
+	        	});
+	    	});
 		});
     </script>
 
