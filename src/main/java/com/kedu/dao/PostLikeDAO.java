@@ -2,7 +2,9 @@ package com.kedu.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PostLikeDAO {
 	
 	@Autowired
@@ -15,7 +17,7 @@ public class PostLikeDAO {
 		return jdbc.queryForObject(sql, Integer.class, post_seq, mem_id);
 	};
 	
-	// 좋아요 수 출력 메서드
+	// 게시글에 대한 전체 좋아요 수 출력 메서드
 	public int likeCount(int post_seq) {
 		String sql = "select count(*) from post_like where post_seq = ?";
 		return jdbc.queryForObject(sql, Integer.class, post_seq);

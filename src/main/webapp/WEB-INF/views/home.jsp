@@ -732,27 +732,15 @@ body, html {
 
 	<script>
 		$(".loginBtn").on("click", function() {
-			$(".loginBtn").css({
-				"display" : "none"
-			});
-			$(".joinBtn").css({
-				"display" : "none"
-			});
-			$(".logoutArea").css({
-				"display" : "flex"
-			});
+			$(".loginBtn").css({"display" : "none"});
+			$(".joinBtn").css({"display" : "none"});
+			$(".logoutArea").css({"display" : "flex"});
 		})
 
 		$(".logoutArea").on("click", function() {
-			$(".loginBtn").css({
-				"display" : "inline"
-			});
-			$(".joinBtn").css({
-				"display" : "inline"
-			});
-			$(".logoutArea").css({
-				"display" : "none"
-			});
+			$(".loginBtn").css({"display" : "inline"});
+			$(".joinBtn").css({"display" : "inline"});
+			$(".logoutArea").css({"display" : "none"});
 		})
 		
 		$(function() {
@@ -760,7 +748,7 @@ body, html {
 		    // .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동
 		    $(document).on("click", ".postBox", function(e) {
 		        // 클릭한 타겟이 신고 아이콘, 신고 선택창, 신고 버튼, 좋아요 박스 내부에 있다면 이동 금지
-		        if ($(e.target).closest(".reportArea, .postLikeBox, .postCommentBox").length > 0) {
+		        if ($(e.target).closest(".reportArea, .postLikeBox").length > 0) {
 		            return;
 		        }
 		
@@ -783,9 +771,6 @@ body, html {
 		        
 		        // 클릭한 아이콘이 속한 그 영역의 메뉴만 토글
 		        let reportArea = $(this).closest(".reportArea");
-		        
-		        // (선택사항) 다른 게시글의 열려있는 신고창을 모두 닫고 싶다면 아래 주석 해제
-		        // $(".reportSelect, .reportBtn").not(reportArea.find(".reportSelect, .reportBtn")).hide();
 		        
 		        reportArea.find(".reportSelect, .reportBtn").toggle(); 
 		    });

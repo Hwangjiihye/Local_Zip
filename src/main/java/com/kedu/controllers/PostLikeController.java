@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kedu.dao.BoardDAO;
 import com.kedu.dao.PostLikeDAO;
-import com.kedu.dao.ReplyDAO;
 
 @Controller
 @RequestMapping("/like")
@@ -19,7 +19,7 @@ public class PostLikeController {
 	private Gson gson;
 
 	@Autowired
-	private ReplyDAO ReplyDao;
+	private BoardDAO dao;
 
 	@Autowired
 	private PostLikeDAO LikeDao;
@@ -30,13 +30,16 @@ public class PostLikeController {
 
 		String mem_id = (String)session.getAttribute("loginId");
 		
-		int isLike = ReplyDao.likeCheck(0, mem_id);
+		int isLike = LikeDao.likeCheck(0, mem_id);
 		
 		if(isLike == 0) {
-			int result = ReplyDao.insertLike(0, mem_id);
+			
+			int result = dao.setLike(0, mem_id);
 			return "addLike";
+			
 		}else {
-			int result = ReplyDao.deleteLike(0, mem_id);
+			int result = dao.deleteLike(0, mem_id);
+			
 			return "likeDelete";
 		}
 
