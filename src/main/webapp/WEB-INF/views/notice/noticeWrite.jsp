@@ -229,7 +229,7 @@ button, body, div, input {
 	
 				<div class="bottomBtn">
 					<button class="requestBtn">작성 완료</button>
-					<a href="/notice/toNotice"><button class="backBtn" type="button">뒤로가기</button></a>
+					<button class="backBtn" type="button" onclick="history.back();">뒤로가기</button>
 				</div>
 		</form>
 	</div>

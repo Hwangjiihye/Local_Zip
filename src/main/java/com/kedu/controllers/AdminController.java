@@ -134,9 +134,26 @@ public class AdminController {
 		return "/notice/noticeWrite";
 	}
 	
+	//공지사항(관리자 버전)으로 가기
 	@RequestMapping("/toAdminNotice")
-	public String toAdminNotice() {
+	public String toAdminNotice(Model model,int cPage) {
+		
+		//list 가져오기
+		int start = (cPage-1)*10+1;
+		int end = cPage*10;
+		List<NoticeDTO> list = nDao.getNoticePost(start, end);
+		
+		//총 게시글 갯수 가져오기
+		
+		int totalCount = nDao.getTotalNotice();
+		
+		
+		model.addAttribute("list",list);
+		model.addAttribute("menu", "notice");
+		model.addAttribute("cPage",cPage);
+		model.addAttribute("totalCount",totalCount);
 		return "/admin/adminNotice";
+		
 	}
 	
 	//공지사항 글쓰기 DB에 저장
@@ -149,6 +166,7 @@ public class AdminController {
 		System.out.println(role);
 		nDao.insertNotice(new NoticeDTO(0,id,role,title,contents,"0"));
 		
-		return "redirect:/notice/toNotice?cPage=1";
+		return "redirect:/admin/toAdminNotice?cPage=1";
+		
 	}
 }

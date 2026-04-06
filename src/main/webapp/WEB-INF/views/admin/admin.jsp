@@ -292,7 +292,7 @@ body {
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}" type="button">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>
-				<a href="/admin/toAdminNotice"><button class="categoryBtnAll" type="button">
+				<a href="/admin/toAdminNotice?cPage=1"><button class="categoryBtnAll ${menu == 'notice' ? 'nowBtn' : ''}" type="button">
 					<i class="fa-solid fa-bullhorn fa-lg"></i> 공지사항
 				</button></a>
 			</div>

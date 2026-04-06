@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kedu.dao.NoticeDAO;
 import com.kedu.dto.NoticeDTO;
@@ -34,7 +35,12 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/toNoticeDetail")
-	public String toNoticeDetail() {
+	public String toNoticeDetail(@RequestParam("notice_seq") int seq,Model model) {
+		
+		//공지사항 내용 불러오기
+		NoticeDTO dto = ndao.getContents(seq);
+		model.addAttribute("dto",dto);
+		
 		return "/notice/noticeDetail";
 	}
 }

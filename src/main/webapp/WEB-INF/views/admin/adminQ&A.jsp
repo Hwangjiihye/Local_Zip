@@ -418,9 +418,9 @@ body {
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>
-				<button class="categoryBtnAll">
+				<a href="/admin/toAdminNotice?cPage=1"><button class="categoryBtnAll ${menu == 'notice' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-bullhorn fa-lg"></i> 공지사항
-				</button>
+				</button></a>
 			</div>
 		</div>
 		

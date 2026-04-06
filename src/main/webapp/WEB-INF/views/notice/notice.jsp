@@ -153,6 +153,8 @@ body, html {
 	cursor: pointer;
 }
 
+
+
 /* 하단바 */
 .bottomBox {
 	position: fixed;
@@ -191,7 +193,7 @@ body, html {
 		<c:choose>
 			<c:when test="${not empty list}">
 				<c:forEach var="i" items="${list}">
-				<div class="postBox" onclick="location.href='/notice/toNoticeDetail'">
+				<div class="postBox" onclick="location.href='/notice/toNoticeDetail?notice_seq=${i.notice_seq}'">
 					<input type="hidden" name="notice_seq" value="${i.notice_seq}">
 					<div class="postHeader">${i.notice_date}</div>
 					<div class="postBody">

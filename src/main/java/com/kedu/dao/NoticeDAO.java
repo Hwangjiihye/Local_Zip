@@ -36,5 +36,9 @@ public class NoticeDAO {
 		jdbc.update(sql,dto.getMem_id(),dto.getMem_role(),dto.getNotice_title(),dto.getNotice_content());
 	}
 	
-	
+	//----------------공통 영역-------------------------
+	public NoticeDTO getContents(int notice_seq) {
+		String sql = "select * from notice where notice_seq=?";
+		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<NoticeDTO>(NoticeDTO.class),notice_seq);
+	}
 }

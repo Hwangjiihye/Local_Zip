@@ -268,27 +268,22 @@ hr {
 			<div class="headBox">공지사항</div>
 			<div class="backBtnDiv">
 <!-- 			게시글을 누르기 전에 보고있었던 목록의 페이지를 기억해서, 누르면 전으로 돌아가는 기능 : onclick="history.back();" -->
-				<input class="backBtn" type="button" value="목록으로" onclick="location.href='/'">
+				<input class="backBtn" type="button" value="목록으로" onclick="history.back();">
 			</div>
 		</div>
 		<div class="bodyBox">
 			<div class="postBox">
-
 				<div class="postUpBox">
-
 					<div class="postInfoBox">
-
 						<div class="postInfoDown">
-							<div class="postTitle" style="color: #5e361a;">${dto.post_title }</div>
+							<div class="postTitle" style="color: #5e361a;">${dto.notice_title}</div>
 						</div>
                         
 					</div>
 				</div>
 
 				<div class="postMidBox">
-
-					<div class="postContents">${dto.post_contents }${dto.post_contents }${dto.post_contents }${dto.post_contents }</div>
-
+					<div class="postContents">${dto.notice_content}</div>
 				</div>
 
 			</div>
@@ -305,16 +300,6 @@ hr {
 	</div>
 
 	<script>
-		
-		let loginId = "${loginId}";
-		let post_seq = "${dto.post_seq}"
-		let postTitle = $(".postTitle");
-		let postContents = $(".postContents");
-		
-		
-	
-		
-        
         
     </script>
 </body>
