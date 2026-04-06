@@ -19,11 +19,11 @@ public class MeetingDAO {
 	// 모임 생성 폼 db에 넣기
 	public int insert(MeetingDTO dto) throws Exception {
 		
-		String sql = "insert into meeting values(meeting_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate)";
+		String sql = "insert into meeting values(meeting_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate, ?)";
 		
 		return jdbc.update(sql, dto.getMem_id(), dto.getMem_nickname() , dto.getMeet_title(), dto.getMeet_category(), dto.getMeet_introcontents(),
 				dto.getMeet_detailcontents(), dto.getMeet_maxpeople(), dto.getMeet_currentpeople(), dto.getMem_address1(),
-				dto.getMeet_kakaolink(), dto.getMeet_kakaopw(), dto.getMeet_status());
+				dto.getMeet_kakaolink(), dto.getMeet_kakaopw(), dto.getMeet_status(), dto.getMeet_allpeople());
 	}
 	
 	// 모임 생성 폼 조회
@@ -49,17 +49,17 @@ public class MeetingDAO {
 	}
 	
 	public List<MeetingDTO> selectAllByPage(int start, int end) { // + 게이지바 포함
-		String sql = "select * from (select row_number() over(order by meet_seq desc) rn, "
-				+ "meeting.*, (select count(*) from meeting_member "
-				+ "where meeting_member.meet_seq = meeting.meet_seq "
-				+ "and meeting_member.meetmem_status = 1 ) "
-				+ "as meet_currentpeople from meeting) where rn between ? and ?";
-		return jdbc.query(sql, new BeanPropertyRowMapper<>(MeetingDTO.class), start, end);
+		String sql = "select * from (select row_number() over(order by m.meet_seq desc) rn, "
+				+ "m.meet_seq, m.meet_maxpeople, m.meet_currentpeople, (select count(*) from meeting_member mm "
+				+ "where mm.meet_seq = m.meet_seq "
+				+ "and mm.meetmem_status = 1 ) "
+				+ "as meet_allpeople from meeting m) where rn between ? and ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), start, end);
 	}
 	
 	public List<MeetingDTO> selectByPage(String category, int start, int end){
 		String sql = "select * from (select row_number() "
-				+ "over(order by meet_seq desc) rn, "
+				+ "over(order by m.meet_seq desc) rn, "
 				+ "meeting.* from meeting where meet_category =? ) where rn between ? and ? ";
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), category, start, end);
 	}
