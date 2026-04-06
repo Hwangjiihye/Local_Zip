@@ -218,11 +218,11 @@ public class MeetingMemberController {
 	@RequestMapping("/updateStatus")
 	public int updateStatus(int seq, int status) {
 		
-//		if(status == 1) {
-//			mdao.currentUpdate(seq);
-//		}else if(status == 2) {
-//			mdao.currentDelete(seq);
-//		}
+		if(status == 1) {
+			mdao.currentUpdate(seq);
+		}else if(status == 2) {
+			mdao.currentDelete(seq);
+		}
 	    return dao.updateStatus(seq, status);
 	}
 	
