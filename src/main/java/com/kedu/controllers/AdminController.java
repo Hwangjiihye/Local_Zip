@@ -9,12 +9,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.AdminQaDAO;
 import com.kedu.dao.BoardDAO;
+import com.kedu.dao.NoticeDAO;
 import com.kedu.dao.VisitLogDAO;
+import com.kedu.dto.NoticeDTO;
 import com.kedu.dto.QaDTO;
 
 @Controller
@@ -29,6 +33,9 @@ public class AdminController {
 	
 	@Autowired
 	private BoardDAO bdao;
+	
+	@Autowired
+	private NoticeDAO nDao;
 	
 	@RequestMapping("/adminPage")
 	public String test(HttpSession session, Model model) {
@@ -118,4 +125,28 @@ public class AdminController {
 		return "redirect:/admin/adminQ&A?seq=" + qa_seq;
 	}
 	
+	
+	
+	//공지사항 글쓰기로 가기
+	
+	@RequestMapping("/toNoticeWrite")
+	public String toWrite() {
+		return "/notice/noticeWrite";
+	}
+	
+	@RequestMapping("/toAdminNotice")
+	public String toAdminNotice() {
+		return "/admin/adminNotice";
+	}
+	
+	//공지사항 글쓰기 DB에 저장
+	@PostMapping("/insertNotice")
+	public String insertNotice(HttpSession session,@RequestParam("post_title")String title,
+								@RequestParam("post_contents")String contents) {
+		String id =(String)session.getAttribute("loginId");
+		int role = (Integer)session.getAttribute("role");
+		nDao.insertNotice(new NoticeDTO(0,id,role,title,contents,"0"));
+		
+		return "redirect:/notice/toNotice";
+	}
 }

@@ -262,7 +262,7 @@ body, html {
 		
 		<c:if test="${role==0}">
 		<button class="writeBtn" type="button"
-			onclick="location.href='/qa/toWrite'">
+			onclick="location.href='/notice/toWrite'">
 			<i class="fa-solid fa-pencil"></i>
 		</button>
 		</c:if>
