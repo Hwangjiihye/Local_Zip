@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kedu.dao.FeedBackDAO;
+import com.kedu.dao.FeedBack_reactionDAO;
 import com.kedu.dao.ReportDAO;
 import com.kedu.dto.FeedBackDTO;
 import com.kedu.dto.ReportDTO;
@@ -25,6 +26,12 @@ public class FeedBackController {
 	
 	@Autowired
 	public ReportDAO reportdao;
+	
+	@Autowired
+	public FeedBack_reactionDAO reactiondao;
+	
+	@Autowired
+	public FeedBackDAO feedbackdao;
 	
 	@Autowired
 	public Gson gson;
@@ -71,29 +78,108 @@ public class FeedBackController {
 	    return "redirect:/feedback/feedbackHome";
 	}
 	
-	// 좋아요 버튼
+	
 	@ResponseBody
-	@RequestMapping("/like")
-	public String like(int suggestion_seq) {
-		System.out.println("컨트롤러 들어옴");
-	    System.out.println("받은 글번호: " + suggestion_seq);
-
-	    int result = dao.plusLike(suggestion_seq);
-	    System.out.println("update 결과: " + result);
-	    return "ok";
+	@RequestMapping("/like") // 좋아요
+	public String like(int suggestion_seq, HttpSession session) throws Exception {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		if(loginId == null) {
+			return "/members/login";
+		}
+		
+		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
+		
+		
+		// 처음 누름
+		if(reaction == null) {
+			reactiondao.insert(loginId, suggestion_seq, "Like");
+			feedbackdao.plusLike(suggestion_seq);
+			return "liked";
+		}
+		
+		// 좋아요 누름 -> 취소
+		else if(reaction.equals("Like")) {
+			reactiondao.delete(loginId, suggestion_seq);
+			feedbackdao.minusLike(suggestion_seq);
+			return "cancle";
+		}
+		
+		// 싫어요 -> 좋아요 변경
+		else {
+			reactiondao.update(loginId, suggestion_seq, "Like");
+			feedbackdao.minusUnlike(suggestion_seq);
+			feedbackdao.plusLike(suggestion_seq);
+			return "change";
+		}
 	}
 	
-	// 싫어요 버튼
 	@ResponseBody
 	@RequestMapping("/unlike")
-	public String unlike(int suggestion_seq) {
-		System.out.println("컨트롤러 들어옴");
-		System.out.println("받은 글번호:" + suggestion_seq);
+	public String unlike(int suggestion_seq, HttpSession session) throws Exception {
 		
-		int result = dao.plusUnLike(suggestion_seq);
-		System.out.println("update 결과 : " + result);
-		return "ok";
+		String loginId = (String)session.getAttribute("loginId");
+		
+		if(loginId == null) {
+			return "/members/login";
+		}
+		
+		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
+		
+		// 처음 누름
+		if(reaction == null) {
+			reactiondao.insert(loginId, suggestion_seq, "UNLIKE");
+			feedbackdao.plusUnLike(suggestion_seq);
+			return "unliked";
+		}
+		
+		// 싫어요 누름 -> 취소
+		else if(reaction.equals("UNLIKE")) {
+			reactiondao.delete(loginId, suggestion_seq);
+			feedbackdao.minusUnlike(suggestion_seq);
+			return "cancle";
+		}
+		
+		// 좋아요 -> 싫어요 변경
+		else {
+			reactiondao.update(loginId, suggestion_seq, "UNLIKE");
+			feedbackdao.minusLike(suggestion_seq);
+			feedbackdao.plusUnLike(suggestion_seq);
+			return "change";
+		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+//	// 좋아요 버튼
+//	@ResponseBody
+//	@RequestMapping("/like")
+//	public String like(int suggestion_seq) {
+//		System.out.println("컨트롤러 들어옴");
+//	    System.out.println("받은 글번호: " + suggestion_seq);
+//
+//	    int result = dao.plusLike(suggestion_seq);
+//	    System.out.println("update 결과: " + result);
+//	    return "like";
+//	}
+//	
+//	// 싫어요 버튼
+//	@ResponseBody
+//	@RequestMapping("/unlike")
+//	public String unlike(int suggestion_seq) {
+//		System.out.println("컨트롤러 들어옴");
+//		System.out.println("받은 글번호:" + suggestion_seq);
+//		
+//		int result = dao.plusUnLike(suggestion_seq);
+//		System.out.println("update 결과 : " + result);
+//		return "unlike";
+//	}
 	
 	// 신고
 	@ResponseBody

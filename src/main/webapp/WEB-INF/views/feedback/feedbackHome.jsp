@@ -123,18 +123,18 @@
             transition: all 0.2s ease;
         }
         
-        .writeBtn:hover{
+        .writeBtn:hover, .editBtn:hover, .delBtn:hover {
         	transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
         
-        .navicon:hover {
+        .navicon:hover{
             transform: translateY(-3px);
             /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .navicon:active {
+        .navicon:active, .editBtn:active, .delBtn:active {
             transform: translateY(2px);
             /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -196,9 +196,10 @@
         .postInfoBox {
             width: 300px;
             min-height: 50px;
+           /*  margin-bottom: 10px; */
             position: relative;
             left: 20px;
-            top: 30px;
+            top: 20px;
 
             flex-grow: 1;
             /* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
@@ -349,6 +350,27 @@
         	color: #5e361a;
         }
         
+        .editBtn, .delBtn {
+            cursor: pointer;
+            border: #fbe5c0;
+            color:  #5e361a;
+            font-size: 13px;
+            font-weight: bold;
+			background-color:  #FFB300;
+			width: 50px;
+			height: 20px;
+			border-radius: 5px;
+            /* 그림자 효과 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+            /* 애니메이션 부드럽게 */
+            transition: all 0.2s ease;
+        }
+        
+        .btnBox{
+        	display: flex;
+        	gap: 8px;
+        }
     </style>
 
 </head>
@@ -370,11 +392,15 @@
 	                    <div class="postInfoBox">
 	                        <div class="postInfoUp">
 	                            <div class="profileName profileInfo" style=color:#5e361a;>${i.mem_nickname}</div>
+	                            <div class="profileName profileInfo" style=color:#5e361a;>${i.mem_dong}</div>
 	                        </div>
-	
+							
 	                        <div class="postInfoDown">
 	                            <div class="profileTime profileInfo" style=color:#5e361a;>${i.suggestion_writedate}</div>
 	                        </div>
+	                        <div class="btnBox">
+	                        	<input class="editBtn" type="button" value="수정"><input class="delBtn" type="button" value="삭제">
+	                    	</div>
 	                    </div>
 	
 		                    <div class="reportArea">
@@ -385,7 +411,9 @@
 	                               <option value="badWord" class="reportOption">욕설/비방</option>
 	                               <option value="AD" class="reportOption">광고/스팸</option>
 	                           	</select>
-		                        <input class="reportBtn" type="button" value="신고하기" data-seq="${i.suggestion_seq}" data-targetid="${i.mem_id}">
+	                           	
+		                        	<input class="reportBtn" type="button" value="신고하기" data-seq="${i.suggestion_seq}" data-targetid="${i.mem_id}">
+		                    	
 		                    </div>
 	                </div>
 	
@@ -425,7 +453,7 @@
         // container가 감시하고 있다가 postLikeBox가 눌리면 함수를 실행
         $(".postLikeBox").on("click", function () {
         	
-        	let btn = $(this).off("click");
+        	let btn = $(this);
         	// this : .postLikeBox 자기 자신
 			// ex) this는 그 5번째 게시글 안의 .postLikeBox가 됨.
 			// closest(".postBox") : 나를 감싸는 가장 가까운 .postBox를 찾아라
@@ -434,9 +462,9 @@
 			// suggestion_seq : 지금 클릭한 게시글 번호 들어감
 			let suggestion_seq = postDownBox.data("seq");
 			
-            let countSpan = $(this).find(".agreeCount");
-			
-			console.log("글번호:", suggestion_seq);
+            let likeCountSpan = btn.find(".agreeCount");
+            let unlikeBtn = postDownBox.find(".postCommentBox");
+            let unlikeCountSpan = unlikeBtn.find(".noCount");
         	
         	// jqeury의 ajax함수 시작
         	// 페이지 새로고침 없이 서버랑 통신하겠다는 의미
@@ -449,30 +477,64 @@
         		success: function(resp) { // 서버가 성공적으로 응답했을때, resp: 서버가 돌려준 결과값
         			console.log("서버응답:", resp);
         			
-        			// ⭐ 숫자 +1
-                    let current = Number(countSpan.text());
-                    countSpan.text(current + 1);
-                    
-                 	// 아이콘 변경 ⭐
-                    btn.find("i")
+        			if(resp == "login") {
+        			    alert("로그인 후 이용해주세요.");
+        			    location.href = "/members/loginUi";
+        			    return;
+        			}
+        			
+        			// ⭐ 숫자 증감
+        			if(resp == "liked") {
+        				let current = Number(likeCountSpan.text());
+        				likeCountSpan.text(current + 1);
+        				
+        				btn.find("i")
                        .removeClass("fa-regular")
                        .addClass("fa-solid")
                        .css("color", "#5e361a");
-
-                    // ⭐ 중복 클릭 방지
-                    btn.off("click");
-                },
+        			}
+        			else if(resp == "cancel") {
+        				let current = Number(likeCountSpan.text());
+        				likeCountSpan.text(current -1);
+        				
+        				btn.find("i")
+                        .removeClass("fa-solid")
+                        .addClass("fa-regular")
+                        .css("color", "#5e361a");
+        			}
+        			else if(resp == "change") {
+        				let likeCurrent = Number(likeCountSpan.text());
+        				likeCountSpan.text(likeCurrent + 1);
+        				
+        				let unlikeCurrent = Number(unlikeCountSpan.text());
+        				unlikeCountSpan.text(unlikeCurrent -1);
+        				
+        				btn.find("i")
+                        .removeClass("fa-regular")
+                        .addClass("fa-solid")
+                        .css("color", "#5e361a");
+        				
+        				unlikeBtn.find("i")
+                        .removeClass("fa-solid")
+                        .addClass("fa-regular")
+                        .css("color", "#5e361a");
+        			}
+               	},
             error: function() {
                 alert("에러 발생");
             }
         });	
     });
+    
+    // 싫어요 버튼
         	$(".postCommentBox").on("click", function(){
-        		let btn = $(this).off("click");
+        		let btn = $(this);
         		let postDownBox = $(this).closest(".postDownBox");
         		let suggestion_seq = postDownBox.data("seq");
-        		let countSpan = $(this).find(".noCount");
-        		console.log("글번호 :", suggestion_seq);
+        		
+        		let unlikeCountSpan = btn.find(".noCount");
+        		let likeBtn = postDownBox.find(".postLikeBox");
+        		let	likeCountSpan = likeBtn.find(".agreeCount");
         		
         		$.ajax({
         			url: "/feedback/unlike",
@@ -483,18 +545,50 @@
         			success: function(resp) {
         				console.log("서버응답", resp);
         				
-        				// ⭐ 숫자 +1
-                        let current = Number(countSpan.text());
-                        countSpan.text(current + 1);
-                        
-                     	// 아이콘 변경 ⭐
-                        btn.find("i")
+        				if(resp == "login") {
+        				    alert("로그인 후 이용해주세요.");
+        				    location.href = "/members/loginUi";
+        				    return;
+        				}
+        				
+        				// ⭐ 숫자 증감
+        				if(resp == "unliked") {
+        					let current = Number(unlikeCountSpan.text());
+        					unlikeCountSpan.text(current + 1);
+        					
+        					btn.find("i")
                            .removeClass("fa-regular")
                            .addClass("fa-solid")
                            .css("color", "#5e361a");
-
-                        // ⭐ 중복 클릭 방지
-                        btn.off("click");
+        				}
+                        
+        				else if(resp == "cancel") {
+        					let current = Number(unlikeCountSpan.text());
+        					unlikeCountSpan.text(current - 1);
+        					
+        					btn.find("i")
+                            .removeClass("fa-solid")
+                            .addClass("fa-regular")
+                            .css("color", "#5e361a");
+        				}
+        				
+        				else if(resp == "change") {
+        					let unlikeCurrent = Number(unlikeCountSpan.text());
+        					unlikeCountSpan.text(unlikeCurrent + 1);
+        					
+        					let likeCurrent = Number(likeCountSpan.text());
+        					likeCountSpan.text(likeCurrent - 1);
+        					
+        					btn.find("i")
+                            .removeClass("fa-regular")
+                            .addClass("fa-solid")
+                            .css("color", "#5e361a");
+        					
+        					likeBtn.find("i")
+                            .removeClass("fa-solid")
+                            .addClass("fa-regular")
+                            .css("color", "#5e361a");
+        				}
         			},
         			error: function(){
         				alert("에러 발생");
@@ -544,6 +638,10 @@
         $(".postLikeBox, .reportArea, .reportIcon, .reportSelect, .reportBtn").on("click", function (e) {
 		    e.stopPropagation();
 		});
+        
+        // 게시글 삭제
+        
+        
     </script>
 
 </body>

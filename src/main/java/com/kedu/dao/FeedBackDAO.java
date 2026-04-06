@@ -47,6 +47,18 @@ public class FeedBackDAO {
 		return jdbc.update(sql, suggestion_seq);
 	}
 	
+	//////// 좋아요 취소
+	public int minusLike(int suggestion_seq) {
+		String sql = "update suggestion set suggestion_like = suggestion_like -1 where suggestion_seq = ?";
+		return jdbc.update(sql, suggestion_seq);
+	}
+	
+	/////// 싫어요 취소
+	public int minusUnlike(int suggestion_seq) {
+		String sql = "update suggestion set suggestion_unlike = suggestion_unlike -1 where suggestion_seq = ?";
+		return jdbc.update(sql, suggestion_seq);
+	}
+	
 	// 신고
 	public String getWriterBySeq(int suggestion_seq) {
 	    String sql = "select mem_id from suggestion where suggestion_seq = ?";
