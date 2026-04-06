@@ -75,7 +75,7 @@ public class MeetingController {
 	public String meetCreateFrom(MeetingDTO dto, HttpSession session) throws Exception {
 		
 		String loginId = (String)session.getAttribute("loginId");
-		
+		String nickname = (String)session.getAttribute("nickname");
 		// 한 id당 모임 3개 이상 생성 금지
 		int count = dao.countMeetingByWriter(loginId);
 		
@@ -84,6 +84,7 @@ public class MeetingController {
 			return "redirect:/meeting/list?category=all";
 		}
 		dto.setMem_id(loginId);
+		dto.setMem_nickname(nickname);
 		dao.insert(dto);
 		
 		return "redirect:/meeting/list?category=all";
@@ -258,24 +259,13 @@ public class MeetingController {
 	
 	
 	
-	
+	// 마이페이지 모임 탭 (신청 관리)
 	@RequestMapping("/manageMeeting")
 	public String manageMeeting() throws Exception{
 		return "myPage/manageMeeting";
 	}
 	
-	@RequestMapping("/myMeetingList")
-	public String myMeetingList(HttpSession session, Model model) {
-
-	    String loginId = (String)session.getAttribute("loginId");
-
-	    List<MeetingDTO> list = dao.selectMyAllMeeting(loginId);
-
-	    model.addAttribute("list", list);
-
-	    return "myPage/myMeeting";
-	}
-	
+	// 마이페이지 모임 탭 (참여중인 모임)
 	@RequestMapping("/myMeeting")
 	public String myMeeting(HttpSession session, Model model) {
 
@@ -286,5 +276,23 @@ public class MeetingController {
 	    model.addAttribute("list", list);
 
 	    return "myPage/myMeeting";
+	}
+	
+	// 참여중인 모임 탭 > 자세히 보기 클릭 시
+	@RequestMapping("/myMeetingDetail")
+	public String myMeetingDetail(int seq, Model model) throws Exception{
+		
+		List<MeetingDTO> list = dao.selectBySeq(seq);
+		
+		model.addAttribute("list", list);
+		
+		return "myPage/myMeetingDetail";
+	}
+	
+	// 참여중인 모임 탭 > 모임 삭제 버튼 클릭 시
+	@RequestMapping("/deleteMeeting")
+	public int deleteMeeting(int seq, int status) throws Exception{
+		
+		return dao.deleteMeeting(seq, status);
 	}
 }

@@ -30,10 +30,11 @@ public class MeetingMemberController {
 	// 한 줄 소개 db에 넣기
 	@RequestMapping("/insert")
 	public String insert(MeetingMemberDTO dto, HttpSession session) throws Exception {
-		
+		session.setAttribute("nickName", dto.getMem_nickname());
 		String loginId = (String)session.getAttribute("loginId");
-		dto.setMem_id(loginId);
 		
+		
+		dto.setMem_id(loginId);
 		dao.insert(dto);
 		
 		return "meeting/applySuccess";
@@ -215,5 +216,12 @@ public class MeetingMemberController {
 	public int updateStatus(int seq, int status) {
 
 	    return dao.updateStatus(seq, status);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/completeList")
+	public List<ManageMeetingDTO> completeList(HttpSession session) {
+	    String loginId = (String)session.getAttribute("loginId");
+	    return dao.selectCompleteList(loginId);
 	}
 }
