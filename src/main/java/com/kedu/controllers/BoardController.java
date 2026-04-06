@@ -59,7 +59,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/write")
-	public String write_lifeInfo() {
+	public String write_lifeInfo(HttpSession session) {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		if(loginId == null) {
+			return "redirect:/members/loginUi";
+		}
+		
 		return "board/write";
 	}
 	
