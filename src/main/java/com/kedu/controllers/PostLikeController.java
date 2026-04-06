@@ -24,36 +24,44 @@ public class PostLikeController {
 	@Autowired
 	private PostLikeDAO LikeDao;
 
-	@ResponseBody // 좋아요 숫자 +-1 반영
+	@ResponseBody // 좋아요 토글 반영(하트 채우고, 비우고)
 	@RequestMapping("/toggle")
 	public int likeToggle(int post_seq, HttpSession session) {
 
 		String loginId = (String)session.getAttribute("loginId");
-//		if(loginId == null) { // 비로그인시 하트 누르면 에러를 유발하는거라고 하는데 필요 없을 듯.
-//			return -1;
-//		}
 		
-		// 이미 좋아요를 눌렀는지 DB에서 확인 (count(*)쿼리)
-		int isLike = LikeDao.likeCheck(post_seq, loginId);
-		System.out.println(isLike);
+		if(loginId == null) { // 비로그인시 하트 누르면 로그인 화면으로 돌려보낼거임.
+			return -1;
+		}
+		try {
+			// 이미 좋아요를 눌렀는지 DB에서 확인 (count(*)쿼리)
+			int isLike = LikeDao.likeCheck(post_seq, loginId);
+			int count = LikeDao.likeCount(post_seq); // 현재 총 누른 하트 수
 		
-		return 0;
+			if(isLike == 0) { // 좋아요를 누른 적이 없으면, 
+				LikeDao.likeInsert(post_seq, loginId);
+				dao.updateLikeCount(count, post_seq);
+				return 1;
+			}else {
+				LikeDao.likeDelete(post_seq, loginId);
+				dao.updateLikeCount(count, post_seq);	
+				return 0;
+			}
 		
-//		if(isLike == 0) {
-//			
-//			int result = dao.setLike(post_seq, loginId);
-//			return 1;
-//			
-//		}else {
-//			int result = dao.deleteLike(post_seq, loginId);
-//			
-//			return 0;
-//		}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -2; //서버 에러
+		}
+	}
 
-
+	@ResponseBody // 좋아요 숫자 +-1 반영
+	@RequestMapping("/count")
+	public int likeCount(int post_seq) {
 		
-	};
-
-
+		int count = LikeDao.likeCount(post_seq);
+		System.out.println("하트 총 카운트 수: "+ count);
+		
+		return count;
+	}
 
 }
