@@ -31,7 +31,14 @@ public class FeedBackController {
 	
 	// 건의사항 작성글 출력
 	@RequestMapping("/feedbackHome")
-	public String feedbackHome(Model model) throws Exception {
+	public String feedbackHome(Model model, HttpSession session) throws Exception {
+		
+		// 홈에서 비회원일 경우, 로그인 페이지로 보냄
+		String loginId = (String)session.getAttribute("loginId");
+		
+		if(loginId == null) {
+			return "redirect:/members/login";
+		}
 		
 		List<FeedBackDTO> list = dao.list();
 		
@@ -48,6 +55,8 @@ public class FeedBackController {
 	// 건의사항 작성 db 입력
 	@RequestMapping("/feedbackInsert")
 	public String feedbackWrite(FeedBackDTO dto, HttpSession session) throws Exception {
+		
+		if(dto.getSuggestion_title().trim().equals("")) return "redirect:/feedback/feedbackWrite";
 		
 		String nickname = (String)session.getAttribute("nickname");
 		String dong = (String)session.getAttribute("dong");
