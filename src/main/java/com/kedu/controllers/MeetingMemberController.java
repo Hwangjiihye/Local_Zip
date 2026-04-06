@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kedu.dao.MeetingDAO;
 import com.kedu.dao.MeetingMemberDAO;
 import com.kedu.dto.ManageMeetingDTO;
 import com.kedu.dto.MeetingMemberDTO;
@@ -201,7 +202,9 @@ public class MeetingMemberController {
 	
 	
 	
-
+	@Autowired 
+	MeetingDAO mdao;
+	
 	@ResponseBody
 	@RequestMapping("/applyList")
 	public List<ManageMeetingDTO> applyList(HttpSession session) {
@@ -214,7 +217,12 @@ public class MeetingMemberController {
 	@ResponseBody
 	@RequestMapping("/updateStatus")
 	public int updateStatus(int seq, int status) {
-
+		
+		if(status == 1) {
+			mdao.currentUpdate(seq);
+		}else if(status == 2) {
+			mdao.currentDelete(seq);
+		}
 	    return dao.updateStatus(seq, status);
 	}
 	
