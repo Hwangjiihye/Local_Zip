@@ -205,6 +205,7 @@ public class MeetingMemberController {
 	@Autowired 
 	MeetingDAO mdao;
 	
+	// 승인 대기 중인 리스트 출력
 	@ResponseBody
 	@RequestMapping("/applyList")
 	public List<ManageMeetingDTO> applyList(HttpSession session) {
@@ -214,6 +215,7 @@ public class MeetingMemberController {
 	    return dao.selectApplyList(loginId);
 	}
 	
+	// 요청 승인, 거절 처리
 	@ResponseBody
 	@RequestMapping("/updateStatus")
 	public int updateStatus(int seq, int status) {
@@ -226,6 +228,16 @@ public class MeetingMemberController {
 	    return dao.updateStatus(seq, status);
 	}
 	
+	// 모임 탈퇴 클릭 시
+	@ResponseBody
+	@RequestMapping("/outMeeting")
+	public int outMeeting(HttpSession session, int seq) throws Exception{
+		
+		String loginId = (String)session.getAttribute("loginId");
+		return dao.outMeeting(loginId, seq);
+	}
+	
+	// 처리 완료된 리스트 출력
 	@ResponseBody
 	@RequestMapping("/completeList")
 	public List<ManageMeetingDTO> completeList(HttpSession session) {

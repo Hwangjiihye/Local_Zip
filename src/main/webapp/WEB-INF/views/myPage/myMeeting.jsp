@@ -367,6 +367,20 @@
 				});
 				
 			});
+			
+			// 모임 탈퇴 버튼 클릭 시
+			$(document).on("click",".outBtn",function(){
+				let seq = $(this).closest(".meeting-card").data("seq");
+				if(!confirm("정말로 탈퇴하시겠습니까?")){
+					return;
+				}
+				$.ajax({
+					url:"/meetingMember/outMeeting",
+					data:{seq: seq}
+				}).done(function(){
+					location.reload();
+				})
+			})
 	</script>
 </body>
 </html>

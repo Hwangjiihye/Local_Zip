@@ -197,6 +197,9 @@ public class MeetingMemberDAO {
 	
 	
 	
+	
+	
+	// 승인 대기 중인 리스트 출력
 	public List<ManageMeetingDTO> selectApplyList(String loginId) {
 
 	    String sql =
@@ -216,6 +219,7 @@ public class MeetingMemberDAO {
 	    return jdbc.query(sql,new BeanPropertyRowMapper<ManageMeetingDTO>(ManageMeetingDTO.class),loginId);
 	}
 	
+	// 요청 승인/거절 시 처리
 	public int updateStatus(int meetmem_seq, int status) {
 
 	    String sql = "update meeting_member set meetmem_status = ? where meetmem_seq = ?";
@@ -223,6 +227,15 @@ public class MeetingMemberDAO {
 	    return jdbc.update(sql, status, meetmem_seq);
 	}
 	
+	// 모임 탈퇴 시 처리
+	public int outMeeting(String loginId, int seq) {
+		
+		String sql = "delete from meeting_member where mem_id = ? and meet_seq = ?";
+		
+		return jdbc.update(sql, loginId, seq);
+	}
+	
+	// 승인 요청 처리 완료된 리스트 출력
 	public List<ManageMeetingDTO> selectCompleteList(String loginId) {
 
 	    String sql =
