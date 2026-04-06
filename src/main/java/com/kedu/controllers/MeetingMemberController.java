@@ -26,7 +26,8 @@ public class MeetingMemberController {
 	public MeetingMemberDAO dao;
 	
 	@RequestMapping("/applyForm")
-	public String applyform(int meet_seq, Model model) {
+	public String applyform(int meet_seq, Model model, HttpSession session) {
+		session.setAttribute("meet_seq", meet_seq);
 		model.addAttribute("meet_seq", meet_seq);
 		return "meeting/applyForm";
 	}
@@ -35,7 +36,10 @@ public class MeetingMemberController {
 	@RequestMapping("/insert")
 	public String insert(MeetingMemberDTO dto, HttpSession session) throws Exception {
 		session.setAttribute("nickName", dto.getMem_nickname());
+		
 		String loginId = (String)session.getAttribute("loginId");
+		Integer meet_seq = (Integer)session.getAttribute("meet_seq");
+		System.out.println("meet_seq : " + meet_seq);
 		
 		
 		dto.setMem_id(loginId);
@@ -43,8 +47,7 @@ public class MeetingMemberController {
 		
 		return "meeting/applySuccess";
 	}
-	
-	
+
 	
 	
 	

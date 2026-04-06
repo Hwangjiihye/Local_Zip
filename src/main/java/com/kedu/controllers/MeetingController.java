@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.MeetingDAO;
+import com.kedu.dao.MeetingMemberDAO;
 import com.kedu.dto.MeetingDTO;
 
 @Controller
@@ -24,6 +25,9 @@ public class MeetingController {
 	
 	@Autowired
 	public MeetingDAO dao;
+	
+	@Autowired
+	public MeetingMemberDAO mdao;
 	
 	// 모임 신청 폼 출력
 	@RequestMapping("/list")
@@ -76,14 +80,25 @@ public class MeetingController {
 		model.addAttribute("appliedSet", appliedSet);
 		model.addAttribute("joinedSet", joinedSet);
 		model.addAttribute("companionSet", companionSet);
+		
+		session.setAttribute("cPage", cpage);
+		model.addAttribute("cPage", cpage);
 		return "meeting/meeting";
 	}
 	
 	@RequestMapping("/meetingDetail") // meeting 디테일 jsp로 이동
-	public String meetingCreateForm(@RequestParam int seq, Model model) throws Exception{
-		System.out.println(seq);
+	public String meetingCreateForm(@RequestParam int seq, String mem_id, Model model, HttpSession session) throws Exception{
 		List<MeetingDTO> list = dao.selectBySeq(seq);
+		model.addAttribute("meet_seq", seq);
+		
+		String loginId = (String)session.getAttribute("loginId");
 		model.addAttribute("list", list);
+			
+		mdao.selectByStatus(seq, loginId);
+		session.setAttribute("count", mdao.selectByStatus(seq, loginId));
+		session.setAttribute("admin", mdao.adminCheck(loginId));
+		session.setAttribute("host", mdao.hostCheck(seq, loginId));
+		
 		return "meeting/meetingDetail";
 	}
 	
