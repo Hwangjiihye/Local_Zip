@@ -314,7 +314,7 @@
 		
 			let card = $(this).closest(".meeting-card");
 			let seq = card.data("seq");
-			let meetSeq = card.data("meetSeq");
+			let meetSeq = card.data("meet_seq");
 		
 		    $.ajax({
 		        url:"/meetingMember/updateStatus",
