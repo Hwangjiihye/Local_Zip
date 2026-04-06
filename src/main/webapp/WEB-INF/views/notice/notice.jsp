@@ -191,7 +191,7 @@ body, html {
 		<c:choose>
 			<c:when test="${not empty list}">
 				<c:forEach var="i" items="${list}">
-				<div class="postBox" onclick="location.href='https://www.naver.com'">
+				<div class="postBox" onclick="location.href='/notice/toNoticeDetail'">
 					<input type="hidden" name="notice_seq" value="${i.notice_seq}">
 					<div class="postHeader">${i.notice_date}</div>
 					<div class="postBody">
