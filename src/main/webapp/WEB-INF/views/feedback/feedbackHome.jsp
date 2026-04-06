@@ -386,7 +386,7 @@
 	                               <option value="badWord" class="reportOption">욕설/비방</option>
 	                               <option value="AD" class="reportOption">광고/스팸</option>
 	                           	</select>
-		                        <input class="reportBtn" type="submit" value="신고하기">
+		                        <input class="reportBtn" type="button" value="신고하기" data-seq="${i.suggestion_seq}">
 		                    </div>
 						</form>
 	
@@ -418,7 +418,7 @@
 		 <div class="bottomBox">
             <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/meeting/ㅣlist?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+            <a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
         </div>
@@ -470,7 +470,6 @@
             }
         });	
     });
-        	
         	$(".postCommentBox").on("click", function(){
         		let btn = $(this).off("click");
         		let postDownBox = $(this).closest(".postDownBox");
@@ -509,6 +508,43 @@
         // 신고버튼을 눌렀을 때, 내가 누른 게시글 신고버튼만 눌림
         $(".reportIcon").on("click", function () {
         	$(this).siblings(".reportSelect, .reportBtn").css({"display" : "inline"});
+        })
+        
+        //
+        $(".reportBtn").on("click", function(e){
+        	 e.preventDefault();
+        	 
+        	let target_seq = $(this).data("seq");
+        	let reports_type = $(this).closest(".postBox").find(".reportSelect").val();
+
+            console.log("target_seq :", target_seq);
+            console.log("reports_type :", reports_type);
+            
+        	$.ajax({
+        		url:"/report/insert",
+        		type:"post",
+        		data: {
+        			target_seq: target_seq,
+                    reports_type: reports_type
+        		},
+        		success: function(resp) {
+        			 if(resp === "success") {
+        	                alert("신고가 접수되었습니다.");
+        	            } else if(resp === "fail") {
+        	                alert("이미 신고한 글입니다.");
+        	            } else if(resp === "login") {
+        	                location.href = "/members/loginUi";
+        	            } else {
+        	                alert("신고 실패");
+        	            }
+                },
+                error: function(xhr, status, error) {
+                    console.log("status :", xhr.status);
+                    console.log("responseText :", xhr.responseText);
+                    console.log("error :", error);
+                    alert("에러 발생");
+                }
+        	})
         })
         
         // 좋아요 버튼, 신고버튼 클릭 시에는 페이지 이동 X
