@@ -66,7 +66,7 @@ public class HomeController {
 			// post_seq를 기준으로 post_likeDAO에서 count된 개수를 세야할거 같음.
 
 			// System.out.println("해당 게시글에 좋아요 수 :" + like.size());
-			System.out.println("해당 게시글에 댓글 수 :" + commentCount);
+			// System.out.println("해당 게시글에 댓글 수 :" + commentCount);
 
 		}
 		//--------------------------------------------------------------
