@@ -753,7 +753,7 @@ hr {
 				
 				$(".replyUpBox, .hr").remove(); // 기존 댓글 목록 비우기,(새로 등록된 것까지 포함해서 다시 그려야 하므로)
 				
-				for(let i of resp){
+				for(let i of resp){ // 댓글 for문 돌리면서 뽑기.
 						let replyUpBox = $("<div>").addClass("replyUpBox");
 						
 						let replyProfileBox = $("<div>").addClass("replyProfileBox");
@@ -804,7 +804,11 @@ hr {
 								$("<option>").addClass("reportOption").html("욕설/비방").val("badWord"),
 								$("<option>").addClass("reportOption").html("광고/스팸").val("AD")
 							);
-							let reportBtn = $("<input>").attr("type","button").addClass("reportBtn").val("신고하기");
+							let reportBtn = $("<input>").attr("type","button")
+														.addClass("reportBtn")
+														.val("신고하기")
+														.attr("data-target_id", i.mem_id) // 신고시 controller에 보낼 id
+														.attr("data-reply_seq", i.reply_seq); // 신고 버튼시 사용할 seq 미리 부여
 							
 							reportArea.append(reportIcon, reportSelect, reportBtn);
 							replyInfoUp.append(reportArea);
@@ -835,10 +839,44 @@ hr {
             $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
         });
 
-        // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
+        // 신고 아이콘을 눌렀을 때, 신고 사유가 튀어나오게
         $(document).on("click", ".reportIcon", function () {
 		    $(this).siblings(".reportSelect").css("display", "inline");
 		    $(this).siblings(".reportBtn").css("display", "inline");
+		});
+
+		// [댓글 신고하기] 버튼 클릭 시 (동적 요소이므로 document 위임 방식 사용)
+		$(document).on("click", ".reportBtn", function() {
+			
+		    let btn = $(this); // 클릭한 버튼(신고하기)
+		    let target_id = btn.attr("data-target_id"); // 작성자의 id값 가져오기
+		    let reply_seq = btn.attr("data-reply_seq"); // 댓글 번호
+		    let report_reason = btn.siblings(".reportSelect").val(); // 선택한 신고 사유 값 저장.
+		    
+		    
+
+		    if(!report_reason) {
+		        alert("신고 사유를 선택해주세요.");
+		        return;
+		    }
+		
+		    if(confirm("이 댓글을 신고하시겠습니까?")) {
+		        $.ajax({
+		            url: "/report/insert", // 서버의 신고 처리 컨트롤러 주소
+		            type: "post",
+		            data: {
+		            	target_id: target_id,
+		                reply_seq: reply_seq,
+		                reports_reason: report_reason
+		            }
+		        }).done(function(resp) {
+		            alert("신고가 접수되었습니다.");
+		            btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
+		            btn.siblings(".reportSelect").hide();
+		        }).fail(function() {
+		            alert("신고 처리 중 오류가 발생했습니다.");
+		        });
+		    }
 		});
         
         $(".newReply").on("input", function(){
@@ -846,6 +884,8 @@ hr {
 		    this.style.height = this.scrollHeight + "px";  // 내용만큼 늘림
 		});
         
+        
+        // 댓글 등록 버튼을 눌렀을 때, ajax
         $(".applyBtn").on("click",function(){
         	
         	let reply = $(".newReply").val();
@@ -862,8 +902,16 @@ hr {
                     post_seq: post_seq
         		},
         		type:"post"
-        	}).done(function(){
-        		location.reload();
+        	}).done(function(resp){ // 입력 성공시
+        		$(".newReply").val(""); // 입력창 비우고,
+        		
+        		let countElement = $(".commentCount"); // 카운트한 값이 들어있는 div
+        		let currentCount = parseInt(countElement.text()); // div에 값만 빼와서 남기.
+        		
+        		countElement.text(currentCount + 1); // div에 기존값 + 1로 화면에 보여주기용
+        		
+        		loadReplyList(); // 댓글 목록 다시 불러오기. -> location.reload() 대신 사용
+        		
         	})
         	
         	console.log(post_seq);

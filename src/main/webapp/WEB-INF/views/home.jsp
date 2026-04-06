@@ -385,7 +385,7 @@ body, html {
 	display: none;
 	position: absolute;
 	top: 60px;
-	left: 28px;
+	left: 20px;
 	width: 90px;
 }
 

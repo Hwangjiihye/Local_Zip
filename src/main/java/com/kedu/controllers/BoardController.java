@@ -144,7 +144,7 @@ public class BoardController {
 		return "success";
 	}
 	
-	// 댓글 리스트 출력
+	// ajax 댓글 리스트 출력
 	@ResponseBody
 	@RequestMapping("/replyList")
 	public String replyList(int post_seq) {
