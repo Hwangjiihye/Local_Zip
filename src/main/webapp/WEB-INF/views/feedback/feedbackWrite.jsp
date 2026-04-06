@@ -247,7 +247,7 @@
 				<div class="titleDiv">
 					<div class="title">제목</div>
 					<div class="titleContent">
-						<input name="suggestion_title" class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
+						<input id="title" name="suggestion_title" class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
 					</div>
 					
 				</div>
@@ -263,18 +263,33 @@
 	
 				<div class="TextDiv">
 					<div class="TextTitle">내용</div>
-					<textarea name="suggestion_contents" class="TextDetail" type="text" placeholder="내용을 작성해주세요" maxlength="1000" style="border: #fbe5c0"></textarea>
+					<textarea id="contents" name="suggestion_contents" class="TextDetail" type="text" placeholder="내용을 작성해주세요" maxlength="1000" style="border: #fbe5c0"></textarea>
 				</div>
 	
 			</div>
 				<div class="bottomBtn">
-					<button class="requestBtn" type="submit">작성 완료</button>
+					<button id="writeBtn" class="requestBtn" type="submit">작성 완료</button>
 					<a href="/feedback/feedbackHome"><button class="backBtn" type="button">뒤로가기</button></a>
 				</div>
 		</form>
 	</div>
 	<script>
 		
+		$(".requestBtn").on("click", function(){
+			
+			let title = document.getElementById("title").value;
+			
+			if(title == null) {
+				alert("제목을 작성해주세요");
+			} 
+			else if(contents == null) {
+				alert("내용을 작성해주세요")
+			}
+		})
+	
+	
+	
+	
 		// submit 전 공백에 대한 안내메시지
 		/* $(".frm").on("submit",function(){
 			

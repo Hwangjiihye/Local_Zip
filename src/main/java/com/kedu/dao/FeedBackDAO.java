@@ -3,12 +3,12 @@ package com.kedu.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.FeedBackDTO;
+import com.kedu.dto.ReportDTO;
 
 @Repository
 public class FeedBackDAO {
@@ -47,5 +47,9 @@ public class FeedBackDAO {
 		return jdbc.update(sql, suggestion_seq);
 	}
 	
-	
+	// 신고
+	public String getWriterBySeq(int suggestion_seq) {
+	    String sql = "select mem_id from suggestion where suggestion_seq = ?";
+	    return jdbc.queryForObject(sql, String.class, suggestion_seq);
+	}
 }
