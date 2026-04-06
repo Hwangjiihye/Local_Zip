@@ -90,4 +90,14 @@ public class MembersDAO {
 		String sql = "delete from members where mem_id=?";
 		return jdbc.update(sql, mem_id);
 	}
+	
+	// 마이페이지 모임 개수 출력
+	public int meetingCount(String loginId) {
+		String sql = 
+				"select count(distinct m.meet_seq) " +
+				"from meeting m left join meeting_member mm on m.meet_seq = mm.meet_seq " +
+				"where (mm.mem_id = ? and mm.meetmem_status = 1 and m.meet_status in (0,1)) " +
+				"or (m.mem_id = ? and m.meet_status in (0,1))";
+		return jdbc.queryForObject(sql, Integer.class, loginId, loginId);
+	}
 }
