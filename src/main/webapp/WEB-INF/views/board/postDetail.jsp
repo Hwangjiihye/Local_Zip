@@ -851,9 +851,8 @@ hr {
 		    let btn = $(this); // 클릭한 버튼(신고하기)
 		    let target_id = btn.attr("data-target_id"); // 작성자의 id값 가져오기
 		    let reply_seq = btn.attr("data-reply_seq"); // 댓글 번호
+		    let reports_type = 1; // 신고 종류(댓글)
 		    let report_reason = btn.siblings(".reportSelect").val(); // 선택한 신고 사유 값 저장.
-		    
-		    
 
 		    if(!report_reason) {
 		        alert("신고 사유를 선택해주세요.");
@@ -867,6 +866,7 @@ hr {
 		            data: {
 		            	target_id: target_id,
 		                reply_seq: reply_seq,
+		                reports_type: reports_type,
 		                reports_reason: report_reason
 		            }
 		        }).done(function(resp) {
