@@ -48,9 +48,21 @@ public class ReplyDAO {
 	};
 	
 	// 좋아요 버튼을 다시 눌러서 취소했을 때, 취소된 기록을 보여주기 위한 메서드
-	public int deleteLike() {
-		String sql = "";
-		return jdbc.update(sql);
+	public int deleteLike(int post_seq) {
+		String sql = "delete from post_like where post_seq = ?";
+		return jdbc.update(sql, post_seq);
+	};
+	
+	// 좋아요 여부 확인용 메서드
+	public int likeCheck(int post_seq, String mem_id) {
+		String sql = "select count(*) from post_like where post_seq = ? and mem_id = ?";
+		return jdbc.queryForObject(sql, Integer.class, post_seq, mem_id);
+	};
+	
+	// 좋아요 수 출력 메서드
+	public int likeCount(int post_seq) {
+		String sql = "select count(*) from post_like where post_seq = ?";
+		return jdbc.queryForObject(sql, Integer.class, post_seq);
 	};
 	
 }
