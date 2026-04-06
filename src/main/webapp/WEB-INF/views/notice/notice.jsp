@@ -103,7 +103,9 @@ body, html {
 	overflow: hidden;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
-
+.postBox:hover{
+	cursor: pointer;
+}
 .postHeader {
 	background-color: #F2D3A2;
 	padding: 10px 15px;
@@ -118,25 +120,9 @@ body, html {
 
 .rowItem1 {
 	border: 0px solid #ccc;
-	margin-bottom: 10px;
 	padding: 10px;
 	border-radius: 5px;
 	background-color: #F2D3A2;
-}
-
-.rowItem2 {
-	border: 0px solid #ccc;
-	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-	margin-bottom: 10px;
-	padding: 10px;
-	border-radius: 5px;
-}
-
-.labelName {
-	font-size: 12px;
-	color: #5e361a;;
-	display: block;
-	margin-bottom: 5px;
 }
 
 .titleContent {
@@ -152,20 +138,6 @@ body, html {
 	color: #5e361a;
 }
 
-/* 답변 영역 (와이어프레임의 하단 칸) */
-.answerBox {
-	background-color: #F2D3A2;
-	border-top: 1px solid #A66A3F;
-	padding: 15px;
-	color: #5e361a;
-}
-
-.answerLabel {
-	font-weight: bold;
-	color: #5e361a;
-	margin-bottom: 5px;
-	display: block;
-}
 
 /* 하단 페이지네이션 */
 .pageBox {
@@ -181,22 +153,7 @@ body, html {
 	cursor: pointer;
 }
 
-/* 글쓰기 버튼 */
-.writeBtn {
-	position: fixed;
-	right: 30px;
-	bottom: 90px;
-	width: 60px;
-	height: 60px;
-	border-radius: 50%;
-	background-color: #A66A3F;
-	border: none;
-	color: white;
-	font-size: 30px;
-	cursor: pointer;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	z-index: 999;
-}
+
 
 /* 하단바 */
 .bottomBox {
@@ -236,16 +193,12 @@ body, html {
 		<c:choose>
 			<c:when test="${not empty list}">
 				<c:forEach var="i" items="${list}">
-				<div class="postBox">
-					<div class="postHeader">작성일자 : ${i.qa_create_date}</div>
+				<div class="postBox" onclick="location.href='/notice/toNoticeDetail?notice_seq=${i.notice_seq}'">
+					<input type="hidden" name="notice_seq" value="${i.notice_seq}">
+					<div class="postHeader">${i.notice_date}</div>
 					<div class="postBody">
 						<div class="rowItem1">
-							<span class="labelName">제목</span>
-							<div class="titleContent">${i.qa_title}</div>
-						</div>
-						<div class="rowItem2">
-							<span class="labelName">내용</span>
-							<div class="textContent">${i.qa_contents}</div>
+							<div class="titleContent">${i.notice_title}</div>
 						</div>
 					</div>
 				</div>
@@ -260,12 +213,6 @@ body, html {
 			 <span class="page"></span>
 		</div>
 		
-		<c:if test="${role==0}">
-		<button class="writeBtn" type="button"
-			onclick="location.href='/qa/toWrite'">
-			<i class="fa-solid fa-pencil"></i>
-		</button>
-		</c:if>
 		<div class="bottomBox">
 			<a href="/"><i class="fa-solid fa-house fa-2xl"></i></a>
 			<a href="/map/test"><i class="fa-solid fa-map-location-dot fa-2xl"></i></a>
@@ -276,7 +223,7 @@ body, html {
 	</div>
 	<script>
 	let recordTotalCount = ${totalCount};
-	let recordCountPerPage = 5;
+	let recordCountPerPage = 10;
 	let naviCountPerPage = 5;
 	let currentPage = ${cPage};
 
@@ -300,7 +247,7 @@ body, html {
 	
 	if(needPrev) {
 		let prev = $("<a>"); 
-		prev.attr("href", "/qa/toQa?cPage="+(startNavi-1)); 
+		prev.attr("href", "/notice/toNotice?cPage="+(startNavi-1)); 
 		prev.html("<i class='fa-solid fa-chevron-left'></i>");
 		$(".page").append(prev);
 	}else{
@@ -309,7 +256,7 @@ body, html {
 		
 	for(let i = startNavi; i <= endNavi; i++) {
 		let navi = $("<a>");
-		navi.attr("href", "/qa/toQa?cPage="+i);
+		navi.attr("href", "/notice/toNotice?cPage="+i);
 		navi.html(i + " ");
 		if (i === currentPage) {
 	        navi.css({"font-weight": "bold"}); 
@@ -318,7 +265,7 @@ body, html {
 	}
 	if(needNext) {
 		let next = $("<a>");
-		next.attr("href", "/qa/toQa?cPage="+(endNavi+1));
+		next.attr("href", "/notice/toNotice?cPage="+(endNavi+1));
 		next.html("<i class='fa-solid fa-chevron-right'></i>");
 		$(".page").append(next);
 	}else{
