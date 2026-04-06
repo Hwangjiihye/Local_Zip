@@ -50,7 +50,8 @@ public class MeetingDAO {
 	
 	public List<MeetingDTO> selectAllByPage(int start, int end) { // + 게이지바 포함
 		String sql = "select * from (select row_number() over(order by m.meet_seq desc) rn, "
-				+ "m.meet_seq, m.meet_maxpeople, m.meet_currentpeople, (select count(*) from meeting_member mm "
+				+ "m.meet_seq, m.mem_nickname, m.meet_title, m.meet_category, "
+				+ "m.meet_introcontents, m.meet_maxpeople, m.meet_currentpeople, (select count(*) from meeting_member mm "
 				+ "where mm.meet_seq = m.meet_seq "
 				+ "and mm.meetmem_status = 1 ) "
 				+ "as meet_allpeople from meeting m) where rn between ? and ?";
@@ -89,6 +90,15 @@ public class MeetingDAO {
 		return jdbc.queryForList(sql, loginId);
 	}
 	
+	public int currentUpdate(int meet_seq) { // 모임 승인시 참여인원 1 증가
+		String sql = "update meeting set meet_currentpeople = meet_currentpeople + 1 where meet_seq = ?";
+		return jdbc.update(sql,meet_seq);
+	}
+	
+	public int currentDelete(int meet_seq) { // 모임 거절시 참여인원 1 감소
+		String sql = "update meeting set meet_currentpeople = meet_currentpeople - 1 where meet_seq = ?";
+		return jdbc.update(sql,meet_seq);
+	}
 	
 	
 	

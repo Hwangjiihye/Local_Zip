@@ -458,7 +458,7 @@ body {
 			</div>
 		</div>
 			
-			<c:forEach var="i" items="${list}">	
+			<c:forEach var="i" items="${list}">
 				<div class="meeting-card" data-seq="${i.meet_seq}" data-writer="${i.mem_id}">
 					<div class="card-header">
 						<div class="title">${i.meet_title}</div>
@@ -593,7 +593,7 @@ body {
 			    location.href = "/meeting/meetingDetail?seq=" + seq;
 			});
 			
-			$(document).on("click", ".join-btn, .reportBtn, .reportIcon", ".joinTwo-btn", function (e) {
+			$(document).on("click", ".join-btn, .reportBtn, .reportIcon, .joinTwo-btn", function (e) {
 				e.stopPropagation();
 			});
 			
