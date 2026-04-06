@@ -47,7 +47,7 @@ public class FeedBackController {
 			return "redirect:/members/login";
 		}
 		
-		List<FeedBackDTO> list = dao.list();
+		List<FeedBackDTO> list = dao.list(loginId);
 		
 		model.addAttribute("list", list);
 		
@@ -149,37 +149,6 @@ public class FeedBackController {
 			return "change";
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-//	// 좋아요 버튼
-//	@ResponseBody
-//	@RequestMapping("/like")
-//	public String like(int suggestion_seq) {
-//		System.out.println("컨트롤러 들어옴");
-//	    System.out.println("받은 글번호: " + suggestion_seq);
-//
-//	    int result = dao.plusLike(suggestion_seq);
-//	    System.out.println("update 결과: " + result);
-//	    return "like";
-//	}
-//	
-//	// 싫어요 버튼
-//	@ResponseBody
-//	@RequestMapping("/unlike")
-//	public String unlike(int suggestion_seq) {
-//		System.out.println("컨트롤러 들어옴");
-//		System.out.println("받은 글번호:" + suggestion_seq);
-//		
-//		int result = dao.plusUnLike(suggestion_seq);
-//		System.out.println("update 결과 : " + result);
-//		return "unlike";
-//	}
 	
 	// 신고
 	@ResponseBody
