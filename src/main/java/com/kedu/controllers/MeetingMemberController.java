@@ -47,7 +47,13 @@ public class MeetingMemberController {
 	
 	
 	
-	
+	@Autowired 
+	MeetingDAO mdao;	
+//		if(status == 1) {
+//			mdao.currentUpdate(seq);
+//		}else if(status == 2) {
+//			mdao.currentDelete(seq);
+//		}
 	
 	
 	
@@ -202,8 +208,7 @@ public class MeetingMemberController {
 	
 	
 	
-	@Autowired 
-	MeetingDAO mdao;
+	
 	
 	// 승인 대기 중인 리스트 출력
 	@ResponseBody
@@ -219,12 +224,7 @@ public class MeetingMemberController {
 	@ResponseBody
 	@RequestMapping("/updateStatus")
 	public int updateStatus(int seq, int status) {
-		
-		if(status == 1) {
-			mdao.currentUpdate(seq);
-		}else if(status == 2) {
-			mdao.currentDelete(seq);
-		}
+
 	    return dao.updateStatus(seq, status);
 	}
 	
