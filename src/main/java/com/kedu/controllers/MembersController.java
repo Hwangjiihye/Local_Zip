@@ -111,9 +111,14 @@ public class MembersController {
 	
 	// 마이페이지 아이콘 클릭 시
 	@RequestMapping("/mypage")
-	public String mypage(HttpSession session) {
+	public String mypage(HttpSession session, Model model) {
 		session.getAttribute("nickname");
-		if(session.getAttribute("loginId") == null) {
+		String loginId = (String)session.getAttribute("loginId");
+		
+		int meetingCount = dao.meetingCount(loginId);
+		model.addAttribute("meetingCount",meetingCount);
+		
+		if(loginId == null) {
 			return "redirect:/members/loginUi";
 		}
 		Integer role = (Integer) session.getAttribute("role");
@@ -128,7 +133,7 @@ public class MembersController {
 	
 	// 마이페이지 > 내 정보 버튼 클릭 시
 	@RequestMapping("/myInfo")
-	public String mypage(HttpSession session, Model model) throws Exception{
+	public String myInfo(HttpSession session, Model model) throws Exception{
 		String id = (String)session.getAttribute("loginId");
 		MembersDTO list = dao.selectAll(id);
 		

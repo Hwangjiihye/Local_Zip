@@ -292,7 +292,7 @@
 		    		<div class="myClubIcon"><img src="/resources/images/people.png" class="icon"></div>
 		    		<div class="myClubContents">
 			    		<div class="myClubTitle">모임</div>
-			    		<div class="myClubNum">3</div>
+			    		<div class="myClubNum">${meetingCount }</div>
 			    	</div>
 		    	</div>
 		    </a>	
@@ -301,7 +301,7 @@
 	    <div class="FAQTitle">· 고객센터</div>
 	    <div class="FAQDiv">
 	    	<a href="/qa/toQa?cPage=1"><div class="CS">고객지원 ></div></a>
-	    	<div class="notice">공지사항 ></div>
+	    	<a href="/notice/toNotice?cPage=1"><div class="notice">공지사항 ></div></a>
 	    </div>
 	    
     </div>
