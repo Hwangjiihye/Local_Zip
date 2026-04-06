@@ -562,18 +562,18 @@
 		                        </div>
 		                    </div>
 		
-		
-		                    <div class="reportArea">
-									<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-		                        <select class="reportSelect">
-		                            <option value="" disabled selected>신고 사유</option>
-		                            <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
-		                            <option value="badWord" class="reportOption">욕설/비방</option>
-		                            <option value="AD" class="reportOption">광고/스팸</option>
-		                        </select>
-		                        <input class="reportBtn" type="submit" value="신고하기">
-		                    </div>
-		
+							<c:if test="${loginId != null && loginId != i.mem_id}">
+			                    <div class="reportArea">
+										<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+			                        <select class="reportSelect">
+			                            <option disabled selected class="reportOption">신고 사유</option>
+			                            <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
+			                            <option value="badWord" class="reportOption">욕설/비방</option>
+			                            <option value="AD" class="reportOption">광고/스팸</option>
+			                        </select>
+			                        <input class="reportBtn" type="submit" value="신고하기">
+			                    </div>
+							</c:if>
 		
 		                </div>
 		
@@ -583,24 +583,24 @@
 		                    <div class="postContent">${i.post_contents }</div>
 		
 		                </div>
-		
-		                <div class="postDownBox">
-		
-		                    <div class="postLikeBox">
-		                        <i class="fa-regular fa-heart fa-xl beforeHeart"></i>
-		                        <i class="fa-solid fa-heart fa-xl afterHeart"></i>
-		
-		                        <div>갯수</div>
-		                    </div>
-		
-		                    <div class="postCommentBox">
-		                        <i class="fa-regular fa-comment fa-xl comment"></i>
-		
-		                        <div>갯수</div>
-		                    </div>
-		
-		                </div>
-		
+						<c:if test="${loginId != null}">
+			                <div class="postDownBox">
+			
+			                    <div class="postLikeBox">
+			                        <i class="fa-regular fa-heart fa-xl beforeHeart"></i>
+			                        <i class="fa-solid fa-heart fa-xl afterHeart"></i>
+			
+			                        <div>갯수</div>
+			                    </div>
+			
+			                    <div class="postCommentBox">
+			                        <i class="fa-regular fa-comment fa-xl comment"></i>
+			
+			                        <div>갯수</div>
+			                    </div>
+			
+			                </div>
+						</c:if>
 		            </div>
 				</c:forEach>
 		        </div>
@@ -614,16 +614,26 @@
         <div class="bottomBox">
             <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/meeting/list"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-            <a><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-
+            <a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+            <a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+            <c:choose>
+				<c:when test="${loginId == null}">
+					<a href="/members/loginUi"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				</c:when>
+				<c:when test="${role == 1}">
+					<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				</c:when>
+				<c:otherwise>
+					<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				</c:otherwise>
+			</c:choose>
         </div>
 
     </div>
 
     <script>
-
+		
+    	// 게시글 정렬 기준
         $(".sortBtn").on("click",function(){
         	
         	let currentSort = "${sort}";

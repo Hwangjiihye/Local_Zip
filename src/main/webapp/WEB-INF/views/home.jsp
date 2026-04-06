@@ -348,8 +348,8 @@ body, html {
 /* 신고 영역 스타일 */
 .reportArea {
 	position: relative;
-	top: 15px;
-	right: 20px;
+	top: 10px;
+	right: 12px;
 	display: flex;
 	flex-direction: column;
 	/* 아이콘과 선택창을 세로로 배치 */
@@ -385,7 +385,7 @@ body, html {
 	display: none;
 	position: absolute;
 	top: 60px;
-	left: 0;
+	left: 20px;
 	width: 90px;
 }
 
@@ -648,7 +648,6 @@ body, html {
 
 										<c:if test="${loginId != null && loginId != i.mem_id}">
 											<div class="reportArea">
-												<!-- <i class="fa-solid fa-flag reportIcon"></i> -->
 												<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
 													style="width: 25px; height: 25px; margin-bottom: 5px"></img> 
 												<select class="reportSelect">
