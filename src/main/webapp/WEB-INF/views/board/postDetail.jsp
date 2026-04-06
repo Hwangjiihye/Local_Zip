@@ -401,6 +401,72 @@ a {
 	margin-left: 210px;
 }
 
+/* 신고 영역 스타일 */
+.reportArea {
+	position: relative;
+	top: 10px;
+	right: 12px;
+	display: flex;
+	flex-direction: column;
+	/* 아이콘과 선택창을 세로로 배치 */
+	align-items: flex-end;
+	/* 오른쪽 정렬 */
+	gap: 5px;
+}
+
+.reportIcon {
+	color: #A66A3F;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.reportSelect {
+	font-family: 'GMarketSans';
+	border: 1px solid #A66A3F;
+	border-radius: 5px;
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	font-size: 12px;
+	padding: 2px;
+	outline: none;
+	display: none;
+}
+
+.reportBtn {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+	display: none;
+	position: absolute;
+	top: 60px;
+	left: 20px;
+	width: 90px;
+}
+
+.reportBtn:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reportBtn:active {
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.report-menu{
+	 font-family: 'GMarketSans';
+     border: 1px solid #A66A3F;
+     border-radius: 5px;
+     background-color: #F2D3A2;
+     color: #A66A3F;
+     font-size: 12px;
+     padding: 2px;
+     outline: none;
+}
+
 .newReplyBox {
 	display: flex;
 	background-color: #F2D3A2;
@@ -520,7 +586,23 @@ hr {
 							</c:if>
 						</div>
 					</div>
+
+					<c:if test="${loginId != null && loginId != i.mem_id}">
+						<div class="reportArea">
+							<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
+								style="width: 25px; height: 25px; margin-bottom: 5px"></img> <select class="reportSelect">
+								<option class="report-menu" disabled selected>신고 사유</option>
+								<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
+								<option class="report-menu" value="badWord">욕설/비방</option>
+								<option class="report-menu" value="AD">광고/스팸</option>
+							</select>
+							<button type="button" class="reportBtn">신고하기</button>
+						</div>
+					</c:if>
+
 				</div>
+
+
 
 				<div class="postMidBox">
 
@@ -540,7 +622,7 @@ hr {
 					<div class="postCommentBox">
 						<i class="fa-regular fa-comment fa-xl comment"></i>
 
-							<div class="commentCount infoCount">${dto.post_hit}</div>
+							<div id="commentCount" class="commentCount infoCount">${dto.post_hit}</div>
 						
 					</div>
 
@@ -578,6 +660,7 @@ hr {
 		let post_seq = "${dto.post_seq}"
 		let postTitle = $(".postTitle");
 		let postContents = $(".postContents");
+		
 		
 		
 		// 게시글 수정 버튼 클릭 시
@@ -660,12 +743,15 @@ hr {
 		    
 		});
 		
-		$(function(){
+		// 댓글 목록 출력해오는 ajax -> 이름있는 함수로 만들고 밑에서 익명함수로 최초 실행
+		function loadReplyList(){
 			$.ajax({
 				url:"/board/replyList",
 				dataType:"json",
 				data: { post_seq: post_seq }
 			}).done(function(resp){
+				
+				$(".replyUpBox, .hr").remove(); // 기존 댓글 목록 비우기,(새로 등록된 것까지 포함해서 다시 그려야 하므로)
 				
 				for(let i of resp){
 						let replyUpBox = $("<div>").addClass("replyUpBox");
@@ -734,9 +820,15 @@ hr {
 						
 						let hr = $("<hr>").addClass("hr")
 						$(".replyBox").append(replyUpBox, hr);
-				}
+				} // for문 종료
 			});
+		};
+			
+		// 페이지 로드 시 최초 실행
+		$(function() {
+		    loadReplyList();
 		});
+		
 		
         // 좋아요 버튼
         $(".postLikeBox").on("click", function () {
