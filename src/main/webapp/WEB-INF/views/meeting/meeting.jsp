@@ -475,6 +475,10 @@ body {
 							</div>
 						</c:if>
 					</div>
+					시퀀스 : ${i.meet_seq}<br>
+					신청자수 : ${i.meet_currentpeople}<br>
+					신청자수 * 100 : ${(i.meet_currentpeople * 100)}<br>
+					퍼센트 : ${percent}
 				<div class="category-row">
 					<div class="category">${i.meet_category}</div>
 							<c:if test="${i.mem_id == loginId}">
@@ -489,27 +493,30 @@ body {
 						<div class="count">👥 ${i.meet_currentpeople}</div>
 					</div>
 					
-					<c:choose>
-					    <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
-					        <c:set var="percent" value="100" />
-					    </c:when>
-					    <c:otherwise>
-					        <c:set var="percent" value="${(i.meet_currentpeople * 100) / i.meet_maxpeople}" />
-					    </c:otherwise>
-					</c:choose>
+<%-- 					<c:choose> --%>
+<%-- 						<c:when test="${i.meet_maxpeople == 0}"> --%>
+<%-- 					        <c:set var="percent" value="0" /> --%>
+<%-- 					    </c:when> --%>
+<%-- 					    <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}"> --%>
+<%-- 					        <c:set var="percent" value="100" /> --%>
+<%-- 					    </c:when> --%>
+<%-- 					    <c:otherwise> --%>
+<%-- 					        <c:set var="percent" value="${(i.meet_currentpeople * 100) / i.meet_maxpeople}" /> --%>
+<%-- 					    </c:otherwise> --%>
+<%-- 					</c:choose> --%>
 
 					<div class="card-footer">
 						<div class="gauge-wrap">
-							<div class="gauge-bar" style="width: ${percent}%;"></div>
+							<div class="gauge-bar" style="width: ${i.meet_maxpeople == 0 ? 0 : (i.meet_currentpeople >= i.meet_maxpeople ? 100 : (i.meet_currentpeople * 100) / i.meet_maxpeople)}%;"></div>
 						</div>
 						<div class="gauge-text">${i.meet_currentpeople} / ${i.meet_maxpeople}명 참여중</div>
-					
 					
 						<c:choose>
 					        <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
 					            <button class="closing-btn" disabled>모집마감</button>
 					        </c:when>
 					        <c:when test="${i.mem_id == loginId}">
+					        	
 					            <button class="recruitment-Btn" disabled>모집중</button>
 					        </c:when>
 					         <c:when test="${joinedSet.contains(i.meet_seq)}">
