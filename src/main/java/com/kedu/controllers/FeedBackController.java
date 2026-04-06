@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kedu.dao.FeedBackDAO;
+import com.kedu.dao.ReportDAO;
 import com.kedu.dto.FeedBackDTO;
+import com.kedu.dto.ReportDTO;
 
 @Controller
 @RequestMapping("/feedback")
@@ -20,6 +22,9 @@ public class FeedBackController {
 	
 	@Autowired
 	public FeedBackDAO dao;
+	
+	@Autowired
+	public ReportDAO reportdao;
 	
 	@Autowired
 	public Gson gson;
@@ -48,10 +53,6 @@ public class FeedBackController {
 		String dong = (String)session.getAttribute("dong");
 		String loginId = (String)session.getAttribute("loginId");
 		
-		System.out.println("loginId : " + loginId);
-	    System.out.println("nickname : " + nickname);
-	    System.out.println("dong : " + dong);
-		
 		dto.setMem_nickname(nickname);
 		dto.setMem_dong(dong);
 		dto.setMem_id(loginId);
@@ -61,6 +62,7 @@ public class FeedBackController {
 	    return "redirect:/feedback/feedbackHome";
 	}
 	
+	// 좋아요 버튼
 	@ResponseBody
 	@RequestMapping("/like")
 	public String like(int suggestion_seq) {
@@ -72,6 +74,7 @@ public class FeedBackController {
 	    return "ok";
 	}
 	
+	// 싫어요 버튼
 	@ResponseBody
 	@RequestMapping("/unlike")
 	public String unlike(int suggestion_seq) {
@@ -83,6 +86,16 @@ public class FeedBackController {
 		return "ok";
 	}
 	
-	
-	
+	// 신고
+	@ResponseBody
+	@RequestMapping("/report/insert")
+	public String report(ReportDTO dto, HttpSession session) {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		dto.setMem_id(loginId);
+		reportdao.reportInsert(dto);
+		
+		return "success";
+	}
 }

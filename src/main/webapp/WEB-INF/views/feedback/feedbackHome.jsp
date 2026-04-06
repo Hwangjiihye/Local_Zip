@@ -377,7 +377,6 @@
 	                        </div>
 	                    </div>
 	
-						<form action="">
 		                    <div class="reportArea">
 								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 								<select class="reportSelect" name="reports_reason">
@@ -386,10 +385,8 @@
 	                               <option value="badWord" class="reportOption">욕설/비방</option>
 	                               <option value="AD" class="reportOption">광고/스팸</option>
 	                           	</select>
-		                        <input class="reportBtn" type="button" value="신고하기" data-seq="${i.suggestion_seq}">
+		                        <input class="reportBtn" type="button" value="신고하기" data-seq="${i.suggestion_seq}" data-targetid="${i.mem_id}">
 		                    </div>
-						</form>
-	
 	                </div>
 	
 	                <div class="postMidBox">
@@ -510,25 +507,27 @@
         	$(this).siblings(".reportSelect, .reportBtn").css({"display" : "inline"});
         })
         
-        //
-        $(".reportBtn").on("click", function(e){
-        	 e.preventDefault();
-        	 
+        // 신고 시, 유형별로 db에 넣기
+        $(".reportBtn").on("click", function(){
+        	
+        	// 클릭한 버튼에서 값 가져옴
         	let target_seq = $(this).data("seq");
-        	let reports_type = $(this).closest(".postBox").find(".reportSelect").val();
-
-            console.log("target_seq :", target_seq);
-            console.log("reports_type :", reports_type);
+        	let reports_type = 1; // 신고 종류(게시글)
+        	let target_id = $(this).data("targetid");
+        	let reports_reason = $(this).closest(".postBox").find(".reportSelect").val();
+        	// 신고 사유 가져오는 코드
             
         	$.ajax({
         		url:"/report/insert",
         		type:"post",
         		data: {
         			target_seq: target_seq,
-                    reports_type: reports_type
+        			reports_type: reports_type,
+        		 	target_id: target_id, 
+                    reports_reason: reports_reason
         		},
-        		success: function(resp) {
-        			 if(resp === "success") {
+        		success: function(resp) { 
+        			 if(resp === "success") {  // 컨트롤러에서 return한 값
         	                alert("신고가 접수되었습니다.");
         	            } else if(resp === "fail") {
         	                alert("이미 신고한 글입니다.");
@@ -537,15 +536,9 @@
         	            } else {
         	                alert("신고 실패");
         	            }
-                },
-                error: function(xhr, status, error) {
-                    console.log("status :", xhr.status);
-                    console.log("responseText :", xhr.responseText);
-                    console.log("error :", error);
-                    alert("에러 발생");
-                }
+                	}
+        		})
         	})
-        })
         
         // 좋아요 버튼, 신고버튼 클릭 시에는 페이지 이동 X
         $(".postLikeBox, .reportArea, .reportIcon, .reportSelect, .reportBtn").on("click", function (e) {
