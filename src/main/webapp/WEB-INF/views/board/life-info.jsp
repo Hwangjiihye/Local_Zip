@@ -536,7 +536,7 @@ hr {
 										
 										<i class="fa-solid fa-heart fa-xl afterHeart"></i>
 
-										<div>갯수</div>
+										<div>${i.post_like}</div>
 									</div>
 
 									<div class="postCommentBox">
@@ -690,13 +690,6 @@ hr {
 		        });
 		    });
 		
-		    // 좋아요 버튼을 눌렀을 때,
-		    $(document).on("click", ".postLikeBox", function(e) {
-		        e.stopPropagation(); // ★부모(.postBox)의 클릭 이벤트X
-		        $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
-		    });
-
-		
 		    // 댓글 수 갱신
 		    $(".postBox").each(function(){
 		        let postBox = $(this);
@@ -706,11 +699,31 @@ hr {
 		            data: { post_seq : post_seq},
 		            type: "get"
 		        }).done(function(count){
-		            postBox.find(".commentCount").html(count);
+		            postBox.find(".commentCount").text(count);
 		        	});
 		    	});
 			});
         
+     // 좋아요 버튼을 눌렀을 때,
+        $(".postLikeBox").on("click", function(e){
+        	 e.stopPropagation(); // 상세페이지 이동 방지
+        	 let post_seq = postBox.data("seq");
+        	 let postLike = $(this);
+        	
+        	$.ajax({
+        		url: "/like/toggle",
+        		data: { post_seq : post_seq },
+        		type: "get"
+        	}).done(function(likeCheck){
+        		
+        		if(likeCheck == 1 || likeCheck == 0){ // 하트를 누를때마다 css 적용
+        			postLike.toggleClass("active"); // active 클래스를 넣었다 뺐다 함
+        		}
+        		
+        	
+        	});
+        	
+        });
  
 
 

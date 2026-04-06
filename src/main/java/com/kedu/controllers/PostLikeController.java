@@ -26,22 +26,29 @@ public class PostLikeController {
 
 	@ResponseBody // 좋아요 숫자 +-1 반영
 	@RequestMapping("/toggle")
-	public String like(HttpSession session) {
+	public int likeToggle(int post_seq, HttpSession session) {
 
-		String mem_id = (String)session.getAttribute("loginId");
+		String loginId = (String)session.getAttribute("loginId");
+//		if(loginId == null) { // 비로그인시 하트 누르면 에러를 유발하는거라고 하는데 필요 없을 듯.
+//			return -1;
+//		}
 		
-		int isLike = LikeDao.likeCheck(0, mem_id);
+		// 이미 좋아요를 눌렀는지 DB에서 확인 (count(*)쿼리)
+		int isLike = LikeDao.likeCheck(post_seq, loginId);
+		System.out.println(isLike);
 		
-		if(isLike == 0) {
-			
-			int result = dao.setLike(0, mem_id);
-			return "addLike";
-			
-		}else {
-			int result = dao.deleteLike(0, mem_id);
-			
-			return "likeDelete";
-		}
+		return 0;
+		
+//		if(isLike == 0) {
+//			
+//			int result = dao.setLike(post_seq, loginId);
+//			return 1;
+//			
+//		}else {
+//			int result = dao.deleteLike(post_seq, loginId);
+//			
+//			return 0;
+//		}
 
 
 		
