@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -8,7 +8,8 @@
 <meta charset="UTF-8">
 <title>postDetail</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 
 <style>
@@ -73,27 +74,26 @@ button, body {
 	padding: 0 30px;
 	background-color: #F2D3A2;
 	border-bottom: 2px solid #A66A3F;
-
 	z-index: 1000;
 	display: flex;
-    align-items: center;         /* 세로 중앙 정렬 */
-    justify-content: space-between;
+	align-items: center; /* 세로 중앙 정렬 */
+	justify-content: space-between;
 }
 
 .headBox {
 	font-weight: bold;
 	font-size: 50px;
 	color: #A66A3F;
-    padding-top: 11px;
-    line-height: normal;
+	padding-top: 11px;
+	line-height: normal;
 }
 
 .backBtnDiv {
 	width: 90px;
 	height: 50px;
 	display: flex;
-    align-items: center;
-margin-top: 31px;
+	align-items: center;
+	margin-top: 31px;
 }
 
 .backBtn {
@@ -139,15 +139,14 @@ margin-top: 31px;
 	border-radius: 10px;
 	/* 그림자 효과 */
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .postUpBox {
-    
 	width: 100%;
 	display: flex;
-    align-items: center;
-    padding: 30px 20px;
+	align-items: center;
+	padding: 30px 20px;
 	border-radius: 10px 10px 0 0;
 	background-color: #F2D3A2;
 }
@@ -157,17 +156,15 @@ margin-top: 31px;
 	/* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
 }
 
-
 .postMidBox {
-    padding: 40px 0;
-    width: 100%;
+	padding: 40px 0;
+	width: 100%;
 	height: auto;
 }
 
 .postTitle {
-	
 	font-size: 24px;
-    font-weight: bold;
+	font-weight: bold;
 	margin: 0;
 }
 
@@ -178,28 +175,63 @@ margin-top: 31px;
 	background-color: #f0d8af;
 	border-radius: 5px;
 	padding: 0 10px;
-    line-height: 1.6;
-    word-break: break-all; 
-    white-space: pre-wrap;
+	line-height: 1.6;
+	word-break: break-all;
+	white-space: pre-wrap;
 }
 
- .afterHeart {
+.afterHeart {
 	display: inline;
 	color: red;
 }
 
-.navicon:hover, .backBtn:hover, .upBtn:hover,
-	.delBtn:hover, .OBtn:hover, .XBtn:hover {
+.navicon:hover, .backBtn:hover, .upBtn:hover, .delBtn:hover, .OBtn:hover,
+	.XBtn:hover, .changeBtns:hover{
 	transform: translateY(-3px);
 	/* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.navicon:active, .backBtn:active,.upBtn:active,
-	.delBtn:active, .OBtn:active, .XBtn:active {
+.navicon:active, .backBtn:active, .upBtn:active, .delBtn:active, .OBtn:active,
+	.XBtn:active, .changeBtns:active{
 	transform: translateY(2px);
 	/* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.changeBtns {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+}
+.completeBtn ,.cancelBtn{
+	display : none;
+}
+
+.postContents[contenteditable="true"] {
+    border: 1px solid #FFB300;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.postContents[contenteditable="true"]:focus {
+    outline: none;
+    border: 1px solid #FFB300;
+    background-color: #fbe5c0;
+}
+
+.postTitle[contenteditable="true"] {
+    border: 1px solid #FFB300;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.postTitle[contenteditable="true"]:focus {
+    outline: none;
+    border: 1px solid #FFB300;
+    background-color: #fbe5c0;
 }
 
 .bottomBox {
@@ -230,12 +262,11 @@ a {
 	text-decoration: none;
 }
 
- .delBtn, .XBtn {
+.delBtn, .XBtn {
 	margin-left: 5px;
 }
 
-.upBtn, .delBtn, .OBtn,
-	.XBtn {
+.upBtn, .delBtn, .OBtn, .XBtn {
 	background-color: #ffb300;
 	color: #5e361a;
 	border: 1px solid #ffb300;
@@ -243,7 +274,7 @@ a {
 	font-weight: bold;
 }
 
- .OBtn, .XBtn {
+.OBtn, .XBtn {
 	display: none;
 }
 
@@ -267,40 +298,130 @@ hr {
 		<div class="headBoxDiv">
 			<div class="headBox">공지사항</div>
 			<div class="backBtnDiv">
-<!-- 			게시글을 누르기 전에 보고있었던 목록의 페이지를 기억해서, 누르면 전으로 돌아가는 기능 : onclick="history.back();" -->
-				<input class="backBtn" type="button" value="목록으로" onclick="history.back();">
+				<!-- 			게시글을 누르기 전에 보고있었던 목록의 페이지를 기억해서, 누르면 전으로 돌아가는 기능 : onclick="history.back();" -->
+				<c:choose>
+				<c:when test="${role==0}">
+				<a href="/admin/toAdminNotice?cPage=${cPage}"><input class="backBtn" type="button" value="목록으로"></a>
+				</c:when>
+				<c:otherwise>
+				<a href="/notice/toNotice?cPage=${cPage}"><input class="backBtn" type="button" value="목록으로"></a>
+				</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		<div class="bodyBox">
 			<div class="postBox">
+			<form action="" method="post" class="frm">
 				<div class="postUpBox">
 					<div class="postInfoBox">
 						<div class="postInfoDown">
 							<div class="postTitle" style="color: #5e361a;">${dto.notice_title}</div>
 						</div>
-                        
 					</div>
+					<c:if test="${role==0}">
+					
+					<input type="button" class="changeBtns updateBtn" value="수정">
+					<input type="button" class="changeBtns deleteBtn" value="삭제">
+					<input type="button" class="changeBtns completeBtn" value="완료">
+					<input type="button" class="changeBtns cancelBtn" value="취소">
+					
+					</c:if>
 				</div>
 
 				<div class="postMidBox">
 					<div class="postContents">${dto.notice_content}</div>
 				</div>
-
+			</form>
 			</div>
-			
+
 			<div class="bottomBox">
-				<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
-					class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list"><i
-					class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a><i
-					class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> <a href="/members/mypage"><i
-					class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
+				<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> 
+				<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> 
+				<a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+				<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 
 			</div>
 		</div>
 	</div>
 
 	<script>
-        
-    </script>
+	
+	
+	let currentTitle = "${dto.notice_title}";
+    let currentContent = "${dto.notice_content}";
+    
+		$(".updateBtn").on("click",function(){
+			$(".completeBtn").show();
+			$(".cancelBtn").show();
+			$(".updateBtn").hide();
+			$(".deleteBtn").hide();
+			
+			$(".postTitle").attr("contenteditable","true");
+			$(".postContents").attr("contenteditable","true");
+			
+		})
+		
+		$(".cancelBtn").on("click",function(){
+			$(".completeBtn").hide();
+			$(".cancelBtn").hide();
+			$(".updateBtn").show();
+			$(".deleteBtn").show();
+			
+			$(".postTitle").attr("contenteditable","false");
+			$(".postContents").attr("contenteditable","false");
+			$(".postTitle").html(currentTitle);
+			$(".postContents").html(currentContent);
+			
+		})
+		$(".completeBtn").on("click",function(){
+			
+			let newTitle = $(".postTitle").html();
+	        let newContent = $(".postContents").html();
+			
+	        $.ajax({
+				url:"/admin/updateNotice",
+				data:{
+					seq : ${dto.notice_seq},
+					notice_title : newTitle,
+					notice_content : newContent},
+				type:"post"
+			}).done(function(resp){
+				if(resp=="success"){
+					alert("공지사항 수정 완료");
+					currentTitle = newTitle;
+					currentContent = newContent;
+				}else{
+					alert("공지사항 수정 실패");
+				}
+			});
+			
+			$(".completeBtn").hide();
+			$(".cancelBtn").hide();
+			$(".updateBtn").show();
+			$(".deleteBtn").show();
+			
+			$(".postTitle, .postContents").attr("contenteditable","false");
+		})
+		
+		$(".deleteBtn").on("click",function(){
+			if(confirm("정말 삭제하시겠습니까?")){
+				$.ajax({
+		            url: "/admin/deleteNotice",
+		            type: "POST",
+		            data: { notice_seq: "${dto.notice_seq}" }
+		        })
+		        .done(function(resp) {
+		            if (resp === "success") {
+		                alert("성공적으로 삭제되었습니다.");
+		                location.href = "/admin/toAdminNotice?cPage="+${cPage};
+		            } else {
+		                alert("삭제 처리에 실패했습니다.");
+		            }
+		        })
+			}
+		})
+		
+	</script>
 </body>
 </html>

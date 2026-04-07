@@ -36,9 +36,22 @@ public class NoticeDAO {
 		jdbc.update(sql,dto.getMem_id(),dto.getMem_role(),dto.getNotice_title(),dto.getNotice_content());
 	}
 	
+	//공지사항 수정
+	public int updateNotice(int seq, String title, String content) {
+		String sql = "UPDATE NOTICE SET NOTICE_TITLE=?,NOTICE_CONTENT=? WHERE NOTICE_SEQ=?";
+		return jdbc.update(sql,title,content,seq);
+	}
+	
+	//공지사항 삭제
+	public int deleteNoticeBySeq(int seq) {
+		String sql = "DELETE FROM NOTICE WHERE NOTICE_SEQ=?";
+		return jdbc.update(sql,seq);
+	}	
+	
 	//----------------공통 영역-------------------------
 	public NoticeDTO getContents(int notice_seq) {
 		String sql = "select * from notice where notice_seq=?";
 		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<NoticeDTO>(NoticeDTO.class),notice_seq);
 	}
+	
 }

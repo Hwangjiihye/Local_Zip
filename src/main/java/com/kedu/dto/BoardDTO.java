@@ -13,8 +13,17 @@ public class BoardDTO {
 	private int post_like;
 	private String post_date;
 	
-	public BoardDTO() {}
+	// 하트가 채워져있는지 아닌지를 기록할 용도로 만든 변수, db컬럼,생성자에는 없는게 맞음.
+	private int post_like_check;
+	public int getPost_like_check() {
+		return post_like_check;
+	}
+	public void setPost_like_check(int post_like_check) {
+		this.post_like_check = post_like_check;
+	}
+	//------------------------------------------------------------
 	
+	public BoardDTO() {}
 	public BoardDTO(int post_seq, String post_category, String mem_id, String mem_nickname, String mem_dong,
 			int post_hit, String post_title, String post_contents, int post_like, String post_date) {
 		super();
