@@ -72,10 +72,16 @@ public class MeetingController {
 		for(Map<String,Object> m : clist){
 			companionSet.add(((Number)m.get("meet_seq")).intValue());
 		}
+		
 		Map<String, Object> navi = this.getPageNaviAll(category, cpage);
+		
+		session.setAttribute("admin", mdao.adminCheck(loginId));
+		int admin = (Integer)session.getAttribute("admin");
+		model.addAttribute("admin", admin);
 		
 	    model.addAttribute("navi", navi);
 		model.addAttribute("list", list);
+		session.setAttribute("category", category);
 		model.addAttribute("category", category);
 		model.addAttribute("appliedSet", appliedSet);
 		model.addAttribute("joinedSet", joinedSet);
@@ -98,6 +104,26 @@ public class MeetingController {
 		session.setAttribute("count", mdao.selectByStatus(seq, loginId));
 		session.setAttribute("admin", mdao.adminCheck(loginId));
 		session.setAttribute("host", mdao.hostCheck(seq, loginId));
+		
+		
+		List<Map<String, Object>> vlist = dao.isApplied(loginId);
+		Set<Integer> appliedSet = new HashSet<>();
+
+		for(Map<String,Object> m : vlist){
+			appliedSet.add(((Number)m.get("meet_seq")).intValue());
+		}
+		
+		List<Map<String, Object>> jlist = dao.joinMeet(loginId);
+		Set<Integer> joinedSet = new HashSet<>();
+
+		for(Map<String,Object> m : jlist){
+			joinedSet.add(((Number)m.get("meet_seq")).intValue());
+		}
+		
+		String category = (String)session.getAttribute("category");
+		model.addAttribute("category", category);
+		model.addAttribute("appliedSet", appliedSet);
+		model.addAttribute("joinedSet", joinedSet);
 		
 		return "meeting/meetingDetail";
 	}
