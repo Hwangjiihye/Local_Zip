@@ -276,10 +276,12 @@
 	    		<div class="myWriteIcon"><img src="/resources/images/text1.png" class="icon"></div>
 	    		<div class="myWriteContents">
 	    			<div class="myWriteTitle">작성글</div>
-	    			<div class="myWriteNum">10</div>
+	    			<div class="myWriteNum">${writeCount}</div>
 	    		</div>
 	    	</div>
 	    	</a>
+	    	
+	    	<a href="/members/myLikes">
 	    	<div class="myLike">
 	    		<div class="myLikeIcon"><img src="/resources/images/love.png" class="icon"></div>
 	    		<div class="myLikeContents">
@@ -287,6 +289,8 @@
 		    		<div class="myLikeNum">15</div>
 		    	</div>
 	    	</div>
+	    	</a>
+	    	
 	    	<a href="/meeting/myMeeting">
 		    	<div class="myClub">
 		    		<div class="myClubIcon"><img src="/resources/images/people.png" class="icon"></div>
