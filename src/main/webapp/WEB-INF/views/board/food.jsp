@@ -5,13 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>talk</title>
+<title>food</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-
-    <style>
+<style>
         /* 폰트 */
         @font-face {
             font-family: 'GMarketSans';
@@ -508,11 +505,9 @@
   			text-align: center;
   		}
     </style>
-
 </head>
 <body>
-
-    <div class="container">
+<div class="container">
 
         <div class="headBox">우리 동네.zip</div>
 
@@ -520,9 +515,9 @@
             <div class="categoryBtns">
                 <a href="/"><button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
                 <a href="/board/lifeInfo"><button class="categoryBtn topBtn" type="button"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
-                <a href="/board/food"><button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button></a>
+                <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
                 <a href="/board/talk"><button class="categoryBtn nowBtn" type="button"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
-                <a href="/board/beauty"><button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button></a>
+                <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
             </div>
         </div>
 
@@ -735,6 +730,5 @@
 	    	});
 		});
     </script>
-
 </body>
 </html>

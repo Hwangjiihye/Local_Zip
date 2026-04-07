@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kedu.dao.BoardDAO;
+import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.ReplyDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.BoardDTO;
@@ -31,7 +32,10 @@ public class HomeController {
 
 	@Autowired
 	private VisitLogDAO vdao;
-
+	
+	@Autowired
+	private PostLikeDAO likeDao;
+	
 	// 전체 리스트 출력 내용 반영
 	@RequestMapping("/")
 	public String home(String sort, Model model, HttpSession session, ReplyDTO rdto) throws Exception{
@@ -63,10 +67,10 @@ public class HomeController {
 			dao.setCommentCount(commentCount , post.getPost_seq());
 
 			// *(좋아요)
-			// post_seq를 기준으로 post_likeDAO에서 count된 개수를 세야할거 같음.
-
-			// System.out.println("해당 게시글에 좋아요 수 :" + like.size());
-			// System.out.println("해당 게시글에 댓글 수 :" + commentCount);
+			// 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.
+		    String loginId = (String)session.getAttribute("loginId");
+		    
+		    LikeStatus(list, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
 
 		}
 		//--------------------------------------------------------------
@@ -76,7 +80,7 @@ public class HomeController {
 		
 		return "home";
 	}
-
+	
 	// ajax용 댓글 수 count
 	@ResponseBody // ★중요: JSP 페이지가 아니라 "데이터(숫자)"만 보낸다는 뜻
 	@RequestMapping("/board/getCommentCount")
@@ -89,14 +93,24 @@ public class HomeController {
 
 		return count; // count된 숫자만, 댓글 수 전달
 	}
-
+	
+	// board에 list를 출력 시,로그인 한 아이디를 기준으로 하트를 눌러놨는지 체크하는 메서드
+	private void LikeStatus(List<BoardDTO> list, String loginId) {
+			
+		if(loginId != null && list != null) { // 로그인 아이디랑 리스트가 null이 아니면 
+			for(BoardDTO dto : list) { // for문 돌면서 list에서 
+				int check = likeDao.likeCheck(dto.getPost_seq(), loginId); // 로그인 아이디를 기준으로 하트를 눌렀는지 체크하고,
+				dto.setPost_like_check(check); // check의 값이 1 또는 0으로 나온 값을 dto에 set으로 기록.
+			}
+		}
+			
+	};
 
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
 	public String postDetail(Model model, int post_seq, HttpSession session) throws Exception{
 
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
-		model.addAttribute("dto",dto);
 
 		String loginId = (String)session.getAttribute("loginId");
 
@@ -104,10 +118,20 @@ public class HomeController {
 			String category = dao.getCategoryBySeq(post_seq);
 			vdao.postClickVisit(loginId, category);
 		}
-
+		
+		LikeStatus(dto, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1) 담아줌.
+	    model.addAttribute("dto",dto);
+	    
 		return "board/postDetail";
 	}
 
-
+	// postDetail 페이지,로그인 한 아이디를 기준으로 하트를 눌러놨는지 체크하는 메서드
+	private void LikeStatus(BoardDTO dto, String loginId) {
+			
+		if(loginId != null && dto != null) { // 로그인 아이디랑 리스트가 null이 아니면 
+			int check = likeDao.likeCheck(dto.getPost_seq(), loginId); // 로그인 아이디를 기준으로 하트를 눌렀는지 체크하고,
+			dto.setPost_like_check(check); // check의 값이 1 또는 0으로 나온 값을 dto에 set으로 기록.
+		}
+	};
 
 }
