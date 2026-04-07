@@ -40,6 +40,7 @@ public class FeedBackDAO {
 	// 좋아요 db에 넣기
 	public int plusLike(int suggestion_seq) {
 	    String sql = "update suggestion set suggestion_like = suggestion_like + 1 where suggestion_seq = ?";
+	    
 	    return jdbc.update(sql, suggestion_seq);
 	}
 	
