@@ -1,5 +1,7 @@
 package com.kedu.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
+import com.kedu.dao.BoardDAO;
 import com.kedu.dao.MembersDAO;
 import com.kedu.dao.VisitLogDAO;
+import com.kedu.dto.BoardDTO;
 import com.kedu.dto.MembersDTO;
 
 @Controller
@@ -24,6 +28,8 @@ public class MembersController {
 	private Gson gson;
 	@Autowired
 	private VisitLogDAO vdao;	
+	@Autowired
+	private BoardDAO BoardDao;
 	
 	// 회원가입 창으로 이동 클릭 시
 	@RequestMapping("/join")
@@ -170,7 +176,13 @@ public class MembersController {
 	
 	// 마이페이지 > 작성글(모아보기)를 눌렀을 때,
 	@RequestMapping("/myPosts")
-	public String myPosts() {
+	public String myPosts(HttpSession session, Model model) throws Exception{
+		String mem_id = (String)session.getAttribute("loginId");
+		
+		List<BoardDTO> list = BoardDao.list_home_latest(); // 최신순 기준으로 전체 게시판 목록 출력
+		
+		model.addAttribute("listAll",list);
+		
 		return "members/myPosts";
 	}
 	
