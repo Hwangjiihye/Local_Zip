@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kedu.dao.FeedBackDAO;
+import com.kedu.dao.FeedBack_reactionDAO;
 import com.kedu.dao.ReportDAO;
 import com.kedu.dto.FeedBackDTO;
+import com.kedu.dto.FeedBack_reactionDTO;
 import com.kedu.dto.ReportDTO;
 
 @Controller
@@ -27,15 +29,30 @@ public class FeedBackController {
 	public ReportDAO reportdao;
 	
 	@Autowired
+	public FeedBack_reactionDAO reactiondao;
+	
+	@Autowired
+	public FeedBackDAO feedbackdao;
+	
+	@Autowired
 	public Gson gson;
 	
 	// 건의사항 작성글 출력
 	@RequestMapping("/feedbackHome")
-	public String feedbackHome(Model model) throws Exception {
+	public String feedbackHome(Model model, HttpSession session) throws Exception {
+		
+		// 홈에서 비회원일 경우, 로그인 페이지로 보냄
+		String loginId = (String)session.getAttribute("loginId");
+		
+		if(loginId == null) {
+			return "redirect:/members/login";
+		}
 		
 		List<FeedBackDTO> list = dao.list();
+		List<FeedBack_reactionDTO> myReaction = reactiondao.selectMyReaction(loginId); // 내 반응 목록 list
 		
 		model.addAttribute("list", list);
+		model.addAttribute("myReaction", myReaction);
 		
 	    return "feedback/feedbackHome";
 	}
@@ -48,6 +65,8 @@ public class FeedBackController {
 	// 건의사항 작성 db 입력
 	@RequestMapping("/feedbackInsert")
 	public String feedbackWrite(FeedBackDTO dto, HttpSession session) throws Exception {
+		
+		if(dto.getSuggestion_title().trim().equals("")) return "redirect:/feedback/feedbackWrite";
 		
 		String nickname = (String)session.getAttribute("nickname");
 		String dong = (String)session.getAttribute("dong");
@@ -62,28 +81,78 @@ public class FeedBackController {
 	    return "redirect:/feedback/feedbackHome";
 	}
 	
-	// 좋아요 버튼
+	
 	@ResponseBody
-	@RequestMapping("/like")
-	public String like(int suggestion_seq) {
-		System.out.println("컨트롤러 들어옴");
-	    System.out.println("받은 글번호: " + suggestion_seq);
-
-	    int result = dao.plusLike(suggestion_seq);
-	    System.out.println("update 결과: " + result);
-	    return "ok";
+	@RequestMapping("/like") // 좋아요
+	public String like(int suggestion_seq, HttpSession session) throws Exception {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		if(loginId == null) {
+			return "/members/login";
+		}
+		
+		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
+		
+		
+		// 처음 누름
+		if(reaction == null) {
+			reactiondao.insert(loginId, suggestion_seq, "LIKE");
+			feedbackdao.plusLike(suggestion_seq);
+			return "liked";
+		}
+		
+		// 좋아요 누름 -> 취소
+		else if(reaction.equals("Like")) {
+//			reactiondao.delete(loginId, suggestion_seq);
+//			feedbackdao.minusLike(suggestion_seq);
+			return "alreadyLiked";
+		}
+		
+		// 싫어요 -> 좋아요 변경
+		else if(reaction.equals("UNLIKE")){
+			reactiondao.update(loginId, suggestion_seq, "LIKE");
+			feedbackdao.minusUnlike(suggestion_seq);
+			feedbackdao.plusLike(suggestion_seq);
+			return "change";
+		}
+		return "fail";
 	}
 	
-	// 싫어요 버튼
 	@ResponseBody
 	@RequestMapping("/unlike")
-	public String unlike(int suggestion_seq) {
-		System.out.println("컨트롤러 들어옴");
-		System.out.println("받은 글번호:" + suggestion_seq);
+	public String unlike(int suggestion_seq, HttpSession session) throws Exception {
 		
-		int result = dao.plusUnLike(suggestion_seq);
-		System.out.println("update 결과 : " + result);
-		return "ok";
+		String loginId = (String)session.getAttribute("loginId");
+		
+		if(loginId == null) {
+			return "/members/login";
+		}
+		
+		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
+		
+		// 처음 누름
+		if(reaction == null) {
+			reactiondao.insert(loginId, suggestion_seq, "UNLIKE");
+			feedbackdao.plusUnLike(suggestion_seq);
+			return "unliked";
+		}
+		
+		// 싫어요 누름 -> 취소
+		else if(reaction.equals("UNLIKE")) {
+//			reactiondao.delete(loginId, suggestion_seq);
+//			feedbackdao.minusUnlike(suggestion_seq);
+			return "alreadyLiked";
+		}
+		
+		// 좋아요 -> 싫어요 변경
+		else if(reaction.equals("LIKE")){
+			reactiondao.update(loginId, suggestion_seq, "UNLIKE");
+			feedbackdao.minusLike(suggestion_seq);
+			feedbackdao.plusUnLike(suggestion_seq);
+			return "change";
+		}
+		return "fail";
 	}
 	
 	// 신고
@@ -97,5 +166,42 @@ public class FeedBackController {
 		reportdao.reportInsert(dto);
 		
 		return "success";
+	}
+	
+	// 게시글 삭제
+	@ResponseBody
+	@RequestMapping("/delete")
+	public String delete(int suggestion_seq, HttpSession session) {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		FeedBackDTO dto = dao.selectBySeq(suggestion_seq);
+		
+		if(dto != null && loginId.equals(dto.getMem_id())) {
+			
+			dao.delete(suggestion_seq);
+			return "successDel";
+		}
+		else {
+			return "fail";
+		}
+	}
+	
+	// 게시글 수정
+	@ResponseBody
+	@RequestMapping("/update")
+	public String update(FeedBackDTO dto, HttpSession session) {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		FeedBackDTO updateDto = dao.selectBySeq(dto.getSuggestion_seq());
+		
+		if(!loginId.equals(updateDto.getMem_id())) {
+			return "fail";
+		}
+		
+		int result = dao.udpate(dto);
+		
+		return result > 0 ? "success" : "fail";
 	}
 }
