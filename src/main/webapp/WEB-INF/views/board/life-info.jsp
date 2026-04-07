@@ -340,22 +340,27 @@ button, body {
 	transition: 0.3s;
 }
 
-.beforeHeart:hover, .afterHeart:hover, .comment:hover {
+.beforeHeart:hover, .comment:hover {
 	color: #cdaa69;
+}
+
+/* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
+.beforeHeart{
+	display : inline;
 }
 
 .afterHeart {
 	display: none;
+	color: red;
 }
 
-/* active 클래스가 붙었을 때의 제어 */
+/* active 클래스가 붙었을 때의 제어(빨간하트를 보여주고 빈 하트는 숨김.) */
 .postLikeBox.active .beforeHeart {
 	display: none;
 }
 
 .postLikeBox.active .afterHeart {
 	display: inline;
-	color: red;
 }
 
 .navicon:hover {
@@ -531,7 +536,7 @@ hr {
 							<c:if test="${loginId != null}">
 								<div class="postDownBox">
 
-									<div class="postLikeBox">
+									<div class="postLikeBox ${i.post_like_check == 1 ? 'active' : ''}">
 										<i class="fa-regular fa-heart fa-xl beforeHeart"></i>
 										
 										<i class="fa-solid fa-heart fa-xl afterHeart"></i>
@@ -645,7 +650,7 @@ hr {
 				let reportArea = $(this).closest(".reportArea");
 
 				// (선택사항) 다른 게시글의 열려있는 신고창을 모두 닫고 싶다면 아래 주석 해제
-				// $(".reportSelect, .reportBtn").not(reportArea.find(".reportSelect, .reportBtn")).hide();
+				$(".reportSelect, .reportBtn").not(reportArea.find(".reportSelect, .reportBtn")).hide();
 
 				reportArea.find(".reportSelect, .reportBtn").toggle();
 			});
@@ -730,7 +735,8 @@ hr {
 				}
 
 				if (likeCheck == 1 || likeCheck == 0) { // 하트를 누를때마다 css 적용
-					postLike.toggleClass("active"); // active 클래스를 넣었다 뺐다 함
+					postLike.toggleClass("active"); // active 클래스를 넣었다 뺐다 함 
+					// 서버 처리가 성공하면 화면의 하트 색깔을 토글(변경)함.
 					
 					// jsp 화면에 보여지는 전체 숫자용 ajax
 					$.ajax({

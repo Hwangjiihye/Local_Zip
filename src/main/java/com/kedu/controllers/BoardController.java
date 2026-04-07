@@ -283,7 +283,7 @@ public class BoardController {
 	    String loginId = (String)session.getAttribute("loginId");
 	    
 	    LikeStatus(list, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
-
+	    
 	    model.addAttribute("lifeInfo", list);
 	    model.addAttribute("sort",sort);
 

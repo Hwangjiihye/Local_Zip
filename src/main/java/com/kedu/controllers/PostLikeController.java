@@ -62,7 +62,6 @@ public class PostLikeController {
 	public int likeCount(int post_seq) {
 		
 		int count = LikeDao.likeCount(post_seq);
-		System.out.println("하트 총 카운트 수: "+ count);
 		
 		return count;
 	}
