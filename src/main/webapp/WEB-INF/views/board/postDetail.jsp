@@ -312,12 +312,18 @@ button, body {
 	transition: 0.3s;
 }
 
-.beforeHeart:hover, .afterHeart:hover, .comment:hover {
+.beforeHeart:hover, .comment:hover {
 	color: #cdaa69;
+}
+
+/* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
+.beforeHeart{
+	display : inline;
 }
 
 .afterHeart {
 	display: none;
+	color: red;
 }
 
 /* active 클래스가 붙었을 때의 제어 */
@@ -327,7 +333,6 @@ button, body {
 
 .postLikeBox.active .afterHeart {
 	display: inline;
-	color: red;
 }
 
 .navicon:hover, .applyBtn:hover, .backBtn:hover, .updateBtn:hover,
@@ -570,7 +575,7 @@ hr {
 			</div>
 		</div>
 		<div class="bodyBox">
-			<div class="postBox">
+			<div class="postBox" data-seq="${dto.post_seq}">
 
 				<div class="postUpBox">
 
@@ -625,10 +630,10 @@ hr {
 
 				<div class="postDownBox">
 
-					<div class="postLikeBox ${i.post_like_check == 1 ? 'active' : ''}">
+					<div class="postLikeBox ${dto.post_like_check == 1 ? 'active' : ''}">
 						<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
 
-						<div class="likeCount infoCount">${i.post_like}</div>
+						<div class="likeCount infoCount">${dto.post_like}</div>
 					</div>
 
 					<div class="postCommentBox">
@@ -669,7 +674,7 @@ hr {
 	<script>
 		
 		let loginId = "${loginId}";
-		let post_seq = "${dto.post_seq}"
+		let postSeq = "${dto.post_seq}"
 		let postTitle = $(".postTitle");
 		let postContents = $(".postContents");
 		
@@ -707,7 +712,7 @@ hr {
 			$.ajax({
 				url:"/board/updatePost",
 				data:{
-					post_seq: post_seq,
+					post_seq: postSeq,
 					post_title: post_title,
 					post_contents: post_contents
 				},
@@ -725,7 +730,7 @@ hr {
 			
 		    $.ajax({
 		        url: "/board/deletePost",
-		        data: { post_seq: post_seq },
+		        data: { post_seq: postSeq },
 		        type: "post"
 		    }).done(function(){
 		    	alert("삭제 완료!");
@@ -760,7 +765,7 @@ hr {
 			$.ajax({
 				url:"/board/replyList",
 				dataType:"json",
-				data: { post_seq: post_seq }
+				data: { post_seq: postSeq }
 			}).done(function(resp){
 				
 				$(".replyUpBox, .hr").remove(); // 기존 댓글 목록 비우기,(새로 등록된 것까지 포함해서 다시 그려야 하므로)
@@ -874,6 +879,7 @@ hr {
 	                  postLike.find(".likeCount").text(count);
 	               });
 	            }
+	           console.log("${dto.post_like_check}");
 	         });
         });
                

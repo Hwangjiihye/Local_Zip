@@ -625,7 +625,7 @@ hr {
 				}
 
 				let post_seq = $(this).data("seq");
-				location.href = "/postDetail?post_seq=" + post_seq;
+				location.href = "/board/postDetail?post_seq=" + post_seq;
 			});
 
 			// 신고 ---------------------------------------------
