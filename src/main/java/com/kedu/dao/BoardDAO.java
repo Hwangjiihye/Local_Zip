@@ -128,4 +128,198 @@ public class BoardDAO {
 		String sql = "select post_category from post where post_seq = ?";
 		return jdbc.queryForObject(sql, String.class, seq);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//맛집/카페 리스트 출력(최신순)
+	public List<BoardDTO> list_food_latest() throws Exception{
+		String sql = "select * from post where post_category = 'food' order by post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
+	//맛집/카페 리스트 출력(인기순)
+	public List<BoardDTO> list_food_like() throws Exception{
+		String sql = "select * from post where post_category = 'food' order by post_like desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
+	//미용/패션 리스트 출력(최신순)
+	public List<BoardDTO> list_beauty_latest() throws Exception{
+		String sql = "select * from post where post_category = 'beauty' order by post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+		
+	//미용/패션 리스트 출력(인기순)
+	public List<BoardDTO> list_beauty_like() throws Exception{
+		String sql = "select * from post where post_category = 'beauty' order by post_like desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
 }

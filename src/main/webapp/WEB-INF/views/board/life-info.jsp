@@ -570,8 +570,8 @@ hr {
 
 		<div class="bottomBox">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
-				class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list"><i
-				class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a><i
+				class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
+				class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
 				class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> <a href="/members/mypage"><i
 				class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 
@@ -625,7 +625,7 @@ hr {
 				}
 
 				let post_seq = $(this).data("seq");
-				location.href = "/board/postDetail?post_seq=" + post_seq;
+				location.href = "/board/postDetail?post_seq=" + post_seq + "&category=lifeInfo";
 			});
 
 			// 신고 ---------------------------------------------
@@ -700,9 +700,7 @@ hr {
 		$(".postLikeBox").on("click", function(e) {
 			e.stopPropagation(); // 상세페이지 이동 방지
 			let postLike = $(this);
-			let post_seq = postLike.closest(".postBox").data("seq");	
-			
-			console.log("클릭된 게시글 번호: " + post_seq);
+			let post_seq = postLike.closest(".postBox").data("seq");
 			
 			// 하트 채워지고 비워지는 토글용 ajax
 			$.ajax({
@@ -728,16 +726,10 @@ hr {
 						data : {post_seq : post_seq},
 						type : "post"
 					}).done(function(count){
-						
 						postLike.find(".likeCount").text(count);
-						
 					});
-					
-					
 				}
-
 			});
-
 		});
 	</script>
 

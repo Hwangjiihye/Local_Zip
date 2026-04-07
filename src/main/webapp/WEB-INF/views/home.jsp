@@ -575,18 +575,18 @@ body, html {
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
 						<i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보
 					</button></a>
-				<button type="button"
+				<a href="/board/food"><button type="button"
 					style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
 					<i class="fa-solid fa-utensils fa-lg" style="color: #3e5e40;"></i> 맛집/카페
-				</button>
+				</button></a>
 				<a href="/board/talk"><button type="button"
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
 						<i class="fa-regular fa-comment-dots fa-lg" style="color: #3e5e40;"></i> 고민/이야기
 					</button></a>
-				<button type="button"
+				<a href="/board/beauty"><button type="button"
 					style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px;">
 					<i class="fa-solid fa-shirt fa-lg" style="color: #3e5e40;"></i> 미용/패션
-				</button>
+				</button></a>
 			</div>
 
 			<div class="subBox">
