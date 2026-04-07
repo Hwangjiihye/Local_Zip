@@ -247,7 +247,7 @@
 				<div class="titleDiv">
 					<div class="title">제목</div>
 					<div class="titleContent">
-						<input id="title" name="suggestion_title" class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
+						<input name="suggestion_title" class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
 					</div>
 					
 				</div>
@@ -274,47 +274,21 @@
 		</form>
 	</div>
 	<script>
-		
-		$(".requestBtn").on("click", function(){
+		// 제목, 내용 빈칸 일시, alert 띄움
+		$(".frm").on("submit", function(){
 			
-			let title = document.getElementById("title").value;
-			
-			if(title == null) {
+			if($(".inputBox").val() == "") {
 				alert("제목을 작성해주세요");
-			} 
-			else if(contents == null) {
-				alert("내용을 작성해주세요")
-			}
-		})
-	
-	
-	
-	
-		// submit 전 공백에 대한 안내메시지
-		/* $(".frm").on("submit",function(){
-			
-			// 공백 예외 처리
-			if($(".inputBox").val() == ""){
-				alert("제목을 입력해주세요.");
 				$(".inputBox").focus();
 				return false;
-				
-			}else if($(".report").val() == ""){
-				alert("카테고리를 선택해주세요.");
-				$(".report").focus();
-				return false;
-				
-			}else if($(".TextDetail").val() == ""){
-				alert("내용을 입력해주세요.");
+			}
+			else if($(".TextDetail").val() == "") {
+				alert("내용을 작성해주세요");
 				$(".TextDetail").focus();
 				return false;
-				
 			}
-			
-			alert("글이 등록되었습니다!");
 			return true;
-			
-		}); */
+		});
 	</script>
 
 </body>

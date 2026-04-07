@@ -8,610 +8,569 @@
 <title>food</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
-        /* 폰트 */
-        @font-face {
-            font-family: 'GMarketSans';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
-            font-weight: 300;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'GMarketSans';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-            font-weight: 500;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'GMarketSans';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
-            font-weight: 700;
-            font-display: swap;
-        }
-
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* 폰트 지정 */
-        button,
-        body {
-            font-family: 'GMarketSans', sans-serif;
-        }
-
-        .container {
-            position: relative;
-            top: 100px;
-
-            width: 100%;
-            min-height: 100vh;
-            /* 최소 높이 지정 : 브라우저 */
-
-            border: 1px solid black;
-            background-color: #fbe5c0;
-        }
-
-
-        .headBox {
-            position: fixed;
-            top: 0;
-            left: 0;
-
-            width: 100%;
-            height: 100px;
-
-            padding-left: 20px;
-
-            font-weight: bold;
-            font-size: 50px;
-            color: #A66A3F;
-            background-color: #F2D3A2;
-            border-bottom: 2px solid #A66A3F;
-            /* 아래쪽만 줄 그음 */
-
-            line-height: 100px;
-            z-index: 1000;
-
-        }
-
-        .categoryBtnBox {
-
-            width: 100%;
-            height: 70px;
-        }
-
-        .categoryBtns {
-
-            position: relative;
-            top: 20px;
-            left: 20px;
-
-            /* 수정: 고정 800px 대신 화면의 90%만 차지하게 */
-            width: 90%;
-            max-width: 800px;
-        }
-        
-        .nowBtn{
-         	background-color: #fecc56;
-            color: #A66A3F;
-
-            transform: translateY(-3px);
-            /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            
-            
-            height: 25px;
-
-            border-radius: 10px;
-            border: 1px solid #FFB300;
-
-            align-items: center;
-            /* 수직 중앙 정렬 */
-
-            vertical-align: middle;
-            /* 버튼들끼리 줄이 안 맞을 때를 대비 */
-
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-
-        .topBtn {
-            height: 25px;
-
-            background-color: #FFB300;
-            border-radius: 10px;
-            border: 1px solid #FFB300;
-            color: #3e5e40;
-
-            align-items: center;
-            /* 수직 중앙 정렬 */
-
-            vertical-align: middle;
-            /* 버튼들끼리 줄이 안 맞을 때를 대비 */
-
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .categoryBtn {
-            margin-right: 10px;
-            height: 30px;
-
-            /* 그림자 효과 */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
-            /* 애니메이션 부드럽게 */
-            transition: all 0.2s ease;
-        }
-
-        .categoryBtn:hover {
-            background-color: #fecc56;
-            color: #A66A3F;
-
-            transform: translateY(-3px);
-            /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .categoryBtn:active {
-            transform: translateY(2px);
-            /* 아래로 눌림 */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .bodyBox {
-            width: 100%;
-            min-height: 100vh;
-            /* 최소 높이 지정 : 브라우저 */
-
-            margin-top: -40px;
-        }
-
-
-        .orderBox {
-            text-align: right;
-            font-size: 14px;
-
-            position: relative;
-            top: 30px;
-
-            width: 95%;
-            max-width: 1500px;
-
-            margin: auto;
-
-            border-radius: 10px;
-        }
-        .orderBtn {
-            border: none;
-            border-radius: 30%;
-            background-color: transparent;
-
-            font-size: 15px;
-
-            color: #A66A3F;
-        }
-
-        .orderBtn:hover {
-            background-color: #fecc56;
-        }
-
-
-        .postBox {
-            /* 수정: 고정 1500px 제거 */
-            width: 95%;
-            max-width: 1500px;
-            /* 적당히 보기 좋은 최대 너비 설정 */
-
-            min-height: 200px;
-            height: auto;
-
-            margin: auto;
-            margin-top: 30px;
-
-            border-radius: 10px;
-            
-            /* 그림자 효과 */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-
-        }
-
-        .postUpBox {
-            width: 100%;
-            height: 95px;
-            display: flex;
-            
-            border-radius: 10px 10px 0 0;
-            background-color: #F2D3A2;
-        }
-
-
-        .postProfile {
-            width: 75px;
-            height: 75px;
-            border: 4px solid #A66A3F;
-            border-radius: 50%;
-
-            position: relative;
-            top: 10px;
-            left: 10px;
-
-        }
-
-        .contentProfile {
-            margin-top: -10px;
-            margin-left: 2px;
-        }
-
-        .postInfoBox {
-            width: 300px;
-            min-height: 50px;
-
-            position: relative;
-            left: 20px;
-            top: 23px;
-
-            flex-grow: 1;
-            /* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
-        }
-
-        .postInfoUp,
-        .postInfoDown {
-            display: flex;
-        }
-
-
-        .profileInfo {
-            width: auto;
-            margin-right: 15px;
-            /* 정보 사이의 간격 일정하게 부여 */
-
-            /*수직 정렬*/
-            display: flex;
-            align-items: center;
-
-            font-size: 14px;
-            color: #333;
-        }
-
-
-        /* 신고 영역 스타일 */
-        .reportArea {
-            position: relative;
-            top: 8px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            /* 아이콘과 선택창을 세로로 배치 */
-            align-items: flex-end;
-            /* 오른쪽 정렬 */
-            gap: 5px;
-        }
-
-        .reportIcon {
-            color: #A66A3F;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .reportSelect {
-            font-family: 'GMarketSans';
-            border: 1px solid #A66A3F;
-            border-radius: 5px;
-            background-color: #F2D3A2;
-            color: #A66A3F;
-            font-size: 12px;
-            outline: none;
-            display: none;
-        }
-		.reportBtn{
-			background-color: #ffb300;
-			color: #5e361a;
-			border: 1px solid #ffb300;
-			border-radius: 10px;
-			font-weight: bold;
-			display: none;
-		}
-		.reportBtn:hover{
-			transform: translateY(-3px); /* 살짝 위로 뜸 */
-			box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-		}
-		
-		.reportBtn:active{
-			transform: translateY(2px); /* 아래로 눌림 */
-			box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-		}
-		
-        .postMidBox {
-            width: 100%;
-            height: auto;
-        }
-
-        .postTitle {
-            margin: auto;
-
-            width: 95%;
-            height: 40px;
-
-            font-size: 20px;
-            color: #5e361a;
-        }
-
-        .postContent {
-            margin: auto;
-
-            width: 95%;
-            height: 1.5em;       /* 한 줄 높이만큼 고정 */
-    		line-height: 1.5em;
-
-            font-size: 15px;
-
-            background-color: #f0d8af;
-            border-radius: 5px;
-            padding: 0 10px;
-            white-space: nowrap;
-            overflow: hidden;
-    		text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
-    		display: block;
-    		color: #5e361a;
-        }
-
-
-        .postDownBox {
-            width: 95%;
-            margin: auto;
-
-            min-height: 40px;
-            display: flex;
-            color: #5e361a;
-        }
-
-        .postLikeBox,
-        .postCommentBox {
-            display: flex;
-            align-items: center;
-
-            min-width: 80px;
-            width: auto;
-
-            gap: 10px;
-
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-
-        .beforeHeart:hover,
-        .afterHeart:hover,
-        .comment:hover {
-            color: #cdaa69;
-        }
-
-        .afterHeart {
-            display: none;
-        }
-
-        /* active 클래스가 붙었을 때의 제어 */
-        .postLikeBox.active .beforeHeart {
-            display: none;
-        }
-
-        .postLikeBox.active .afterHeart {
-            display: inline;
-            color: red;
-        }
-
-        .navicon:hover {
-            transform: translateY(-3px);
-            /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .navicon:active {
-            transform: translateY(2px);
-            /* 아래로 눌림 */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .bottomBox {
-            border: 1px solid #A66A3F;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            border-top: 2px solid #A66A3F;
-            background-color: #F2D3A2;
-
-            gap: 200px;
-        }
-
-        hr {
-            width: 97%;
-            margin-bottom: 40px;
-            border: 1px solid #cdaa69;
-            ;
-        }
-        
-        .pageBox{
-            width: 100%;
-    		text-align: center;   /* 가운데 정렬 */
-    		padding: 20px 0;      /* 상하 여백 */
-    		margin-bottom: 80px;  /* 중요: 하단 바에 가려지지 않도록 아래쪽 여백 확보 */
-    
-    		font-size: 18px;
-    		color: #A66A3F;
-    		font-weight: bold;
-        }
-        
-        
-        .writeBtn{
-            width: 50px;
-            height: 50px;
-            right: 30px;
-            bottom: 90px;
-            cursor: pointer;
-            margin-top: 90%;
-            border-radius: 50%;
-            background-color: #A66A3F;
-            border: #fbe5c0;
-            color: #fbe5c0;
-            font-size: 30px;
-            position: fixed; /* 버튼 따라다니게 만들기 */
-
-            align-items: center;
-            display: flex;
-            justify-content: center;
-
-            /* 그림자 효과 */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-
-            /* 애니메이션 부드럽게 */
-            transition: all 0.2s ease;
-        }
-        
-        .writeBtn:hover{
-        	transform: translateY(-3px); /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-        }
-        
-        a{
-     		color: #5e361a;
-     		text-decoration: none;
-     	}
-     	.emptyBox{
- 			
-  			width: 100%;
-  			height: 600px;
-  			
-  			font-size: 25px;
-  			
-  			color: #5e361a;
-  			
-  			text-align: center;
-  		}
-    </style>
+/* 폰트 */
+@font-face {
+	font-family: 'GMarketSans';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
+		format('woff');
+	font-weight: 300;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GMarketSans';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff')
+		format('woff');
+	font-weight: 500;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GMarketSans';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff')
+		format('woff');
+	font-weight: 700;
+	font-display: swap;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body, html {
+	margin: 0;
+	padding: 0;
+}
+
+/* 폰트 지정 */
+button, body {
+	font-family: 'GMarketSans', sans-serif;
+}
+
+.container {
+	position: relative;
+	top: 100px;
+	width: 100%;
+	min-height: 100vh;
+	/* 최소 높이 지정 : 브라우저 */
+	border: 1px solid black;
+	background-color: #fbe5c0;
+}
+
+.headBox {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100px;
+	padding-left: 20px;
+	font-weight: bold;
+	font-size: 50px;
+	color: #A66A3F;
+	background-color: #F2D3A2;
+	border-bottom: 2px solid #A66A3F;
+	/* 아래쪽만 줄 그음 */
+	line-height: 100px;
+	z-index: 1000;
+}
+
+.categoryBtnBox {
+	width: 100%;
+	height: 70px;
+}
+
+.categoryBtns {
+	position: relative;
+	top: 20px;
+	left: 20px;
+	/* 수정: 고정 800px 대신 화면의 90%만 차지하게 */
+	width: 90%;
+	max-width: 800px;
+}
+
+.nowBtn {
+	background-color: #fecc56;
+	color: #A66A3F;
+	transform: translateY(-3px);
+	/* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	height: 25px;
+	border-radius: 10px;
+	border: 1px solid #FFB300;
+	align-items: center;
+	/* 수직 중앙 정렬 */
+	vertical-align: middle;
+	/* 버튼들끼리 줄이 안 맞을 때를 대비 */
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.topBtn {
+	height: 25px;
+	background-color: #FFB300;
+	border-radius: 10px;
+	border: 1px solid #FFB300;
+	color: #3e5e40;
+	align-items: center;
+	/* 수직 중앙 정렬 */
+	vertical-align: middle;
+	/* 버튼들끼리 줄이 안 맞을 때를 대비 */
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.categoryBtn {
+	margin-right: 10px;
+	height: 30px;
+	/* 그림자 효과 */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	/* 애니메이션 부드럽게 */
+	transition: all 0.2s ease;
+}
+
+.categoryBtn:hover {
+	background-color: #fecc56;
+	color: #A66A3F;
+	transform: translateY(-3px);
+	/* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.categoryBtn:active {
+	transform: translateY(2px);
+	/* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bodyBox {
+	width: 100%;
+	min-height: 100vh;
+	/* 최소 높이 지정 : 브라우저 */
+	margin-top: -40px;
+	color: #5e361a;
+}
+
+.orderBox {
+	text-align: right;
+	font-size: 14px;
+	position: relative;
+	top: 30px;
+	width: 95%;
+	max-width: 1500px;
+	margin: auto;
+	border-radius: 10px;
+}
+
+.orderNew {
+	display: none;
+}
+
+.orderBtn {
+	border: none;
+	border-radius: 30%;
+	background-color: transparent;
+	font-size: 15px;
+	color: #A66A3F;
+}
+
+.orderBtn:hover {
+	background-color: #fecc56;
+}
+
+.postBox {
+	/* 수정: 고정 1500px 제거 */
+	width: 95%;
+	max-width: 1500px;
+	/* 적당히 보기 좋은 최대 너비 설정 */
+	min-height: 200px;
+	height: auto;
+	margin: auto;
+	margin-top: 30px;
+	border-radius: 10px;
+	/* 그림자 효과 */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.postUpBox {
+	width: 100%;
+	height: 95px;
+	display: flex;
+	border-radius: 10px 10px 0 0;
+	background-color: #F2D3A2;
+}
+
+.postProfile {
+	width: 75px;
+	height: 75px;
+	border: 4px solid #A66A3F;
+	border-radius: 50%;
+	position: relative;
+	top: 10px;
+	left: 10px;
+}
+
+.contentProfile {
+	margin-top: -10px;
+	margin-left: 2px;
+}
+
+.postInfoBox {
+	width: 300px;
+	min-height: 50px;
+	position: relative;
+	left: 20px;
+	top: 23px;
+	flex-grow: 1;
+	/* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
+}
+
+.postInfoUp, .postInfoDown {
+	display: flex;
+}
+
+.profileInfo {
+	width: auto;
+	margin-right: 15px;
+	/* 정보 사이의 간격 일정하게 부여 */
+	/*수직 정렬*/
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	color: #333;
+}
+
+/* 신고 영역 스타일 */
+.reportArea {
+	position: relative;
+	top: 8px;
+	right: 20px;
+	display: flex;
+	flex-direction: column;
+	/* 아이콘과 선택창을 세로로 배치 */
+	align-items: flex-end;
+	/* 오른쪽 정렬 */
+	gap: 5px;
+}
+
+.reportIcon {
+	color: #A66A3F;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.reportSelect {
+	font-family: 'GMarketSans';
+	border: 1px solid #A66A3F;
+	border-radius: 5px;
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	font-size: 12px;
+	outline: none;
+	display: none;
+}
+
+.reportBtn {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+	display: none;
+}
+
+.reportBtn:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reportBtn:active {
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.postMidBox {
+	width: 100%;
+	height: auto;
+}
+
+.postTitle {
+	margin: auto;
+	width: 95%;
+	height: 40px;
+	font-size: 20px;
+	margin-top: 5px;
+	line-height: 40px;
+}
+
+.postContent {
+	margin: auto;
+	width: 95%;
+	height: 1.5em; /* 한 줄 높이만큼 고정 */
+	line-height: 1.5em;
+	font-size: 15px;
+	background-color: #f0d8af;
+	border-radius: 5px;
+	padding: 0 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+	display: block;
+}
+
+.postDownBox {
+	width: 95%;
+	margin: auto;
+	min-height: 40px;
+	display: flex;
+}
+
+.postLikeBox, .postCommentBox {
+	display: flex;
+	align-items: center;
+	min-width: 80px;
+	width: auto;
+	gap: 10px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.beforeHeart:hover, .comment:hover {
+	color: #cdaa69;
+}
+
+/* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
+.beforeHeart{
+	display : inline;
+}
+
+.afterHeart {
+	display: none;
+	color: red;
+}
+
+/* active 클래스가 붙었을 때의 제어(빨간하트를 보여주고 빈 하트는 숨김.) */
+.postLikeBox.active .beforeHeart {
+	display: none;
+}
+
+.postLikeBox.active .afterHeart {
+	display: inline;
+}
+
+.navicon:hover {
+	transform: translateY(-3px);
+	/* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.navicon:active {
+	transform: translateY(2px);
+	/* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bottomBox {
+	border: 1px solid #A66A3F;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	border-top: 2px solid #A66A3F;
+	background-color: #F2D3A2;
+	gap: 200px;
+}
+
+hr {
+	width: 97%;
+	margin-bottom: 40px;
+	border: 1px solid #cdaa69;
+	;
+}
+
+.pageBox {
+	width: 100%;
+	text-align: center; /* 가운데 정렬 */
+	padding: 20px 0; /* 상하 여백 */
+	margin-bottom: 80px; /* 중요: 하단 바에 가려지지 않도록 아래쪽 여백 확보 */
+	font-size: 18px;
+	color: #A66A3F;
+	font-weight: bold;
+}
+
+.writeBtn {
+	width: 50px;
+	height: 50px;
+	right: 30px;
+	bottom: 90px;
+	cursor: pointer;
+	margin-top: 90%;
+	border-radius: 50%;
+	background-color: #A66A3F;
+	border: #fbe5c0;
+	color: #fbe5c0;
+	font-size: 30px;
+	position: fixed; /* 버튼 따라다니게 만들기 */
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	/* 그림자 효과 */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	/* 애니메이션 부드럽게 */
+	transition: all 0.2s ease;
+}
+
+.writeBtn:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.emptyBox {
+	width: 100%;
+	height: 600px;
+	font-size: 25px;
+	color: #5e361a;
+	text-align: center;
+}
+</style>
 </head>
 <body>
 <div class="container">
 
-        <div class="headBox">우리 동네.zip</div>
+		<div class="headBox">우리 동네.zip</div>
 
-        <div class="categoryBtnBox">
-            <div class="categoryBtns">
-                <a href="/"><button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
-                <a href="/board/lifeInfo"><button class="categoryBtn topBtn" type="button"><i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보</button></a>
-                <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페</button>
-                <a href="/board/talk"><button class="categoryBtn nowBtn" type="button"><i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기</button></a>
-                <button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-shirt fa-lg"></i> 미용/패션</button>
-            </div>
-        </div>
+		<div class="categoryBtnBox">
+			<div class="categoryBtns">
+				<a href="/"><button class="categoryBtn topBtn" type="button">
+						<i class="fa-solid fa-house fa-lg"></i> 전체
+					</button></a> <a href="/board/lifeInfo"><button class="categoryBtn topBtn" type="button">
+						<i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보
+					</button></a>
+				<a href="/board/food"><button class="categoryBtn nowBtn" type="button">
+					<i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페
+				</button></a>
+				<a href="/board/talk"><button class="categoryBtn topBtn" type="button">
+						<i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기
+					</button></a>
+				<a href="/board/beauty"><button class="categoryBtn topBtn" type="button">
+					<i class="fa-solid fa-shirt fa-lg"></i> 미용/패션
+				</button></a>
+			</div>
+		</div>
 
-        <hr>
+		<hr>
+
 		<c:choose>
 			<c:when test="${empty list}">
-				<div class="emptyBox">등록된 게시글이 없습니다.</div>
-			</c:when>
-			<c:otherwise>
-					
-		        <div class="bodyBox">
-		
-		            <div class="orderBox">
-<!-- 		            버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
-		                <button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
-		            </div>
-				<c:forEach var="i" items="${list}">
-		            <div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
-		
-		                <div class="postUpBox">
-		
-		                    <div class="postProfile">
-		                        <img class="contentProfile" src="/resources/images/Profile.png" width="60px">
-		                    </div>
-		
-		                    <div class="postInfoBox">
-		                        <div class="postInfoUp">
-		                            <div class="profileName profileInfo" style="color: #5e361a;">${i.mem_nickname}</div>
-		                            <div class="profileLocal profileInfo" style="color: #5e361a;">${i.mem_dong}</div>
-		                            <div class="profileCatagory profileInfo">
-		                                <button class="topBtn" type="button">고민/이야기</button>
-		                            </div>
-		                        </div>
-		
-		                        <div class="postInfoDown">
-		                            <div class="profileTime profileInfo" style="color: #5e361a;">${i.post_date}</div>
-		                        </div>
-		                    </div>
-		
-							<c:if test="${loginId != null && loginId != i.mem_id}">
-			                    <div class="reportArea">
-									<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
-			                        <select class="reportSelect">
-			                            <option disabled selected class="reportOption">신고 사유</option>
-			                            <option value="badContents" class="reportOption">부적절한 콘텐츠</option>
-			                            <option value="badWord" class="reportOption">욕설/비방</option>
-			                            <option value="AD" class="reportOption">광고/스팸</option>
-			                        </select>
-			                        <input class="reportBtn" type="button" value="신고하기">
-			                    </div>
-							</c:if>
-		
-		                </div>
-		
-		                <div class="postMidBox">
-		
-		                    <div class="postTitle">${i.post_title }</div>
-		                    <div class="postContent">${i.post_contents }</div>
-		
-		                </div>
-						<c:if test="${loginId != null}">
-			                <div class="postDownBox">
-			
-			                    <div class="postLikeBox">
-			                        <i class="fa-regular fa-heart fa-xl beforeHeart"></i>
-			                        <i class="fa-solid fa-heart fa-xl afterHeart"></i>
-			
-			                        <div>갯수</div>
-			                    </div>
-			
-			                    <div class="postCommentBox">
-			                        <i class="fa-regular fa-comment fa-xl comment"></i>
-			
-			                        <div class="commentCount infoCount">${i.post_hit }</div>
-			                    </div>
-			
-			                </div>
-						</c:if>
-		            </div>
-				</c:forEach>
-		        </div>
-		
-		        <div class="pageBox">1 2 3</div>
-        	</c:otherwise>
-		</c:choose>
-        <a href="/board/write"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
-        
 
-        <div class="bottomBox">
-            <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-            <a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
-            <c:choose>
+				<div class="emptyBox">등록된 게시글이 없습니다.</div>
+
+			</c:when>
+
+			<c:otherwise>
+				<div class="bodyBox">
+
+					<div class="orderBox">
+						<!-- 버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
+						<button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
+					</div>
+
+					<c:forEach var="i" items="${list}">
+						<div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
+
+							<div class="postUpBox">
+
+								<div class="postProfile">
+									<img class="contentProfile" src="/resources/images/Profile.png" width="60px">
+								</div>
+
+								<div class="postInfoBox">
+									<div class="postInfoUp">
+										<div class="profileName profileInfo" style="color: #5e361a;">${i.mem_nickname}</div>
+										<div class="profileLocal profileInfo" style="color: #5e361a;">${i.mem_dong}</div>
+										<div class="profileCatagory profileInfo">
+											<button class="topBtn" type="button">맛집/카페</button>
+										</div>
+									</div>
+
+									<div class="postInfoDown">
+										<div class="profileTime profileInfo" style="color: #5e361a;">${i.post_date}</div>
+									</div>
+								</div>
+
+								<c:if test="${loginId != null && loginId != i.mem_id}">
+									<div class="reportArea">
+										<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
+											style="width: 25px; height: 25px; margin-bottom: 5px"></img> 
+											<select class="reportSelect" name="reports_reason">
+												<option value="" disabled selected>신고 사유</option>
+												<option value="badContents" class="reportOption">부적절한 콘텐츠</option>
+												<option value="badWord" class="reportOption">욕설/비방</option>
+												<option value="AD" class="reportOption">광고/스팸</option>
+											</select> 
+										<input class="reportBtn" type="submit" value="신고하기">
+									</div>
+								</c:if>
+
+							</div>
+
+							<div class="postMidBox">
+
+								<div class="postTitle">${i.post_title}</div>
+								<div class="postContent">${i.post_contents}</div>
+
+							</div>
+
+							<c:if test="${loginId != null}">
+								<div class="postDownBox">
+
+									<div class="postLikeBox ${i.post_like_check == 1 ? 'active' : ''}">
+										<i class="fa-regular fa-heart fa-xl beforeHeart"></i>
+										
+										<i class="fa-solid fa-heart fa-xl afterHeart"></i>
+
+										<div class="likeCount infoCount">${i.post_like}</div>
+									</div>
+
+									<div class="postCommentBox">
+										<i class="fa-regular fa-comment fa-xl comment"></i>
+
+										<div class="commentCount infoCount">${i.post_hit}</div>
+									</div>
+
+								</div>
+							</c:if>
+						</div>
+					</c:forEach>
+				</div>
+
+				<div class="pageBox">1 2 3</div>
+
+			</c:otherwise>
+		</c:choose>
+
+
+
+		<a href="/board/write"><button class="writeBtn" type="button">
+				<i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i>
+			</button></a>
+
+
+		<div class="bottomBox">
+			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
+				class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
+				class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
+				class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+			<c:choose>
 				<c:when test="${loginId == null}">
 					<a href="/members/loginUi"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 				</c:when>
@@ -622,113 +581,160 @@
 					<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 				</c:otherwise>
 			</c:choose>
-        </div>
+		</div>
 
-    </div>
+	</div>
 
-    <script>
-		
-    	// 게시글 정렬 기준
+
+	<script>
+
+        // 최신순, 인기순 버튼
+        $(".orderNew").on("click", function () {
+            $(".orderNew").css({ "display": "none" });
+            $(".orderPopular").css({ "display": "inline" });
+        })
+
+        $(".orderPopular").on("click", function () {
+            $(".orderNew").css({ "display": "inline" });
+            $(".orderPopular").css({ "display": "none" });
+        })
+        
+        
+        // 최신순, 인기순 정렬s
         $(".sortBtn").on("click",function(){
         	
         	let currentSort = "${sort}";
         	
         	if(currentSort == "latest"){
-        		location.href = "/board/talk?sort=like";
+        		location.href = "/board/food?sort=like";
         	}else{
-        		location.href = "/board/talk?sort=latest";
+        		location.href = "/board/food?sort=latest";
         	}
         });
-    	
-    	// 게시글 상세 페이지 이동
-        $(function() {
-		    // .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동
-		    $(document).on("click", ".postBox", function(e) {
-		        // 클릭한 타겟이 신고 아이콘, 신고 선택창, 신고 버튼, 좋아요 박스 내부에 있다면 이동 금지
-		        if ($(e.target).closest(".reportArea, .postLikeBox").length > 0) {
-		            return;
-		        }
-		
-		        // 게시글 상세보기 이동 제어
-		        let loginId = "${loginId}";
-		        if (loginId === "") {
-		            alert("로그인 후 이용 가능합니다.");
-		            location.href = "/members/loginUi";
-		            return;
-		        }
-		
-		        let post_seq = $(this).data("seq");
-		        location.href = "/board/postDetail?post_seq=" + post_seq + "&category=talk";
-		    });
-		
-		 // 신고 아이콘 클릭 시 메뉴 표시
-		    $(document).on("click", ".reportIcon", function(e) {
-		        e.stopPropagation();
-		        
-		        let reportArea = $(this).closest(".reportArea");
-		        reportArea.find(".reportSelect, .reportBtn").toggle(); 
-		    });
-		 
-		// 신고 사유 선택창 클릭 시 이동 방지
-		    $(document).on("click", ".reportSelect", function(e) {
-		        e.stopPropagation();
-		    });
-		
         
-        
-     	// 신고 버튼 클릭 시
-	    $(document).on("click", ".reportBtn", function() {
-	        
-	        let card = $(this).closest(".postBox");
-	        let targetSeq = card.data("seq");
-	        let targetId = card.data("writer"); 
-	        let reportReason = card.find(".reportSelect").val(); 
-	        
-	        if(!reportReason || reportReason == "신고 사유"){
-	            alert("신고 사유를 선택해 주세요.");
-	            return;
-	        }
-	        
-	        $.ajax({
-	            url : "/report/insert",
-	            type : "post",
-	            data : {
-	                target_seq : targetSeq,
-	                target_id : targetId,
-	                reports_type : 0,
-	                reports_reason : reportReason
-	            }
-	        }).done(function(resp){
-	            if(resp == "success"){
-	                alert("신고가 접수되었습니다.");
-	                card.find(".reportSelect, .reportBtn").hide();
-	            } else {
-	                alert("이미 신고했거나 처리에 실패했습니다.");
-	                card.find(".reportSelect, .reportBtn").hide();
-	            }
-	        }).fail(function(){
-	            alert("서버와 통신 중 오류가 발생했습니다.");
-	        });
-	    });
-     	
-     // 좋아요 버튼
-        $(".postLikeBox").on("click", function () {
-            $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
-        });
-     
-	 // 댓글 수 갱신
-	    $(".postBox").each(function(){
-	        let postBox = $(this);
-	        let post_seq = postBox.data("seq");
-	        $.ajax({
-	            url: "/board/getCommentCount",
-	            data: { post_seq : post_seq},
-	            type: "get"
-	        }).done(function(count){
-	            postBox.find(".commentCount").html(count);
-	        	});
-	    	});
+
+		$(function() {
+			// 1. 게시글 상세 페이지 이동 (통합 제어)
+			// .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동
+			$(document).on("click", ".postBox", function(e) {
+				// 클릭한 타겟이 신고 아이콘, 신고 선택창, 신고 버튼 내부에 있다면 이동 금지
+				if ($(e.target).closest(".reportArea").length > 0) {
+					return;
+				}
+
+				// 게시글 상세보기 이동 제어
+				let loginId = "${loginId}";
+				if (loginId === "") {
+					alert("로그인 후 이용 가능합니다.");
+					location.href = "/members/loginUi";
+					return;
+				}
+
+				let post_seq = $(this).data("seq");
+				location.href = "/board/postDetail?post_seq=" + post_seq + "&category=food";
+			});
+
+			// 신고 ---------------------------------------------
+			// 신고 아이콘 클릭 시 메뉴 표시
+			$(document).on("click", ".reportIcon", function(e) {
+				e.stopPropagation(); // 부모인 .postBox로 이벤트가 퍼지는 것을 막음 (중요)
+
+				// 클릭한 아이콘이 속한 그 영역의 메뉴만 토글
+				let reportArea = $(this).closest(".reportArea");
+
+				reportArea.find(".reportSelect, .reportBtn").toggle();
+			});
+
+			// 신고 사유 선택창 클릭 시 이동 방지
+			$(document).on("click", ".reportSelect", function(e) {
+				e.stopPropagation(); // 클릭 시 상세페이지 이동 방지
+			});
+
+			// 신고 버튼 클릭 (AJAX)
+			$(document).on("click", ".reportBtn", function(e) {
+				e.stopPropagation(); // 클릭 시 상세페이지 이동 방지
+
+				let card = $(this).closest(".postBox");
+				let targetSeq = card.data("seq");
+				let targetId = card.data("writer");
+				let reportReason = card.find(".reportSelect").val();
+
+				if (!reportReason || reportReason === "신고 사유") {
+					alert("신고 사유를 선택해 주세요.");
+					return;
+				}
+
+				$.ajax({
+					url : "/report/insert",
+					type : "post",
+					data : {
+						target_seq : targetSeq,
+						target_id : targetId,
+						reports_type : 0,
+						reports_reason : reportReason
+					}
+				}).done(function(resp) {
+					if (resp == "success") {
+						alert("신고가 접수되었습니다.");
+						card.find(".reportSelect, .reportBtn").hide();
+					} else {
+						alert("이미 신고했거나 처리에 실패했습니다.");
+						card.find(".reportSelect, .reportBtn").hide();
+					}
+				}).fail(function() {
+					alert("서버와 통신 중 오류가 발생했습니다.");
+				});
+			});
+
+			// 댓글 수 갱신
+			$(".postBox").each(function() {
+				let postBox = $(this);
+				let post_seq = postBox.data("seq");
+				$.ajax({
+					url : "/board/getCommentCount",
+					data : {
+						post_seq : post_seq
+					},
+					type : "get"
+				}).done(function(count) {
+					postBox.find(".commentCount").text(count);
+				});
+			});
 		});
-    </script>
+
+		// 좋아요 버튼을 눌렀을 때,
+		$(".postLikeBox").on("click", function(e) {
+			e.stopPropagation(); // 상세페이지 이동 방지
+			let postLike = $(this);
+			let post_seq = postLike.closest(".postBox").data("seq");
+			
+			// 하트 채워지고 비워지는 토글용 ajax
+			$.ajax({
+				url : "/like/toggle",
+				data : {post_seq : post_seq},
+				type : "post"
+			}).done(function(likeCheck) {
+				if(likeCheck == -1){
+					alert("로그인 후 이용 가능합니다.");
+					location.href = "/members/loginUi";
+					return;
+				}
+
+				if (likeCheck == 1 || likeCheck == 0) { // 하트를 누를때마다 css 적용
+					postLike.toggleClass("active"); // active 클래스를 넣었다 뺐다 함 
+					// 서버 처리가 성공하면 화면의 하트 색깔을 토글(변경)함.
+					
+					// jsp 화면에 보여지는 전체 숫자용 ajax
+					$.ajax({
+						url : "/like/count",
+						data : {post_seq : post_seq},
+						type : "post"
+					}).done(function(count){
+						postLike.find(".likeCount").text(count);
+					});
+				}
+			});
+		});
+	</script>
 </body>
 </html>

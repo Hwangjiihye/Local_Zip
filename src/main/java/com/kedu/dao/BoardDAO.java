@@ -130,7 +130,6 @@ public class BoardDAO {
 	}
 	
 	
-	
 	//----------------------------------------------------
 	
 	//마이페이지 > 내 작성글 모아보기
@@ -144,5 +143,7 @@ public class BoardDAO {
 		String sql = "select count(*) from post where mem_id = ?";
 		return jdbc.queryForObject(sql, Integer.class, mem_id);
 	}
+	
+
 	
 }
