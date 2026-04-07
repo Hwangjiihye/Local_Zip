@@ -123,18 +123,18 @@
             transition: all 0.2s ease;
         }
         
-        .writeBtn:hover{
+        .writeBtn:hover, .editBtn:hover, .delBtn:hover, .cancleBtn:hover, .okBtn:hover {
         	transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
         
-        .navicon:hover {
+        .navicon:hover{
             transform: translateY(-3px);
             /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .navicon:active {
+        .navicon:active, .editBtn:active, .delBtn:active, .cancleBtn:active, .okBtn:active {
             transform: translateY(2px);
             /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -196,9 +196,10 @@
         .postInfoBox {
             width: 300px;
             min-height: 50px;
+           /*  margin-bottom: 10px; */
             position: relative;
             left: 20px;
-            top: 30px;
+            top: 20px;
 
             flex-grow: 1;
             /* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
@@ -349,6 +350,45 @@
         	color: #5e361a;
         }
         
+        .editBtn, .delBtn {
+            cursor: pointer;
+            border: #fbe5c0;
+            color:  #5e361a;
+            font-size: 13px;
+            font-weight: bold;
+			background-color:  #FFB300;
+			width: 50px;
+			height: 20px;
+			border-radius: 5px;
+            /* 그림자 효과 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+            /* 애니메이션 부드럽게 */
+            transition: all 0.2s ease;
+        }
+        
+        .btnBox{
+        	display: flex;
+        	gap: 8px;
+        }
+        
+        .cancleBtn, .okBtn{
+        	display: none;
+        	cursor: pointer;
+            border: #fbe5c0;
+            color:  #5e361a;
+            font-size: 13px;
+            font-weight: bold;
+			background-color:  #FFB300;
+			width: 50px;
+			height: 20px;
+			border-radius: 5px;
+            /* 그림자 효과 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+            /* 애니메이션 부드럽게 */
+            transition: all 0.2s ease;
+        }
     </style>
 
 </head>
@@ -370,11 +410,18 @@
 	                    <div class="postInfoBox">
 	                        <div class="postInfoUp">
 	                            <div class="profileName profileInfo" style=color:#5e361a;>${i.mem_nickname}</div>
+	                            <div class="profileName profileInfo" style=color:#5e361a;>${i.mem_dong}</div>
 	                        </div>
-	
+							
 	                        <div class="postInfoDown">
 	                            <div class="profileTime profileInfo" style=color:#5e361a;>${i.suggestion_writedate}</div>
 	                        </div>
+	                  <c:if test="${loginId == i.mem_id}">      
+	                        <div class="btnBox">
+	                        	<input class="editBtn" type="button" value="수정" data-seq="${i.suggestion_seq}"><input class="delBtn" type="button" value="삭제" data-seq="${i.suggestion_seq}">
+	                    		<input class="okBtn" type="button" value="완료" data-seq="${i.suggestion_seq}"><input class="cancleBtn" type="button" value="취소" data-seq="${i.suggestion_seq}">
+	                    	</div>
+	                  </c:if>
 	                    </div>
 	
 		                    <div class="reportArea">
@@ -385,26 +432,38 @@
 	                               <option value="badWord" class="reportOption">욕설/비방</option>
 	                               <option value="AD" class="reportOption">광고/스팸</option>
 	                           	</select>
-		                        <input class="reportBtn" type="button" value="신고하기" data-seq="${i.suggestion_seq}" data-targetid="${i.mem_id}">
+	                           	
+		                        	<input class="reportBtn" type="button" value="신고하기" data-seq="${i.suggestion_seq}" data-targetid="${i.mem_id}">
+		                    	
 		                    </div>
 	                </div>
 	
 	                <div class="postMidBox">
 	
 	                    <div class="postTitle">${i.suggestion_title}</div>
+	                    
 	                    <div class="postContent">${i.suggestion_contents}</div>
 	
 	                </div>
 	
 	                <div class="postDownBox" data-seq="${i.suggestion_seq}">
 	
+				<c:set var="myType" value="" />
+				
+				<!-- 새로고침 후에도 처음 상태 유지 -->
+				<c:forEach var="r" items="${myReaction}">
+					<c:if test="${r.suggestion_seq == i.suggestion_seq}">
+						<c:set var="myType" value="${r.reaction_type}"/>
+					</c:if>
+				</c:forEach>			
+				
 	                    <div class="postLikeBox">
-							<i class="navicon2 fa-regular fa-thumbs-up fa-2xl agreeIcon"></i> 동의해요
+							<i class="navicon2 ${myType eq 'LIKE' ? 'fa-solid' : 'fa-regular'} fa-thumbs-up fa-2xl agreeIcon"></i> 동의해요
 							<span class="agreeCount">${i.suggestion_like}</span>
 	                    </div>
 	
 	                    <div class="postCommentBox">
-	                         <i class="navicon2 fa-regular fa-thumbs-down fa-2xl noIcon" style="color: #5e361a;"></i> 잘 모르겠어요
+	                         <i class="navicon2 ${myType eq 'UNLIKE' ? 'fa-solid' : 'fa-regular'} fa-thumbs-down fa-2xl noIcon" style="color: #5e361a;"></i> 잘 모르겠어요
 	                         <span class="noCount">${i.suggestion_unlike}</span>
 	                    </div>
 	               </div>
@@ -425,7 +484,7 @@
         // container가 감시하고 있다가 postLikeBox가 눌리면 함수를 실행
         $(".postLikeBox").on("click", function () {
         	
-        	let btn = $(this).off("click");
+        	let btn = $(this);
         	// this : .postLikeBox 자기 자신
 			// ex) this는 그 5번째 게시글 안의 .postLikeBox가 됨.
 			// closest(".postBox") : 나를 감싸는 가장 가까운 .postBox를 찾아라
@@ -434,9 +493,9 @@
 			// suggestion_seq : 지금 클릭한 게시글 번호 들어감
 			let suggestion_seq = postDownBox.data("seq");
 			
-            let countSpan = $(this).find(".agreeCount");
-			
-			console.log("글번호:", suggestion_seq);
+            let likeCountSpan = btn.find(".agreeCount");
+            let unlikeBtn = postDownBox.find(".postCommentBox");
+            let unlikeCountSpan = unlikeBtn.find(".noCount");
         	
         	// jqeury의 ajax함수 시작
         	// 페이지 새로고침 없이 서버랑 통신하겠다는 의미
@@ -449,30 +508,58 @@
         		success: function(resp) { // 서버가 성공적으로 응답했을때, resp: 서버가 돌려준 결과값
         			console.log("서버응답:", resp);
         			
-        			// ⭐ 숫자 +1
-                    let current = Number(countSpan.text());
-                    countSpan.text(current + 1);
-                    
-                 	// 아이콘 변경 ⭐
-                    btn.find("i")
+        			if(resp == "login") {
+        			    alert("로그인 후 이용해주세요.");
+        			    location.href = "/members/loginUi";
+        			    return;
+        			}
+        			
+        			// ⭐ 숫자 증감
+        			if(resp == "liked") {
+        				let current = Number(likeCountSpan.text());
+        				likeCountSpan.text(current + 1);
+        				
+        				btn.find("i")
                        .removeClass("fa-regular")
                        .addClass("fa-solid")
                        .css("color", "#5e361a");
-
-                    // ⭐ 중복 클릭 방지
-                    btn.off("click");
-                },
+        			}
+        			else if(resp == "alreadyLiked") { // 
+        				return;
+        			}
+        			else if(resp == "change") {
+        				let likeCurrent = Number(likeCountSpan.text());
+        				likeCountSpan.text(likeCurrent + 1);
+        				
+        				let unlikeCurrent = Number(unlikeCountSpan.text());
+        				unlikeCountSpan.text(unlikeCurrent -1);
+        				
+        				btn.find("i")
+                        .removeClass("fa-regular")
+                        .addClass("fa-solid")
+                        .css("color", "#5e361a");
+        				
+        				unlikeBtn.find("i")
+                        .removeClass("fa-solid")
+                        .addClass("fa-regular")
+                        .css("color", "#5e361a");
+        			}
+               	},
             error: function() {
                 alert("에러 발생");
             }
         });	
     });
+    
+    // 싫어요 버튼
         	$(".postCommentBox").on("click", function(){
-        		let btn = $(this).off("click");
+        		let btn = $(this);
         		let postDownBox = $(this).closest(".postDownBox");
         		let suggestion_seq = postDownBox.data("seq");
-        		let countSpan = $(this).find(".noCount");
-        		console.log("글번호 :", suggestion_seq);
+        		
+        		let unlikeCountSpan = btn.find(".noCount");
+        		let likeBtn = postDownBox.find(".postLikeBox");
+        		let	likeCountSpan = likeBtn.find(".agreeCount");
         		
         		$.ajax({
         			url: "/feedback/unlike",
@@ -483,18 +570,51 @@
         			success: function(resp) {
         				console.log("서버응답", resp);
         				
-        				// ⭐ 숫자 +1
-                        let current = Number(countSpan.text());
-                        countSpan.text(current + 1);
-                        
-                     	// 아이콘 변경 ⭐
-                        btn.find("i")
+        				if(resp == "login") {
+        				    alert("로그인 후 이용해주세요.");
+        				    location.href = "/members/loginUi";
+        				    return;
+        				}
+        				
+        				// ⭐ 숫자 증감
+        				if(resp == "unliked") {
+        					let current = Number(unlikeCountSpan.text());
+        					unlikeCountSpan.text(current + 1);
+        					
+        					btn.find("i")
                            .removeClass("fa-regular")
                            .addClass("fa-solid")
                            .css("color", "#5e361a");
-
-                        // ⭐ 중복 클릭 방지
-                        btn.off("click");
+        				}
+                        
+        				else if(resp == "alreadyLiked") {
+        					return;
+        					/* let current = Number(unlikeCountSpan.text());
+        					unlikeCountSpan.text(current - 1);
+        					
+        					btn.find("i")
+                            .removeClass("fa-solid")
+                            .addClass("fa-regular")
+                            .css("color", "#5e361a"); */
+        				}
+        				
+        				else if(resp == "change") {
+        					let unlikeCurrent = Number(unlikeCountSpan.text());
+        					unlikeCountSpan.text(unlikeCurrent + 1);
+        					
+        					let likeCurrent = Number(likeCountSpan.text());
+        					likeCountSpan.text(likeCurrent - 1);
+        					
+        					btn.find("i")
+                            .removeClass("fa-regular")
+                            .addClass("fa-solid")
+                            .css("color", "#5e361a");
+        					
+        					likeBtn.find("i")
+                            .removeClass("fa-solid")
+                            .addClass("fa-regular")
+                            .css("color", "#5e361a");
+        				}
         			},
         			error: function(){
         				alert("에러 발생");
@@ -544,7 +664,115 @@
         $(".postLikeBox, .reportArea, .reportIcon, .reportSelect, .reportBtn").on("click", function (e) {
 		    e.stopPropagation();
 		});
-    </script>
+        
+        // 수정 버튼 클릭 -> 완료/취소 버튼으로 변경
+        $(".editBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".editBtn, .delBtn").hide();
+        	box.find(".cancleBtn, .okBtn").show();
+        })
+        
+        // 수정 버튼 -> 취소 버튼 -> 수정/삭제 버튼으로 변경
+        $(".cancleBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".okBtn, .cancleBtn").hide();
+        	box.find(".delBtn, .editBtn").show();
+        })
+        
+        // 완료 버튼 -> 수정/삭제 버튼으로 변경
+        $(".okBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".okBtn, .cancleBtn").hide();
+        	box.find(".delBtn, .editBtn").show();
+        })
+        
+        $(".cancleBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".postTitle").attr("contenteditable", "false");
+            box.find(".postContent").attr("contenteditable", "false");
+            
+            location.reload(); // 수정 전으로 새로고침
+        })
+        
+        $(".editBtn").on("click", function(){
 
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".postTitle").attr("contenteditable", "true");
+            box.find(".postContent").attr("contenteditable", "true");
+        })
+        
+        // 게시글 수정 버튼
+        $(".okBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	let seq = $(this).data("seq");
+        	let title = box.find(".postTitle").text();
+        	let contents = box.find(".postContent").text();
+        	
+        	console.log("seq :", seq);
+            console.log("title :", title);
+            console.log("contents :", contents);
+        	
+            box.find(".postTitle").attr("contenteditable", "false");
+            box.find(".postContent").attr("contenteditable", "false");
+            box.find(".postTitle").css("border", "none"); //1px solid rgb(242, 211, 162)
+            box.find(".postContent").css("border", "1px solid #F2D3A2"); // 1px solid #F2D3A2
+        	
+        	$.ajax ({
+        		url: "/feedback/update",
+        		type: "post",
+        		data: {suggestion_seq: seq,
+        			   suggestion_title: title,
+        			   suggestion_contents: contents
+        		},
+        		
+        		success: function(resp) {
+        			if(resp === "editOk"){
+        				location.reload();
+        			}
+        		}
+        	})
+        }) 
+        
+        // 게시글 삭제 버튼
+        $(".delBtn").on("click", function(){
+        	
+        	let seq = $(this).data("seq");
+        	
+        	if(confirm("정말 삭제하시겠습니까?")) {
+        		
+        		alert("삭제 되었습니다"); // 확인 눌렀을 때
+        		
+        		$.ajax ({
+        			url: "/feedback/delete",
+        			type: "post",
+        			data: { suggestion_seq: seq },
+        			
+        			success: function(resp) {
+        				if(resp === "successDel") {
+        					location.reload(); // 새로고침(일단 간단하게)
+        				}
+        				else {
+        					alert("삭제 실패");
+        				}
+        			},
+        			error: function() {
+        				alert("서버 오류 발생");
+        			}
+        		})
+        	} else {
+        		alert("취소 되었습니다");
+        	}
+        });
+    </script>
 </body>
 </html>
