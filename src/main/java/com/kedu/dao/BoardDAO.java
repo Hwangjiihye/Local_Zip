@@ -19,8 +19,8 @@ public class BoardDAO {
 	
 	//db에 게시글 등록
 	public int insert(BoardDTO dto, String mem_id, String mem_nickname, String mem_dong) throws Exception{
-		String sql = "insert into post values(post_seq.nextval,?,?,?,?,?,?,?,?,sysdate)";
-		return jdbc.update(sql, dto.getPost_category(), mem_id, mem_nickname, mem_dong, 
+		String sql = "insert into post values(?,?,?,?,?,?,?,?,?,sysdate)";
+		return jdbc.update(sql,dto.getPost_seq(), dto.getPost_category(), mem_id, mem_nickname, mem_dong, 
 				dto.getPost_hit(),dto.getPost_title(), dto.getPost_contents(), dto.getPost_like());
 	}
 	
