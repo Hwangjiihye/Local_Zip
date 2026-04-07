@@ -193,7 +193,27 @@ p{
 	color: #5e361a;
 }
 
+.applied-Btn, .joined-Btn{
+	width: 350px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: #bebebe;
+    color: #5e361a;
+    cursor: not-allowed;
+    box-shadow: none;
+}
 
+.closing-btn{
+	width: 350px;
+	height: 40px;
+    border:none;
+    border-radius: 10px;
+    background-color: #FF9D6E;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
 </style>
 </head>
 <body>
@@ -255,14 +275,20 @@ p{
 				</div>
 				<div class="bottomBtn">
 					<c:choose>
-						<c:when test="${loginId != i.mem_id}">
-							<button class="requestBtn" type="submit" data-meet-seq="${meet_seq}">신청하기</button>
+						<c:when test="${appliedSet.contains(i.meet_seq)}">
+							<button class="applied-Btn" type="button">승인대기중</button>
 						</c:when>
-						<c:when test="${loginId == i.mem_id}">
+						<c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
+					        <button class="closing-btn" disabled>모집마감</button>
+					    </c:when>
+					    <c:when test="${loginId == i.mem_id or joinedSet.contains(i.meet_seq)}">
 							<a href="/meeting/myMeeting"><button class="myMeetingBtn" type="button">내 모임으로 이동</button></a>
 						</c:when>
+						<c:when test="${loginId != i.mem_id and admin == 0}">
+							<button class="requestBtn" type="submit" data-meet-seq="${meet_seq}">신청하기</button>
+						</c:when>
 					</c:choose>
-						<a href="/meeting/list?category=all&cpage=${cPage}"><button class="backBtn" type="button">뒤로가기</button></a>
+						<a href="/meeting/list?category=${category}&cpage=${cPage}"><button class="backBtn" type="button">뒤로가기</button></a>
 				</div>
 			</c:forEach>
 		</div>
