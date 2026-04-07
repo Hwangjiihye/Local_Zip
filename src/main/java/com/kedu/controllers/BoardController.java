@@ -32,10 +32,10 @@ public class BoardController {
 	@Autowired
 	private VisitLogDAO vdao;
 	
-//	@RequestMapping("/lifeInfo")
-//	public String lifeInfo() {
-//		return "board/life-info";
-//	}
+	@RequestMapping("/lifeInfo")
+	public String lifeInfo() {
+		return "board/life-info";
+	}
 	
 	@RequestMapping("/concern")
 	public String concern(String sort, Model model) throws Exception {
@@ -94,28 +94,28 @@ public class BoardController {
 	
 	
 	//생활정보 jsp에 생활정보 카테고리 list만 출력
-//	@RequestMapping("/list_lifeInfo")
-//	public String list_lifeInfo(String sort, Model model) throws Exception{
-//		
-//		
-//		// 기본 정렬
-//		if(sort == null) {
-//			sort = "latest";
-//		}
-//	    List<BoardDTO> list;
-//	    
-//	    // 출력을 어떤 종류를 기준으로 할 지 검사
-//	    if ("like".equals(sort)) {
-//	        list = dao.list_lifeInfo_like();
-//	    }else {
-//	        list = dao.list_lifeInfo_latest();
-//	    }
-//
-//	    model.addAttribute("lifeInfo", list);
-//	    model.addAttribute("sort",sort);
-//
-//		return "board/life-info";
-//	}
+	@RequestMapping("/list_lifeInfo")
+	public String list_lifeInfo(String sort, Model model) throws Exception{
+		
+		
+		// 기본 정렬
+		if(sort == null) {
+			sort = "latest";
+		}
+	    List<BoardDTO> list;
+	    
+	    // 출력을 어떤 종류를 기준으로 할 지 검사
+	    if ("like".equals(sort)) {
+	        list = dao.list_lifeInfo_like();
+	    }else {
+	        list = dao.list_lifeInfo_latest();
+	    }
+
+	    model.addAttribute("lifeInfo", list);
+	    model.addAttribute("sort",sort);
+
+		return "board/life-info";
+	}
 	
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
