@@ -389,6 +389,37 @@
             /* 애니메이션 부드럽게 */
             transition: all 0.2s ease;
         }
+        
+        .pageBox{
+		    text-align: center;
+		    padding: 20px;
+		    font-size: 18px;
+		    color: #A66A3F;
+		    margin-bottom: 55px;
+		}
+		
+		.pageBox a{
+		    display: inline-block;
+		    min-width:35px;
+		    padding:6px 10px;
+		    margin: 0 8px;
+		    text-decoration: none;
+		    color: #A66A3F;
+		    border-radius:6px;
+		    transition:0.2s;
+		    font-weight: normal;
+		    cursor: pointer;
+		}
+		
+		.pageBox a.active{
+			background-color:#fecc56;
+		    font-weight: bold;
+		    color: #5e361a;
+		}
+		
+		.pageBox a:hover{
+		    background-color:#F2D3A2;
+		}
     </style>
 
 </head>
@@ -469,6 +500,11 @@
 	               </div>
 				</div>
 			</c:forEach>
+			<div class="pageBox">
+			
+			
+			
+			</div>
 		</div>
 		
 		 <div class="bottomBox">
@@ -589,13 +625,6 @@
                         
         				else if(resp == "alreadyLiked") {
         					return;
-        					/* let current = Number(unlikeCountSpan.text());
-        					unlikeCountSpan.text(current - 1);
-        					
-        					btn.find("i")
-                            .removeClass("fa-solid")
-                            .addClass("fa-regular")
-                            .css("color", "#5e361a"); */
         				}
         				
         				else if(resp == "change") {
@@ -773,6 +802,37 @@
         		alert("취소 되었습니다");
         	}
         });
+        
+        // 하단 네비게이션 바 구현
+        $("document").ready(function(){
+        let recordTotalCount = Number("${recordTotalCount}"); // 전체 게시물 수
+        let recordCountPerPage = Number("${recordCountPerPage}"); // 한 페이지에 몇 개 보여줄지
+        let naviCountPerPage = Number("${naviCountPerPage}"); //  한 번에 몇 개 페이지 번호 보여줄지
+        let currentPage = Number("${currentPage}"); // 현재 페이지
+        
+        let pageTotalCount = Math.ceil(recordTotalCount / recordCountPerPage); //  총 페이지 개수 구하기
+        
+       	let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
+        let endNavi = startNavi + naviCountPerPage - 1;
+        
+        if(endNavi > pageTotalCount) {
+        	endNavi = pageTotalCount;
+        }
+        
+        for(let i = startNavi; i <= endNavi; i++) {
+        	let navi = $("<a>");
+        	navi.attr("href", "/feedback/feedbackHome?cPage="+i);
+        	navi.html(i + " ");
+        	
+        	if(i == currentPage) {
+        		navi.addClass("active");
+        	}
+        	
+        	$(".pageBox").append(navi);
+        }
+    });
+        
+        
     </script>
 </body>
 </html>
