@@ -594,30 +594,17 @@ hr {
         })
         
         
-        // 최신순, 인기순 정렬
+        // 최신순, 인기순 정렬s
         $(".sortBtn").on("click",function(){
         	
         	let currentSort = "${sort}";
         	
         	if(currentSort == "latest"){
-        		location.href = "/board/list_lifeInfo?sort=like";
+        		location.href = "/board/lifeInfo?sort=like";
         	}else{
-        		location.href = "/board/list_lifeInfo?sort=latest";
+        		location.href = "/board/lifeInfo?sort=latest";
         	}
         });
-
-
-        // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
-        $(".reportIcon").on("click", function (e) {
-        	e.stopPropagation(); // ★부모(.postBox)의 클릭 이벤트X
-            $(".reportSelect").css({ "display": "inline" });
-            $(".reportBtn").css({"display": "inline"});
-        	
-			// 신고 사유 선택창 클릭 시 ★부모(.postBox)의 클릭 이벤트X
-			$(".reportSelect").on("click", function(e) {
-			    e.stopPropagation(); // 상세페이지 이동 방지
-			});
-        })
         
 
 		$(function() {
@@ -648,9 +635,6 @@ hr {
 
 				// 클릭한 아이콘이 속한 그 영역의 메뉴만 토글
 				let reportArea = $(this).closest(".reportArea");
-
-				// (선택사항) 다른 게시글의 열려있는 신고창을 모두 닫고 싶다면 아래 주석 해제
-				$(".reportSelect, .reportBtn").not(reportArea.find(".reportSelect, .reportBtn")).hide();
 
 				reportArea.find(".reportSelect, .reportBtn").toggle();
 			});
