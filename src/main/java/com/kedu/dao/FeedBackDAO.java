@@ -39,14 +39,12 @@ public class FeedBackDAO {
 	
 	// 좋아요 db에 넣기
 	public int plusLike(int suggestion_seq) {
-		 System.out.println("DAO 들어옴 / suggestion_seq = " + suggestion_seq);
 	    String sql = "update suggestion set suggestion_like = suggestion_like + 1 where suggestion_seq = ?";
 	    return jdbc.update(sql, suggestion_seq);
 	}
 	
 	// 싫어요 db에 넣기
 	public int plusUnLike(int suggestion_seq) {
-		System.out.println("DAO 들어옴 / suggestion_seq = " + suggestion_seq);
 		String sql = "update suggestion set suggestion_unlike = suggestion_unlike + 1 where suggestion_seq = ?";
 		return jdbc.update(sql, suggestion_seq);
 	}

@@ -89,6 +89,7 @@ public class FeedBackController {
 			return "/members/login";
 		}
 		
+		
 		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
 		
 		
