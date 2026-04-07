@@ -31,12 +31,7 @@ public class BoardController {
 	@Autowired
 	private VisitLogDAO vdao;
 	
-	@RequestMapping("/lifeInfo")
-	public String lifeInfo() {
-		return "board/life-info";
-	}
-	
-	@RequestMapping("/concern")
+	@RequestMapping("/talk")
 	public String concern(String sort, Model model) throws Exception {
 		
 		// 기본 정렬
@@ -93,8 +88,8 @@ public class BoardController {
 	
 	
 	//생활정보 jsp에 생활정보 카테고리 list만 출력
-	@RequestMapping("/list_lifeInfo")
-	public String list_lifeInfo(String sort, Model model) throws Exception{
+	@RequestMapping("/lifeInfo")
+	public String lifeInfo(String sort, Model model) throws Exception{
 		
 		
 		// 기본 정렬
@@ -118,19 +113,22 @@ public class BoardController {
 	
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
-	public String postDetail(Model model, int post_seq, HttpSession session) throws Exception{
+	public String postDetail(Model model, int post_seq, HttpSession session, String category) throws Exception{
+		
+		System.out.println(category);
 		
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
 		model.addAttribute("dto",dto);
 		
 		String loginId = (String)session.getAttribute("loginId");
-		   
+		
 		   if(loginId != null) {
-		      String category = dao.getCategoryBySeq(post_seq);
-		      vdao.postClickVisit(loginId, category);
+		      String allCategory = dao.getCategoryBySeq(post_seq);
+		      vdao.postClickVisit(loginId, allCategory);
 		   }
 		   
-		return "board/postDetail?seq="+post_seq;
+		session.setAttribute("category", category);
+	    return "board/postDetail";
 	}
 	
 	// 게시글 삭제

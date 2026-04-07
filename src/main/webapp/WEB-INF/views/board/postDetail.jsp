@@ -566,7 +566,7 @@ hr {
 			<div class="headBox">게시글 자세히보기</div>
 			<div class="backBtnDiv">
 <!-- 			게시글을 누르기 전에 보고있었던 목록의 페이지를 기억해서, 누르면 전으로 돌아가는 기능 : onclick="history.back();" -->
-				<input class="backBtn" type="button" value="목록으로" onclick="location.href='/'">
+				<input class="backBtn" type="button" value="목록으로">
 			</div>
 		</div>
 		<div class="bodyBox">
@@ -625,10 +625,10 @@ hr {
 
 				<div class="postDownBox">
 
-					<div class="postLikeBox">
+					<div class="postLikeBox ${i.post_like_check == 1 ? 'active' : ''}">
 						<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
 
-						<div>갯수</div>
+						<div class="likeCount infoCount">${i.post_like}</div>
 					</div>
 
 					<div class="postCommentBox">
@@ -847,9 +847,36 @@ hr {
 		
         // 좋아요 버튼
         $(".postLikeBox").on("click", function () {
-            $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
+            let postLike = $(this);
+            let post_seq = postLike.closest(".postBox").data("seq");
+            
+            // 하트 채워지고 비워지는 토글용 ajax
+	        $.ajax({
+	           url : "/like/toggle",
+	           data : {post_seq : post_seq},
+	           type : "post"
+	        }).done(function(likeCheck) {
+	           if(likeCheck == -1){
+	              alert("로그인 후 이용 가능합니다.");
+	              location.href = "/members/loginUi";
+	              return;
+	           }
+	           if (likeCheck == 1 || likeCheck == 0) { // 하트를 누를때마다 css 적용
+	               postLike.toggleClass("active"); // active 클래스를 넣었다 뺐다 함 
+	               // 서버 처리가 성공하면 화면의 하트 색깔을 변경함
+	               
+	               // jsp 화면에 보여지는 전체 숫자용 ajax
+	               $.ajax({
+	                  url : "/like/count",
+	                  data : {post_seq : post_seq},
+	                  type : "post"
+	               }).done(function(count){
+	                  postLike.find(".likeCount").text(count);
+	               });
+	            }
+	         });
         });
-
+               
         // 신고 아이콘을 눌렀을 때, 신고 사유가 튀어나오게
         $(document).on("click", ".reportIcon", function () {
 		    $(this).siblings(".reportSelect").css("display", "inline");
@@ -1008,6 +1035,17 @@ hr {
         		loadReplyList();
         	});
         });
+        
+        // 뒤로가기 버튼을 눌렀을 때
+        $(document).on("click", ".backBtn", function(){
+		    let category = "${category}";
+		
+		    if(category == "talk"){
+		        location.href = "/board/talk";
+		    } else if(category == "lifeInfo"){
+		        location.href = "/board/lifeInfo";
+		    }
+		});
     </script>
 </body>
 </html>
