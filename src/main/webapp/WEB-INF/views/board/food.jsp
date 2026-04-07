@@ -1,14 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>lifeInfo</title>
+<title>food</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 
 <style>
 /* 폰트 */
@@ -443,11 +442,9 @@ hr {
 	text-align: center;
 }
 </style>
-
 </head>
 <body>
-
-	<div class="container">
+<div class="container">
 
 		<div class="headBox">우리 동네.zip</div>
 
@@ -455,10 +452,10 @@ hr {
 			<div class="categoryBtns">
 				<a href="/"><button class="categoryBtn topBtn" type="button">
 						<i class="fa-solid fa-house fa-lg"></i> 전체
-					</button></a> <a href="/board/lifeInfo"><button class="categoryBtn nowBtn" type="button">
+					</button></a> <a href="/board/lifeInfo"><button class="categoryBtn topBtn" type="button">
 						<i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보
 					</button></a>
-				<a href="/board/food"><button class="categoryBtn topBtn" type="button">
+				<a href="/board/food"><button class="categoryBtn nowBtn" type="button">
 					<i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페
 				</button></a>
 				<a href="/board/talk"><button class="categoryBtn topBtn" type="button">
@@ -473,7 +470,7 @@ hr {
 		<hr>
 
 		<c:choose>
-			<c:when test="${empty lifeInfo}">
+			<c:when test="${empty list}">
 
 				<div class="emptyBox">등록된 게시글이 없습니다.</div>
 
@@ -487,7 +484,7 @@ hr {
 						<button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
 					</div>
 
-					<c:forEach var="i" items="${lifeInfo}">
+					<c:forEach var="i" items="${list}">
 						<div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
 
 							<div class="postUpBox">
@@ -501,7 +498,7 @@ hr {
 										<div class="profileName profileInfo" style="color: #5e361a;">${i.mem_nickname}</div>
 										<div class="profileLocal profileInfo" style="color: #5e361a;">${i.mem_dong}</div>
 										<div class="profileCatagory profileInfo">
-											<button class="topBtn" type="button">생활정보</button>
+											<button class="topBtn" type="button">맛집/카페</button>
 										</div>
 									</div>
 
@@ -572,9 +569,18 @@ hr {
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
 				class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
 				class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
-				class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> <a href="/members/mypage"><i
-				class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-
+				class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+			<c:choose>
+				<c:when test="${loginId == null}">
+					<a href="/members/loginUi"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				</c:when>
+				<c:when test="${role == 1}">
+					<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				</c:when>
+				<c:otherwise>
+					<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				</c:otherwise>
+			</c:choose>
 		</div>
 
 	</div>
@@ -600,9 +606,9 @@ hr {
         	let currentSort = "${sort}";
         	
         	if(currentSort == "latest"){
-        		location.href = "/board/lifeInfo?sort=like";
+        		location.href = "/board/food?sort=like";
         	}else{
-        		location.href = "/board/lifeInfo?sort=latest";
+        		location.href = "/board/food?sort=latest";
         	}
         });
         
@@ -625,7 +631,7 @@ hr {
 				}
 
 				let post_seq = $(this).data("seq");
-				location.href = "/board/postDetail?post_seq=" + post_seq + "&category=lifeInfo";
+				location.href = "/board/postDetail?post_seq=" + post_seq + "&category=food";
 			});
 
 			// 신고 ---------------------------------------------
@@ -708,8 +714,6 @@ hr {
 				data : {post_seq : post_seq},
 				type : "post"
 			}).done(function(likeCheck) {
-				console.log("서버 응답:" + likeCheck);
-				
 				if(likeCheck == -1){
 					alert("로그인 후 이용 가능합니다.");
 					location.href = "/members/loginUi";
@@ -732,6 +736,5 @@ hr {
 			});
 		});
 	</script>
-
 </body>
 </html>

@@ -1,14 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>lifeInfo</title>
+<title>beauty</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 
 <style>
 /* 폰트 */
@@ -443,11 +442,9 @@ hr {
 	text-align: center;
 }
 </style>
-
 </head>
 <body>
-
-	<div class="container">
+<div class="container">
 
 		<div class="headBox">우리 동네.zip</div>
 
@@ -455,7 +452,7 @@ hr {
 			<div class="categoryBtns">
 				<a href="/"><button class="categoryBtn topBtn" type="button">
 						<i class="fa-solid fa-house fa-lg"></i> 전체
-					</button></a> <a href="/board/lifeInfo"><button class="categoryBtn nowBtn" type="button">
+					</button></a> <a href="/board/lifeInfo"><button class="categoryBtn topBtn" type="button">
 						<i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보
 					</button></a>
 				<a href="/board/food"><button class="categoryBtn topBtn" type="button">
@@ -464,7 +461,7 @@ hr {
 				<a href="/board/talk"><button class="categoryBtn topBtn" type="button">
 						<i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기
 					</button></a>
-				<a href="/board/beauty"><button class="categoryBtn topBtn" type="button">
+				<a href="/board/beauty"><button class="categoryBtn nowBtn" type="button">
 					<i class="fa-solid fa-shirt fa-lg"></i> 미용/패션
 				</button></a>
 			</div>
@@ -473,7 +470,7 @@ hr {
 		<hr>
 
 		<c:choose>
-			<c:when test="${empty lifeInfo}">
+			<c:when test="${empty list}">
 
 				<div class="emptyBox">등록된 게시글이 없습니다.</div>
 
@@ -487,7 +484,7 @@ hr {
 						<button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
 					</div>
 
-					<c:forEach var="i" items="${lifeInfo}">
+					<c:forEach var="i" items="${list}">
 						<div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
 
 							<div class="postUpBox">
@@ -501,7 +498,7 @@ hr {
 										<div class="profileName profileInfo" style="color: #5e361a;">${i.mem_nickname}</div>
 										<div class="profileLocal profileInfo" style="color: #5e361a;">${i.mem_dong}</div>
 										<div class="profileCatagory profileInfo">
-											<button class="topBtn" type="button">생활정보</button>
+											<button class="topBtn" type="button">미용/패션</button>
 										</div>
 									</div>
 
@@ -600,9 +597,9 @@ hr {
         	let currentSort = "${sort}";
         	
         	if(currentSort == "latest"){
-        		location.href = "/board/lifeInfo?sort=like";
+        		location.href = "/board/beauty?sort=like";
         	}else{
-        		location.href = "/board/lifeInfo?sort=latest";
+        		location.href = "/board/beauty?sort=latest";
         	}
         });
         
@@ -625,7 +622,7 @@ hr {
 				}
 
 				let post_seq = $(this).data("seq");
-				location.href = "/board/postDetail?post_seq=" + post_seq + "&category=lifeInfo";
+				location.href = "/board/postDetail?post_seq=" + post_seq + "&category=beauty";
 			});
 
 			// 신고 ---------------------------------------------
@@ -708,7 +705,6 @@ hr {
 				data : {post_seq : post_seq},
 				type : "post"
 			}).done(function(likeCheck) {
-				console.log("서버 응답:" + likeCheck);
 				
 				if(likeCheck == -1){
 					alert("로그인 후 이용 가능합니다.");
@@ -732,6 +728,5 @@ hr {
 			});
 		});
 	</script>
-
 </body>
 </html>
