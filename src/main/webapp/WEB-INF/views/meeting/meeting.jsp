@@ -420,6 +420,16 @@ body {
     box-shadow: none;
 }
 
+.adminMeetin-btn{
+	width: 100%;
+    height: 40px;
+    background-color: #FFB300;
+    border:none;
+    border-radius: 10px;
+    color: #5e361a;
+    margin-top: auto;
+}
+
 </style>
 </head>
 <body>
@@ -499,7 +509,7 @@ body {
 						    </div>
 						</div>
 						<div class="gauge-text">${i.meet_currentpeople} / ${i.meet_maxpeople}명 참여중</div>
-					
+						
 						<c:choose>
 					        <c:when test="${i.meet_currentpeople >= i.meet_maxpeople}">
 					            <button class="closing-btn" disabled>모집마감</button>
@@ -510,15 +520,18 @@ body {
 					         <c:when test="${joinedSet.contains(i.meet_seq)}">
 					            <button class="joined-Btn" disabled>참여중</button>
 					        </c:when>
-					        <c:when test="${companionSet.contains(i.meet_seq)} ">
+					        <c:when test="${companionSet.contains(i.meet_seq) or admin == 1} ">
 					        	<button class="joinTwo-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">참여신청</button>
 					        </c:when>
 					        <c:when test="${appliedSet.contains(i.meet_seq)}">
 					            <button class="applied-Btn" disabled>승인대기중</button>
 					        </c:when>
-					        <c:otherwise>
+					        <c:when test="${admin != 1}">
 								<button class="join-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">참여신청</button>
-							 </c:otherwise>
+							</c:when>
+							<c:otherwise>
+								<button class="adminMeetin-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">자세히보기</button>
+							</c:otherwise>
     					</c:choose>
 					</div>
 				</div>
