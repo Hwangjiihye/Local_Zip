@@ -1,8 +1,13 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.kedu.dto.PostLikeDTO;
 
 @Repository
 public class PostLikeDAO {
@@ -34,5 +39,12 @@ public class PostLikeDAO {
 		String sql = "select count(*) from post_like where post_seq = ?";
 		return jdbc.queryForObject(sql, Integer.class, post_seq);
 	};
+	
+	// 좋아요를 누른 게시글 전체 출력하는 메서드
+	public List<PostLikeDTO> getMyLikes(String mem_id){
+		String sql = "select * from post_like where mem_id = ? order by like_date desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<PostLikeDTO>(PostLikeDTO.class), mem_id);
+	};
+	
 
 }

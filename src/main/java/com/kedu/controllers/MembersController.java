@@ -14,9 +14,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.gson.Gson;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.MembersDAO;
+import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.MembersDTO;
+import com.kedu.dto.PostLikeDTO;
 
 @Controller
 @RequestMapping("/members")
@@ -30,6 +32,8 @@ public class MembersController {
 	private VisitLogDAO vdao;	
 	@Autowired
 	private BoardDAO BoardDao;
+	@Autowired
+	private PostLikeDAO likeDao;
 	
 	// 회원가입 창으로 이동 클릭 시
 	@RequestMapping("/join")
@@ -127,7 +131,8 @@ public class MembersController {
 		int meetingCount = dao.meetingCount(loginId);
 		model.addAttribute("meetingCount",meetingCount);
 		
-
+		int writeCount = BoardDao.MyWriteCount(loginId); // 마이페이지에서 작성글 수 보여주는 메서드
+		model.addAttribute("writeCount",writeCount);
 		
 		if(loginId == null) {
 			return "redirect:/members/loginUi";
@@ -137,11 +142,7 @@ public class MembersController {
 		if(role == 0){
 			System.out.println(role);
 			return "redirect:/admin/adminPage";
-		}else {
-			int writeCount = BoardDao.MyWriteCount(loginId);
-			System.out.println(writeCount); // 5
-			model.addAttribute("writeCount",writeCount);
-			
+		}else {		
 			return "members/mypage";
 		}
 	}
@@ -192,4 +193,17 @@ public class MembersController {
 		return "members/myPosts";
 	}
 	
+	// 마이페이지 > 관심 게시글을 눌렀을 때,
+	@RequestMapping("/myLikes")
+	public String myLikes(HttpSession session, Model model) throws Exception{
+		
+		String mem_id = (String)session.getAttribute("loginId");
+		
+		List<PostLikeDTO> list = likeDao.getMyLikes(mem_id);
+		model.addAttribute("likeList",list);
+		
+		return "members/myLikes";
+	}
+	
+
 }
