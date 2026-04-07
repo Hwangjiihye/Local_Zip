@@ -123,7 +123,7 @@
             transition: all 0.2s ease;
         }
         
-        .writeBtn:hover, .editBtn:hover, .delBtn:hover {
+        .writeBtn:hover, .editBtn:hover, .delBtn:hover, .cancleBtn:hover, .okBtn:hover {
         	transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
@@ -134,7 +134,7 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .navicon:active, .editBtn:active, .delBtn:active {
+        .navicon:active, .editBtn:active, .delBtn:active, .cancleBtn:active, .okBtn:active {
             transform: translateY(2px);
             /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -372,8 +372,22 @@
         	gap: 8px;
         }
         
-        .cancleBtn{
+        .cancleBtn, .okBtn{
         	display: none;
+        	cursor: pointer;
+            border: #fbe5c0;
+            color:  #5e361a;
+            font-size: 13px;
+            font-weight: bold;
+			background-color:  #FFB300;
+			width: 50px;
+			height: 20px;
+			border-radius: 5px;
+            /* 그림자 효과 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+            /* 애니메이션 부드럽게 */
+            transition: all 0.2s ease;
         }
     </style>
 
@@ -405,7 +419,7 @@
 	                  <c:if test="${loginId == i.mem_id}">      
 	                        <div class="btnBox">
 	                        	<input class="editBtn" type="button" value="수정" data-seq="${i.suggestion_seq}"><input class="delBtn" type="button" value="삭제" data-seq="${i.suggestion_seq}">
-	                    		<input class="cancleBtn" type="button" value="취소">
+	                    		<input class="okBtn" type="button" value="완료" data-seq="${i.suggestion_seq}"><input class="cancleBtn" type="button" value="취소" data-seq="${i.suggestion_seq}">
 	                    	</div>
 	                  </c:if>
 	                    </div>
@@ -427,6 +441,7 @@
 	                <div class="postMidBox">
 	
 	                    <div class="postTitle">${i.suggestion_title}</div>
+	                    
 	                    <div class="postContent">${i.suggestion_contents}</div>
 	
 	                </div>
@@ -646,15 +661,83 @@
 		    e.stopPropagation();
 		});
         
-        // 수정 버튼 클릭 -> 완료/취소 버튼 변경
+        // 수정 버튼 클릭 -> 완료/취소 버튼으로 변경
         $(".editBtn").on("click", function(){
         	
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".editBtn, .delBtn").hide();
+        	box.find(".cancleBtn, .okBtn").show();
+        })
+        
+        // 수정 버튼 -> 취소 버튼 -> 수정/삭제 버튼으로 변경
+        $(".cancleBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".okBtn, .cancleBtn").hide();
+        	box.find(".delBtn, .editBtn").show();
+        })
+        
+        // 완료 버튼 -> 수정/삭제 버튼으로 변경
+        $(".okBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".okBtn, .cancleBtn").hide();
+        	box.find(".delBtn, .editBtn").show();
+        })
+        
+        $(".cancleBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".postTitle").attr("contenteditable", "false");
+            box.find(".postContent").attr("contenteditable", "false");
+            
+            location.reload(); // 수정 전으로 새로고침
+        })
+        
+        $(".editBtn").on("click", function(){
+
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".postTitle").attr("contenteditable", "true");
+            box.find(".postContent").attr("contenteditable", "true");
         })
         
         // 게시글 수정 버튼
-        $(".editBtn").on("click", function(){
+        $(".okBtn").on("click", function(){
         	
-        })
+        	let box = $(this).closest(".postBox");
+        	let seq = $(this).data("seq");
+        	let title = box.find(".postTitle").text();
+        	let contents = box.find(".postContent").text();
+        	
+        	console.log("seq :", seq);
+            console.log("title :", title);
+            console.log("contents :", contents);
+        	
+            box.find(".postTitle").attr("contenteditable", "false");
+            box.find(".postContent").attr("contenteditable", "false");
+            box.find(".postTitle").css("border", "none"); //1px solid rgb(242, 211, 162)
+            box.find(".postContent").css("border", "1px solid #F2D3A2"); // 1px solid #F2D3A2
+        	
+        	$.ajax ({
+        		url: "/feedback/update",
+        		type: "post",
+        		data: {suggestion_seq: seq,
+        			   suggestion_title: title,
+        			   suggestion_contents: contents
+        		},
+        		
+        		success: function(resp) {
+        			if(resp === "editOk"){
+        				location.reload();
+        			}
+        		}
+        	})
+        }) 
         
         // 게시글 삭제 버튼
         $(".delBtn").on("click", function(){
@@ -686,11 +769,6 @@
         		alert("취소 되었습니다");
         	}
         });
-        
-        
-        
-        
     </script>
-
 </body>
 </html>

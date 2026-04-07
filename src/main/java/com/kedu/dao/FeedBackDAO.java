@@ -34,9 +34,6 @@ public class FeedBackDAO {
 		        "on s.suggestion_seq = r.suggestion_seq and r.mem_id = ? " +
 		        "order by s.suggestion_seq desc";
 		
-		
-//		String sql = "select * from suggestion order by suggestion_seq desc";
-		
 		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class), loginId);
 	}
 	
@@ -83,5 +80,17 @@ public class FeedBackDAO {
 	public int delete(int suggestion_seq) {
 		String sql = "delete from suggestion where suggestion_seq = ?";
 		return jdbc.update(sql, suggestion_seq);
+	}
+	
+	// 게시글 수정 1 (글 목록 불러오기)
+	public List<FeedBackDTO> list() {
+		String sql = "select * from suggestion order by suggestion_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class));
+	}	
+	
+	// 게시글 수정 2 (글 수정)
+	public int udpate(FeedBackDTO dto) {
+		String sql = "update suggestion set suggestion_title = ? , suggestion_contents = ? where suggestion_seq = ?";
+		return jdbc.update(sql, dto.getSuggestion_title(), dto.getSuggestion_contents(), dto.getSuggestion_seq());
 	}
 }

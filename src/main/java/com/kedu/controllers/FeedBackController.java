@@ -181,4 +181,22 @@ public class FeedBackController {
 			return "fail";
 		}
 	}
+	
+	// 게시글 수정
+	@ResponseBody
+	@RequestMapping("/update")
+	public String update(FeedBackDTO dto, HttpSession session) {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		FeedBackDTO updateDto = dao.selectBySeq(dto.getSuggestion_seq());
+		
+		if(!loginId.equals(updateDto.getMem_id())) {
+			return "fail";
+		}
+		
+		int result = dao.udpate(dto);
+		
+		return result > 0 ? "success" : "fail";
+	}
 }
