@@ -1048,8 +1048,12 @@ hr {
 		
 		    if(category == "talk"){
 		        location.href = "/board/talk";
-		    } else if(category == "lifeInfo"){
+		    }else if(category == "lifeInfo"){
 		        location.href = "/board/lifeInfo";
+		    }else if(category == "food"){
+		    	location.href = "/board/food";
+		    }else if(category == "beauty"){
+		    	location.href = "/board/beauty";
 		    }
 		});
     </script>
