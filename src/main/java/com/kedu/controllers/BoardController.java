@@ -84,9 +84,9 @@ public class BoardController {
 	      dao.insert(dto, mem_id, mem_nickname, mem_dong);
 	      	      
 	      if("lifeInfo".equals(post_category)) {
-	         return "redirect:/board/list_lifeInfo";
+	         return "redirect:/board/lifeInfo";
 	      }else if("talk".equals(post_category)) {
-	         return "redirect:/board/concern";
+	         return "redirect:/board/talk";
 	      }else if("food".equals(post_category)) {
 	         return "redirect:/board/food";
 	      }else if("beauty".equals(post_category)) {
