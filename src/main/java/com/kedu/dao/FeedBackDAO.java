@@ -93,4 +93,23 @@ public class FeedBackDAO {
 		String sql = "update suggestion set suggestion_title = ? , suggestion_contents = ? where suggestion_seq = ?";
 		return jdbc.update(sql, dto.getSuggestion_title(), dto.getSuggestion_contents(), dto.getSuggestion_seq());
 	}
+	
+	// 네비게이션 바
+	public int getRecordTotalCount() {
+		String sql = "select count(*) from suggestion";
+		return jdbc.queryForObject(sql, Integer.class);
+	}
+	
+	//
+	public List<FeedBackDTO> list(String loginId, int start, int end) throws Exception {
+		
+		String sql = "select * from ("
+	            + "    select row_number() over(order by s.suggestion_seq desc) rn, s.*, r.reaction_type "
+	            + "    from suggestion s "
+	            + "    left join suggestion_reaction r "
+	            + "    on s.suggestion_seq = r.suggestion_seq and r.mem_id = ? "
+	            + ") where rn between ? and ?";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class), loginId, start, end);
+	}
 }

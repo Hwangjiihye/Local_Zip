@@ -336,6 +336,7 @@
 		function checkForm() {
 			let title = document.getElementById("title").value;
 			let category = document.getElementById("category").value;
+			let peopleNumber = document.getElementById("peopleNumber").value;
 			let intro = document.getElementById("intro").value;
 			let detail = document.getElementById("detail").value;
 			let address = document.getElementById("address").value;
@@ -347,6 +348,9 @@
 				return false;
 			} else if(category == "") {
 				alert("카테고리를 선택해주세요");
+				return false;
+			} else if(peopleNumber == "") {
+				alert("정원수를 선택해주세요");
 				return false;
 			} else if(intro == "") {
 				alert("한 줄 소개를 작성해주세요");
@@ -368,6 +372,5 @@
 		}
 		
 		</script>
-
 </body>
 </html>
