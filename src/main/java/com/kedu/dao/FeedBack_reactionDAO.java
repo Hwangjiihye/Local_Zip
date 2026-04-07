@@ -1,8 +1,13 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.kedu.dto.FeedBack_reactionDTO;
 
 @Repository
 public class FeedBack_reactionDAO {
@@ -44,5 +49,13 @@ public class FeedBack_reactionDAO {
 		String sql = "delete from suggestion_reaction where mem_id = ? and suggestion_seq = ?";
 		
 		return jdbc.update(sql, mem_id, suggestion_seq);
+	}
+	
+	// 내가 눌렀던 반응 목록
+	public List<FeedBack_reactionDTO> selectMyReaction(String mem_id) {
+		
+		String sql = "select * from suggestion_reaction where mem_id = ?";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBack_reactionDTO>(FeedBack_reactionDTO.class), mem_id);
 	}
 }

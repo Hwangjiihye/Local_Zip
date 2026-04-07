@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.FeedBackDTO;
-import com.kedu.dto.ReportDTO;
+import com.kedu.dto.FeedBack_reactionDTO;
 
 @Repository
 public class FeedBackDAO {
@@ -50,17 +50,18 @@ public class FeedBackDAO {
 		return jdbc.update(sql, suggestion_seq);
 	}
 	
-	//////// 좋아요 취소
+	// 좋아요 취소
 	public int minusLike(int suggestion_seq) {
-		String sql = "update suggestion set suggestion_like = suggestion_like -1 where suggestion_seq = ?";
+		String sql = "update suggestion set suggestion_like = suggestion_like -1 where suggestion_seq = ? and suggestion_like > 0";
 		return jdbc.update(sql, suggestion_seq);
 	}
 	
-	/////// 싫어요 취소
+	// 싫어요 취소
 	public int minusUnlike(int suggestion_seq) {
-		String sql = "update suggestion set suggestion_unlike = suggestion_unlike -1 where suggestion_seq = ?";
+		String sql = "update suggestion set suggestion_unlike = suggestion_unlike -1 where suggestion_seq = ? and suggestion_unlike > 0";
 		return jdbc.update(sql, suggestion_seq);
 	}
+	
 	
 	// 신고
 	public String getWriterBySeq(int suggestion_seq) {

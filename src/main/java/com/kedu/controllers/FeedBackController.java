@@ -15,6 +15,7 @@ import com.kedu.dao.FeedBackDAO;
 import com.kedu.dao.FeedBack_reactionDAO;
 import com.kedu.dao.ReportDAO;
 import com.kedu.dto.FeedBackDTO;
+import com.kedu.dto.FeedBack_reactionDTO;
 import com.kedu.dto.ReportDTO;
 
 @Controller
@@ -47,9 +48,11 @@ public class FeedBackController {
 			return "redirect:/members/login";
 		}
 		
-		List<FeedBackDTO> list = dao.list(loginId);
+		List<FeedBackDTO> list = dao.list();
+		List<FeedBack_reactionDTO> myReaction = reactiondao.selectMyReaction(loginId); // 내 반응 목록 list
 		
 		model.addAttribute("list", list);
+		model.addAttribute("myReaction", myReaction);
 		
 	    return "feedback/feedbackHome";
 	}
@@ -94,25 +97,26 @@ public class FeedBackController {
 		
 		// 처음 누름
 		if(reaction == null) {
-			reactiondao.insert(loginId, suggestion_seq, "Like");
+			reactiondao.insert(loginId, suggestion_seq, "LIKE");
 			feedbackdao.plusLike(suggestion_seq);
 			return "liked";
 		}
 		
 		// 좋아요 누름 -> 취소
 		else if(reaction.equals("Like")) {
-			reactiondao.delete(loginId, suggestion_seq);
-			feedbackdao.minusLike(suggestion_seq);
-			return "cancle";
+//			reactiondao.delete(loginId, suggestion_seq);
+//			feedbackdao.minusLike(suggestion_seq);
+			return "alreadyLiked";
 		}
 		
 		// 싫어요 -> 좋아요 변경
-		else {
-			reactiondao.update(loginId, suggestion_seq, "Like");
+		else if(reaction.equals("UNLIKE")){
+			reactiondao.update(loginId, suggestion_seq, "LIKE");
 			feedbackdao.minusUnlike(suggestion_seq);
 			feedbackdao.plusLike(suggestion_seq);
 			return "change";
 		}
+		return "fail";
 	}
 	
 	@ResponseBody
@@ -136,18 +140,19 @@ public class FeedBackController {
 		
 		// 싫어요 누름 -> 취소
 		else if(reaction.equals("UNLIKE")) {
-			reactiondao.delete(loginId, suggestion_seq);
-			feedbackdao.minusUnlike(suggestion_seq);
-			return "cancle";
+//			reactiondao.delete(loginId, suggestion_seq);
+//			feedbackdao.minusUnlike(suggestion_seq);
+			return "alreadyLiked";
 		}
 		
 		// 좋아요 -> 싫어요 변경
-		else {
+		else if(reaction.equals("LIKE")){
 			reactiondao.update(loginId, suggestion_seq, "UNLIKE");
 			feedbackdao.minusLike(suggestion_seq);
 			feedbackdao.plusUnLike(suggestion_seq);
 			return "change";
 		}
+		return "fail";
 	}
 	
 	// 신고

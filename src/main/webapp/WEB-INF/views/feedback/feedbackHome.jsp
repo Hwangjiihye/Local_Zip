@@ -448,13 +448,22 @@
 	
 	                <div class="postDownBox" data-seq="${i.suggestion_seq}">
 	
+				<c:set var="myType" value="" />
+				
+				<!-- 새로고침 후에도 처음 상태 유지 -->
+				<c:forEach var="r" items="${myReaction}">
+					<c:if test="${r.suggestion_seq == i.suggestion_seq}">
+						<c:set var="myType" value="${r.reaction_type}"/>
+					</c:if>
+				</c:forEach>			
+				
 	                    <div class="postLikeBox">
-							<i class="navicon2 fa-regular fa-thumbs-up fa-2xl agreeIcon"></i> 동의해요
+							<i class="navicon2 ${myType eq 'LIKE' ? 'fa-solid' : 'fa-regular'} fa-thumbs-up fa-2xl agreeIcon"></i> 동의해요
 							<span class="agreeCount">${i.suggestion_like}</span>
 	                    </div>
 	
 	                    <div class="postCommentBox">
-	                         <i class="navicon2 fa-regular fa-thumbs-down fa-2xl noIcon" style="color: #5e361a;"></i> 잘 모르겠어요
+	                         <i class="navicon2 ${myType eq 'UNLIKE' ? 'fa-solid' : 'fa-regular'} fa-thumbs-down fa-2xl noIcon" style="color: #5e361a;"></i> 잘 모르겠어요
 	                         <span class="noCount">${i.suggestion_unlike}</span>
 	                    </div>
 	               </div>
@@ -515,14 +524,8 @@
                        .addClass("fa-solid")
                        .css("color", "#5e361a");
         			}
-        			else if(resp == "cancel") {
-        				let current = Number(likeCountSpan.text());
-        				likeCountSpan.text(current -1);
-        				
-        				btn.find("i")
-                        .removeClass("fa-solid")
-                        .addClass("fa-regular")
-                        .css("color", "#5e361a");
+        			else if(resp == "alreadyLiked") { // 
+        				return;
         			}
         			else if(resp == "change") {
         				let likeCurrent = Number(likeCountSpan.text());
@@ -584,14 +587,15 @@
                            .css("color", "#5e361a");
         				}
                         
-        				else if(resp == "cancel") {
-        					let current = Number(unlikeCountSpan.text());
+        				else if(resp == "alreadyLiked") {
+        					return;
+        					/* let current = Number(unlikeCountSpan.text());
         					unlikeCountSpan.text(current - 1);
         					
         					btn.find("i")
                             .removeClass("fa-solid")
                             .addClass("fa-regular")
-                            .css("color", "#5e361a");
+                            .css("color", "#5e361a"); */
         				}
         				
         				else if(resp == "change") {
