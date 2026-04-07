@@ -60,6 +60,7 @@ public class BoardController {
 	       
 	      
 		int nextval = dao.getNextval();
+		System.out.println(nextval);
 		String post_category = dto.getPost_category();
 		String savePath = "c:/files";
 		File savePathFile = new File(savePath);

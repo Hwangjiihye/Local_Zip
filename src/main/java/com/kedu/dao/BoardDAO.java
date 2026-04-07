@@ -199,7 +199,7 @@ public class BoardDAO {
 	
 
 	public int getNextval() {
-		String sql = "SELECT POST_SEQ.NEXTVAL FROM DUAL";
+		String sql = "SELECT post_seq.NEXTVAL FROM DUAL";
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 
