@@ -106,6 +106,9 @@ body {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	transition: all 0.2s ease;
 	line-height: 30px;
+	display: flex;
+    align-items: center;
+    gap : 5px;
 }
 
 .categoryBtnAll:hover, .navicon:hover {
@@ -274,6 +277,15 @@ body {
 	font-weight: bold;
 	color: #286708;
 }
+
+a{
+	text-decoration: none;
+}
+
+img{
+	width: 16.67px;
+	height: 16.10px;
+}
 </style>
 </head>
 
@@ -286,9 +298,9 @@ body {
 				<a href="/admin/adminPage"><button class="categoryBtnAll ${menu == 'dashboard' ? 'nowBtn' : ''}" type="button">
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
-				<button class="categoryBtnAll" type="button">
-					<i class="fa-solid fa-user fa-lg"></i> 신고관리
-				</button>
+				<a href="/admin/adminBlackList"><button class="categoryBtnAll" type="button">
+					<img src="/resources/images/adminSiren.png"></img> 신고관리
+				</button></a>
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}" type="button">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>

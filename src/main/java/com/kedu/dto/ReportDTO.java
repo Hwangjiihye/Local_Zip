@@ -9,6 +9,8 @@ public class ReportDTO {
 	private String reports_date;
 	private int reports_type;
 	private String reports_reason;
+	private String target_content;
+	private String target_type_name;
 	
 	public ReportDTO() {}
 	
@@ -64,5 +66,17 @@ public class ReportDTO {
 	}
 	public void setReports_reason(String reports_reason) {
 		this.reports_reason = reports_reason;
+	}
+	public String getTarget_content() {
+		return target_content;
+	}
+	public void setTarget_content(String target_content) {
+		this.target_content = target_content;
+	}
+	public String getTarget_type_name() {
+		return target_type_name;
+	}
+	public void setTarget_type_name(String target_type_name) {
+		this.target_type_name = target_type_name;
 	}
 }
