@@ -39,7 +39,7 @@ public class FeedBackController {
 	
 	// 건의사항 작성글 출력
 	@RequestMapping("/feedbackHome")
-	public String feedbackHome(Model model, HttpSession session) throws Exception {
+	public String feedbackHome(Model model, HttpSession session, Integer cPage) throws Exception {
 		
 		// 홈에서 비회원일 경우, 로그인 페이지로 보냄
 		String loginId = (String)session.getAttribute("loginId");
@@ -48,10 +48,24 @@ public class FeedBackController {
 			return "redirect:/members/login";
 		}
 		
-		List<FeedBackDTO> list = dao.list();
-		List<FeedBack_reactionDTO> myReaction = reactiondao.selectMyReaction(loginId); // 내 반응 목록 list
+		if(cPage == null) {
+			cPage = 1;
+		}
+	
+		List<FeedBackDTO> list = feedbackdao.list(loginId, cPage * 10 - 9, cPage * 10);
 		
+		/* List<FeedBackDTO> list = dao.list(); */
 		model.addAttribute("list", list);
+		int recordTotalCount = dao.getRecordTotalCount();
+		
+		model.addAttribute("recordTotalCount", recordTotalCount);
+		
+		model.addAttribute("naviCountPerPage", 10);
+		model.addAttribute("recordCountPerPage", 10);
+		model.addAttribute("currentPage", cPage);
+		session.setAttribute("cPage", cPage);
+		
+		List<FeedBack_reactionDTO> myReaction = reactiondao.selectMyReaction(loginId); // 내 반응 목록 list
 		model.addAttribute("myReaction", myReaction);
 		
 	    return "feedback/feedbackHome";

@@ -238,7 +238,7 @@ button, body {
 }
 
 .profileTime {
-	font-size: 20px;
+	font-size: 14px;
 	display: flex;
 	align-items: center;
 	width: auto;
@@ -250,7 +250,7 @@ button, body {
 	margin: auto;
 	width: 95%;
 	height: 40px;
-	font-size: 30px;
+	font-size: 20px;
 	margin-top: 5px;
 	line-height: 40px;
 }
@@ -260,7 +260,7 @@ button, body {
 	width: 95%;
 	height: 1.5em; /* 한 줄 높이만큼 고정 */
 	line-height: 1.5em;
-	font-size: 18px;
+	font-size: 15px;
 	background-color: #f0d8af;
 	border-radius: 5px;
 	padding: 0 10px;
@@ -352,7 +352,7 @@ button, body {
 	
 					<c:forEach var="i" items="${listAll}">
 
-						<div class="postBox">
+						<div class="postBox" onclick="location.href='/board/postDetail?post_seq=${i.post_seq}'" style="cursor:pointer;">
 
 							<div class="postUpBox">
 
@@ -373,7 +373,7 @@ button, body {
 									</div>
 
 									<div class="postInfoDown">
-										<div class="profileTime profileInfo" style="color: #5e361a;">${i.post_date}</div>
+										<div class="profileTime profileInfo" style="color: #5e361a;">작성일자 : ${i.post_date}</div>
 									</div>
 								</div>
 

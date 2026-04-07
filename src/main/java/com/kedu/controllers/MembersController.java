@@ -1,5 +1,7 @@
 package com.kedu.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
+import com.kedu.dao.BoardDAO;
 import com.kedu.dao.MembersDAO;
+import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.VisitLogDAO;
+import com.kedu.dto.BoardDTO;
 import com.kedu.dto.MembersDTO;
+import com.kedu.dto.PostLikeDTO;
 
 @Controller
 @RequestMapping("/members")
@@ -24,6 +30,10 @@ public class MembersController {
 	private Gson gson;
 	@Autowired
 	private VisitLogDAO vdao;	
+	@Autowired
+	private BoardDAO BoardDao;
+	@Autowired
+	private PostLikeDAO likeDao;
 	
 	// 회원가입 창으로 이동 클릭 시
 	@RequestMapping("/join")
@@ -121,6 +131,9 @@ public class MembersController {
 		int meetingCount = dao.meetingCount(loginId);
 		model.addAttribute("meetingCount",meetingCount);
 		
+		int writeCount = BoardDao.MyWriteCount(loginId); // 마이페이지에서 작성글 수 보여주는 메서드
+		model.addAttribute("writeCount",writeCount);
+		
 		if(loginId == null) {
 			return "redirect:/members/loginUi";
 		}
@@ -129,7 +142,7 @@ public class MembersController {
 		if(role == 0){
 			System.out.println(role);
 			return "redirect:/admin/adminPage";
-		}else {
+		}else {		
 			return "members/mypage";
 		}
 	}
@@ -170,8 +183,27 @@ public class MembersController {
 	
 	// 마이페이지 > 작성글(모아보기)를 눌렀을 때,
 	@RequestMapping("/myPosts")
-	public String myPosts() {
+	public String myPosts(HttpSession session, Model model) throws Exception{
+		
+		String mem_id = (String)session.getAttribute("loginId");
+		
+		List<BoardDTO> list = BoardDao.getMyBoards(mem_id); // 로그인 아이디를 기준으로 전체 게시판 목록 출력
+		model.addAttribute("listAll",list);
+		
 		return "members/myPosts";
 	}
 	
+	// 마이페이지 > 관심 게시글을 눌렀을 때,
+	@RequestMapping("/myLikes")
+	public String myLikes(HttpSession session, Model model) throws Exception{
+		
+		String mem_id = (String)session.getAttribute("loginId");
+		
+		List<PostLikeDTO> list = likeDao.getMyLikes(mem_id);
+		model.addAttribute("likeList",list);
+		
+		return "members/myLikes";
+	}
+	
+
 }

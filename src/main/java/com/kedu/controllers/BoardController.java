@@ -58,9 +58,8 @@ public class BoardController {
 		@RequestMapping("/insert")
 	   public String insert(BoardDTO dto,MultipartFile[] files, HttpSession session) throws Exception{
 	       
-	      
 		int nextval = dao.getNextval();
-		System.out.println(nextval);
+		dto.setPost_seq(nextval);
 		String post_category = dto.getPost_category();
 		String savePath = "c:/files";
 		File savePathFile = new File(savePath);

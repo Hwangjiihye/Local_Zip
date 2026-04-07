@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kedu.dao.AdminQaDAO;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.NoticeDAO;
+import com.kedu.dao.ReportDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.NoticeDTO;
 import com.kedu.dto.QaDTO;
+import com.kedu.dto.ReportDTO;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,6 +38,7 @@ public class AdminController {
 	
 	@Autowired
 	private NoticeDAO nDao;
+	
 	
 	@RequestMapping("/adminPage")
 	public String test(HttpSession session, Model model) {
@@ -194,5 +196,25 @@ public class AdminController {
 			return "success";
 		}
 		return "fail";
+	}
+	
+	// 신고관리 페이지로 이동
+	@RequestMapping("/adminBlackList")
+	public String adminBlackList() {
+		return "/admin/adminBlackList";
+	}
+	
+	// 신고관리 -> 신고 목록 출력
+	@ResponseBody
+	@RequestMapping("/getReportList")
+	public Map<String, Object> getReportList() {
+		Map<String, Object> resp = new HashMap<>();
+		List<ReportDTO> list = dao.selectReportContents();
+		
+		for(ReportDTO dto : list) {
+		    System.out.println("신고대상내용: " + dto.getTarget_content()); // 콘솔창(STS/Eclipse)에 찍힘
+		}
+		resp.put("list", list);
+		return resp;
 	}
 }
