@@ -299,7 +299,14 @@ hr {
 			<div class="headBox">공지사항</div>
 			<div class="backBtnDiv">
 				<!-- 			게시글을 누르기 전에 보고있었던 목록의 페이지를 기억해서, 누르면 전으로 돌아가는 기능 : onclick="history.back();" -->
+				<c:choose>
+				<c:when test="${role==0}">
 				<a href="/admin/toAdminNotice?cPage=${cPage}"><input class="backBtn" type="button" value="목록으로"></a>
+				</c:when>
+				<c:otherwise>
+				<a href="/notice/toNotice?cPage=${cPage}"><input class="backBtn" type="button" value="목록으로"></a>
+				</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		<div class="bodyBox">
@@ -340,6 +347,10 @@ hr {
 
 	<script>
 	
+	
+	let currentTitle = "${dto.notice_title}";
+    let currentContent = "${dto.notice_content}";
+    
 		$(".updateBtn").on("click",function(){
 			$(".completeBtn").show();
 			$(".cancelBtn").show();
@@ -359,21 +370,27 @@ hr {
 			
 			$(".postTitle").attr("contenteditable","false");
 			$(".postContents").attr("contenteditable","false");
-			$(".postTitle").html("${dto.notice_title}");
-			$(".postContents").html("${dto.notice_content}");
+			$(".postTitle").html(currentTitle);
+			$(".postContents").html(currentContent);
 			
 		})
 		$(".completeBtn").on("click",function(){
-			$.ajax({
+			
+			let newTitle = $(".postTitle").html();
+	        let newContent = $(".postContents").html();
+			
+	        $.ajax({
 				url:"/admin/updateNotice",
 				data:{
 					seq : ${dto.notice_seq},
-					notice_title : $(".postTitle").html(),
-					notice_content : $(".postContents").html()},
+					notice_title : newTitle,
+					notice_content : newContent},
 				type:"post"
 			}).done(function(resp){
 				if(resp=="success"){
 					alert("공지사항 수정 완료");
+					currentTitle = newTitle;
+					currentContent = newContent;
 				}else{
 					alert("공지사항 수정 실패");
 				}
