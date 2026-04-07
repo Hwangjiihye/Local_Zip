@@ -162,4 +162,23 @@ public class FeedBackController {
 		
 		return "success";
 	}
+	
+	// 게시글 삭제
+	@ResponseBody
+	@RequestMapping("/delete")
+	public String delete(int suggestion_seq, HttpSession session) {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		FeedBackDTO dto = dao.selectBySeq(suggestion_seq);
+		
+		if(dto != null && loginId.equals(dto.getMem_id())) {
+			
+			dao.delete(suggestion_seq);
+			return "successDel";
+		}
+		else {
+			return "fail";
+		}
+	}
 }

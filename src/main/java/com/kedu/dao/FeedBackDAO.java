@@ -25,12 +25,19 @@ public class FeedBackDAO {
 				dto.getSuggestion_like(), dto.getSuggestion_unlike());
 	}
 	
-	// 건의사항 게시글 출력
-	public List<FeedBackDTO> list() throws Exception {
+	// 건의사항 게시글 출력.........
+	public List<FeedBackDTO> list(String loginId) throws Exception {
 		
-		String sql = "select * from suggestion order by suggestion_seq desc";
+		String sql = "select s.*, r.reaction_type " +
+		        "from suggestion s " +
+		        "left join suggestion_reaction r " +
+		        "on s.suggestion_seq = r.suggestion_seq and r.mem_id = ? " +
+		        "order by s.suggestion_seq desc";
 		
-		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class));
+		
+//		String sql = "select * from suggestion order by suggestion_seq desc";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class), loginId);
 	}
 	
 	// 좋아요 db에 넣기
@@ -63,5 +70,18 @@ public class FeedBackDAO {
 	public String getWriterBySeq(int suggestion_seq) {
 	    String sql = "select mem_id from suggestion where suggestion_seq = ?";
 	    return jdbc.queryForObject(sql, String.class, suggestion_seq);
+	}
+	
+	// 게시글 삭제 1 (글 주인 확인용)
+	public FeedBackDTO selectBySeq(int suggestion_seq) { 
+		String sql = "select * from suggestion where suggestion_seq = ?";
+		
+		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class), suggestion_seq);
+	}
+	
+	// 게시글 삭제 2 (진짜 삭제)
+	public int delete(int suggestion_seq) {
+		String sql = "delete from suggestion where suggestion_seq = ?";
+		return jdbc.update(sql, suggestion_seq);
 	}
 }

@@ -371,6 +371,10 @@
         	display: flex;
         	gap: 8px;
         }
+        
+        .cancleBtn{
+        	display: none;
+        }
     </style>
 
 </head>
@@ -398,9 +402,12 @@
 	                        <div class="postInfoDown">
 	                            <div class="profileTime profileInfo" style=color:#5e361a;>${i.suggestion_writedate}</div>
 	                        </div>
+	                  <c:if test="${loginId == i.mem_id}">      
 	                        <div class="btnBox">
-	                        	<input class="editBtn" type="button" value="수정"><input class="delBtn" type="button" value="삭제">
+	                        	<input class="editBtn" type="button" value="수정" data-seq="${i.suggestion_seq}"><input class="delBtn" type="button" value="삭제" data-seq="${i.suggestion_seq}">
+	                    		<input class="cancleBtn" type="button" value="취소">
 	                    	</div>
+	                  </c:if>
 	                    </div>
 	
 		                    <div class="reportArea">
@@ -639,7 +646,48 @@
 		    e.stopPropagation();
 		});
         
-        // 게시글 삭제
+        // 수정 버튼 클릭 -> 완료/취소 버튼 변경
+        $(".editBtn").on("click", function(){
+        	
+        })
+        
+        // 게시글 수정 버튼
+        $(".editBtn").on("click", function(){
+        	
+        })
+        
+        // 게시글 삭제 버튼
+        $(".delBtn").on("click", function(){
+        	
+        	let seq = $(this).data("seq");
+        	
+        	if(confirm("정말 삭제하시겠습니까?")) {
+        		
+        		alert("삭제 되었습니다"); // 확인 눌렀을 때
+        		
+        		$.ajax ({
+        			url: "/feedback/delete",
+        			type: "post",
+        			data: { suggestion_seq: seq },
+        			
+        			success: function(resp) {
+        				if(resp === "successDel") {
+        					location.reload(); // 새로고침(일단 간단하게)
+        				}
+        				else {
+        					alert("삭제 실패");
+        				}
+        			},
+        			error: function() {
+        				alert("서버 오류 발생");
+        			}
+        		})
+        	} else {
+        		alert("취소 되었습니다");
+        	}
+        });
+        
+        
         
         
     </script>
