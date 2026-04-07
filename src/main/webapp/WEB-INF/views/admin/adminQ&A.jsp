@@ -413,7 +413,7 @@ body {
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
 				<button class="categoryBtnAll"> 
-					<i class="fa-solid fa-user fa-lg"></i> 회원관리
+					<i class="fa-solid fa-user fa-lg"></i> 신고관리
 				</button>
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
