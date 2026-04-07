@@ -276,7 +276,7 @@
 	    		<div class="myWriteIcon"><img src="/resources/images/text1.png" class="icon"></div>
 	    		<div class="myWriteContents">
 	    			<div class="myWriteTitle">작성글</div>
-	    			<div class="myWriteNum">10</div>
+	    			<div class="myWriteNum">${writeCount}</div>
 	    		</div>
 	    	</div>
 	    	</a>

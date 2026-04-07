@@ -127,6 +127,8 @@ public class MembersController {
 		int meetingCount = dao.meetingCount(loginId);
 		model.addAttribute("meetingCount",meetingCount);
 		
+
+		
 		if(loginId == null) {
 			return "redirect:/members/loginUi";
 		}
@@ -136,6 +138,10 @@ public class MembersController {
 			System.out.println(role);
 			return "redirect:/admin/adminPage";
 		}else {
+			int writeCount = BoardDao.MyWriteCount(loginId);
+			System.out.println(writeCount); // 5
+			model.addAttribute("writeCount",writeCount);
+			
 			return "members/mypage";
 		}
 	}
@@ -177,10 +183,10 @@ public class MembersController {
 	// 마이페이지 > 작성글(모아보기)를 눌렀을 때,
 	@RequestMapping("/myPosts")
 	public String myPosts(HttpSession session, Model model) throws Exception{
+		
 		String mem_id = (String)session.getAttribute("loginId");
 		
-		List<BoardDTO> list = BoardDao.list_home_latest(); // 최신순 기준으로 전체 게시판 목록 출력
-		
+		List<BoardDTO> list = BoardDao.getMyBoards(mem_id); // 로그인 아이디를 기준으로 전체 게시판 목록 출력
 		model.addAttribute("listAll",list);
 		
 		return "members/myPosts";

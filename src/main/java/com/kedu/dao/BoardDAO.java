@@ -128,4 +128,21 @@ public class BoardDAO {
 		String sql = "select post_category from post where post_seq = ?";
 		return jdbc.queryForObject(sql, String.class, seq);
 	}
+	
+	
+	
+	//----------------------------------------------------
+	
+	//마이페이지 > 내 작성글 모아보기
+	public List<BoardDTO> getMyBoards(String mem_id){
+		String sql = "select * from post where mem_id = ? order by post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), mem_id);
+	};
+	
+	// 마이페이지 > 내 작성글 수 세기
+	public int MyWriteCount(String mem_id) {
+		String sql = "select count(*) from post where mem_id = ?";
+		return jdbc.queryForObject(sql, Integer.class, mem_id);
+	}
+	
 }
