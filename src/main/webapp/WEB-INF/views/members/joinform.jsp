@@ -546,7 +546,18 @@ hr {
 				zonecode.focus();
 				return false;
 			}
-
+			
+			// address1 - 서울시만 가입 가능
+			let address1 = document.getElementsByClassName("address1")[0];
+			let regex = /^(서울)|(서울시)|(서울특별)|(서울특별시)/;
+			let address1Result = regex.test(address1.value);
+			if (!address1Result) {
+				alert("죄송합니다!\n현재는 서울시를 기준으로 한 서비스만 제공 중입니다.");
+				zonecode.value = "";
+				address1.value = "";
+				return false;
+			}
+			
 			// agreeBtn
 			let agreeBtn = document.getElementsByClassName("agreeBtn")[0];
 			if (!agreeBtn.checked) {
@@ -556,9 +567,6 @@ hr {
 			}
 			
 			//이메일 인증 최종확인(회원가입 버튼 눌렀을 때)
-		
-			
-			
 			$.ajax({
 				url : "/auth/isVerified",
 				type : "post",
