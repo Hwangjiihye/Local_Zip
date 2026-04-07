@@ -35,11 +35,12 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/toNoticeDetail")
-	public String toNoticeDetail(@RequestParam("notice_seq") int seq,Model model) {
+	public String toNoticeDetail(@RequestParam("notice_seq") int seq,Model model,int cPage) {
 		
 		//공지사항 내용 불러오기
 		NoticeDTO dto = ndao.getContents(seq);
 		model.addAttribute("dto",dto);
+		model.addAttribute("cPage",cPage);
 		
 		return "/notice/noticeDetail";
 	}

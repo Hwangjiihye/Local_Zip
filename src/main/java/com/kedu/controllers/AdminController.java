@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kedu.dao.AdminQaDAO;
 import com.kedu.dao.BoardDAO;
@@ -167,6 +168,31 @@ public class AdminController {
 		nDao.insertNotice(new NoticeDTO(0,id,role,title,contents,"0"));
 		
 		return "redirect:/admin/toAdminNotice?cPage=1";
+	}
+	
+	//공지사항 글 수정
+	@PostMapping("/updateNotice")
+	@ResponseBody
+	public String updateNotice(@RequestParam("notice_title")String title, 
+			@RequestParam("notice_content")String content, @RequestParam("seq")int seq) {
 		
+		System.out.println(seq + title + content);
+		int result = nDao.updateNotice(seq,title,content);
+		if(result>0) {
+			return "success";	
+		}
+		return "fail";
+	}
+	
+	//공지사항 글 삭제
+	@PostMapping("/deleteNotice")
+	@ResponseBody
+	public String deleteNotice(@RequestParam("notice_seq")int seq) {
+		
+		int result = nDao.deleteNoticeBySeq(seq);
+		if(result>0) {
+			return "success";
+		}
+		return "fail";
 	}
 }

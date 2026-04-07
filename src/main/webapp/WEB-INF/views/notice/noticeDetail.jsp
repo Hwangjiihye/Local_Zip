@@ -186,17 +186,52 @@ button, body {
 }
 
 .navicon:hover, .backBtn:hover, .upBtn:hover, .delBtn:hover, .OBtn:hover,
-	.XBtn:hover {
+	.XBtn:hover, .changeBtns:hover{
 	transform: translateY(-3px);
 	/* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .navicon:active, .backBtn:active, .upBtn:active, .delBtn:active, .OBtn:active,
-	.XBtn:active {
+	.XBtn:active, .changeBtns:active{
 	transform: translateY(2px);
 	/* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.changeBtns {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+}
+.completeBtn ,.cancelBtn{
+	display : none;
+}
+
+.postContents[contenteditable="true"] {
+    border: 1px solid #FFB300;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.postContents[contenteditable="true"]:focus {
+    outline: none;
+    border: 1px solid #FFB300;
+    background-color: #fbe5c0;
+}
+
+.postTitle[contenteditable="true"] {
+    border: 1px solid #FFB300;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.postTitle[contenteditable="true"]:focus {
+    outline: none;
+    border: 1px solid #FFB300;
+    background-color: #fbe5c0;
 }
 
 .bottomBox {
@@ -264,25 +299,32 @@ hr {
 			<div class="headBox">공지사항</div>
 			<div class="backBtnDiv">
 				<!-- 			게시글을 누르기 전에 보고있었던 목록의 페이지를 기억해서, 누르면 전으로 돌아가는 기능 : onclick="history.back();" -->
-				<input class="backBtn" type="button" value="목록으로"
-					onclick="history.back();">
+				<a href="/admin/toAdminNotice?cPage=${cPage}"><input class="backBtn" type="button" value="목록으로"></a>
 			</div>
 		</div>
 		<div class="bodyBox">
 			<div class="postBox">
+			<form action="" method="post" class="frm">
 				<div class="postUpBox">
 					<div class="postInfoBox">
 						<div class="postInfoDown">
 							<div class="postTitle" style="color: #5e361a;">${dto.notice_title}</div>
 						</div>
-
 					</div>
+					<c:if test="${role==0}">
+					
+					<input type="button" class="changeBtns updateBtn" value="수정">
+					<input type="button" class="changeBtns deleteBtn" value="삭제">
+					<input type="button" class="changeBtns completeBtn" value="완료">
+					<input type="button" class="changeBtns cancelBtn" value="취소">
+					
+					</c:if>
 				</div>
 
 				<div class="postMidBox">
 					<div class="postContents">${dto.notice_content}</div>
 				</div>
-
+			</form>
 			</div>
 
 			<div class="bottomBox">
@@ -297,6 +339,71 @@ hr {
 	</div>
 
 	<script>
+	
+		$(".updateBtn").on("click",function(){
+			$(".completeBtn").show();
+			$(".cancelBtn").show();
+			$(".updateBtn").hide();
+			$(".deleteBtn").hide();
+			
+			$(".postTitle").attr("contenteditable","true");
+			$(".postContents").attr("contenteditable","true");
+			
+		})
+		
+		$(".cancelBtn").on("click",function(){
+			$(".completeBtn").hide();
+			$(".cancelBtn").hide();
+			$(".updateBtn").show();
+			$(".deleteBtn").show();
+			
+			$(".postTitle").attr("contenteditable","false");
+			$(".postContents").attr("contenteditable","false");
+			$(".postTitle").html("${dto.notice_title}");
+			$(".postContents").html("${dto.notice_content}");
+			
+		})
+		$(".completeBtn").on("click",function(){
+			$.ajax({
+				url:"/admin/updateNotice",
+				data:{
+					seq : ${dto.notice_seq},
+					notice_title : $(".postTitle").html(),
+					notice_content : $(".postContents").html()},
+				type:"post"
+			}).done(function(resp){
+				if(resp=="success"){
+					alert("공지사항 수정 완료");
+				}else{
+					alert("공지사항 수정 실패");
+				}
+			});
+			
+			$(".completeBtn").hide();
+			$(".cancelBtn").hide();
+			$(".updateBtn").show();
+			$(".deleteBtn").show();
+			
+			$(".postTitle, .postContents").attr("contenteditable","false");
+		})
+		
+		$(".deleteBtn").on("click",function(){
+			if(confirm("정말 삭제하시겠습니까?")){
+				$.ajax({
+		            url: "/admin/deleteNotice",
+		            type: "POST",
+		            data: { notice_seq: "${dto.notice_seq}" }
+		        })
+		        .done(function(resp) {
+		            if (resp === "success") {
+		                alert("성공적으로 삭제되었습니다.");
+		                location.href = "/admin/toAdminNotice?cPage="+${cPage};
+		            } else {
+		                alert("삭제 처리에 실패했습니다.");
+		            }
+		        })
+			}
+		})
 		
 	</script>
 </body>

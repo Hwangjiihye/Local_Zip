@@ -400,7 +400,7 @@ body {
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
 				<button class="categoryBtnAll"> 
-					<i class="fa-solid fa-user fa-lg"></i> 회원관리
+					<i class="fa-solid fa-user fa-lg"></i> 신고관리
 				</button>
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
@@ -418,7 +418,7 @@ body {
 		<c:choose>
 			<c:when test="${not empty list}">
 				<c:forEach var="i" items="${list}">
-				<div class="postBox" onclick="location.href='/notice/toNoticeDetail?notice_seq=${i.notice_seq}'">
+				<div class="postBox" onclick="location.href='/notice/toNoticeDetail?notice_seq=${i.notice_seq}&cPage=${cPage}'">
 					<input type="hidden" name="notice_seq" value="${i.notice_seq}">
 					<div class="postHeader">${i.notice_date}</div>
 					<div class="postBody">
@@ -442,7 +442,7 @@ body {
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> 
-			<a><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 	</div>
