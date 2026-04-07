@@ -294,6 +294,11 @@ button, body {
 	border-radius: 5px;
 	padding: 0 10px;
 }
+.fileDownload {
+	margin: auto;
+	width: 95%;
+	padding: 10px 10px;
+}
 
 .postDownBox {
 	width: 95%;
@@ -625,7 +630,11 @@ hr {
 
 					<div class="postTitle">${dto.post_title }</div>
 					<div class="postContents">${dto.post_contents }</div>
-
+					<div class="fileDownload">첨부 파일 :
+						<c:forEach var="i" items="${fileList}">
+						<a href="/">${i.attach_oriname} </a>
+						</c:forEach>
+					 </div>
 				</div>
 
 				<div class="postDownBox">
@@ -943,7 +952,7 @@ hr {
         		url:"/reply/insertReply",
         		data: {
         			reply_contents: reply,
-                    post_seq: post_seq
+                    post_seq: postSeq
         		},
         		type:"post"
         	}).done(function(resp){ // 입력 성공시

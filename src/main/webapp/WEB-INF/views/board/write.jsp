@@ -251,7 +251,7 @@ button, body, div, input {
 	<div class="container">
 		<div class="headBox">새 게시글 작성</div>
 
-		<form action="/board/insert" method="post" class="frm">
+		<form action="/board/insert" method="post" class="frm" enctype="multipart/form-data">
 			<div class="writeDetail">
 				<div class="titleDiv">
 					<div class="title">제목</div>
