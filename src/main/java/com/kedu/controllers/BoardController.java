@@ -1,20 +1,26 @@
 package com.kedu.controllers;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.kedu.dao.AttachmentDAO;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.ReplyDAO;
 import com.kedu.dao.VisitLogDAO;
+import com.kedu.dto.AttachmentDTO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.ReplyDTO;
 
@@ -69,25 +75,25 @@ public class BoardController {
 	}
 	
 	// 모든 글쓰기
-	@RequestMapping("/insert")
-	public String insert(BoardDTO dto, HttpSession session) throws Exception{
-	    
-	    String mem_id = (String)session.getAttribute("loginId");
-		String mem_nickname = (String)session.getAttribute("nickname");
-		String mem_dong = (String)session.getAttribute("dong");
-		System.out.println(mem_dong);
-		dao.insert(dto, mem_id, mem_nickname, mem_dong);
-		
-		String post_category = dto.getPost_category();
-		
-		if("lifeInfo".equals(post_category)) {
-			return "redirect:/board/list_lifeInfo";
-		}else if("talk".equals(post_category)) {
-			return "redirect:/board/concern";
-		}
-		
-		return "redirect:/";
-	}
+//	@RequestMapping("/insert")
+//	public String insert(BoardDTO dto, HttpSession session) throws Exception{
+//	    
+//	    String mem_id = (String)session.getAttribute("loginId");
+//		String mem_nickname = (String)session.getAttribute("nickname");
+//		String mem_dong = (String)session.getAttribute("dong");
+//		System.out.println(mem_dong);
+//		dao.insert(dto, mem_id, mem_nickname, mem_dong);
+//		
+//		String post_category = dto.getPost_category();
+//		
+//		if("lifeInfo".equals(post_category)) {
+//			return "redirect:/board/list_lifeInfo";
+//		}else if("talk".equals(post_category)) {
+//			return "redirect:/board/concern";
+//		}
+//		
+//		return "redirect:/";
+//	}
 	
 	
 	//생활정보 jsp에 생활정보 카테고리 list만 출력
@@ -120,27 +126,27 @@ public class BoardController {
 	}
 	
 	// 게시물 상세보기
-	@RequestMapping("/postDetail")
-	public String postDetail(Model model, int post_seq, HttpSession session, String category) throws Exception{
-		
-		System.out.println(category);
-		
-		BoardDTO dto = dao.selectByPost_seq(post_seq);
-		
-		String loginId = (String)session.getAttribute("loginId");
-		
-		   if(loginId != null) {
-		      String allCategory = dao.getCategoryBySeq(post_seq);
-		      vdao.postClickVisit(loginId, allCategory);
-		   }
-	    
-	    LikeStatus(dto, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
-	    model.addAttribute("loginId", loginId);
-	    model.addAttribute("dto",dto);
-	    
-		session.setAttribute("category", category);
-	    return "board/postDetail";
-	}
+//	@RequestMapping("/postDetail")
+//	public String postDetail(Model model, int post_seq, HttpSession session, String category) throws Exception{
+//		
+//		System.out.println(category);
+//		
+//		BoardDTO dto = dao.selectByPost_seq(post_seq);
+//		
+//		String loginId = (String)session.getAttribute("loginId");
+//		
+//		   if(loginId != null) {
+//		      String allCategory = dao.getCategoryBySeq(post_seq);
+//		      vdao.postClickVisit(loginId, allCategory);
+//		   }
+//	    
+//	    LikeStatus(dto, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
+//	    model.addAttribute("loginId", loginId);
+//	    model.addAttribute("dto",dto);
+//	    
+//		session.setAttribute("category", category);
+//	    return "board/postDetail";
+//	}
 	
 	// 게시글 삭제
 	@ResponseBody
@@ -192,4 +198,174 @@ public class BoardController {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Autowired
+	private AttachmentDAO aDao;
+	@RequestMapping("/insert")
+	public String insert(BoardDTO dto,MultipartFile[] files, HttpSession session) throws Exception{
+	    
+		int nextval = dao.getNextval();
+		String post_category = dto.getPost_category();
+		String savePath = "c:/files";
+		File savePathFile = new File(savePath);
+		
+		if(!savePathFile.exists()) {
+			savePathFile.mkdir();
+		}
+		
+		for(MultipartFile file:files){
+			if(!file.isEmpty()) {
+				String oriName = file.getOriginalFilename();
+				String sysName = UUID.randomUUID() + "_" + oriName;
+				file.transferTo(new File(savePath + "/" + sysName));
+				aDao.insert(new AttachmentDTO(nextval,post_category,nextval,oriName,sysName));	
+			}
+		}
+		
+	    String mem_id = (String)session.getAttribute("loginId");
+		String mem_nickname = (String)session.getAttribute("nickname");
+		String mem_dong = (String)session.getAttribute("dong");
+		
+		dao.insert(dto, mem_id, mem_nickname, mem_dong);
+		
+		if("lifeInfo".equals(post_category)) {
+			return "redirect:/board/lifeInfo";
+		}else if("talk".equals(post_category)) {
+			return "redirect:/board/talk";
+		}
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/postDetail")
+	public String postDetail(Model model, int post_seq, HttpSession session, String category) throws Exception{
+		
+		BoardDTO dto = dao.selectByPost_seq(post_seq);
+		String loginId = (String)session.getAttribute("loginId");
+		
+		//파일리스트 뽑아오기
+	    List<AttachmentDTO> aList = aDao.getAttachment(post_seq);
+		model.addAttribute("fileList",aList);
+		System.out.println(aList.size());
+		
+		   if(loginId != null) {
+		      String allCategory = dao.getCategoryBySeq(post_seq);
+		      vdao.postClickVisit(loginId, allCategory);
+		   }
+	    
+	    LikeStatus(dto, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
+	    model.addAttribute("loginId", loginId);
+	    model.addAttribute("dto",dto);
+	    
+		session.setAttribute("category", category);
+	    return "board/postDetail";
+	}
+	@ExceptionHandler(Exception.class)
+	public String exceptionHandler(Exception e) {
+		e.printStackTrace();
+		return "error";
+	}
 }

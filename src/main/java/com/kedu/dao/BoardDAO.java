@@ -128,4 +128,77 @@ public class BoardDAO {
 		String sql = "select post_category from post where post_seq = ?";
 		return jdbc.queryForObject(sql, String.class, seq);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public int getNextval() {
+		String sql = "SELECT POST_SEQ.NEXTVAL FROM DUAL";
+		return jdbc.queryForObject(sql, Integer.class);
+	}
 }
