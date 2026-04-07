@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.QaDTO;
+import com.kedu.dto.ReportDTO;
 
 @Repository
 public class AdminQaDAO {
@@ -193,4 +194,25 @@ public class AdminQaDAO {
 
 		return map;
 	}
+	
+	public List<ReportDTO> selectReportAll(){
+		String sql = "select * from reports";
+		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));
+	}
+	
+	public List<ReportDTO> selectReportContents(){
+		String sql = "select r.mem_id, r.target_id, r.reports_date, r.reports_type, "
+				+ "coalesce(p.post_contents, reply.reply_contents) as target_content, "
+				+ "case "
+				+ "when r.reports_type = 0 then '게시글' else '댓글' end as target_type_name "
+				+ "from reports r "
+				+ "left join post p on r.target_seq = p.post_seq and r.reports_type = 0 "
+				+ "left join reply on r.target_seq = reply.reply_seq and r.reports_type = 1 "
+				+ "order by r.reports_date desc ";
+		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));
+	}
+	
+	
+	
+	
 }
