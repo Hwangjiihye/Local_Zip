@@ -197,6 +197,12 @@ public class BoardDAO {
 	
 	
 	
+
+	public int getNextval() {
+		String sql = "SELECT post_seq.NEXTVAL FROM DUAL";
+		return jdbc.queryForObject(sql, Integer.class);
+	}
+
 	
 	
 	
@@ -322,4 +328,5 @@ public class BoardDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
 	
+
 }
