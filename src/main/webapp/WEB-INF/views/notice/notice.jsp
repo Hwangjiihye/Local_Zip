@@ -193,7 +193,7 @@ body, html {
 		<c:choose>
 			<c:when test="${not empty list}">
 				<c:forEach var="i" items="${list}">
-				<div class="postBox" onclick="location.href='/notice/toNoticeDetail?notice_seq=${i.notice_seq}'">
+				<div class="postBox" onclick="location.href='/notice/toNoticeDetail?notice_seq=${i.notice_seq}&cPage=${cPage}'">
 					<input type="hidden" name="notice_seq" value="${i.notice_seq}">
 					<div class="postHeader">${i.notice_date}</div>
 					<div class="postBody">

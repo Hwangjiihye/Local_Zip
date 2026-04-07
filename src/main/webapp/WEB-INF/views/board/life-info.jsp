@@ -340,22 +340,27 @@ button, body {
 	transition: 0.3s;
 }
 
-.beforeHeart:hover, .afterHeart:hover, .comment:hover {
+.beforeHeart:hover, .comment:hover {
 	color: #cdaa69;
+}
+
+/* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
+.beforeHeart{
+	display : inline;
 }
 
 .afterHeart {
 	display: none;
+	color: red;
 }
 
-/* active 클래스가 붙었을 때의 제어 */
+/* active 클래스가 붙었을 때의 제어(빨간하트를 보여주고 빈 하트는 숨김.) */
 .postLikeBox.active .beforeHeart {
 	display: none;
 }
 
 .postLikeBox.active .afterHeart {
 	display: inline;
-	color: red;
 }
 
 .navicon:hover {
@@ -531,12 +536,12 @@ hr {
 							<c:if test="${loginId != null}">
 								<div class="postDownBox">
 
-									<div class="postLikeBox">
+									<div class="postLikeBox ${i.post_like_check == 1 ? 'active' : ''}">
 										<i class="fa-regular fa-heart fa-xl beforeHeart"></i>
 										
 										<i class="fa-solid fa-heart fa-xl afterHeart"></i>
 
-										<div>갯수</div>
+										<div class="likeCount infoCount">${i.post_like}</div>
 									</div>
 
 									<div class="postCommentBox">
@@ -589,132 +594,152 @@ hr {
         })
         
         
-        // 최신순, 인기순 정렬
+        // 최신순, 인기순 정렬s
         $(".sortBtn").on("click",function(){
         	
         	let currentSort = "${sort}";
         	
         	if(currentSort == "latest"){
-        		location.href = "/board/list_lifeInfo?sort=like";
+        		location.href = "/board/lifeInfo?sort=like";
         	}else{
-        		location.href = "/board/list_lifeInfo?sort=latest";
+        		location.href = "/board/lifeInfo?sort=latest";
         	}
         });
-
-
-        // 신고버튼을 눌렀을 때, 신고 사유가 튀어나오게
-        $(".reportIcon").on("click", function (e) {
-        	e.stopPropagation(); // ★부모(.postBox)의 클릭 이벤트X
-            $(".reportSelect").css({ "display": "inline" });
-            $(".reportBtn").css({"display": "inline"});
-        	
-			// 신고 사유 선택창 클릭 시 ★부모(.postBox)의 클릭 이벤트X
-			$(".reportSelect").on("click", function(e) {
-			    e.stopPropagation(); // 상세페이지 이동 방지
-			});
-        })
         
-        	$(function() {
-		    // 1. 게시글 상세 페이지 이동 (통합 제어)
-		    // .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동
-		    $(document).on("click", ".postBox", function(e) {
-		        // 클릭한 타겟이 신고 아이콘, 신고 선택창, 신고 버튼, 좋아요 박스 내부에 있다면 이동 금지
-		        if ($(e.target).closest(".reportArea, .postLikeBox").length > 0) {
-		            return;
-		        }
-		
-		        // 게시글 상세보기 이동 제어
-		        let loginId = "${loginId}";
-		        if (loginId === "") {
-		            alert("로그인 후 이용 가능합니다.");
-		            location.href = "/members/loginUi";
-		            return;
-		        }
-		
-		        let post_seq = $(this).data("seq");
-		        location.href = "/postDetail?post_seq=" + post_seq;
-		    });
-		
-		    // 신고 ---------------------------------------------
-		    // 신고 아이콘 클릭 시 메뉴 표시
-		    $(document).on("click", ".reportIcon", function(e) {
-		        e.stopPropagation(); // 부모인 .postBox로 이벤트가 퍼지는 것을 막음 (중요)
-		        
-		        // 클릭한 아이콘이 속한 그 영역의 메뉴만 토글
-		        let reportArea = $(this).closest(".reportArea");
-		        
-		        // (선택사항) 다른 게시글의 열려있는 신고창을 모두 닫고 싶다면 아래 주석 해제
-		        // $(".reportSelect, .reportBtn").not(reportArea.find(".reportSelect, .reportBtn")).hide();
-		        
-		        reportArea.find(".reportSelect, .reportBtn").toggle(); 
-		    });
-		
-		    // 신고 사유 선택창 클릭 시 이동 방지
-		    $(document).on("click", ".reportSelect", function(e) {
-		        e.stopPropagation(); // 클릭 시 상세페이지 이동 방지
-		    });
-		
-		    // 신고 버튼 클릭 (AJAX)
-		    $(document).on("click", ".reportBtn", function(e) {
-		        e.stopPropagation(); // 클릭 시 상세페이지 이동 방지
-		        
-		        let card = $(this).closest(".postBox"); 
-		        let targetSeq = card.data("seq");
-		        let targetId = card.data("writer"); 
-		        let reportReason = card.find(".reportSelect").val(); 
-		        
-		        if(!reportReason || reportReason === "신고 사유"){
-		            alert("신고 사유를 선택해 주세요.");
-		            return;
-		        }
-		        
-		        $.ajax({
-		            url : "/report/insert",
-		            type : "post",
-		            data : {
-		                target_seq : targetSeq,
-		                target_id : targetId,
-		                reports_type : 0,
-		                reports_reason : reportReason
-		            }
-		        }).done(function(resp){
-		            if(resp == "success"){
-		                alert("신고가 접수되었습니다.");
-		                card.find(".reportSelect, .reportBtn").hide();
-		            } else {
-		                alert("이미 신고했거나 처리에 실패했습니다.");
-		                card.find(".reportSelect, .reportBtn").hide();
-		            }
-		        }).fail(function(){
-		            alert("서버와 통신 중 오류가 발생했습니다.");
-		        });
-		    });
-		
-		    // 좋아요 버튼을 눌렀을 때,
-		    $(document).on("click", ".postLikeBox", function(e) {
-		        e.stopPropagation(); // ★부모(.postBox)의 클릭 이벤트X
-		        $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
-		    });
 
-		
-		    // 댓글 수 갱신
-		    $(".postBox").each(function(){
-		        let postBox = $(this);
-		        let post_seq = postBox.data("seq");
-		        $.ajax({
-		            url: "/board/getCommentCount",
-		            data: { post_seq : post_seq},
-		            type: "get"
-		        }).done(function(count){
-		            postBox.find(".commentCount").html(count);
-		        	});
-		    	});
+		$(function() {
+			// 1. 게시글 상세 페이지 이동 (통합 제어)
+			// .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동
+			$(document).on("click", ".postBox", function(e) {
+				// 클릭한 타겟이 신고 아이콘, 신고 선택창, 신고 버튼 내부에 있다면 이동 금지
+				if ($(e.target).closest(".reportArea").length > 0) {
+					return;
+				}
+
+				// 게시글 상세보기 이동 제어
+				let loginId = "${loginId}";
+				if (loginId === "") {
+					alert("로그인 후 이용 가능합니다.");
+					location.href = "/members/loginUi";
+					return;
+				}
+
+				let post_seq = $(this).data("seq");
+				location.href = "/board/postDetail?post_seq=" + post_seq;
 			});
-        
- 
 
+			// 신고 ---------------------------------------------
+			// 신고 아이콘 클릭 시 메뉴 표시
+			$(document).on("click", ".reportIcon", function(e) {
+				e.stopPropagation(); // 부모인 .postBox로 이벤트가 퍼지는 것을 막음 (중요)
 
-    </script>
+				// 클릭한 아이콘이 속한 그 영역의 메뉴만 토글
+				let reportArea = $(this).closest(".reportArea");
+
+				reportArea.find(".reportSelect, .reportBtn").toggle();
+			});
+
+			// 신고 사유 선택창 클릭 시 이동 방지
+			$(document).on("click", ".reportSelect", function(e) {
+				e.stopPropagation(); // 클릭 시 상세페이지 이동 방지
+			});
+
+			// 신고 버튼 클릭 (AJAX)
+			$(document).on("click", ".reportBtn", function(e) {
+				e.stopPropagation(); // 클릭 시 상세페이지 이동 방지
+
+				let card = $(this).closest(".postBox");
+				let targetSeq = card.data("seq");
+				let targetId = card.data("writer");
+				let reportReason = card.find(".reportSelect").val();
+
+				if (!reportReason || reportReason === "신고 사유") {
+					alert("신고 사유를 선택해 주세요.");
+					return;
+				}
+
+				$.ajax({
+					url : "/report/insert",
+					type : "post",
+					data : {
+						target_seq : targetSeq,
+						target_id : targetId,
+						reports_type : 0,
+						reports_reason : reportReason
+					}
+				}).done(function(resp) {
+					if (resp == "success") {
+						alert("신고가 접수되었습니다.");
+						card.find(".reportSelect, .reportBtn").hide();
+					} else {
+						alert("이미 신고했거나 처리에 실패했습니다.");
+						card.find(".reportSelect, .reportBtn").hide();
+					}
+				}).fail(function() {
+					alert("서버와 통신 중 오류가 발생했습니다.");
+				});
+			});
+
+			// 댓글 수 갱신
+			$(".postBox").each(function() {
+				let postBox = $(this);
+				let post_seq = postBox.data("seq");
+				$.ajax({
+					url : "/board/getCommentCount",
+					data : {
+						post_seq : post_seq
+					},
+					type : "get"
+				}).done(function(count) {
+					postBox.find(".commentCount").text(count);
+				});
+			});
+		});
+
+		// 좋아요 버튼을 눌렀을 때,
+		$(".postLikeBox").on("click", function(e) {
+			e.stopPropagation(); // 상세페이지 이동 방지
+			let postLike = $(this);
+			let post_seq = postLike.closest(".postBox").data("seq");	
+			
+			console.log("클릭된 게시글 번호: " + post_seq);
+			
+			// 하트 채워지고 비워지는 토글용 ajax
+			$.ajax({
+				url : "/like/toggle",
+				data : {post_seq : post_seq},
+				type : "post"
+			}).done(function(likeCheck) {
+				console.log("서버 응답:" + likeCheck);
+				
+				if(likeCheck == -1){
+					alert("로그인 후 이용 가능합니다.");
+					location.href = "/members/loginUi";
+					return;
+				}
+
+				if (likeCheck == 1 || likeCheck == 0) { // 하트를 누를때마다 css 적용
+					postLike.toggleClass("active"); // active 클래스를 넣었다 뺐다 함 
+					// 서버 처리가 성공하면 화면의 하트 색깔을 토글(변경)함.
+					
+					// jsp 화면에 보여지는 전체 숫자용 ajax
+					$.ajax({
+						url : "/like/count",
+						data : {post_seq : post_seq},
+						type : "post"
+					}).done(function(count){
+						
+						postLike.find(".likeCount").text(count);
+						
+					});
+					
+					
+				}
+
+			});
+
+		});
+	</script>
 
 </body>
 </html>

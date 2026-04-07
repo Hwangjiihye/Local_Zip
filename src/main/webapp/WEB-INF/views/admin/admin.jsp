@@ -287,7 +287,7 @@ body {
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
 				<button class="categoryBtnAll" type="button">
-					<i class="fa-solid fa-user fa-lg"></i> 회원관리
+					<i class="fa-solid fa-user fa-lg"></i> 신고관리
 				</button>
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}" type="button">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
