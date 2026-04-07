@@ -312,12 +312,18 @@ button, body {
 	transition: 0.3s;
 }
 
-.beforeHeart:hover, .afterHeart:hover, .comment:hover {
+.beforeHeart:hover, .comment:hover {
 	color: #cdaa69;
+}
+
+/* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
+.beforeHeart{
+	display : inline;
 }
 
 .afterHeart {
 	display: none;
+	color: red;
 }
 
 /* active 클래스가 붙었을 때의 제어 */
@@ -327,7 +333,6 @@ button, body {
 
 .postLikeBox.active .afterHeart {
 	display: inline;
-	color: red;
 }
 
 .navicon:hover, .applyBtn:hover, .backBtn:hover, .updateBtn:hover,
@@ -544,6 +549,18 @@ a {
 hr {
 	border: 1px dotted #5e361a;
 }
+
+.replyContents[contenteditable="true"] {
+    border: 1px solid #FFB300;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.replyContents[contenteditable="true"]:focus {
+    outline: none;
+    border: 1px solid #FFB300;
+    background-color: #fbe5c0;
+}
 </style>
 
 </head>
@@ -554,11 +571,11 @@ hr {
 			<div class="headBox">게시글 자세히보기</div>
 			<div class="backBtnDiv">
 <!-- 			게시글을 누르기 전에 보고있었던 목록의 페이지를 기억해서, 누르면 전으로 돌아가는 기능 : onclick="history.back();" -->
-				<input class="backBtn" type="button" value="목록으로" onclick="location.href='/'">
+				<input class="backBtn" type="button" value="목록으로">
 			</div>
 		</div>
 		<div class="bodyBox">
-			<div class="postBox">
+			<div class="postBox" data-seq="${dto.post_seq}">
 
 				<div class="postUpBox">
 
@@ -613,10 +630,10 @@ hr {
 
 				<div class="postDownBox">
 
-					<div class="postLikeBox">
+					<div class="postLikeBox ${dto.post_like_check == 1 ? 'active' : ''}">
 						<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
 
-						<div>갯수</div>
+						<div class="likeCount infoCount">${dto.post_like}</div>
 					</div>
 
 					<div class="postCommentBox">
@@ -657,7 +674,7 @@ hr {
 	<script>
 		
 		let loginId = "${loginId}";
-		let post_seq = "${dto.post_seq}"
+		let postSeq = "${dto.post_seq}"
 		let postTitle = $(".postTitle");
 		let postContents = $(".postContents");
 		
@@ -695,7 +712,7 @@ hr {
 			$.ajax({
 				url:"/board/updatePost",
 				data:{
-					post_seq: post_seq,
+					post_seq: postSeq,
 					post_title: post_title,
 					post_contents: post_contents
 				},
@@ -713,11 +730,11 @@ hr {
 			
 		    $.ajax({
 		        url: "/board/deletePost",
-		        data: { post_seq: post_seq },
+		        data: { post_seq: postSeq },
 		        type: "post"
 		    }).done(function(){
 		    	alert("삭제 완료!");
- 		        location.href = "/board/concern";
+ 		        location.href = "/";
 		    });
 		});
 		
@@ -748,7 +765,7 @@ hr {
 			$.ajax({
 				url:"/board/replyList",
 				dataType:"json",
-				data: { post_seq: post_seq }
+				data: { post_seq: postSeq }
 			}).done(function(resp){
 				
 				$(".replyUpBox, .hr").remove(); // 기존 댓글 목록 비우기,(새로 등록된 것까지 포함해서 다시 그려야 하므로)
@@ -783,8 +800,8 @@ hr {
 							);
 							let replyEditCompleteDiv = $("<div>").addClass("replyEditCompleteDiv");
 							replyEditCompleteDiv.append(
-								$("<input>").attr("type","button").addClass("OBtn").val("완료"),
-								$("<input>").attr("type","button").addClass("XBtn").val("취소").attr("data-reply_seq", i.reply_seq)		
+								$("<input>").attr("type","button").addClass("OBtn").val("완료").attr("data-reply_seq", i.reply_seq),
+								$("<input>").attr("type","button").addClass("XBtn").val("취소")		
 							);
 							btnDiv.append(replyEditDiv, replyEditCompleteDiv);
 							replyInfoUp.append(btnDiv);
@@ -833,12 +850,39 @@ hr {
 		    loadReplyList();
 		});
 		
-		
         // 좋아요 버튼
         $(".postLikeBox").on("click", function () {
-            $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
+            let postLike = $(this);
+            let post_seq = postLike.closest(".postBox").data("seq");
+            
+            // 하트 채워지고 비워지는 토글용 ajax
+	        $.ajax({
+	           url : "/like/toggle",
+	           data : {post_seq : post_seq},
+	           type : "post"
+	        }).done(function(likeCheck) {
+	           if(likeCheck == -1){
+	              alert("로그인 후 이용 가능합니다.");
+	              location.href = "/members/loginUi";
+	              return;
+	           }
+	           if (likeCheck == 1 || likeCheck == 0) { // 하트를 누를때마다 css 적용
+	               postLike.toggleClass("active"); // active 클래스를 넣었다 뺐다 함 
+	               // 서버 처리가 성공하면 화면의 하트 색깔을 변경함
+	               
+	               // jsp 화면에 보여지는 전체 숫자용 ajax
+	               $.ajax({
+	                  url : "/like/count",
+	                  data : {post_seq : post_seq},
+	                  type : "post"
+	               }).done(function(count){
+	                  postLike.find(".likeCount").text(count);
+	               });
+	            }
+	           console.log("${dto.post_like_check}");
+	         });
         });
-
+               
         // 신고 아이콘을 눌렀을 때, 신고 사유가 튀어나오게
         $(document).on("click", ".reportIcon", function () {
 		    $(this).siblings(".reportSelect").css("display", "inline");
@@ -916,6 +960,98 @@ hr {
         	
         	console.log(post_seq);
         });
+        
+        // upBtn, delBtn, OBtn, XBtn
+        // 댓글 수정 버튼을 눌렀을 때
+        $(document).on("click",".upBtn",function(){
+        	let replyUpBox = $(this).closest(".replyUpBox");
+        	
+        	let upBtn = replyUpBox.find(".upBtn").css({"display":"none"});
+        	let delBtn = replyUpBox.find(".delBtn").css({"display":"none"});
+        	let OBtn = replyUpBox.find(".OBtn").css({"display":"inline"});
+        	let XBtn = replyUpBox.find(".XBtn").css({"display":"inline"});
+        	
+        	let replyContents = replyUpBox.find(".replyContents");
+        	replyContents.data("origin", replyContents.html());
+        	
+        	replyContents.attr("contenteditable", "true");
+        });
+        
+        // 댓글 수정 취소 버튼을 눌렀을 때
+        $(document).on("click",".XBtn",function(){
+			let replyUpBox = $(this).closest(".replyUpBox");
+			
+        	let replyContents = replyUpBox.find(".replyContents");
+        	let origin = replyContents.data("origin");
+        	
+        	replyContents.html(origin);
+        	
+        	let upBtn = replyUpBox.find(".upBtn").css({"display":"inline"});
+        	let delBtn = replyUpBox.find(".delBtn").css({"display":"inline"});
+        	let OBtn = replyUpBox.find(".OBtn").css({"display":"none"});
+        	let XBtn = replyUpBox.find(".XBtn").css({"display":"none"});
+
+        	replyContents.removeAttr("contenteditable");
+        });
+        
+        // 댓글 삭제 버튼을 눌렀을 때
+        $(document).on("click",".delBtn",function(){
+        	
+        	let reply_seq = $(this).data("reply_seq");
+        	
+        	$.ajax({
+        		url: "/reply/deleteReply",
+        		data: {reply_seq : reply_seq}
+        	}).done(function(){
+        		if(!confirm("정말로 삭제하시겠습니까?")){
+        			return;
+        		}else{
+        			alert("삭제가 완료되었습니다!")
+        		}
+        		
+        		let countElement = $(".commentCount"); // 카운트한 값이 들어있는 div
+        		let currentCount = parseInt(countElement.text()); // div에 값만 빼와서 남기.
+        		countElement.text(currentCount - 1);
+        		loadReplyList();
+        	});
+        });
+        
+        // 댓글 수정 완료 버튼을 눌렀을 때
+        $(document).on("click",".OBtn",function(){
+        	
+			let replyUpBox = $(this).closest(".replyUpBox");
+        	
+        	let reply_seq = $(this).data("reply_seq");
+        	let reply_contents = replyUpBox.find(".replyContents").text();
+        	
+        	if(reply_contents.trim() == ""){
+		        alert("내용을 입력해주세요.");
+		        return;
+		    }
+        	
+        	$.ajax({
+        		url: "/reply/updateReply",
+        		data: {
+        			reply_seq : reply_seq,
+        			reply_contents : reply_contents
+        		},
+        		type: "post"
+        	}).done(function(){
+        		alert("수정이 완료되었습니다!");
+        		loadReplyList();
+        	});
+        });
+        
+        // 뒤로가기 버튼을 눌렀을 때
+        $(document).on("click", ".backBtn", function(){
+		    let category = "${category}";
+		
+		    if(category == "talk"){
+		        location.href = "/board/talk";
+		    } else if(category == "lifeInfo"){
+		        location.href = "/board/lifeInfo";
+		    }
+		});
     </script>
 </body>
 </html>

@@ -31,13 +31,10 @@ public class BoardController {
 	private ReplyDAO ReplyDao;
 	@Autowired
 	private VisitLogDAO vdao;
+	@Autowired
+	private PostLikeDAO likeDao;
 	
-	@RequestMapping("/lifeInfo")
-	public String lifeInfo() {
-		return "board/life-info";
-	}
-	
-	@RequestMapping("/concern")
+	@RequestMapping("/talk")
 	public String concern(String sort, Model model) throws Exception {
 		
 		// 기본 정렬
@@ -84,7 +81,7 @@ public class BoardController {
 		String post_category = dto.getPost_category();
 		
 		if("lifeInfo".equals(post_category)) {
-			return "redirect:/board/life-info";
+			return "redirect:/board/list_lifeInfo";
 		}else if("talk".equals(post_category)) {
 			return "redirect:/board/concern";
 		}
@@ -94,8 +91,8 @@ public class BoardController {
 	
 	
 	//생활정보 jsp에 생활정보 카테고리 list만 출력
-	@RequestMapping("/list_lifeInfo")
-	public String list_lifeInfo(String sort, Model model) throws Exception{
+	@RequestMapping("/lifeInfo")
+	public String lifeInfo(String sort, Model model, HttpSession session) throws Exception{
 		
 		
 		// 기본 정렬
@@ -110,7 +107,12 @@ public class BoardController {
 	    }else {
 	        list = dao.list_lifeInfo_latest();
 	    }
-
+	    
+	    // 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.
+	    String loginId = (String)session.getAttribute("loginId");
+	    
+	    LikeStatus(list, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
+	    
 	    model.addAttribute("lifeInfo", list);
 	    model.addAttribute("sort",sort);
 
@@ -119,19 +121,25 @@ public class BoardController {
 	
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
-	public String postDetail(Model model, int post_seq, HttpSession session) throws Exception{
+	public String postDetail(Model model, int post_seq, HttpSession session, String category) throws Exception{
+		
+		System.out.println(category);
 		
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
-		model.addAttribute("dto",dto);
 		
 		String loginId = (String)session.getAttribute("loginId");
-		   
+		
 		   if(loginId != null) {
-		      String category = dao.getCategoryBySeq(post_seq);
-		      vdao.postClickVisit(loginId, category);
+		      String allCategory = dao.getCategoryBySeq(post_seq);
+		      vdao.postClickVisit(loginId, allCategory);
 		   }
-		   
-		return "board/postDetail?seq="+post_seq;
+	    
+	    LikeStatus(dto, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
+	    model.addAttribute("loginId", loginId);
+	    model.addAttribute("dto",dto);
+	    
+		session.setAttribute("category", category);
+	    return "board/postDetail";
 	}
 	
 	// 게시글 삭제
@@ -160,97 +168,6 @@ public class BoardController {
 		return  gson.toJson(list);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@Autowired
-	private PostLikeDAO likeDao;
-	
 	// board에 list를 출력 시,로그인 한 아이디를 기준으로 하트를 눌러놨는지 체크하는 메서드
 	private void LikeStatus(List<BoardDTO> list, String loginId) {
 		
@@ -263,31 +180,14 @@ public class BoardController {
 		
 	};
 	
-	@RequestMapping("/lifeInfo")
-	public String lifeInfo(String sort, Model model, HttpSession session) throws Exception{
+	// postDetail 페이지,로그인 한 아이디를 기준으로 하트를 눌러놨는지 체크하는 메서드
+	private void LikeStatus(BoardDTO dto, String loginId) {
 		
-		// 기본 정렬
-		if(sort == null) {
-			sort = "latest";
+		if(loginId != null && dto != null) { // 로그인 아이디랑 리스트가 null이 아니면 
+				int check = likeDao.likeCheck(dto.getPost_seq(), loginId); // 로그인 아이디를 기준으로 하트를 눌렀는지 체크하고,
+				dto.setPost_like_check(check); // check의 값이 1 또는 0으로 나온 값을 dto에 set으로 기록.
 		}
-	    List<BoardDTO> list;
-	    
-	    // 출력을 어떤 종류를 기준으로 할 지 검사
-	    if ("like".equals(sort)) {
-	        list = dao.list_lifeInfo_like();
-	    }else {
-	        list = dao.list_lifeInfo_latest();
-	    }
-	    
-	    // 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.
-	    String loginId = (String)session.getAttribute("loginId");
-	    
-	    LikeStatus(list, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
-	    
-	    model.addAttribute("lifeInfo", list);
-	    model.addAttribute("sort",sort);
-
-		return "board/life-info";
+		
 	};
 	
 	

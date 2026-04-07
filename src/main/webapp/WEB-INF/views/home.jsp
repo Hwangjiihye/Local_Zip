@@ -571,7 +571,7 @@ body, html {
 				<a href="/"><button type="button" class="nowBtn"
 						style="background-color: #fecc56; border-radius: 10px; height: 30px; margin-right: 10px;">
 						<i class="navicon fa-solid fa-house fa-lg"></i> 전체
-					</button></a> <a href="/board/list_lifeInfo"><button type="button"
+					</button></a> <a href="/board/lifeInfo"><button type="button"
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
 						<i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보
 					</button></a>
@@ -579,7 +579,7 @@ body, html {
 					style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
 					<i class="fa-solid fa-utensils fa-lg" style="color: #3e5e40;"></i> 맛집/카페
 				</button>
-				<a href="/board/concern"><button type="button"
+				<a href="/board/talk"><button type="button"
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
 						<i class="fa-regular fa-comment-dots fa-lg" style="color: #3e5e40;"></i> 고민/이야기
 					</button></a>
