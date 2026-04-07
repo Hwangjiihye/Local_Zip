@@ -395,13 +395,18 @@
 
 
         .beforeHeart:hover,
-        .afterHeart:hover,
         .comment:hover {
             color: #cdaa69;
         }
+		
+		/* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
+		.beforeHeart{
+			display : inline;
+		}
 
         .afterHeart {
             display: none;
+            color: red;
         }
 
         /* active 클래스가 붙었을 때의 제어 */
@@ -411,7 +416,6 @@
 
         .postLikeBox.active .afterHeart {
             display: inline;
-            color: red;
         }
 
         .navicon:hover {
@@ -586,11 +590,11 @@
 						<c:if test="${loginId != null}">
 			                <div class="postDownBox">
 			
-			                    <div class="postLikeBox">
+			                    <div class="postLikeBox ${i.post_like_check == 1 ? 'active' : ''}">
 			                        <i class="fa-regular fa-heart fa-xl beforeHeart"></i>
 			                        <i class="fa-solid fa-heart fa-xl afterHeart"></i>
 			
-			                        <div>갯수</div>
+			                        <div class="likeCount infoCount">${i.post_like }</div>
 			                    </div>
 			
 			                    <div class="postCommentBox">
@@ -661,7 +665,6 @@
 		            location.href = "/members/loginUi";
 		            return;
 		        }
-		
 		        let post_seq = $(this).data("seq");
 		        location.href = "/board/postDetail?post_seq=" + post_seq + "&category=talk";
 		    });
@@ -717,9 +720,38 @@
 	    });
      	
      // 좋아요 버튼
-        $(".postLikeBox").on("click", function () {
-            $(this).toggleClass("active"); // 클릭할 때마다 active 클래스를 넣었다 뺐다 함
-        });
+        $(".postLikeBox").on("click", function(e) {
+			e.stopPropagation(); // 상세페이지 이동 방지
+			let postLike = $(this);
+			let post_seq = postLike.closest(".postBox").data("seq");
+			
+			// 하트 채워지고 비워지는 토글용 ajax
+			$.ajax({
+				url : "/like/toggle",
+				data : {post_seq : post_seq},
+				type : "post"
+			}).done(function(likeCheck) {
+				if(likeCheck == -1){
+					alert("로그인 후 이용 가능합니다.");
+					location.href = "/members/loginUi";
+					return;
+				}
+
+				if (likeCheck == 1 || likeCheck == 0) { // 하트를 누를때마다 css 적용
+					postLike.toggleClass("active"); // active 클래스를 넣었다 뺐다 함 
+					// 서버 처리가 성공하면 화면의 하트 색깔을 토글(변경)함.
+					
+					// jsp 화면에 보여지는 전체 숫자용 ajax
+					$.ajax({
+						url : "/like/count",
+						data : {post_seq : post_seq},
+						type : "post"
+					}).done(function(count){
+						postLike.find(".likeCount").text(count);
+					});
+				}
+			});
+		});
      
 	 // 댓글 수 갱신
 	    $(".postBox").each(function(){
