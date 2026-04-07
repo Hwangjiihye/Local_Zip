@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>lifeInfo</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -455,18 +455,18 @@ hr {
 			<div class="categoryBtns">
 				<a href="/"><button class="categoryBtn topBtn" type="button">
 						<i class="fa-solid fa-house fa-lg"></i> 전체
-					</button></a> <a href="/board/list_lifeInfo"><button class="categoryBtn nowBtn" type="button">
+					</button></a> <a href="/board/lifeInfo"><button class="categoryBtn nowBtn" type="button">
 						<i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보
 					</button></a>
-				<button class="categoryBtn topBtn" type="button">
+				<a href="/board/food"><button class="categoryBtn topBtn" type="button">
 					<i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페
-				</button>
-				<a href="/board/concern"><button class="categoryBtn topBtn" type="button">
+				</button></a>
+				<a href="/board/talk"><button class="categoryBtn topBtn" type="button">
 						<i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기
 					</button></a>
-				<button class="categoryBtn topBtn" type="button">
+				<a href="/board/beauty"><button class="categoryBtn topBtn" type="button">
 					<i class="fa-solid fa-shirt fa-lg"></i> 미용/패션
-				</button>
+				</button></a>
 			</div>
 		</div>
 
