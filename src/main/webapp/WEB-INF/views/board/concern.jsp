@@ -548,9 +548,9 @@
 <body>
 
     <div class="container">
-
+	
         <div class="headBox">우리 동네.zip</div>
-
+        
         <div class="categoryBtnBox">
             <div class="categoryBtns">
                 <a href="/"><button class="categoryBtn topBtn" type="button"><i class="fa-solid fa-house fa-lg"></i> 전체</button></a>
@@ -614,8 +614,12 @@
 		
 		                <div class="postMidBox">
 		
-		                    <div class="postTitle">${i.post_title }</div>
-		                    <div class="postContent">${i.post_contents }</div>
+		                    <div class="postTitle">
+		                    	<a href="/board/postDetail?post_seq=${i.post_seq}&category=${i.post_category}&cPage=${currentPage}&sort=${sort}">
+							        ${i.post_title}
+							    </a>
+		                    </div>
+		                    <div class="postContent">${i.post_contents}</div>
 		
 		                </div>
 						<c:if test="${loginId != null}">
@@ -639,7 +643,6 @@
 		            </div>
 				</c:forEach>
 		        </div>
-		
 		        <div class="pageBox"></div>
         	</c:otherwise>
 		</c:choose>
@@ -817,7 +820,7 @@
         for(let i = startNavi; i <= endNavi; i++) {
         	let navi = $("<a>");
         	let sort = "${sort}";
-        	navi.attr("href", "/board/talk?sort" + sort + "&cPage=" + i);
+        	navi.attr("href", "/board/talk?sort=" + sort + "&cPage=" + i);
         	navi.html(i + " ");
         	
         	if(i == currentPage) {

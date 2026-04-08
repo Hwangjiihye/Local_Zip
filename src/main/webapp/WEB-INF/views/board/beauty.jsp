@@ -765,6 +765,7 @@ hr {
         let recordCountPerPage = Number("${recordCountPerPage}"); // 한 페이지에 몇 개 보여줄지
         let naviCountPerPage = Number("${naviCountPerPage}"); //  한 번에 몇 개 페이지 번호 보여줄지
         let currentPage = Number("${currentPage}"); // 현재 페이지
+        let sort = "${sort}";
         
         let pageTotalCount = Math.ceil(recordTotalCount / recordCountPerPage); //  총 페이지 개수 구하기
         
@@ -777,7 +778,7 @@ hr {
         
         for(let i = startNavi; i <= endNavi; i++) {
         	let navi = $("<a>");
-        	navi.attr("href", "/home?cPage="+i);
+        	navi.attr("href", "/board/beauty?sort=" + sort + "&cPage=" + i);
         	navi.html(i + " ");
         	
         	if(i == currentPage) {
