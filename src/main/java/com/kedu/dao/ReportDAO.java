@@ -20,10 +20,10 @@ public class ReportDAO {
 				dto.getReports_type(), dto.getReports_reason());
 	}
 	
-	public int isReport(String mem_id, int reports_seq, int reports_type) {
+	public int isReport(String mem_id, int target_seq, int reports_type) {
 		String sql = "select count(*) from reports where mem_id = ? "
 				+ "and target_seq = ? "
 				+ "and reports_type =? ";
-		return jdbc.queryForObject(sql, Integer.class, mem_id, reports_seq, reports_type);
+		return jdbc.queryForObject(sql, Integer.class, mem_id, target_seq, reports_type);
 	}
 }

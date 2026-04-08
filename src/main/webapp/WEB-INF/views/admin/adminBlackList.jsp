@@ -505,8 +505,8 @@ img{
 		        			<div class="postBody">
 		            			<div class="rowItem2">
 					                <div class="reportReason">
-					                	\${i.target_type_name}
-					                	신고 내용 : \${i.target_content}
+					                	<신고 대상 : \${i.target_type_name} >
+					                	<신고 내용 : \${i.target_content}>
 					                </div>
 		            			</div>
 		        			</div>

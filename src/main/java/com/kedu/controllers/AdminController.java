@@ -212,6 +212,7 @@ public class AdminController {
 		List<ReportDTO> list = dao.selectReportContents();
 		
 		for(ReportDTO dto : list) {
+			System.out.println("신고 대상: " + dto.getTarget_type_name());
 		    System.out.println("신고대상내용: " + dto.getTarget_content()); // 콘솔창(STS/Eclipse)에 찍힘
 		}
 		resp.put("list", list);
