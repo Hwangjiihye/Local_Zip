@@ -64,15 +64,27 @@ public class BoardDAO {
 	}
 	
 	//고민/이야기 리스트 출력(최신순)
-	public List<BoardDTO> list_concern_latest() throws Exception{
-		String sql = "select * from post where post_category = 'talk' order by post_seq desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	public List<BoardDTO> list_concern_latest(int start, int end) throws Exception{
+//		String sql = "select * from post where post_category = 'talk' order by post_seq desc";
+		
+		String sql = "select * from (" + " select row_number() over(order by p.post_seq desc) rn, p.* "
+									   + " from post p "
+									   + " where post_category = 'talk' "
+									   + ") where rn between ? and ?";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), start, end);
 	}
 
 	//고민/이야기 리스트 출력(인기순)
-	public List<BoardDTO> list_concern_like() throws Exception{
-		String sql = "select * from post where post_category = 'talk' order by post_like desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	public List<BoardDTO> list_concern_like(int start, int end) throws Exception{
+//		String sql = "select * from post where post_category = 'talk' order by post_like desc";
+		
+		String sql = "select * from (" + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, p.* "
+									   + " from post p"
+									   + " where post_category = 'talk' "
+									   + ") where rn between ? and ?";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), start, end);
 	}
 
 	//미용/패션 리스트 출력(최신순)
@@ -169,7 +181,7 @@ public class BoardDAO {
 	public List<BoardDTO> getMyLikes(String mem_id){
 		String sql = "select p.* from post_like l "
 					+ " JOIN post p ON l.post_seq = p.post_seq "
-					+ " where mem_id = ? "
+					+ " where l.mem_id = ? "
 					+ " order by l.like_date desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
 	}
@@ -178,7 +190,7 @@ public class BoardDAO {
 	
 	// 고민/이야기 네비바(전체 글 수 출력)
 	public int getConcernRecordTotalCount() {
-		String sql = "select count(*) from post where post_category = 고민/이야기";
+		String sql = "select count(*) from post where post_category = 'talk'";
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 
