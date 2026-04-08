@@ -557,6 +557,7 @@ hr {
 							<div class="postMidBox">
 
 								<div class="postTitle">${i.post_title}</div>
+								  
 								<div class="postContent">${i.post_contents}</div>
 
 							</div>
@@ -785,7 +786,8 @@ hr {
         
         for(let i = startNavi; i <= endNavi; i++) {
         	let navi = $("<a>");
-        	navi.attr("href", "/home?cPage="+i);
+        	let sort = "${sort}";
+        	navi.attr("href", "/board/food?sort=" + sort + "&cPage=" + i);
         	navi.html(i + " ");
         	
         	if(i == currentPage) {
@@ -794,7 +796,7 @@ hr {
         	
         	$(".pageBox").append(navi);
         }
-    });
+    }); 
 	</script>
 </body>
 </html>

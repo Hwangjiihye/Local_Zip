@@ -104,14 +104,19 @@ public class BoardController {
 			sort = "latest";
 		}
 
-		if (cPage == null) {
+		if (cPage == null || cPage < 1) {
 			cPage = 1;
 		}
-
+		
+		int recordTotalCount = dao.getConcernRecordTotalCount();
 		int recordCountPerPage = 10;
 		int naviCountPerPage = 10;
 		
-		int recordTotalCount = dao.getConcernRecordTotalCount();
+		int lastPage = (int) Math.ceil(recordTotalCount / (double) recordCountPerPage);
+	    if (cPage > lastPage && lastPage > 0) {
+	        cPage = lastPage;
+	    }
+		
 		
 		int start = (cPage - 1) * recordCountPerPage + 1; 
 		int end = cPage * recordCountPerPage;
@@ -119,7 +124,8 @@ public class BoardController {
 		model.addAttribute("recordTotalCount", recordTotalCount);
 		model.addAttribute("recordCountPerPage", recordCountPerPage);
 		model.addAttribute("naviCountPerPage", naviCountPerPage);
-		model.addAttribute("currentPage", cPage);
+		session.setAttribute("currentPage", cPage);
+//		model.addAttribute("currentPage", cPage);
 
 		List<BoardDTO> list;
 
@@ -149,6 +155,7 @@ public class BoardController {
 		if (sort == null) {
 			sort = "latest";
 		}
+		
 		List<BoardDTO> list;
 
 		// 출력을 어떤 종류를 기준으로 할 지 검사
@@ -170,19 +177,41 @@ public class BoardController {
 	}
 
 	@RequestMapping("/food")
-	public String food(String sort, Model model, HttpSession session) throws Exception {
+	public String food(String sort, Model model, HttpSession session, Integer cPage) throws Exception {
 
 		// 기본 정렬
 		if (sort == null) {
 			sort = "latest";
 		}
+		
+		if (cPage == null || cPage < 1) {
+			cPage = 1;
+		}
+		
+		int recordTotalCount = dao.getFoodRecordTotalCount();
+		int recordCountPerPage = 10;
+		int naviCountPerPage = 10;
+		
+		int lastPage = (int) Math.ceil(recordTotalCount / (double) recordCountPerPage);
+	    if (cPage > lastPage && lastPage > 0) {
+	        cPage = lastPage;
+	    }
+		
+	    int start = (cPage - 1) * recordCountPerPage + 1; 
+		int end = cPage * recordCountPerPage;
+		
+		model.addAttribute("recordTotalCount", recordTotalCount);
+		model.addAttribute("recordCountPerPage", recordCountPerPage);
+		model.addAttribute("naviCountPerPage", naviCountPerPage);
+		session.setAttribute("currentPage", cPage);
+		
 		List<BoardDTO> list;
 
 		// 출력을 어떤 종류를 기준으로 할 지 검사
 		if ("like".equals(sort)) {
-			list = dao.list_food_like();
+			list = dao.list_food_like(start, end);
 		} else {
-			list = dao.list_food_latest();
+			list = dao.list_food_latest(start, end);
 		}
 
 		// 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.
@@ -225,7 +254,7 @@ public class BoardController {
 
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
-	public String postDetail(Model model, int post_seq, HttpSession session, String category) throws Exception {
+	public String postDetail(Model model, int post_seq, HttpSession session, String category, Integer cPage, String sort) throws Exception {
 
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
 
@@ -241,9 +270,21 @@ public class BoardController {
 			vdao.postClickVisit(loginId, allCategory);
 		}
 
+		if(cPage == null) {
+			cPage = 1;
+		}
+		
+		if(sort == null) {
+			sort = "latest";
+		}
+		
 		LikeStatus(dto, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
 		model.addAttribute("loginId", loginId);
 		model.addAttribute("dto", dto);
+		
+		model.addAttribute("category", category);
+		model.addAttribute("cPage", cPage);
+		model.addAttribute("sort", sort);
 
 		session.setAttribute("category", category);
 		return "board/postDetail";
