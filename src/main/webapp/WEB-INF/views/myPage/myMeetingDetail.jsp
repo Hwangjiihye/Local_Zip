@@ -68,11 +68,11 @@
 	
 	.meetingDetail {
 		margin: auto;
-	    width: 80%;
+	    width: 70%;
 	    border-radius: 10px;
 	    background-color: #fbe5c0;
 	    padding: 35px;
-	 	margin-top: 30px;
+	 	margin-top: 60px;
 	    background-color: #F2D3A2;
 	    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	}
@@ -181,6 +181,19 @@
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
 	
+	.leftImg, .rightImg{
+		position: absolute;
+		width: 450px;
+		height: 170px;
+		z-index: 10;
+		bottom: 0;
+	}
+	.leftImg{
+	    left: 0;
+	}
+	.rightImg{
+		right: 0;
+	}
 </style>
 </head>
 <body>
@@ -233,6 +246,8 @@
 					</div>
 				</div>
 			</c:forEach>
+			<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    		<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 	</div>
 	<div class="bottomBtn">
 			<a href="/meeting/myMeeting"><button class="backBtn" type="button">뒤로가기</button></a>

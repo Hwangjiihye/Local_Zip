@@ -154,13 +154,14 @@ body {
 
 .meeting-card {
     width: 300px;
-    border: 2px solid #A66A3F;
+    border: 2px solid #C29F6D90;
     border-radius: 10px;
     background-color: #fbe5c0;
     padding: 35px;
     margin: 0 0 40px 40px;
     display:flex;
     flex-direction:column;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
 .card-header {

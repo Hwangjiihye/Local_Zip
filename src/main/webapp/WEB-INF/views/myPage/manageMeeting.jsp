@@ -91,7 +91,9 @@
         .deleteBtn:hover,
         .outBtn:hover,
         .myMeetingBtn:hover,
-        .manageBtn:hover{
+        .manageBtn:hover,
+        .acceptBtn:hover,
+        .rejectBtn:hover{
             transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
@@ -100,7 +102,9 @@
         .deleteBtn:active,
         .outBtn:active,
         .myMeetingBtn:active,
-        .manageBtn:active{
+        .manageBtn:active,
+        .acceptBtn:active,
+        .rejectBtn:active{
             transform: translateY(2px); /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
@@ -175,12 +179,10 @@
 		.acceptedBtn{
 			background-color: #7BB8C9;
 			margin-left: 150px;
-/* 			display: none; */
 		}
 		.rejectedBtn{
 			background-color: #FF000080;
 			margin-left: 150px;
-/* 			display: none; */
 		}
 		.completeComments{
 			font-weight: bold;
