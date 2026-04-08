@@ -555,17 +555,26 @@ hr {
 	border: 1px dotted #5e361a;
 }
 
-.replyContents[contenteditable="true"] {
+.replyContents[contenteditable="true"],
+.postTitle[contenteditable="true"],
+.postContents[contenteditable="true"]{
     border: 1px solid #FFB300;
     border-radius: 5px;
     padding: 5px;
 }
 
-.replyContents[contenteditable="true"]:focus {
+.replyContents[contenteditable="true"]:focus{
     outline: none;
     border: 1px solid #FFB300;
     background-color: #fbe5c0;
 }
+
+.postTitle[contenteditable="true"]:focus,
+.postContents[contenteditable="true"]:focus{
+	outline: none;
+	border: 1px solid #FFB300;
+}
+
 </style>
 
 </head>
