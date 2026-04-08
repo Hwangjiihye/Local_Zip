@@ -257,7 +257,20 @@
 		#peopleNumber{
 			width: 200px;
 		}
-	
+		
+		.leftImg, .rightImg{
+			position: absolute;
+			width: 450px;
+			height: 170px;
+			z-index: 10;
+			bottom: -300px;
+		}
+		.leftImg{
+		    left: 0;
+		}
+		.rightImg{
+			right: 0;
+		}
 	</style>
 <body><!-- /meeting/test -->
 <form action="/meeting/meetGenerate" class="frm" method="post" onsubmit="return checkForm();">
@@ -325,7 +338,11 @@
 			<button class="requestBtn" type="submit">추가하기</button>
 			
 			<a href="/meeting/list?category=all"><button class="backBtn" type="button">뒤로가기</button></a>
-		</div>   
+		</div>
+		<div>
+			<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+	    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
+    	</div>
 </form>
 		
 		<script>
