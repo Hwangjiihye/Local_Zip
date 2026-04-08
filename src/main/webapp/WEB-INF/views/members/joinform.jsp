@@ -212,6 +212,9 @@ hr {
 input{
 	outline: none;
 }
+a {
+    color:#FF8200;
+}
 </style>
 </head>
 <body>
@@ -284,7 +287,7 @@ input{
 				
 				<div class="agreeDiv">
 					<input class="agreeBtn" type="checkbox">I agree to the
-					Terms of Use and Privacy Policy (필수)
+					<a href="#" onclick="openPopup(); return false;">Terms of Use and Privacy Policy</a> (필수)
 				</div>
 				<hr>
 				<div class="signUpDiv">
@@ -584,7 +587,20 @@ input{
 			return false;
 		}
 		
-		
+		function openPopup() {
+			var width = 605;
+		    var height = 730;
+			
+		    // 중앙 정렬
+		    var left = window.screenX + (window.outerWidth / 2) - (width / 2);
+		    var top = window.screenY + (window.outerHeight / 2) - (height / 2);
+			
+			window.open(
+		        "/members/terms",        // 열 jsp 경로
+		        "termsPopUp",      // 창 이름
+		        "width="+ width + ",height=" + height + ",left=" + left + ",top="+ top + ",resizable=no,scrollbars=no"
+		    );
+		}
 	</script>
 </body>
 </html>
