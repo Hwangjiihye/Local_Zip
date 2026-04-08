@@ -114,6 +114,10 @@ body, html {
 	border-radius: 10px;
 	margin-top: 10px;
 	margin-left: 20px;
+	
+	position: relative;
+	height: 300px; /* 적당히 고정 */
+	overflow: hidden;
 }
 
 .centerBox {
@@ -223,11 +227,14 @@ body, html {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	display: none;
+	opacity: 0;
+	transition: 0.5s;
+	/* display: none; */
 }
 
 .slideBanner.active {
-	display: block;
+	opacity: 1;
+	/* display: block; */
 }
 
 .writeBtn {
@@ -593,9 +600,9 @@ body, html {
 				<div class="leftBox">
 					<div class="localBanner">
 						<div class="notice">
-							<img class="slideBanner" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;"
+							<img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;"
 								height="100%;"> <img class="slideBanner" src="/resources/images/fleaMarket.jpg"
-								style="border-radius: 10px;" width="100%;" height="100%;">
+								style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
 						</div>
 					</div>
 
