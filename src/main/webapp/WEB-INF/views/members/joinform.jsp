@@ -209,7 +209,9 @@ hr {
 .rightImg{
 	right: 0;
 }
-
+input{
+	outline: none;
+}
 </style>
 </head>
 <body>
