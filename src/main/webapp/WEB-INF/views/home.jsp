@@ -493,7 +493,7 @@ body, html {
 }
 
 .nowBtn {
-	/*          	background-color: #fecc56; */
+	/* background-color: #fecc56; */
 	color: #A66A3F;
 	transform: translateY(-3px);
 	/* 살짝 위로 뜸 */
@@ -557,6 +557,43 @@ body, html {
 		.pageBox a:hover{
 		    background-color:#F2D3A2;
 		}
+		
+		.popup-overlay {
+		    position: fixed;
+		    top: 0; left: 0;
+		    width: 100%; height: 100%;
+		    background: rgba(0, 0, 0, 0.7); /* 배경을 조금 더 어둡게 */
+		    display: none; /* 기본은 숨김 */
+		    justify-content: center;
+		    align-items: center;
+		    z-index: 9999; /* 상단바보다 훨씬 높게 설정 */
+		}
+		
+		.popup-content img {
+		    max-width: 100%; /* 이미지가 팝업창을 넘어가지 않도록 */
+		    border-radius: 10px;
+		    width: 500px;
+		}
+		
+		/* 닫기 버튼 */
+		.close-btn {
+		    width: 100%;
+		    padding: 10px;
+		    margin-top: 10px;
+		    background-color: #FFB300;
+		    color: #5e361a;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    font-weight: bold;
+		    font-size: 20px;
+		}
+		
+		.close-btn:hover {
+		    background-color: #fecc56;
+		}
+		
+		
 </style>
 </head>
 
@@ -768,21 +805,60 @@ body, html {
 		</div>
 
 	</div>
+	
+	
+	<!-- 팝업창 -->
+	<div class="mainPopup popup-overlay" style="display: none;">
+		<div class="popup-content"> 
+		
+			<div class="popup-body">
+				<img src="/resources/images/seoul.png">
+			</div>
+			
+			<div class="popup-footer">
+				<button onclick="closePopup()" class="close-btn">닫기</button>
+			</div>
+		
+		</div>
+	</div>
+	
 
 	<script>
-		$(".loginBtn").on("click", function() {
-			$(".loginBtn").css({"display" : "none"});
-			$(".joinBtn").css({"display" : "none"});
-			$(".logoutArea").css({"display" : "flex"});
-		})
-
-		$(".logoutArea").on("click", function() {
-			$(".loginBtn").css({"display" : "inline"});
-			$(".joinBtn").css({"display" : "inline"});
-			$(".logoutArea").css({"display" : "none"});
-		})
 		
+	    // 팝업 닫기 함수
+	    function closePopup() {
+	        $(".mainPopup").hide(); // jQuery 방식 (display: none 효과)
+	    }
+		    	
+	    // 문서가 다 로딩 된 후 시작하는 함수
 		$(function() {
+			
+			// 페이지 로드 시 팝업 열기
+		    window.onload = function() {
+		        $(".mainPopup").css("display", "flex");
+		    };
+	
+			
+		 	// 배경(어두운 부분) 클릭 시 팝업 닫기
+// 		    $(".popup-overlay").on("click", function(e) {
+// 		        // 클릭한 지점이 팝업 박스 내부(.popup-content)가 아닐 때만 닫기
+// 		        if (!$(e.target).closest(".popup-content").length) {
+// 		            $(this).hide();
+// 		        }
+// 		    });
+		
+			$(".loginBtn").on("click", function() {
+				$(".loginBtn").css({"display" : "none"});
+				$(".joinBtn").css({"display" : "none"});
+				$(".logoutArea").css({"display" : "flex"});
+			})
+
+			$(".logoutArea").on("click", function() {
+				$(".loginBtn").css({"display" : "inline"});
+				$(".joinBtn").css({"display" : "inline"});
+				$(".logoutArea").css({"display" : "none"});
+			})
+			
 		    // 1. 게시글 상세 페이지 이동 (통합 제어)
 		    // .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동
 		    $(document).on("click", ".postBox", function(e) {
