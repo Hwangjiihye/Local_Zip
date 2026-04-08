@@ -30,7 +30,10 @@ public class ReportController {
 		
 		//중복신고 막는 로직
 		int count = dao.isReport(loginId, dto.getTarget_seq(), dto.getReports_type());
-		
+		System.out.println("로직 정상 작동 여부 : " + count);
+		System.out.println("신고한 ID : " + loginId);
+		System.out.println("신고된 게시글 또는 댓글의 SEQ : " + dto.getTarget_seq());
+		System.out.println("신고된 대상의 타입 : " + dto.getReports_type());
 		if(count > 0) {
 			return "fail";
 		}
