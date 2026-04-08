@@ -249,6 +249,12 @@
 	.rightImg{
 		right: 0;
 	}
+	
+	.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+	}
 	</style>
 </head>
 <body>
@@ -295,15 +301,22 @@
 			if($(".inputBox").val() == "") {
 				Swal.fire({
 					icon: "info",
-					title: "Wait",
+					title: "Wait  !",
 					text: "제목을 입력해주세요",
-					confirmButtonColor: "#FF9D6E"
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
 				});
 				$(".inputBox").focus();
 				return false;
 			}
 			else if($(".TextDetail").val() == "") {
-				alert("내용을 작성해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "내용을 입력해주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				$(".TextDetail").focus();
 				return false;
 			}
