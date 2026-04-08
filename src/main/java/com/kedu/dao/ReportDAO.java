@@ -13,11 +13,11 @@ public class ReportDAO {
 	private JdbcTemplate jdbc;
 	
 	public int reportInsert(ReportDTO dto) {
-		String sql = "insert into reports values(reports_seq.nextval,?,?,?,sysdate,?,?)";
+		String sql = "insert into reports values(reports_seq.nextval,?,?,?,sysdate,?,?,?)";
 		return jdbc.update(
 				sql, dto.getMem_id(),
 				dto.getTarget_id(), dto.getTarget_seq(),
-				dto.getReports_type(), dto.getReports_reason());
+				dto.getReports_type(), dto.getReports_reason(), 4);
 	}
 	
 	public int isReport(String mem_id, int target_seq, int reports_type) {

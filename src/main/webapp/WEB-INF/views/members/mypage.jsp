@@ -286,7 +286,7 @@
 	    		<div class="myLikeIcon"><img src="/resources/images/love.png" class="icon"></div>
 	    		<div class="myLikeContents">
 		    		<div class="myLikeTitle">관심 게시글</div>
-		    		<div class="myLikeNum">15</div>
+		    		<div class="myLikeNum">${likeCount}</div>
 		    	</div>
 	    	</div>
 	    	</a>

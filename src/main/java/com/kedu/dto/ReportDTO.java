@@ -11,11 +11,12 @@ public class ReportDTO {
 	private String reports_reason;
 	private String target_content;
 	private String target_type_name;
+	private int reports_status;
 	
 	public ReportDTO() {}
 	
 	public ReportDTO(int reports_seq, String mem_id, String target_id, int target_seq, String reports_date,
-			int reports_type, String reports_reason) {
+			int reports_type, String reports_reason, int reports_status) {
 		this.reports_seq = reports_seq;
 		this.mem_id = mem_id;
 		this.target_id = target_id;
@@ -23,6 +24,7 @@ public class ReportDTO {
 		this.reports_date = reports_date;
 		this.reports_type = reports_type;
 		this.reports_reason = reports_reason;
+		this.reports_status = reports_status;
 	}
 	
 	public int getReports_seq() {
@@ -78,5 +80,11 @@ public class ReportDTO {
 	}
 	public void setTarget_type_name(String target_type_name) {
 		this.target_type_name = target_type_name;
+	}
+	public int getReports_status() {
+		return reports_status;
+	}
+	public void setReports_status(int reports_status) {
+		this.reports_status = reports_status;
 	}
 }
