@@ -115,8 +115,6 @@ public class BoardController {
 		
 		int start = (cPage - 1) * recordCountPerPage + 1; 
 		int end = cPage * recordCountPerPage;
-		 
-		/* List<BoardDTO> list = dao.lifeInfoList(loginId, start, end); */
 		
 		model.addAttribute("recordTotalCount", recordTotalCount);
 		model.addAttribute("recordCountPerPage", recordCountPerPage);
