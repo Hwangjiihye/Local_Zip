@@ -100,4 +100,20 @@ public class MembersDAO {
 				"or (m.mem_id = ? and m.meet_status in (0,1))";
 		return jdbc.queryForObject(sql, Integer.class, loginId, loginId);
 	}
+	
+	// 블랙리스트 로그인 제한 로직
+	public MembersDTO blackListLoginCheck(String mem_id, String mem_password) {
+		String sql = "select m.*, "
+				+ "TO_CHAR(b.end_date, 'YYYY-MM-DD HH24:MI:SS') AS end_date "
+				+ "from members m "
+				+ "left join blackList b on m.mem_id = b.mem_id "
+				+ "where m.mem_id = ? and m.mem_password = ?";
+		try {
+			return jdbc.queryForObject(sql, new BeanPropertyRowMapper<MembersDTO>(MembersDTO.class),mem_id,EncryptionUtils.getSha512(mem_password));
+		}catch(Exception e) {
+			return null;
+		}
+	}
 }
+
+

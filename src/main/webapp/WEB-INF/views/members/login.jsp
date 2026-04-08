@@ -237,19 +237,34 @@ input{
 	</div>
 	
 	<script>
-	let pwMsg = "${pwMsg}";
-    if (pwMsg && pwMsg !== "") {
-        alert(pwMsg);
-    }
+		let pwMsg = "${pwMsg}";
+	    if (pwMsg && pwMsg !== "") {
+	        alert(pwMsg);
+	    }
 	
 		let msg = "${msg}";
+		let endDate = "${endDate}";
 		
 		if(msg == "empty"){
 			alert("아이디와 비밀번호를 입력해주세요");
-		} else if(msg == "pwFail") {
-			alert("비밀번호가 틀립니다.");
-		} else if(msg == "idFail") {
+		}else if(msg == "idFail") {
 			alert("존재하지 않는 계정입니다.");
+		}else if(msg == "pwFail") {
+			alert("비밀번호가 틀립니다.");
+		}else if(msg == "banned"){
+			let alertMsg = "🚨 서비스 이용이 제한된 계정입니다.\n";
+				if(endDate == "영구 정지"){
+					alertMsg += "상태 : 영구정지";
+				}else{
+					alert("제한 해제일 : "  + endDate);
+				}
+			alert(alertMsg);
+		}
+		
+		let lmsg = "${lmsg}";
+		
+		if(lmsg == "loginFail"){
+			alert("로그인에 실패했습니다. 다시 시도해 주세요.");
 		}
 	</script>
 	

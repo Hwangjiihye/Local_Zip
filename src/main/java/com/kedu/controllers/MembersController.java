@@ -1,5 +1,8 @@
 package com.kedu.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,7 +21,6 @@ import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.MembersDTO;
-import com.kedu.dto.PostLikeDTO;
 
 @Controller
 @RequestMapping("/members")
@@ -94,6 +96,44 @@ public class MembersController {
 		int result = dao.login(mem_id,  mem_password);
 		
 		if(result == 1) {
+			MembersDTO member = dao.blackListLoginCheck(mem_id, mem_password);
+			
+			
+			if(member == null){
+			    rttr.addFlashAttribute("lmsg", "loginFail");
+			    return "redirect:/members/loginUi";
+			    
+			}
+			if(member.getEnd_date() != null) {
+			
+					try {
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						Date endDate = sdf.parse(member.getEnd_date());
+						Date now = new Date();
+						
+						if(endDate.after(now)) {
+							Calendar cal = Calendar.getInstance();
+						    cal.setTime(endDate);
+						    int endYear = cal.get(Calendar.YEAR);
+
+						    String dateResult = "";
+					    if (endYear > 2099) {
+					        dateResult = "영구 정지";
+					    }else {
+					    	SimpleDateFormat displaySdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
+					    	dateResult = displaySdf.format(endDate);
+						}
+							rttr.addFlashAttribute("msg", "banned");
+							rttr.addFlashAttribute("endDate", dateResult);
+							return "redirect:/members/loginUi";
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+						System.out.println("블랙리스트 체크 로직 오류");
+					}
+				
+			}
+			
 			String nickname = dao.nickname(mem_id);
 			String dong = dao.address(mem_id); // 로그인 아이디로 주소 저장(00동 출력용)
 			int role = dao.getRole(mem_id);

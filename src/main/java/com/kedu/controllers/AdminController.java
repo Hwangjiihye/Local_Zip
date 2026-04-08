@@ -200,22 +200,83 @@ public class AdminController {
 	
 	// 신고관리 페이지로 이동
 	@RequestMapping("/adminBlackList")
-	public String adminBlackList() {
+	public String adminBlackList(Model model) {
+		model.addAttribute("menu", "report");
 		return "/admin/adminBlackList";
 	}
 	
 	// 신고관리 -> 신고 목록 출력
 	@ResponseBody
 	@RequestMapping("/getReportList")
-	public Map<String, Object> getReportList() {
+	public Map<String, Object> getReportList(String status, HttpSession session) {
 		Map<String, Object> resp = new HashMap<>();
-		List<ReportDTO> list = dao.selectReportContents();
+		List<ReportDTO> list;
 		
-		for(ReportDTO dto : list) {
-			System.out.println("신고 대상: " + dto.getTarget_type_name());
-		    System.out.println("신고대상내용: " + dto.getTarget_content()); // 콘솔창(STS/Eclipse)에 찍힘
+		// 전체 신고목록 개수 카운트
+		int allCount = dao.reportAllCount();
+		// 처리완료 신고목록 개수 카운트
+		int handelCount = dao.reportHandleCount();
+		// 미처리 신고목록 개수 카운트
+		int count = dao.reportCount();
+		
+		session.setAttribute("allCount", allCount);
+		session.setAttribute("handelCount", handelCount);
+		session.setAttribute("count", count);
+		
+		if("3".equals(status)) { // 처리완료건들 출력
+			int reportStatus = Integer.parseInt(status);
+			list = dao.selectReportContentsByStatusHandle(reportStatus);
+		}else if("4".equals(status)) { // 미처리건들 출력
+			int reportStatus = Integer.parseInt(status);
+			list = dao.selectReportContentsByStatus(reportStatus);
+		}else {
+			list = dao.selectReportContents();
 		}
+		
 		resp.put("list", list);
 		return resp;
 	}
+	
+	// 블랙리스트 등록 로직
+	@ResponseBody
+	@RequestMapping("/blackOn")
+	public String blackOn(int mem_status, String target_id, String black_option, int day, int reports_status, int target_seq) {
+			
+		int banDays;
+			if(day == -1) {
+				banDays = 99999;
+			}else {
+				banDays = day;
+			}
+			
+		// members table mem_status 업데이트
+		dao.updateMemberStatus(mem_status, target_id);
+		
+		// blackList table blackList Table status 업데이트
+		dao.insertBlcakList(target_id, black_option, banDays);
+		
+		// 블랙리스트 등록 시 reports 테이블 status 업데이트
+		dao.updateReportStatus(reports_status, target_id, target_seq);
+		return "success";
+	}
+	
+	// 블랙리스트 해제
+	@ResponseBody
+	@RequestMapping("/blackOff")
+	public String blackOff(int mem_status, String target_id) {
+		
+		dao.deleteMembersStatus(mem_status, target_id);
+		dao.deleteBlackList(target_id);
+		
+		return "success";
+		
+	}
 }
+
+
+
+
+
+
+
+
