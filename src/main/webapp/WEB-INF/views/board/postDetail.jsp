@@ -1060,6 +1060,8 @@ hr {
 		    	location.href = "/board/food";
 		    }else if(category == "beauty"){
 		    	location.href = "/board/beauty";
+		    }else {
+		    	location.href = "/";
 		    }
 		});
     </script>

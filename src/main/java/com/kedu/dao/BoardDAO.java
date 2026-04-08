@@ -25,18 +25,26 @@ public class BoardDAO {
 	}
 
 	// 카테고리 별 최신순, 인기순 정렬 후 > 리스트 출력 메서드 ------------------------------
-
-	//홈(=전체) 리스트 출력(최신순)
-	public List<BoardDTO> list_home_latest() throws Exception{
-		String sql = "select * from post order by post_seq desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
-	}
+	public List<BoardDTO> list_home_latest(String mem_id) throws Exception{
+		String sql = "select p.*, " +
+                " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
+                " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like, " + // 전체 좋아요 수
+                " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
+                " FROM post p " +
+                " order by p.post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
+	};
 
 	//홈(=전체) 리스트 출력(인기순)
-	public List<BoardDTO> list_home_like() throws Exception{
-		String sql = "select * from post order by post_like desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
-	}
+	public List<BoardDTO> list_home_like(String mem_id) throws Exception{
+		String sql = "select p.*, " +
+                " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
+                " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like, " + // 전체 좋아요 수
+                " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
+                " FROM post p " +
+                " order by p.post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
+	};
 
 	//생활정보 리스트 출력(최신순)
 	public List<BoardDTO> list_lifeInfo_latest() throws Exception{
@@ -64,15 +72,27 @@ public class BoardDAO {
 	}
 	
 	//고민/이야기 리스트 출력(최신순)
-	public List<BoardDTO> list_concern_latest() throws Exception{
-		String sql = "select * from post where post_category = 'talk' order by post_seq desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	public List<BoardDTO> list_concern_latest(int start, int end) throws Exception{
+//		String sql = "select * from post where post_category = 'talk' order by post_seq desc";
+		
+		String sql = "select * from (" + " select row_number() over(order by p.post_seq desc) rn, p.* "
+									   + " from post p "
+									   + " where post_category = 'talk' "
+									   + ") where rn between ? and ?";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), start, end);
 	}
 
 	//고민/이야기 리스트 출력(인기순)
-	public List<BoardDTO> list_concern_like() throws Exception{
-		String sql = "select * from post where post_category = 'talk' order by post_like desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	public List<BoardDTO> list_concern_like(int start, int end) throws Exception{
+//		String sql = "select * from post where post_category = 'talk' order by post_like desc";
+		
+		String sql = "select * from (" + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, p.* "
+									   + " from post p"
+									   + " where post_category = 'talk' "
+									   + ") where rn between ? and ?";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), start, end);
 	}
 
 	//미용/패션 리스트 출력(최신순)
@@ -167,9 +187,12 @@ public class BoardDAO {
 
 	// 마이페이지 > 내가 좋아요 누른 글 목록 출력
 	public List<BoardDTO> getMyLikes(String mem_id){
-		String sql = "select p.* from post_like l "
+		String sql = "select p.post_seq, p.post_category, p.mem_id, p.mem_nickname, "
+					+ " p.mem_dong, p.post_hit, p.post_title, p.post_contents,"
+					+ " p.post_like, p.post_date "
+					+ " from post_like l "
 					+ " JOIN post p ON l.post_seq = p.post_seq "
-					+ " where mem_id = ? "
+					+ " where l.mem_id = ? "
 					+ " order by l.like_date desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
 	}
@@ -178,7 +201,7 @@ public class BoardDAO {
 	
 	// 고민/이야기 네비바(전체 글 수 출력)
 	public int getConcernRecordTotalCount() {
-		String sql = "select count(*) from post where post_category = 고민/이야기";
+		String sql = "select count(*) from post where post_category = 'talk'";
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 

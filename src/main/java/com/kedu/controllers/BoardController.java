@@ -115,8 +115,6 @@ public class BoardController {
 		
 		int start = (cPage - 1) * recordCountPerPage + 1; 
 		int end = cPage * recordCountPerPage;
-		 
-		/* List<BoardDTO> list = dao.lifeInfoList(loginId, start, end); */
 		
 		model.addAttribute("recordTotalCount", recordTotalCount);
 		model.addAttribute("recordCountPerPage", recordCountPerPage);
@@ -127,9 +125,9 @@ public class BoardController {
 
 		// 출력을 어떤 종류를 기준으로 할 지 검사
 		if ("like".equals(sort)) {
-			list = dao.list_concern_like();
+			list = dao.list_concern_like(start, end);
 		} else {
-			list = dao.list_concern_latest();
+			list = dao.list_concern_latest(start, end);
 		}
 
 		// 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.

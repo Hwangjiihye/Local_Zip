@@ -816,7 +816,8 @@
         
         for(let i = startNavi; i <= endNavi; i++) {
         	let navi = $("<a>");
-        	navi.attr("href", "/home?cPage="+i);
+        	let sort = "${sort}";
+        	navi.attr("href", "/board/talk?sort" + sort + "&cPage=" + i);
         	navi.html(i + " ");
         	
         	if(i == currentPage) {

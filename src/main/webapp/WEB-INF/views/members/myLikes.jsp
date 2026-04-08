@@ -315,6 +315,7 @@ hr {
 .emptyBox {
 	width: 100%;
 	height: 600px;
+	padding: 50px 0;
 	font-size: 25px;
 	color: #5e361a;
 	text-align: center;
@@ -328,14 +329,14 @@ hr {
 
 		<div class="headBox">우리 동네.zip</div>
 
-<%-- 		<c:choose> --%>
-<%-- 			<c:when test="${empty lifeInfo}"> --%>
+		<c:choose>
+			<c:when test="${empty likeList}">
 
-<!-- 				<div class="emptyBox">등록된 게시글이 없습니다.</div> -->
+				<div class="emptyBox">관심 게시글이 없습니다.</div>
 
-<%-- 			</c:when> --%>
+			</c:when>
 
-<%-- 			<c:otherwise> --%>
+			<c:otherwise>
 				<div class="bodyBox">
 
 					<c:forEach var="i" items="${likeList}">
@@ -395,8 +396,8 @@ hr {
 
 				<div class="pageBox">1 2 3</div>
 
-<%-- 			</c:otherwise> --%>
-<%-- 		</c:choose> --%>
+			</c:otherwise>
+		</c:choose>
 
 
 
