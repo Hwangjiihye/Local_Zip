@@ -202,12 +202,13 @@ public class AdminQaDAO {
 	
 	public List<ReportDTO> selectReportContents(){
 		String sql = "select r.mem_id, r.target_id, r.reports_date, r.reports_type, "
-				+ "coalesce(p.post_contents, reply.reply_contents) as target_content, "
+				+ "coalesce(p.post_contents, reply.reply_contents, m.meeting_introcontents, '삭제되었거나 찾을 수 없는 내용(번호:' || r.target_seq || ')') as target_content, "
 				+ "case "
-				+ "when r.reports_type = 0 then '게시글' else '댓글' end as target_type_name "
+				+ "when r.reports_type = 0 then '게시글' when r.reports_type = 1 then '댓글' else '모임' end as target_type_name "
 				+ "from reports r "
 				+ "left join post p on r.target_seq = p.post_seq and r.reports_type = 0 "
 				+ "left join reply on r.target_seq = reply.reply_seq and r.reports_type = 1 "
+				+ "left join meeting m on r.target_seq = m.meet_seq and r.reports_type = 2 "
 				+ "order by r.reports_date desc ";
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));
 	}
