@@ -162,7 +162,8 @@ hr {
 	font-size: small;
 }
 
-.use, .notUse, .correct, .incorrect, .ok, .no {
+.use, .notUse, .correct, .incorrect, .ok, .no, .insertId, .x_id, .doDuplCheck,
+.insertPw, .x_pw {
 	display: none;
 	font-size: small;
 	margin-top: -15px;
@@ -172,7 +173,7 @@ hr {
 	color: #286708;
 }
 
-.notUse, .incorrect, .no {
+.notUse, .incorrect, .no, .insertId, .x_id, .doDuplCheck, .insertPw, .x_pw {
 	color: #de4f28;
 }
 
@@ -234,6 +235,10 @@ a {
 				</div>
 				<div class="use">중복되지 않은 아이디입니다.</div>
 				<div class="notUse">이미 사용 중인 아이디입니다.</div>
+				<div class="insertId">아이디를 입력해주세요.</div>
+				<div class="x_id">아이디를 다시 설정해주세요. 4~12자의 영문 소문자, 숫자, 언더바만 사용 가능</div>
+				<div class="doDuplCheck">아이디 중복확인을 해주세요.</div>
+				
 				<div class="form-row">
 					<label>· PW : </label> <input name="mem_password" class="pw1"
 						type="password" placeholder="비밀번호를 입력해주세요.">
@@ -244,40 +249,62 @@ a {
 				</div>
 				<div class="correct">비밀번호가 일치합니다.</div>
 				<div class="incorrect">비밀번호가 일치하지 않습니다.</div>
+				<div class="insertPw">비밀번호를 입력해주세요.</div>
+				<div class="x_pw">비밀번호를 다시 설정해주세요. 8~16자의 영문 대소문자,숫자,특수문자(!@#$%^&*) 사용 가능</div>
+				
 				<div class="form-row">
 					<label>· NAME : </label> <input name="mem_name" class="name"
 						type="text" placeholder="이름을 입력해주세요.">
 				</div>
+				<div class="insertName">이름을 입력해주세요.</div>
+				<div class="x_name">2~10글자의 이름만 등록 가능합니다.</div>
+				
 				<div class="form-row">
 					<label>·NICKNAME : </label> <input name="mem_nickname"
 						class="nickname" type="text" placeholder="닉네임을 입력해주세요.">
 				</div>
+				<div class="insertNickname">닉네임을 입력해주세요.</div>
+				<div class="x_nickname">2~30글자의 닉네임만 등록 가능합니다.</div>
+				
 				<div class="form-row">
 					<label>· PHONE : </label> <input name="mem_phone" class="phone"
 						type="text" placeholder="휴대폰 번호를 입력해주세요. ('-' 제외)">
 				</div>
+				<div class="insertPhone">연락처를 입력해주세요.</div>
+				<div class="x_phone">연락처 형식은 010********(8자) 입니다.</div>
+				
 				<div class="form-row">
 					<label>·ID NUMBER : </label> <input name="mem_ssn" class="id_num"
 						type="text" placeholder="주민등록번호를 입력해주세요. ('-' 포함)">
 				</div>
+				<div class="insertSsn">주민등록번호를 입력해주세요.</div>
+				<div class="x_ssn">주민등록번호는 생년월일(6글자)-(뒷자리7글자)로 입력바랍니다.</div>
+				
 				<div class="form-row">
 					<label>· EMAIL : </label> <input name="mem_email" class="email"
 						type="text" placeholder="이메일 주소를 입력해주세요."> <input
 						class="authCheck" type="button" value="인증번호 전송">
 				</div>
+				
 				<div>
 					<input class="code" type="text" placeholder="인증번호를 입력해주세요.">
 					<input class="confirmBtn" type="button" value="인증">
 				</div>
+				
 				<div class="form-row">
 					<label class="zonecodeLabel">·ZONECODE:</label> <input
 						name="mem_zip_code" class="zonecode readonly" type="text" readonly>
 					<input class="searchBtn" type="button" value="찾기">
 				</div>
+				<div class="insertZonecode">우편번호 찾기를 눌러주세요.</div>
+				
+				
 				<div class="form-row">
 					<label>· ADDRESS :</label> <input name="mem_address1"
 						class="address1 readonly" type="text" readonly>
 				</div>
+				<div class="x_address">죄송합니다! 현재는 서울시를 기준으로 한 서비스만 제공 중입니다.</div>
+				
 				<div class="form-row">
 					<label>· DETAIL :</label> <input name="mem_address2"
 						class="address2" type="text" placeholder="상세 주소를 입력해주세요.">
@@ -286,9 +313,12 @@ a {
 				<input type="hidden" name="mem_dong" class="dong">
 				
 				<div class="agreeDiv">
-					<input class="agreeBtn" type="checkbox">I agree to the
-					<a href="#" onclick="openPopup(); return false;">Terms of Use and Privacy Policy</a> (필수)
+					<input class="agreeBtn" type="checkbox"> [필수] I agree to the
+					<a href="#" onclick="openPopup(); return false;">Terms of Use and Privacy Policy</a>
 				</div>
+				<div class="insertName">이름을 입력해주세요.</div>
+				<div class="x_name">2~10글자의 이름만 등록 가능합니다.</div>
+				
 				<hr>
 				<div class="signUpDiv">
 					<button class="signUpBtn">Sign Up</button>
@@ -306,7 +336,11 @@ a {
 
 		$(".duplCheck").on("click", function() {
 			if ($(".id").val() == "") {
-				alert("아이디를 먼저 입력해주세요.");
+				$(".insertId").show();
+				$(".doDuplCheck").hide();
+				$(".use").hide();
+				$(".notUse").hide();
+				$(".x_id").hide();
 				return false;
 			} else {
 				$.ajax({
@@ -317,12 +351,18 @@ a {
 					}
 				}).done(function(resp) {
 					if (resp == "0") {
+						$(".insertId").hide();
 						$(".use").show();
 						$(".notUse").hide();
+						$(".doDuplCheck").hide();
+						$(".x_id").hide();
 						idChecked = true;
 					} else {
+						$(".insertId").hide();
 						$(".notUse").show();
 						$(".use").hide();
+						$(".doDuplCheck").hide();
+						$(".x_id").hide();
 						idChecked = false;
 					}
 				});
@@ -333,8 +373,33 @@ a {
 			idChecked = false;
 			$(".use").hide();
 			$(".notUse").hide();
+			$(".insertId").hide();
+			$(".doDuplCheck").hide();
+			$(".x_id").hide();
 		});
-
+		
+		let pw1 = document.getElementsByClassName("pw1")[0];
+		let pw2 = document.getElementsByClassName("pw2")[0];
+		
+		$(".pw2").on("input", function() {
+			$(".correct").hide();
+			$(".incorrect").show();
+			$(".insertPw").hide();
+			$(".x_pw").hide();
+			
+			if (pw1.value != pw2.value) {
+				$(".insertPw").hide();
+				$(".correct").hide();
+				$(".incorrect").show();
+				$(".x_pw").hide();
+			}else {
+				$(".insertPw").hide();
+				$(".correct").show();
+				$(".incorrect").hide();
+				$(".x_pw").hide();
+			}
+		});
+		
 		//인증번호 전송
 		$(".authCheck").on("click", function() {
 			if ($(".email").val() == "") {
@@ -378,9 +443,6 @@ a {
 			});
 		});
 		
-		
-		
-
 		// 주소(찾기)
 		let searchBtn = document.getElementsByClassName("searchBtn")[0];
 		searchBtn.onclick = function() {
@@ -398,20 +460,30 @@ a {
 		let frm = document.getElementsByClassName("frm")[0];
 		frm.onsubmit = function(e) {
 			//기본 제출 막기
-			e.preventDefault();
+// 			e.preventDefault();
 			
 			// id
 			let id = document.getElementsByClassName("id")[0];
-
+			
 			if (id.value == "") {
-				alert("아이디를 입력해주세요.");
+				$(".insertId").show();
+				$(".use").hide();
+				$(".notUse").hide();
+				$(".x_id").hide();
+				$(".doDuplCheck").hide();
+				
 				id.focus();
 				return false;
 			} else {
 				let regex = /^[a-z\d_]{4,12}$/;
 				let idResult = regex.test(id.value);
 				if (!idResult) {
-					alert("아이디를 다시 설정해주세요.\n4~12자의 영문 소문자, 숫자, 언더바만 사용 가능");
+					$(".x_id").show();
+					$(".insertId").hide();
+					$(".use").hide();
+					$(".notUse").hide();
+					$(".doDuplCheck").hide();
+					
 					id.value = "";
 					id.focus();
 					return false;
@@ -419,34 +491,46 @@ a {
 			}
 
 			if (!idChecked) {
-				alert("아이디 중복확인을 해주세요.");
+				$(".doDuplCheck").show();
+				$(".x_id").hide();
+				$(".insertId").hide();
+				$(".use").hide();
+				$(".notUse").hide();
 				return false;
 			}
 
 			// pw
 			let pw1 = document.getElementsByClassName("pw1")[0];
 			let pw2 = document.getElementsByClassName("pw2")[0];
-			let correct = document.getElementsByClassName("correct")[0];
-			let incorrect = document.getElementsByClassName("incorrect")[0];
 
 			if (pw1.value == "" || pw2.value == "") {
-				alert("비밀번호를 입력해주세요.");
+				$(".insertPw").show();
+				$(".correct").hide();
+				$(".incorrect").hide();
+				$(".x_pw").hide();
 				return false;
 			} else {
 				let regex = /^[A-Za-z\d!@#$%^&*]{8,16}$/;
 				let pwResult = regex.test(pw1.value);
 				if (!pwResult) {
-					alert("비밀번호를 다시 설정해주세요.\n8~16자의 영문 대소문자,숫자,특수문자(!@#$%^&*) 사용 가능");
+					$(".insertPw").hide();
+					$(".correct").hide();
+					$(".incorrect").hide();
+					$(".x_pw").show();
 					pw1.value = "";
 					pw1.focus();
 					return false;
-				} else if (pw1.value != pw2.value) {
-					incorrect.style.display = "block";
-					correct.style.display = "none";
+				}else if (pw1.value != pw2.value) {
+					$(".insertPw").hide();
+					$(".correct").hide();
+					$(".incorrect").show();
+					$(".x_pw").hide();
 					return false;
-				} else {
-					correct.style.display = "block";
-					incorrect.style.display = "none";
+				}else{
+					$(".insertPw").hide();
+					$(".correct").show();
+					$(".incorrect").hide();
+					$(".x_pw").hide();
 				}
 			}
 
@@ -596,8 +680,8 @@ a {
 		    var top = window.screenY + (window.outerHeight / 2) - (height / 2);
 			
 			window.open(
-		        "/members/terms",        // 열 jsp 경로
-		        "termsPopUp",      // 창 이름
+		        "/members/terms",
+		        "termsPopUp",
 		        "width="+ width + ",height=" + height + ",left=" + left + ",top="+ top + ",resizable=no,scrollbars=no"
 		    );
 		}
