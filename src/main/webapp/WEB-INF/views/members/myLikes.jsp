@@ -74,10 +74,58 @@ button, body {
 	font-size: 50px;
 	color: #A66A3F;
 	background-color: #F2D3A2;
-	border-bottom: 2px solid #A66A3F;
-	/* 아래쪽만 줄 그음 */
-	line-height: 100px;
+	border-bottom: 2px solid #A66A3F; /* 아래쪽만 줄 그음 */
 	z-index: 1000;
+	display: flex;
+	align-items: center; /* 수직 중앙 정렬 */
+	gap: 15px; /* 아이콘과 글자 사이 간격 */
+	justify-content: space-between;
+}
+
+.myLikeIcon {
+	width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px; /* 👈 아이콘도 텍스트랑 라인 맞추기 위해 살짝 조정 */
+}
+
+.icon {
+	width: 60px;
+	height: 60px;
+	object-fit: contain; /* 이미지 비율 유지 */
+	color: #FFB300;
+}
+
+.mainTitle {
+	margin-right: auto;
+	display: flex;
+	align-items: center; /* 텍스트 자체의 정렬 */
+}
+
+.leftGroup {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	height: 100%;
+}
+
+.backBtn {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+	height: 30px;
+	position: relative;
+	right: 30px;
+	cursor: pointer;
+}
+
+.backBtn:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .topBtn {
@@ -94,7 +142,6 @@ button, body {
 	transition: 0.3s;
 }
 
-
 .bodyBox {
 	width: 100%;
 	min-height: 100vh;
@@ -103,11 +150,9 @@ button, body {
 	color: #5e361a;
 }
 
-
 .orderNew {
 	display: none;
 }
-
 
 .postBox {
 	/* 수정: 고정 1500px 제거 */
@@ -222,8 +267,8 @@ button, body {
 }
 
 /* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
-.beforeHeart{
-	display : inline;
+.beforeHeart {
+	display: inline;
 }
 
 .afterHeart {
@@ -327,7 +372,18 @@ hr {
 
 	<div class="container">
 
-		<div class="headBox">우리 동네.zip</div>
+		<div class="headBox">
+			<div class="leftGroup">
+				<div class="myLikeIcon">
+					<img src="/resources/images/titleLove.png" class="icon">
+				</div>
+				<div class="mainTitle">관심 게시글.zip</div>
+			</div>
+			<div class="backBtnDiv">
+				<a href="/members/mypage"> <input class="backBtn" type="button" value="내.zip으로 가기">
+				</a>
+			</div>
+		</div>
 
 		<c:choose>
 			<c:when test="${empty likeList}">
