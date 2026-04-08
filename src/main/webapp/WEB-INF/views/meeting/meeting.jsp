@@ -469,7 +469,7 @@ body {
 		</div>
 			
 			<c:forEach var="i" items="${list}">
-				<div class="meeting-card" data-seq="${i.meet_seq}" data-mem_id="${i.mem_id}">
+				<div class="meeting-card" data-seq="${i.meet_seq}" data-mem_id="${i.mem_id}" data-target_id="${i.mem_id}">
 					<div class="card-header">
 						<div class="title">${i.meet_title}</div>
 						<c:if test="${i.mem_id != loginId}">
@@ -612,7 +612,7 @@ body {
 				
 				let card = $(this).closest(".meeting-card");
 				let targetSeq = card.data("seq")
-				let targetId = card.data("writer");
+				let targetId = card.data("target_id");
 				let reportReason = card.find(".report").val();
 				
 				if(!reportReason){
@@ -630,7 +630,7 @@ body {
 					data : {
 						target_seq : targetSeq,
 						target_id : targetId,
-						reports_type : 0,
+						reports_type : 2,
 						reports_reason : reportReason
 					},
 					success : function(resp){

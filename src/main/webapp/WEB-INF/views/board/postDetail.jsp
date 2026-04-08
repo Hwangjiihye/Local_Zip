@@ -671,8 +671,8 @@ hr {
 			</div>
 			<div class="bottomBox">
 				<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
-					class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list"><i
-					class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a><i
+					class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
+					class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
 					class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> <a href="/members/mypage"><i
 					class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 
@@ -834,7 +834,7 @@ hr {
 														.addClass("reportBtn")
 														.val("신고하기")
 														.attr("data-target_id", i.mem_id) // 신고시 controller에 보낼 id
-														.attr("data-reply_seq", i.reply_seq); // 신고 버튼시 사용할 seq 미리 부여
+														.attr("data-target_seq", i.reply_seq); // 신고 버튼시 사용할 seq 미리 부여
 							
 							reportArea.append(reportIcon, reportSelect, reportBtn);
 							replyInfoUp.append(reportArea);
@@ -903,7 +903,7 @@ hr {
 			
 		    let btn = $(this); // 클릭한 버튼(신고하기)
 		    let target_id = btn.attr("data-target_id"); // 작성자의 id값 가져오기
-		    let reply_seq = btn.attr("data-reply_seq"); // 댓글 번호
+		    let tatget_seq = btn.attr("data-target_seq"); // 댓글 번호
 		    let reports_type = 1; // 신고 종류(댓글)
 		    let report_reason = btn.siblings(".reportSelect").val(); // 선택한 신고 사유 값 저장.
 
@@ -918,17 +918,23 @@ hr {
 		            type: "post",
 		            data: {
 		            	target_id: target_id,
-		                reply_seq: reply_seq,
+		                target_seq: tatget_seq,
 		                reports_type: reports_type,
 		                reports_reason: report_reason
-		            }
-		        }).done(function(resp) {
-		            alert("신고가 접수되었습니다.");
-		            btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
-		            btn.siblings(".reportSelect").hide();
-		        }).fail(function() {
-		            alert("신고 처리 중 오류가 발생했습니다.");
-		        });
+		            },
+		            success : function(resp){
+		            	console.log(resp);
+		            	if(resp == "success"){
+		            		alert("신고가 접수되었습니다.");
+				            btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
+				            btn.siblings(".reportSelect").hide();
+		            	}else if(resp == "fail"){
+		            		alert("이미 신고한 댓글입니다.");
+		            		btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
+				            btn.siblings(".reportSelect").hide();
+		            	}
+		            } 
+		        })
 		    }
 		});
         
