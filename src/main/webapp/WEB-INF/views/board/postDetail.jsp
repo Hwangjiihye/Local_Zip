@@ -1050,20 +1050,27 @@ hr {
         
         // 뒤로가기 버튼을 눌렀을 때
         $(document).on("click", ".backBtn", function(){
+        	
 		    let category = "${category}";
+		    let currentPage = "${currentPage}";
+		    let sort = "${sort}";
+		    
+		    console.log("현재 카테고리:", category);
+		    console.log("넘어온 페이지 번호:", currentPage); 
+		    console.log("정렬 상태:", sort); 
 		
-		    if(category == "talk"){
-		        location.href = "/board/talk";
+		    if(category === "talk"){
+		        location.href = "/board/talk?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "lifeInfo"){
-		        location.href = "/board/lifeInfo";
+		        location.href = "/board/lifeInfo?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "food"){
-		    	location.href = "/board/food";
+		    	location.href = "/board/food?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "beauty"){
-		    	location.href = "/board/beauty";
+		    	location.href = "/board/beauty?sort=" + sort + "&cPage=" + currentPage;
 		    }else {
 		    	location.href = "/";
 		    }
-		});
+		});  
     </script>
 </body>
 </html>

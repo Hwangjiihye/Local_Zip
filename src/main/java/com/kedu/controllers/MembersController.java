@@ -180,6 +180,9 @@ public class MembersController {
 		int writeCount = BoardDao.MyWriteCount(loginId); // 마이페이지에서 작성글 수 보여주는 메서드
 		model.addAttribute("writeCount",writeCount);
 		
+		int likeCount = BoardDao.MyLikeCount(loginId); // 마이페이지에서 관심 게시글 수 보여주는 메서드
+		model.addAttribute("likeCount",likeCount);
+		
 		if(loginId == null) {
 			return "redirect:/members/loginUi";
 		}
