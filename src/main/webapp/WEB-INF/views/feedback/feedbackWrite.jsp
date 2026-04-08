@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<style>
 	/* 폰트 */
@@ -293,7 +293,12 @@
 		$(".frm").on("submit", function(){
 			
 			if($(".inputBox").val() == "") {
-				alert("제목을 작성해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait",
+					text: "제목을 입력해주세요",
+					confirmButtonColor: "#FF9D6E"
+				});
 				$(".inputBox").focus();
 				return false;
 			}
