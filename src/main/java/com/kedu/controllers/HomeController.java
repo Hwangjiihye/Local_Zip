@@ -133,5 +133,9 @@ public class HomeController {
 			dto.setPost_like_check(check); // check의 값이 1 또는 0으로 나온 값을 dto에 set으로 기록.
 		}
 	};
+	
+	// 네비게이션 바
+	
+	
 
 }

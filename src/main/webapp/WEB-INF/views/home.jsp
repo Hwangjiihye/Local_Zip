@@ -526,6 +526,37 @@ body, html {
 	border-radius: 70%;
 	object-fit: cover;
 }
+
+		.pageBox{
+		    text-align: center;
+		    padding: 20px;
+		    font-size: 18px;
+		    color: #A66A3F;
+		    margin-bottom: 55px;
+		}
+		
+		.pageBox a{
+		    display: inline-block;
+		    min-width:35px;
+		    padding:6px 10px;
+		    margin: 0 8px;
+		    text-decoration: none;
+		    color: #A66A3F;
+		    border-radius:6px;
+		    transition:0.2s;
+		    font-weight: normal;
+		    cursor: pointer;
+		}
+		
+		.pageBox a.active{
+			background-color:#fecc56;
+		    font-weight: bold;
+		    color: #5e361a;
+		}
+		
+		.pageBox a:hover{
+		    background-color:#F2D3A2;
+		}
 </style>
 </head>
 
@@ -577,23 +608,24 @@ body, html {
 			<div class="categoryBtn">
 				<a href="/"><button type="button" class="nowBtn"
 						style="background-color: #fecc56; border-radius: 10px; height: 30px; margin-right: 10px;">
-						<i class="navicon fa-solid fa-house fa-lg"></i> 전체
-					</button></a> <a href="/board/lifeInfo"><button type="button"
+						<i class="navicon fa-solid fa-house fa-lg"></i> 전체</button></a>
+						
+					 <a href="/board/lifeInfo"><button type="button"
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-						<i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보
-					</button></a>
+						<i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보</button></a>
+					
 				<a href="/board/food"><button type="button"
 					style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-					<i class="fa-solid fa-utensils fa-lg" style="color: #3e5e40;"></i> 맛집/카페
-				</button></a>
+					<i class="fa-solid fa-utensils fa-lg" style="color: #3e5e40;"></i> 맛집/카페</button></a>
+				
 				<a href="/board/talk"><button type="button"
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-						<i class="fa-regular fa-comment-dots fa-lg" style="color: #3e5e40;"></i> 고민/이야기
-					</button></a>
+						<i class="fa-regular fa-comment-dots fa-lg" style="color: #3e5e40;"></i> 고민/이야기</button></a>
+					
 				<a href="/board/beauty"><button type="button"
 					style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px;">
-					<i class="fa-solid fa-shirt fa-lg" style="color: #3e5e40;"></i> 미용/패션
-				</button></a>
+					<i class="fa-solid fa-shirt fa-lg" style="color: #3e5e40;"></i> 미용/패션</button></a>
+				
 			</div>
 
 			<div class="subBox">
@@ -711,7 +743,7 @@ body, html {
 			</div>
 
 			<c:if test="${not empty list }">
-				<div class="pageBox">1 2 3</div>
+				<div class="pageBox"></div>
 			</c:if>
 		</div>
 
@@ -801,7 +833,8 @@ body, html {
 		            return;
 		        }
 		        
-		        $.ajax({
+		        if(confirm("정말 신고하시겠습니까?")) {
+		        	$.ajax({
 		            url : "/report/insert",
 		            type : "post",
 		            data : {
@@ -815,13 +848,16 @@ body, html {
 		                alert("신고가 접수되었습니다.");
 		                card.find(".reportSelect, .reportBtn").hide();
 		            } else {
-		                alert("이미 신고했거나 처리에 실패했습니다.");
+		                alert("이미 신고한 게시글 입니다.");
 		                card.find(".reportSelect, .reportBtn").hide();
 		            }
 		        }).fail(function(){
 		            alert("서버와 통신 중 오류가 발생했습니다.");
 		        });
-		    });
+		  } else {
+			  alert("취소 되었습니다");
+		  }
+	});
 		
 		 	// 좋아요 버튼을 눌렀을 때
 			$(".postLikeBox").on("click", function(e) {
@@ -896,52 +932,34 @@ body, html {
         	}
         });
 		
-
-		// let recordTotalCount = ${recordTotalCount}
-		// let recordCountPerPage = ${recordCountPerPage}
-		// let naviCountPerPage = ${naviCountPerPage}
-		// let currentPage = ${currentPage}
-		// // js에서는 정수와 실수를 구분하지 않는다. (캐스팅 필요없음)
-		// let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
-
-		// let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
-		// let endNavi = startNavi + naviCountPerPage - 1;
-
-		// if(endNavi > pageTotalCount) {
-		// 	endNavi = pageTotalCount;
-		// }
-
-		// let needPrev = true; // <<
-		// let needNext = true; // >>
-
-		// if(startNavi == 1) {needPrev = false;}
-		// if(endNavi == pageTotalCount) {needNext = false;}
-		// console.log("데이터 몇 개? : " + recordTotalCount);
-		// console.log("몇 장? : " + recordCountPerPage);
-		// console.log("쪽수 몇 개? : " + naviCountPerPage);
-		// console.log("현재 페이지 : " + currentPage);
-		// console.log("시작 Navi : "+ startNavi);
-		// console.log("끝 Navi : " + endNavi);
-
-		// if(needPrev) {
-		// 	let prev = $("<a>"); // a 태그 생성
-		// 	prev.attr("href", "/boards/list?cPage="+(startNavi-1)); // ex) 11페이지라면 <<을 누르면 10페이지로 이동
-		// 	prev.html("<< ");
-		// 	$(".page").append(prev);
-		// }
-
-		// for(let i = startNavi; i <= endNavi; i++) {
-		// 	let navi = $("<a>");
-		// 	navi.attr("href", "/boards/list?cPage="+i); // 현재 페이지가 i씩 넘어감
-		// 	navi.html(i + " ");
-		// 	$(".page").append(navi);
-		// }
-		// if(needNext) {
-		// 	let next = $("<a>");
-		// 	next.attr("href", "/boards/list?cPage="+(endNavi+1)); // ex) 10페이지라면 >>을 누르면 11페이지로 이동
-		// 	next.html(">>");
-		// 	$(".page").append(next);
-		// }
+     	// 하단 네비게이션 바 구현
+        $(document).ready(function(){
+        let recordTotalCount = Number("${recordTotalCount}"); // 전체 게시물 수
+        let recordCountPerPage = Number("${recordCountPerPage}"); // 한 페이지에 몇 개 보여줄지
+        let naviCountPerPage = Number("${naviCountPerPage}"); //  한 번에 몇 개 페이지 번호 보여줄지
+        let currentPage = Number("${currentPage}"); // 현재 페이지
+        
+        let pageTotalCount = Math.ceil(recordTotalCount / recordCountPerPage); //  총 페이지 개수 구하기
+        
+       	let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
+        let endNavi = startNavi + naviCountPerPage - 1;
+        
+        if(endNavi > pageTotalCount) {
+        	endNavi = pageTotalCount;
+        }
+        
+        for(let i = startNavi; i <= endNavi; i++) {
+        	let navi = $("<a>");
+        	navi.attr("href", "/home?cPage="+i);
+        	navi.html(i + " ");
+        	
+        	if(i == currentPage) {
+        		navi.addClass("active");
+        	}
+        	
+        	$(".pageBox").append(navi);
+        }
+    });
 	</script>
 
 </body>
