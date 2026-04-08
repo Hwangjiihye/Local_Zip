@@ -40,11 +40,5 @@ public class PostLikeDAO {
 		return jdbc.queryForObject(sql, Integer.class, post_seq);
 	};
 	
-	// 좋아요를 누른 게시글의 부모 seq를 출력하는 메서드
-	public List<PostLikeDTO> getMyLikes(String mem_id){
-		String sql = "SELECT post_seq, mem_id FROM zip.post_like WHERE mem_id = 'pppp' ORDER BY like_date DESC";
-		return jdbc.query(sql, new BeanPropertyRowMapper<PostLikeDTO>(PostLikeDTO.class), mem_id);
-	};
-	
 
 }
