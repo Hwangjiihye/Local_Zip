@@ -1062,11 +1062,11 @@ hr {
 		    if(category === "talk"){
 		        location.href = "/board/talk?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "lifeInfo"){
-		        location.href = "/board/lifeInfo";
+		        location.href = "/board/lifeInfo?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "food"){
 		    	location.href = "/board/food?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "beauty"){
-		    	location.href = "/board/beauty";
+		    	location.href = "/board/beauty?sort=" + sort + "&cPage=" + currentPage;
 		    }else {
 		    	location.href = "/";
 		    }

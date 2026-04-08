@@ -149,20 +149,41 @@ public class BoardController {
 
 	// 생활정보 jsp에 생활정보 카테고리 list만 출력
 	@RequestMapping("/lifeInfo")
-	public String lifeInfo(String sort, Model model, HttpSession session) throws Exception {
+	public String lifeInfo(String sort, Model model, HttpSession session, Integer cPage) throws Exception {
 
 		// 기본 정렬
 		if (sort == null) {
 			sort = "latest";
 		}
 		
+		if (cPage == null || cPage < 1) {
+			cPage = 1;
+		}
+		
+		int recordTotalCount = dao.getlifeInfoRecordTotalCount();
+		int recordCountPerPage = 10;
+		int naviCountPerPage = 10;
+		
+		int lastPage = (int) Math.ceil(recordTotalCount / (double) recordCountPerPage);
+		    if (cPage > lastPage && lastPage > 0) {
+		        cPage = lastPage;
+		    }
+		
+	    int start = (cPage - 1) * recordCountPerPage + 1; 
+		int end = cPage * recordCountPerPage;
+		
+		model.addAttribute("recordTotalCount", recordTotalCount);
+		model.addAttribute("recordCountPerPage", recordCountPerPage);
+		model.addAttribute("naviCountPerPage", naviCountPerPage);
+		session.setAttribute("currentPage", cPage);
+		
 		List<BoardDTO> list;
 
 		// 출력을 어떤 종류를 기준으로 할 지 검사
 		if ("like".equals(sort)) {
-			list = dao.list_lifeInfo_like();
+			list = dao.list_lifeInfo_like(start, end);
 		} else {
-			list = dao.list_lifeInfo_latest();
+			list = dao.list_lifeInfo_latest(start, end);
 		}
 
 		// 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.
@@ -226,19 +247,41 @@ public class BoardController {
 	}
 
 	@RequestMapping("/beauty")
-	public String beauty(String sort, Model model, HttpSession session) throws Exception {
+	public String beauty(String sort, Model model, HttpSession session, Integer cPage) throws Exception {
 
 		// 기본 정렬
 		if (sort == null) {
 			sort = "latest";
 		}
+		
+		if (cPage == null || cPage < 1) {
+			cPage = 1;
+		}
+		
+		int recordTotalCount = dao.getbeautyRecordTotalCount();
+		int recordCountPerPage = 10;
+		int naviCountPerPage = 10;
+		
+		int lastPage = (int) Math.ceil(recordTotalCount / (double) recordCountPerPage);
+	    if (cPage > lastPage && lastPage > 0) {
+	        cPage = lastPage;
+	    }
+		
+		int start = (cPage - 1) * recordCountPerPage + 1; 
+		int end = cPage * recordCountPerPage;
+		
+		model.addAttribute("recordTotalCount", recordTotalCount);
+		model.addAttribute("recordCountPerPage", recordCountPerPage);
+		model.addAttribute("naviCountPerPage", naviCountPerPage);
+		session.setAttribute("currentPage", cPage);
+		
 		List<BoardDTO> list;
 
 		// 출력을 어떤 종류를 기준으로 할 지 검사
 		if ("like".equals(sort)) {
-			list = dao.list_beauty_like(); // dao에 beauty로 검색하는 것 추가
+			list = dao.list_beauty_like(start, end); // dao에 beauty로 검색하는 것 추가
 		} else {
-			list = dao.list_beauty_latest();
+			list = dao.list_beauty_latest(start, end);
 		}
 
 		// 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.
