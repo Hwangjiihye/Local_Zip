@@ -292,7 +292,7 @@ img{
  	padding-left:20px;
 }
 
-.reportCheckBtn, .blackOnBtn{
+.reportCheckBtn, .blackOnBtn, .blackOffBtn{
 	width: 250px;
 	color: #5e361a;
     height: 35px;
@@ -312,8 +312,10 @@ img{
 }
 
 .blackOffBtn{
-	display:none;
+	width: 270px;
+	background-color: #6DBE45;
 }
+
 
 .endOption{
     width: 100px;
@@ -351,7 +353,7 @@ img{
 				<a href="/admin/adminPage"><button class="categoryBtnAll ${menu == 'dashboard' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
-				<a href="/admin/adminBlackList"><button class="categoryBtnAll"> 
+				<a href="/admin/adminBlackList"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}"> 
 					<img src="/resources/images/adminSiren.png"></img> 신고관리
 				</button></a>
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
@@ -364,9 +366,9 @@ img{
 		</div>
 		
 		<div class="reportBtnDiv">
-				<button class="navicon filterBtn" data-status="all">전체 </button>
-				<button class="navicon filterBtn" data-status="0">확인대기 </button>
-				<button class="navicon filterBtn" data-status="1">확인완료 </button>
+				<button class="navicon filterBtn" data-status="all">전체 ${allCount}</button>
+				<button class="navicon filterBtn" data-status="4">미처리 ${count}</button>
+				<button class="navicon filterBtn" data-status="3">처리완료 ${handelCount}</button>
 		</div>
 		
 		<div id="reportListWrap"></div>
@@ -469,17 +471,54 @@ img{
 // 			    $(".pageBox").html(html);
 // 			}
 				
-			$.ajax({
-				url : "/admin/getReportList",
-				type : "get",
-				dataType : "json",
-				success : function(resp){
-					console.log(resp);
-					console.log(resp.list);
-					drawreportList(resp.list);
-				}
+			// 신고목록 출력
+			// 버튼 클릭시 status값 컨트롤러로 전달
+			$(document).on("click", ".filterBtn", function(){
+			    let status = $(this).data("status");
+			
+			
+			    $.ajax({
+					url : "/admin/getReportList",
+					type : "get",
+					data : {
+						status : status
+					},
+					dataType : "json",
+					success : function(resp){
+						drawreportList(resp.list);
+					}
+				});
 			});
+			
+			$(document).on("click", ".filterBtn", function(){
+			    // 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
+			    $(".filterBtn").removeClass("nowBtn");
+			    
+			    // 2. 클릭한 버튼에만 활성화 클래스 추가
+			    $(this).addClass("nowBtn");
+			});
+
+			// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
+			$(function(){
+			    $(".filterBtn[data-status='all']").addClass("nowBtn");
+			    loadQaList("all", 1);
+			});
+			
+			// 페이지 진입시 전체 목록 출력
+			loadDefaultList();
+			function loadDefaultList() {
+			    $.ajax({
+			        url: "/admin/getReportList",
+			        type: "get",
+			        data: { status: "all" },
+			        success: function(resp) {
+			            drawreportList(resp.list);
+			        }
+			    });
+			}
+			
 				
+			// status값으로 처리완료/미처리 리스트 출력
 			function drawreportList(list){
 				$("#reportListWrap").empty();
 				
@@ -487,52 +526,126 @@ img{
 				if(list.length == 0){
 					$("#reportListWrap").append(`
 						<div class="postBox">
-							<div class="postBody">신고 내역이 없습니다.</div>
+							<div class="postBody">처리할 신고 내역이 없습니다.</div>
 						</div>		
 					`);
 					return;
 				}
 				
-				for(let i of list){
-					let html = `
-						<div class="postBox">
-				        	<div class="postHeader">
-				       			<div class="reportWriter">
-				           			<div class="writer">신고자: \${i.mem_id}</div> 
-				           			<div class="writeData">신고 시간 : \${i.reports_date}</div> 
-				        		</div>
-				        	</div>
-		        			<div class="postBody">
-		            			<div class="rowItem2">
-					                <div class="reportReason">
-					                	<신고 대상 : \${i.target_type_name} >
-					                	<신고 내용 : \${i.target_content}>
-					                </div>
-		            			</div>
-		        			</div>
-		        			<div class="reportAndBlackBtnDiv">
-		        				<div class="reportAndBlackBtnDiv">
-			        				<button class="onBtn reportCheckBtn">신고 확인</button>
-			        				<button class="onBtn blackOnBtn">블랙리스트</button>
-			        				<button class="offBtn blackOffBtn">해제</button>
-		        				</div>
-		        				<div class="endDiv">
-			        				<select class="endOption">
-			        					<option class="end_date" disabled selected>정지일수</option>
-			        					<option class="end_date">3일</option>
-			        					<option class="end_date">7일</option>
-			        					<option class="end_date">30일</option>
-			        					<option class="end_date">영구정지</option>
-			        				</select>
+			for(let i of list){
+					let html = "";
+				 	let btnHtml = "";
+				 	let selectHtml = "";
+				 	
+				 	if(i.reports_status == 4){
+				 		btnHtml = `
+				 			<button class="onBtn reportCheckBtn">신고 확인</button>
+	        				<button class="onBtn blackOnBtn" data-target_id="\${i.target_id}" data-reports_reason="\${i.reports_reason}" data-reports_status="\${i.reports_status}" data-target_seq="\${i.target_seq}">블랙리스트</button>
+	        				<button class="offBtn blackOffBtn" style="display:none;" data-target_id="\${i.target_id}">해제</button>
+			 			`;
+				 	
+				 		selectHtml = `
+				 			<div class="endDiv">
+		        				<select class="endOption">
+		        					<option class="end_date" disabled selected>정지일수</option>
+		        					<option class="end_date" value="3">3일</option>
+		        					<option class="end_date" value="7">7일</option>
+		        					<option class="end_date" value="30">30일</option>
+		        					<option class="end_date" value="-1">영구정지</option>
+		        				</select>
+	        				</div>
+        				`;
+				 	}else if(i.reports_status == 3){
+				 		btnHtml = `
+				 			<button class="offBtn blackOffBtn" data-target_id="\${i.target_id}">해제</button>
+        				`;
+        				selectHtml = "";
+				 	}
+				 	
+						html = `
+							<div class="postBox">
+					        	<div class="postHeader">
+					       			<div class="reportWriter">
+					           			<div class="writer">신고자: \${i.mem_id}</div> 
+					           			<div class="writeData">신고 시간 : \${i.reports_date}</div> 
+					        		</div>
+					        	</div>
+			        			<div class="postBody">
+			            			<div class="rowItem2">
+						                <div class="reportReason">
+						                	<신고 대상 SEQ : \${i.target_seq} >
+						                	<신고 대상 종류 : \${i.target_type_name} >
+						                	<신고 대상 ID : \${i.target_id} >
+						                	<신고 내용 : \${i.target_content} >
+						                	<신고 사유 : \${i.reports_reason} >
+						                </div>
+			            			</div>
 			        			</div>
-		        			</div>
-						</div>
-					`;
-					
-					$("#reportListWrap").append(html);
-				};
-			};
+			        			<div class="reportAndBlackBtnDiv">
+			        				<div class="reportAndBlackBtnDiv">
+				        				\${btnHtml}
+			        				</div>
+			        					\${selectHtml}
+			        			</div>
+							</div>
+						`;
+						$("#reportListWrap").append(html);
+					}
+				}
+			
+			
+			// 블랙리스트 버튼을 눌렀을 때
+			$(document).on("click", ".blackOnBtn",  function(){
+				let btn = $(this)
+				let mem_id = btn.data("target_id");
+				let day = btn.closest(".postBox").find(".endOption").val();
+				let reports_reason = btn.data("reports_reason");
+				let reports_status = btn.data("reports_status");
+				let target_seq = btn.data("target_seq");
 				
+				if(day == null){
+					alert("정지일수를 먼저 선택해 주세요.");
+					return;
+				}
+				
+				$.ajax({
+					url : "/admin/blackOn",
+					type : "get",
+					data : { 
+						mem_status : 4,
+						target_id : mem_id,
+						target_seq : target_seq,
+						black_option : reports_reason,
+						reports_status : 3,
+						day : day
+					},
+					success : function(resp){
+						alert(mem_id + "님을 블랙리스트에 등록했습니다.");
+						btn.hide();
+						btn.siblings(".blackOffBtn").show();
+						btn.closest(".postBox").find(".endOption").val("정지일수");
+					}
+				});
+			});
+			
+			$(document).on("click", ".blackOffBtn",  function(){
+				let btn = $(this)
+				let target_id = btn.data("target_id");
+				
+				$.ajax({
+					url : "/admin/blackOff",
+					type : "get",
+					data : {
+						mem_status : 3,
+						target_id : target_id
+					},
+					success : function(resp){
+						alert(target_id + "님을 블랙리스트에서 해제했습니다.");
+						btn.hide();
+						btn.siblings(".blackOnBtn").show();
+					}
+				});
+			});
 // 				for(let i of list){
 					
 // 					let categoryText = "";

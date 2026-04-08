@@ -542,7 +542,6 @@
         			suggestion_seq: suggestion_seq
         		},
         		success: function(resp) { // 서버가 성공적으로 응답했을때, resp: 서버가 돌려준 결과값
-        			console.log("서버응답:", resp);
         			
         			if(resp == "login") {
         			    alert("로그인 후 이용해주세요.");

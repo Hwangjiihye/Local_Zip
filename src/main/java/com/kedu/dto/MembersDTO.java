@@ -16,6 +16,7 @@ public class MembersDTO {
 	private int mem_role;
 	private String mem_join_date;
 	private int mem_status;
+	private String end_date;
 	
 	public MembersDTO() {}
 	public MembersDTO(String mem_id, String mem_password, String mem_nickname, String mem_name, String mem_ssn,
@@ -128,7 +129,10 @@ public class MembersDTO {
 	public void setMem_status(int mem_status) {
 		this.mem_status = mem_status;
 	}
-	
-	
+	public String getEnd_date() {
+		return end_date;
+	}
+	public void setEnd_date(String end_date) {
+		this.end_date = end_date;
+	}
 }
-	
