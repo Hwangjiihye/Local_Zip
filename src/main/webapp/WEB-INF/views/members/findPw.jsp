@@ -220,6 +220,23 @@ hr {
 .pwLabel{
 	margin-left: 17px;
 }
+
+.leftImg, .rightImg{
+	position: absolute;
+	width: 450px;
+	height: 170px;
+	z-index: 10;
+	bottom: 0;
+}
+.leftImg{
+    left: 0;
+}
+.rightImg{
+	right: 0;
+}
+input{
+	outline: none;
+}
 </style>
 </head>
 
@@ -270,6 +287,8 @@ hr {
 				</div>
 			</div>
 		</form>
+		<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 	</div>
 
 	<script>

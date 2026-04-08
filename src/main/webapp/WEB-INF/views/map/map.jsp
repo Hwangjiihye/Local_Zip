@@ -194,7 +194,7 @@ transition: 0.3s;
 }
 
 .facility {
-	border: 2px solid #A66A3F;
+	border: 2px solid #C29F6D90;
 	margin: 14px 0 0 14px;
 	width: 98%;
 	padding: 12px;
@@ -203,6 +203,7 @@ transition: 0.3s;
 	color: black;
 	box-sizing: border-box;
 	border-radius: 10px;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
 .bottomBar {

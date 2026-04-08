@@ -65,20 +65,26 @@ public class BoardDAO {
 	
 	//고민/이야기 리스트 출력(최신순)
 	public List<BoardDTO> list_concern_latest(int start, int end) throws Exception{
-		String sql = "select * from post where post_category = 'talk' order by post_seq desc";
+//		String sql = "select * from post where post_category = 'talk' order by post_seq desc";
 		
-		
-		
-		
-		
+		String sql = "select * from (" + " select row_number() over(order by p.post_seq desc) rn, p.* "
+									   + " from post p "
+									   + " where post_category = 'talk' "
+									   + ") where rn between ? and ?";
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), start, end);
 	}
 
 	//고민/이야기 리스트 출력(인기순)
-	public List<BoardDTO> list_concern_like() throws Exception{
-		String sql = "select * from post where post_category = 'talk' order by post_like desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	public List<BoardDTO> list_concern_like(int start, int end) throws Exception{
+//		String sql = "select * from post where post_category = 'talk' order by post_like desc";
+		
+		String sql = "select * from (" + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, p.* "
+									   + " from post p"
+									   + " where post_category = 'talk' "
+									   + ") where rn between ? and ?";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), start, end);
 	}
 
 	//미용/패션 리스트 출력(최신순)
