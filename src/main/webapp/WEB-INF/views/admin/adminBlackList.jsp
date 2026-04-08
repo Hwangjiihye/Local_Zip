@@ -312,6 +312,7 @@ img{
 }
 
 .blackOffBtn{
+	width: 270px;
 	background-color: #6DBE45;
 }
 
@@ -365,9 +366,9 @@ img{
 		</div>
 		
 		<div class="reportBtnDiv">
-				<button class="navicon filterBtn" data-status="all">전체 </button>
-				<button class="navicon filterBtn" data-status="4">미처리 </button>
-				<button class="navicon filterBtn" data-status="3">처리완료 </button>
+				<button class="navicon filterBtn" data-status="all">전체 ${allCount}</button>
+				<button class="navicon filterBtn" data-status="4">미처리 ${count}</button>
+				<button class="navicon filterBtn" data-status="3">처리완료 ${handelCount}</button>
 		</div>
 		
 		<div id="reportListWrap"></div>
@@ -489,6 +490,20 @@ img{
 				});
 			});
 			
+			$(document).on("click", ".filterBtn", function(){
+			    // 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
+			    $(".filterBtn").removeClass("nowBtn");
+			    
+			    // 2. 클릭한 버튼에만 활성화 클래스 추가
+			    $(this).addClass("nowBtn");
+			});
+
+			// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
+			$(function(){
+			    $(".filterBtn[data-status='all']").addClass("nowBtn");
+			    loadQaList("all", 1);
+			});
+			
 			// 페이지 진입시 전체 목록 출력
 			loadDefaultList();
 			function loadDefaultList() {
@@ -511,7 +526,7 @@ img{
 				if(list.length == 0){
 					$("#reportListWrap").append(`
 						<div class="postBox">
-							<div class="postBody">신고 내역이 없습니다.</div>
+							<div class="postBody">처리할 신고 내역이 없습니다.</div>
 						</div>		
 					`);
 					return;
@@ -522,10 +537,10 @@ img{
 				 	let btnHtml = "";
 				 	let selectHtml = "";
 				 	
-				 	if(i.reports_type == 4){
+				 	if(i.reports_status == 4){
 				 		btnHtml = `
 				 			<button class="onBtn reportCheckBtn">신고 확인</button>
-	        				<button class="onBtn blackOnBtn" data-target_id="\${i.target_id}" data-reports_reason="\${i.reports_reason}" data-reports_type="\${i.reports_type}" data-target_seq="\${i.target_seq}">블랙리스트</button>
+	        				<button class="onBtn blackOnBtn" data-target_id="\${i.target_id}" data-reports_reason="\${i.reports_reason}" data-reports_status="\${i.reports_status}" data-target_seq="\${i.target_seq}">블랙리스트</button>
 	        				<button class="offBtn blackOffBtn" style="display:none;" data-target_id="\${i.target_id}">해제</button>
 			 			`;
 				 	
@@ -540,7 +555,7 @@ img{
 		        				</select>
 	        				</div>
         				`;
-				 	}else if(i.reports_type == 3){
+				 	}else if(i.reports_status == 3){
 				 		btnHtml = `
 				 			<button class="offBtn blackOffBtn" data-target_id="\${i.target_id}">해제</button>
         				`;
@@ -575,8 +590,8 @@ img{
 							</div>
 						`;
 						$("#reportListWrap").append(html);
-					};
-				};
+					}
+				}
 			
 			
 			// 블랙리스트 버튼을 눌렀을 때
@@ -585,7 +600,7 @@ img{
 				let mem_id = btn.data("target_id");
 				let day = btn.closest(".postBox").find(".endOption").val();
 				let reports_reason = btn.data("reports_reason");
-				let reports_type = btn.data("reports_type");
+				let reports_status = btn.data("reports_status");
 				let target_seq = btn.data("target_seq");
 				
 				if(day == null){
@@ -601,7 +616,7 @@ img{
 						target_id : mem_id,
 						target_seq : target_seq,
 						black_option : reports_reason,
-						reports_type : 3,
+						reports_status : 3,
 						day : day
 					},
 					success : function(resp){

@@ -208,12 +208,21 @@ public class AdminController {
 	// 신고관리 -> 신고 목록 출력
 	@ResponseBody
 	@RequestMapping("/getReportList")
-	public Map<String, Object> getReportList(String status) {
+	public Map<String, Object> getReportList(String status, HttpSession session) {
 		Map<String, Object> resp = new HashMap<>();
 		List<ReportDTO> list;
 		
-		System.out.println("요청된 상태: " + status);
-		System.out.println("================================");
+		// 전체 신고목록 개수 카운트
+		int allCount = dao.reportAllCount();
+		// 처리완료 신고목록 개수 카운트
+		int handelCount = dao.reportHandleCount();
+		// 미처리 신고목록 개수 카운트
+		int count = dao.reportCount();
+		
+		session.setAttribute("allCount", allCount);
+		session.setAttribute("handelCount", handelCount);
+		session.setAttribute("count", count);
+		
 		if("3".equals(status)) { // 처리완료건들 출력
 			int reportStatus = Integer.parseInt(status);
 			list = dao.selectReportContentsByStatusHandle(reportStatus);
@@ -231,7 +240,7 @@ public class AdminController {
 	// 블랙리스트 등록 로직
 	@ResponseBody
 	@RequestMapping("/blackOn")
-	public String blackOn(int mem_status, String target_id, String black_option, int day, int reports_type, int target_seq) {
+	public String blackOn(int mem_status, String target_id, String black_option, int day, int reports_status, int target_seq) {
 			
 		int banDays;
 			if(day == -1) {
@@ -246,8 +255,8 @@ public class AdminController {
 		// blackList table blackList Table status 업데이트
 		dao.insertBlcakList(target_id, black_option, banDays);
 		
-		// 블랙리스트 등록 시 reports 테이블 타입 업데이트
-		dao.updateReportStatus(reports_type, target_id, target_seq);
+		// 블랙리스트 등록 시 reports 테이블 status 업데이트
+		dao.updateReportStatus(reports_status, target_id, target_seq);
 		return "success";
 	}
 	
