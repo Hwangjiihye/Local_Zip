@@ -195,14 +195,14 @@ public class AdminQaDAO {
 		return map;
 	}
 	
-	public List<ReportDTO> selectReportAll(){
+	public List<ReportDTO> selectReportAll(){ // 신고 목록 출력 메서드
 		String sql = "select * from reports";
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));
 	}
 	
-	public List<ReportDTO> selectReportContents(){
+	public List<ReportDTO> selectReportContents(){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드
 		String sql = "select r.mem_id, r.target_id, r.reports_date, r.reports_type, "
-				+ "coalesce(p.post_contents, reply.reply_contents, m.meeting_introcontents, '삭제되었거나 찾을 수 없는 내용(번호:' || r.target_seq || ')') as target_content, "
+				+ "coalesce(p.post_contents, reply.reply_contents, m.meet_introcontents, '삭제되었거나 찾을 수 없는 내용(번호:' || r.target_seq || ')') as target_content, "
 				+ "case "
 				+ "when r.reports_type = 0 then '게시글' when r.reports_type = 1 then '댓글' else '모임' end as target_type_name "
 				+ "from reports r "
@@ -212,6 +212,12 @@ public class AdminQaDAO {
 				+ "order by r.reports_date desc ";
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));
 	}
+	
+	public int updateMemberStatus(int mem_status, String mem_id) { // 블랙리스트 처리 로직
+		String sql = "update members set mem_status =? where mem_id =? ";
+		return jdbc.update(sql, mem_status, mem_id);
+	}
+	
 	
 	
 	

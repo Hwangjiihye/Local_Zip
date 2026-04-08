@@ -351,7 +351,7 @@ img{
 				<a href="/admin/adminPage"><button class="categoryBtnAll ${menu == 'dashboard' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
-				<a href="/admin/adminBlackList"><button class="categoryBtnAll"> 
+				<a href="/admin/adminBlackList"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}"> 
 					<img src="/resources/images/adminSiren.png"></img> 신고관리
 				</button></a>
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
@@ -474,8 +474,6 @@ img{
 				type : "get",
 				dataType : "json",
 				success : function(resp){
-					console.log(resp);
-					console.log(resp.list);
 					drawreportList(resp.list);
 				}
 			});
@@ -533,6 +531,16 @@ img{
 				};
 			};
 				
+			$(document).on("click", ".blackOnBtn",  function(){
+				
+				$.ajax({
+					url : "/admin/blackOn",
+					type : "get",
+					success : function(resp){
+						alert("블랙리스트 등록이 완료되었습니다.");
+					}
+				})
+			});
 // 				for(let i of list){
 					
 // 					let categoryText = "";

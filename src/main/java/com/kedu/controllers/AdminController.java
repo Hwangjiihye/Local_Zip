@@ -200,7 +200,8 @@ public class AdminController {
 	
 	// 신고관리 페이지로 이동
 	@RequestMapping("/adminBlackList")
-	public String adminBlackList() {
+	public String adminBlackList(Model model) {
+		model.addAttribute("menu", "report");
 		return "/admin/adminBlackList";
 	}
 	
@@ -211,11 +212,14 @@ public class AdminController {
 		Map<String, Object> resp = new HashMap<>();
 		List<ReportDTO> list = dao.selectReportContents();
 		
-		for(ReportDTO dto : list) {
-			System.out.println("신고 대상: " + dto.getTarget_type_name());
-		    System.out.println("신고대상내용: " + dto.getTarget_content()); // 콘솔창(STS/Eclipse)에 찍힘
-		}
 		resp.put("list", list);
 		return resp;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/blackOn")
+	public String blackOn(int mem_status, String mem_id) {
+		dao.updateMemberStatus(mem_status, mem_id);
+		return "success";
 	}
 }
