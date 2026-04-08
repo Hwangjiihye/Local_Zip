@@ -56,6 +56,12 @@ public class MembersController {
 		return "members/login";
 	}
 	
+	// 회원가입 창에서 약관 동의서 확인 url 클릭 시
+	@RequestMapping("/terms")
+	public String terms() {
+		return "members/terms";
+	}
+	
 	// 회원가입 완료 버튼 클릭 시
 	@RequestMapping("/signup")
 	public String signup(MembersDTO dto, String mem_dong, HttpSession session) {
