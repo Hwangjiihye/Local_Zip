@@ -99,11 +99,10 @@ button, body, div, input {
 	border-radius: 10px;
 	background-color: #fbe5c0;
 	padding: 35px;
-	margin-top: 100px;
+	margin-top: 70px;
 	background-color: #F2D3A2;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-
 
 .titleDiv, .categoryDiv, .locationDiv, .TextDiv {
 	padding: 10px;
@@ -220,6 +219,20 @@ button, body, div, input {
 	padding: 2px;
 	outline: none;
 }
+
+.leftImg, .rightImg{
+	position: absolute;
+	width: 450px;
+	height: 170px;
+	z-index: 10;
+	bottom: 0;
+}
+.leftImg{
+    left: 0;
+}
+.rightImg{
+	right: 0;
+}
 </style>
 
 
@@ -264,7 +277,8 @@ button, body, div, input {
 				</div>
 
 		</form>
-
+		<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+	    <img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 	</div>
 
 	<script>

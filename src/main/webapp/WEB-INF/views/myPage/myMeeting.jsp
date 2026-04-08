@@ -70,12 +70,13 @@
 		
 		.meeting-card {
 		    width: 300px;
-		    border: 2px solid #A66A3F;
+ 		    border: 2px solid #C29F6D90;
 		    border-radius: 10px;
 		    background-color: #fbe5c0;
 		    padding: 35px;
 		    margin: 20px 0 20px 50px;
 /* 		     위 오른쪽 아래 왼쪽 */
+			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 		}
 		.mainTitle {
 			width: 100%;

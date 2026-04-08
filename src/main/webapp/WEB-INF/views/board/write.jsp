@@ -92,7 +92,7 @@ button, body, div, input {
 
 .writeDetail {
 	margin: auto;
-	width: 80%;
+	width: 60%;
 	height: auto;
 	border-radius: 10px;
 	background-color: #fbe5c0;
@@ -241,6 +241,20 @@ button, body, div, input {
 	padding: 2px;
 	outline: none;
 }
+
+.leftImg, .rightImg{
+	position: absolute;
+	width: 450px;
+	height: 170px;
+	z-index: 10;
+	bottom: 0;
+}
+.leftImg{
+    left: 0;
+}
+.rightImg{
+	right: 0;
+}
 </style>
 
 
@@ -297,7 +311,8 @@ button, body, div, input {
 				</div>
 
 		</form>
-
+		<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 	</div>
 
 	<script>

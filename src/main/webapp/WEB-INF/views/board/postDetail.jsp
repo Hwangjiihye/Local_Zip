@@ -555,17 +555,26 @@ hr {
 	border: 1px dotted #5e361a;
 }
 
-.replyContents[contenteditable="true"] {
+.replyContents[contenteditable="true"],
+.postTitle[contenteditable="true"],
+.postContents[contenteditable="true"]{
     border: 1px solid #FFB300;
     border-radius: 5px;
     padding: 5px;
 }
 
-.replyContents[contenteditable="true"]:focus {
+.replyContents[contenteditable="true"]:focus{
     outline: none;
     border: 1px solid #FFB300;
     background-color: #fbe5c0;
 }
+
+.postTitle[contenteditable="true"]:focus,
+.postContents[contenteditable="true"]:focus{
+	outline: none;
+	border: 1px solid #FFB300;
+}
+
 </style>
 
 </head>
@@ -575,7 +584,6 @@ hr {
 		<div class="headBoxDiv">
 			<div class="headBox">게시글 자세히보기</div>
 			<div class="backBtnDiv">
-<!-- 			게시글을 누르기 전에 보고있었던 목록의 페이지를 기억해서, 누르면 전으로 돌아가는 기능 : onclick="history.back();" -->
 				<input class="backBtn" type="button" value="목록으로">
 			</div>
 		</div>
@@ -608,24 +616,7 @@ hr {
 							</c:if>
 						</div>
 					</div>
-
-					<c:if test="${loginId != null && loginId != i.mem_id}">
-						<div class="reportArea">
-							<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
-								style="width: 25px; height: 25px; margin-bottom: 5px"></img> <select class="reportSelect">
-								<option class="report-menu" disabled selected>신고 사유</option>
-								<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
-								<option class="report-menu" value="badWord">욕설/비방</option>
-								<option class="report-menu" value="AD">광고/스팸</option>
-							</select>
-							<button type="button" class="reportBtn">신고하기</button>
-						</div>
-					</c:if>
-
 				</div>
-
-
-
 				<div class="postMidBox">
 
 					<div class="postTitle">${dto.post_title }</div>
