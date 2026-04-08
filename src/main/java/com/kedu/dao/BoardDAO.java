@@ -38,12 +38,6 @@ public class BoardDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
 
-	//	//db에 생활정보 리스트 출력(최신순)
-	//	public List<BoardDTO> list_lifeInfo() throws Exception{
-	//		String sql = "select * from post where post_category = 'lifeInfo' order by post_seq desc";
-	//		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
-	//	}
-
 	//생활정보 리스트 출력(최신순)
 	public List<BoardDTO> list_lifeInfo_latest() throws Exception{
 		String sql = "select * from post where post_category = 'lifeInfo' order by post_seq desc";
@@ -56,6 +50,19 @@ public class BoardDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
 
+	//맛집/카페 리스트 출력(최신순)
+	public List<BoardDTO> list_food_latest() throws Exception{
+		String sql = "select * from post where post_category = 'food' order by post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+
+	}
+
+	//맛집/카페 리스트 출력(인기순)
+	public List<BoardDTO> list_food_like() throws Exception{
+		String sql = "select * from post where post_category = 'food' order by post_like desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+	
 	//고민/이야기 리스트 출력(최신순)
 	public List<BoardDTO> list_concern_latest() throws Exception{
 		String sql = "select * from post where post_category = 'talk' order by post_seq desc";
@@ -65,6 +72,18 @@ public class BoardDAO {
 	//고민/이야기 리스트 출력(인기순)
 	public List<BoardDTO> list_concern_like() throws Exception{
 		String sql = "select * from post where post_category = 'talk' order by post_like desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+
+	//미용/패션 리스트 출력(최신순)
+	public List<BoardDTO> list_beauty_latest() throws Exception{
+		String sql = "select * from post where post_category = 'beauty' order by post_seq desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
+	}
+
+	//미용/패션 리스트 출력(인기순)
+	public List<BoardDTO> list_beauty_like() throws Exception{
+		String sql = "select * from post where post_category = 'beauty' order by post_like desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
 	}
 
@@ -146,9 +165,22 @@ public class BoardDAO {
 
 	}
 
+	// 마이페이지 > 내가 좋아요 누른 글 목록 출력
+	public List<BoardDTO> getMyLikes(String mem_id){
+		String sql = "select p.* from post_like l "
+					+ " JOIN post p ON l.post_seq = p.post_seq "
+					+ " where mem_id = ? "
+					+ " order by l.like_date desc";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
+	}
 
-
-
+	//----------------------------------------------------
+	
+	// 고민/이야기 네비바(전체 글 수 출력)
+	public int getConcernRecordTotalCount() {
+		String sql = "select count(*) from post where post_category = 고민/이야기";
+		return jdbc.queryForObject(sql, Integer.class);
+	}
 
 
 
@@ -215,132 +247,5 @@ public class BoardDAO {
 		String sql = "SELECT post_seq.NEXTVAL FROM DUAL";
 		return jdbc.queryForObject(sql, Integer.class);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//맛집/카페 리스트 출력(최신순)
-	public List<BoardDTO> list_food_latest() throws Exception{
-		String sql = "select * from post where post_category = 'food' order by post_seq desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
-
-	}
-
-	//맛집/카페 리스트 출력(인기순)
-	public List<BoardDTO> list_food_like() throws Exception{
-		String sql = "select * from post where post_category = 'food' order by post_like desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
-	}
-
-	//미용/패션 리스트 출력(최신순)
-	public List<BoardDTO> list_beauty_latest() throws Exception{
-		String sql = "select * from post where post_category = 'beauty' order by post_seq desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
-	}
-
-	//미용/패션 리스트 출력(인기순)
-	public List<BoardDTO> list_beauty_like() throws Exception{
-		String sql = "select * from post where post_category = 'beauty' order by post_like desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class));
-	}
-
 
 }
