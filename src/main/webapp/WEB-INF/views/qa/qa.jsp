@@ -79,12 +79,15 @@ body, html {
 	align-items: center;
 	padding: 20px;
 	margin-top: 10px;
+	margin-left: 430px;
 }
 
 .userIcon {
 	font-size: 50px;
 	color: #A66A3F;
 	margin-right: 15px;
+	border: 5px solid #A66A3F;
+	border-radius: 100px;
 }
 
 .userName {
@@ -233,7 +236,7 @@ body, html {
 		<div class="headBox">고객지원(Q&A)</div>
 
 		<div class="userInfoSection">
-			<i class="fa-solid fa-circle-user userIcon"></i> <span
+			<img class="userIcon" src="/resources/images/birdprofile.png" style="width: 80px;"> <span
 				class="userName">${nickname}</span>
 		</div>
 
@@ -277,7 +280,6 @@ body, html {
 			onclick="location.href='/qa/toWrite'">
 			<i class="fa-solid fa-pencil"></i>
 		</button>
-
 		<div class="bottomBox">
 			<a href="/"><i class="fa-solid fa-house fa-2xl"></i></a>
 			<a href="/map/test"><i class="fa-solid fa-map-location-dot fa-2xl"></i></a>
