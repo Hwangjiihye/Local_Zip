@@ -100,7 +100,7 @@ public class FeedBackDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
-	//
+	// 네비게이션 바
 	public List<FeedBackDTO> list(String loginId, int start, int end) throws Exception {
 		
 		String sql = "select * from ("
