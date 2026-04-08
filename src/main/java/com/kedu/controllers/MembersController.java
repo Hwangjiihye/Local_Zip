@@ -205,7 +205,7 @@ public class MembersController {
 		
 		String mem_id = (String)session.getAttribute("loginId");
 		
-		List<PostLikeDTO> list = likeDao.getMyLikes(mem_id);
+		List<BoardDTO> list = BoardDao.getMyLikes(mem_id); // 로그인 아이디 기준, 하트 누른글 모아보기.(join)
 		model.addAttribute("likeList",list);
 		
 		return "members/myLikes";
