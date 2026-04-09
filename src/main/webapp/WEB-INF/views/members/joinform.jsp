@@ -163,20 +163,29 @@ hr {
 }
 
 .use, .notUse, .correct, .incorrect, .ok, .no, .insertId, .x_id, .doDuplCheck,
-.insertPw, .x_pw {
+.insertPw, .x_pw, .insertName, .x_name, .insertNickname, .x_nickname, .insertPhone, .x_phone,
+.insertSsn, .x_ssn, .insertZonecode, .insertEmail, .x_email, .applyCode, .usedEmail,
+.noApplyCode, .retryEmail {
 	display: none;
 	font-size: small;
 	margin-top: -15px;
 }
 
-.use, .correct, .ok {
+.use, .correct, .ok, .applyCode, .codeOk {
 	color: #286708;
 }
 
-.notUse, .incorrect, .no, .insertId, .x_id, .doDuplCheck, .insertPw, .x_pw {
+.notUse, .incorrect, .no, .insertId, .x_id, .doDuplCheck, .insertPw, .x_pw,
+.insertName, .x_name, .insertNickname, .x_nickname, .insertPhone, .x_phone,
+.insertSsn, .x_ssn, .insertZonecode, .insertCheckBox, .insertEmail, .x_email, .usedEmail,
+.noApplyCode, .retryEmail, .insertCode, .codeNo {
 	color: #de4f28;
 }
 
+.insertCode, .codeOk, .codeNo, .insertCheckBox{
+	display: none;
+	font-size: small;
+}
 .duplCheck:hover,
 .authCheck:hover,
 .confirmBtn:hover,
@@ -230,7 +239,7 @@ a {
 			<div class="divTotal">
 				<div class="form-row">
 					<label>· ID : </label> <input name="mem_id" class="id" type="text"
-						placeholder="아이디를 입력해주세요."> <input class="duplCheck"
+						placeholder="아이디를 입력해주세요. [필수]"> <input class="duplCheck"
 						type="button" value="중복확인">
 				</div>
 				<div class="use">중복되지 않은 아이디입니다.</div>
@@ -241,11 +250,11 @@ a {
 				
 				<div class="form-row">
 					<label>· PW : </label> <input name="mem_password" class="pw1"
-						type="password" placeholder="비밀번호를 입력해주세요.">
+						type="password" placeholder="비밀번호를 입력해주세요. [필수]">
 				</div>
 				<div class="form-row">
 					<label>· PW 확인 : </label> <input class="pw2" type="password"
-						placeholder="비밀번호를 동일하게 입력해주세요.">
+						placeholder="비밀번호를 동일하게 입력해주세요. [필수]">
 				</div>
 				<div class="correct">비밀번호가 일치합니다.</div>
 				<div class="incorrect">비밀번호가 일치하지 않습니다.</div>
@@ -254,46 +263,56 @@ a {
 				
 				<div class="form-row">
 					<label>· NAME : </label> <input name="mem_name" class="name"
-						type="text" placeholder="이름을 입력해주세요.">
+						type="text" placeholder="이름을 입력해주세요. [필수]">
 				</div>
 				<div class="insertName">이름을 입력해주세요.</div>
 				<div class="x_name">2~10글자의 이름만 등록 가능합니다.</div>
 				
 				<div class="form-row">
 					<label>·NICKNAME : </label> <input name="mem_nickname"
-						class="nickname" type="text" placeholder="닉네임을 입력해주세요.">
+						class="nickname" type="text" placeholder="닉네임을 입력해주세요. [필수]">
 				</div>
 				<div class="insertNickname">닉네임을 입력해주세요.</div>
 				<div class="x_nickname">2~30글자의 닉네임만 등록 가능합니다.</div>
 				
 				<div class="form-row">
 					<label>· PHONE : </label> <input name="mem_phone" class="phone"
-						type="text" placeholder="휴대폰 번호를 입력해주세요. ('-' 제외)">
+						type="text" placeholder="휴대폰 번호를 입력해주세요. ('-' 제외) [필수]">
 				</div>
 				<div class="insertPhone">연락처를 입력해주세요.</div>
 				<div class="x_phone">연락처 형식은 010********(8자) 입니다.</div>
 				
 				<div class="form-row">
 					<label>·ID NUMBER : </label> <input name="mem_ssn" class="id_num"
-						type="text" placeholder="주민등록번호를 입력해주세요. ('-' 포함)">
+						type="text" placeholder="주민등록번호를 입력해주세요. ('-' 포함) [필수]">
 				</div>
 				<div class="insertSsn">주민등록번호를 입력해주세요.</div>
 				<div class="x_ssn">주민등록번호는 생년월일(6글자)-(뒷자리7글자)로 입력바랍니다.</div>
 				
 				<div class="form-row">
 					<label>· EMAIL : </label> <input name="mem_email" class="email"
-						type="text" placeholder="이메일 주소를 입력해주세요."> <input
-						class="authCheck" type="button" value="인증번호 전송">
+						type="text" placeholder="이메일 주소를 입력해주세요. [필수]">
+						
+						<input class="authCheck" type="button" value="인증번호 전송">
 				</div>
+				<div class="insertEmail">이메일 주소를 입력해주세요.</div>
+				<div class="x_email">잘못된 이메일 형식입니다.</div>
+				<div class="applyCode">이메일로 인증번호를 발송했습니다.</div>
+				<div class="usedEmail">이미 사용되고 있는 이메일입니다. 다른 이메일을 입력해주십시오.</div>
+				<div class="noApplyCode">인증번호 발송 실패했습니다.</div>
+				<div class="retryEmail">이메일 인증이 완료되지 않았거나 만료되었습니다. 다시 인증해주세요.</div>
 				
 				<div>
-					<input class="code" type="text" placeholder="인증번호를 입력해주세요.">
+					<input class="code" type="text" placeholder="인증번호를 입력해주세요. [필수]">
 					<input class="confirmBtn" type="button" value="인증">
 				</div>
+				<div class="insertCode">인증코드를 입력해주세요.</div>
+				<div class="codeOk">인증되었습니다.</div>
+				<div class="codeNo">인증에 실패하셨습니다. 다시 시도 부탁드립니다.</div>
 				
 				<div class="form-row">
 					<label class="zonecodeLabel">·ZONECODE:</label> <input
-						name="mem_zip_code" class="zonecode readonly" type="text" readonly>
+						name="mem_zip_code" class="zonecode readonly" type="text" readonly placeholder="필수">
 					<input class="searchBtn" type="button" value="찾기">
 				</div>
 				<div class="insertZonecode">우편번호 찾기를 눌러주세요.</div>
@@ -301,13 +320,12 @@ a {
 				
 				<div class="form-row">
 					<label>· ADDRESS :</label> <input name="mem_address1"
-						class="address1 readonly" type="text" readonly>
+						class="address1 readonly" type="text" readonly placeholder="필수">
 				</div>
-				<div class="x_address">죄송합니다! 현재는 서울시를 기준으로 한 서비스만 제공 중입니다.</div>
 				
 				<div class="form-row">
 					<label>· DETAIL :</label> <input name="mem_address2"
-						class="address2" type="text" placeholder="상세 주소를 입력해주세요.">
+						class="address2" type="text" placeholder="상세 주소를 입력해주세요.(선택사항)">
 				</div>
 				
 				<input type="hidden" name="mem_dong" class="dong">
@@ -316,8 +334,7 @@ a {
 					<input class="agreeBtn" type="checkbox"> [필수] I agree to the
 					<a href="#" onclick="openPopup(); return false;">Terms of Use and Privacy Policy</a>
 				</div>
-				<div class="insertName">이름을 입력해주세요.</div>
-				<div class="x_name">2~10글자의 이름만 등록 가능합니다.</div>
+				<div class="insertCheckBox">약관동의는 필수입니다.</div>
 				
 				<hr>
 				<div class="signUpDiv">
@@ -400,10 +417,63 @@ a {
 			}
 		});
 		
+		$(".name").on("input", function() {
+			$(".insertName").hide();
+			$(".x_name").hide();
+		});
+		
+		$(".nickname").on("input", function() {
+			$(".insertNickname").hide();
+			$(".x_nickname").hide();
+		});
+		
+		$(".phone").on("input", function() {
+			$(".insertPhone").hide();
+			$(".x_phone").hide();
+		});
+		
+		$(".id_num").on("input", function() {
+			$(".insertSsn").hide();
+			$(".x_ssn").hide();
+		});
+		
+		$(".email").on("input", function() {
+			$(".insertEmail").hide();
+			$(".x_email").hide();
+			$(".applyCode").hide();
+			$(".usedEmail").hide();
+			$(".noApplyCode").hide();
+			$(".retryEmail").hide();
+			
+			$(".insertCode").hide();
+			$(".codeOk").hide();
+			$(".codeNo").hide();
+			$(".code").val("");
+		});
+		
+		$(".code").on("input", function() {
+			$(".insertCode").hide();
+			$(".codeOk").hide();
+			$(".codeNo").hide();
+		});
+		
+		$(".searchBtn").on("click", function() {
+			$(".insertZonecode").hide();
+		});
+		
+		$(".agreeBtn").on("click", function() {
+			$(".insertCheckBox").hide();
+		});
+		
 		//인증번호 전송
 		$(".authCheck").on("click", function() {
 			if ($(".email").val() == "") {
-				alert("이메일을 먼저 입력해주세요.");
+				$(".insertEmail").show();
+				$(".x_email").hide();
+				$(".applyCode").hide();
+				$(".usedEmail").hide();
+				$(".noApplyCode").hide();
+				$(".retryEmail").hide();
 				return false;
 			} else {
 				$.ajax({
@@ -415,11 +485,26 @@ a {
 					}
 				}).done(function(resp) {
 					if (resp == "success") {
-						alert("이메일로 인증번호를 발송했습니다.");
+						$(".insertEmail").hide();
+						$(".x_email").hide();
+						$(".applyCode").show();
+						$(".usedEmail").hide();
+						$(".noApplyCode").hide();
+						$(".retryEmail").hide();
 					}else if(resp == "duplicate"){
-						alert("이미 사용되고 있는 이메일입니다. 다른 이메일을 입력해주십시오.");
+						$(".insertEmail").hide();
+						$(".x_email").hide();
+						$(".applyCode").hide();
+						$(".usedEmail").show();
+						$(".noApplyCode").hide();
+						$(".retryEmail").hide();
 					} else {
-						alert("인증번호 발송 실패했습니다.");
+						$(".insertEmail").hide();
+						$(".x_email").hide();
+						$(".applyCode").hide();
+						$(".usedEmail").hide();
+						$(".noApplyCode").show();
+						$(".retryEmail").hide();
 					}
 				});
 			}
@@ -427,20 +512,30 @@ a {
 
 		//인증번호 확인
 		$(".confirmBtn").on("click", function() {
-			$.ajax({
-				url : "/auth/verify",
-				type: "post",
-				data : {
-					email : $(".email").val(),
-					auth_code : $(".code").val()
-				}
-			}).done(function(resp) {
-				if (resp == "success") {
-					alert("인증되었습니다.");
-				} else {
-					alert("인증에 실패하셨습니다. 다시 시도 부탁드립니다.");
-				}
-			});
+			if($(".code").val() == ""){
+				$(".insertCode").show();
+				$(".codeOk").hide();
+				$(".codeNo").hide();
+			}else{
+				$.ajax({
+					url : "/auth/verify",
+					type: "post",
+					data : {
+						email : $(".email").val(),
+						auth_code : $(".code").val()
+					}
+				}).done(function(resp) {
+					if (resp == "success") {
+						$(".insertCode").hide();
+						$(".codeOk").show();
+						$(".codeNo").hide();
+					} else {
+						$(".insertCode").hide();
+						$(".codeOk").hide();
+						$(".codeNo").show();
+					}
+				});
+			}
 		});
 		
 		// 주소(찾기)
@@ -454,6 +549,8 @@ a {
 							document.getElementsByClassName("dong")[0].value = data.bname;
 						}
 					}).open();
+			let insertZonecode = document.getElementsByClassName(".insertZonecode")[0];
+			insertZonecode.style.display = "none";
 		}
 
 		// 정규표현식 검사
@@ -537,14 +634,16 @@ a {
 			// name
 			let name = document.getElementsByClassName("name")[0];
 			if (name.value == "") {
-				alert("이름을 입력해주세요.");
+				$(".insertName").show();
+				$(".x_name").hide();
 				name.focus();
 				return false;
 			} else {
 				let regex = /^[가-힣]{2,10}$|^[a-z]{2,10}$/;
 				nameResult = regex.test(name.value);
 				if (!nameResult) {
-					alert("2~10글자의 이름만 등록 가능합니다.");
+					$(".insertName").hide();
+					$(".x_name").show();
 					name.value = "";
 					name.focus();
 					return false;
@@ -554,14 +653,16 @@ a {
 			// nickname
 			let nickname = document.getElementsByClassName("nickname")[0];
 			if (nickname.value == "") {
-				alert("닉네임을 입력해주세요.");
+				$(".insertNickname").show();
+				$(".x_nickname").hide();
 				name.focus();
 				return false;
 			} else {
 				let regex = /^[가-힣]{2,30}$|^[a-z]{2,30}$/;
 				nicknameResult = regex.test(nickname.value);
 				if (!nicknameResult) {
-					alert("2~30글자의 닉네임만 등록 가능합니다.");
+					$(".insertNickname").hide();
+					$(".x_nickname").show();
 					nickname.value = "";
 					nickname.focus();
 					return false;
@@ -571,14 +672,16 @@ a {
 			// phone
 			let phone = document.getElementsByClassName("phone")[0];
 			if (phone.value == "") {
-				alert("전화번호를 입력해주세요.");
+				$(".insertPhone").show();
+				$(".x_phone").hide();
 				phone.focus();
 				return false;
 			} else {
 				let regex = /^010[\d]{8}$/;
 				let phoneResult = regex.test(phone.value);
 				if (!phoneResult) {
-					alert("연락처 형식은 010********(8자) 입니다.");
+					$(".insertPhone").hide();
+					$(".x_phone").show();
 					phone.value = "";
 					phone.focus();
 					return false;
@@ -588,14 +691,16 @@ a {
 			// ssn
 			let ssn = document.getElementsByClassName("id_num")[0];
 			if (ssn.value == "") {
-				alert("주민등록번호를 입력해주세요.");
+				$(".insertSsn").show();
+				$(".x_ssn").hide();
 				ssn.focus();
 				return false;
 			} else {
 				let regex = /^[\d]{6}-[1234]{1}[\d]{6}$/;
 				let ssnResult = regex.test(ssn.value);
 				if (!ssnResult) {
-					alert("주민등록번호는 생년월일(6글자)-(뒷자리7글자)로 입력바랍니다.");
+					$(".insertSsn").hide();
+					$(".x_ssn").show();
 					ssn.value = "";
 					ssn.focus();
 					return false;
@@ -606,14 +711,24 @@ a {
 			let email = document.getElementsByClassName("email")[0];
 
 			if (email.value == "") {
-				alert("이메일을 입력해주세요.");
+				$(".insertEmail").show();
+				$(".x_email").hide();
+				$(".applyCode").hide();
+				$(".usedEmail").hide();
+				$(".noApplyCode").hide();
+				$(".retryEmail").hide();
 				email.focus();
 				return false;
 			} else {
 				let regex = /^[a-z\d_]+@[a-z]+\.[a-z]+\.?[a-z]+?$/;
 				let emailResult = regex.test(email.value);
 				if (!emailResult) {
-					alert("잘못된 이메일 형식입니다.");
+					$(".insertEmail").hide();
+					$(".x_email").show();
+					$(".applyCode").hide();
+					$(".usedEmail").hide();
+					$(".noApplyCode").hide();
+					$(".retryEmail").hide();
 					email.value = "";
 					email.focus();
 					return false;
@@ -623,7 +738,9 @@ a {
 			// code
 			let code = document.getElementsByClassName("code")[0];
 			if (code.value == "") {
-				alert("인증코드를 입력해주세요.");
+				$(".insertCode").show();
+				$(".codeOk").hide();
+				$(".codeNo").hide();
 				code.focus();
 				return false;
 			}
@@ -631,7 +748,7 @@ a {
 			// zonecode
 			let zonecode = document.getElementsByClassName("zonecode")[0];
 			if (zonecode.value == "") {
-				alert("우편번호 찾기를 눌러주세요.");
+				$(".insertZonecode").show();
 				zonecode.focus();
 				return false;
 			}
@@ -650,7 +767,7 @@ a {
 			// agreeBtn
 			let agreeBtn = document.getElementsByClassName("agreeBtn")[0];
 			if (!agreeBtn.checked) {
-				alert("약관 동의는 필수입니다.");
+				$(".insertCheckBox").show();
 				agreeBtn.focus();
 				return false;
 			}
@@ -665,7 +782,12 @@ a {
 					alert("회원가입을 축하드립니다.");
 					frm.submit();
 				}else{
-					alert("이메일 인증이 완료되지 않았거나 만료되었습니다. 다시 인증해주세요.");
+					$(".insertEmail").hide();
+					$(".x_email").hide();
+					$(".applyCode").hide();
+					$(".usedEmail").hide();
+					$(".noApplyCode").hide();
+					$(".retryEmail").show();
 				}
 			});
 			return false;
