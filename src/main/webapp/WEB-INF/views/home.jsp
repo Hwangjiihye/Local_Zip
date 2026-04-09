@@ -924,7 +924,7 @@ body, html {
 		        }
 		
 		        let post_seq = $(this).data("seq");
-		        location.href = "/postDetail?post_seq=" + post_seq;
+		        location.href = "/postDetail?post_seq=" + post_seq + "&category=all";
 		    });
 		
 		    // 신고 ---------------------------------------------
