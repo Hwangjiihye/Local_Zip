@@ -8,6 +8,7 @@
 <title>beauty</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 /* 폰트 */
@@ -472,6 +473,18 @@ hr {
 		.pageBox a:hover{
 		    background-color:#F2D3A2;
 		}
+		
+		.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-warning .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 </style>
 </head>
 <body>
@@ -647,8 +660,17 @@ hr {
 				// 게시글 상세보기 이동 제어
 				let loginId = "${loginId}";
 				if (loginId === "") {
-					alert("로그인 후 이용 가능합니다.");
-					location.href = "/members/loginUi";
+					Swal.fire({
+				        icon: "warning",
+				        title: "Wait !",
+				        text: "로그인 후 이용해주세요",
+				        iconColor: "#FFB300",
+				        confirmButtonColor: "#FFB300"
+				    }).then((result) => {
+				    	if (result.isConfirmed) {
+				    		location.href = "/members/loginUi";
+				    	}
+				    });
 					return;
 				}
 
@@ -682,7 +704,13 @@ hr {
 				let reportReason = card.find(".reportSelect").val();
 
 				if (!reportReason || reportReason === "신고 사유") {
-					alert("신고 사유를 선택해 주세요.");
+					Swal.fire({
+						icon: "info",
+						title: "Wait  !",
+						text: "신고 사유를 선택해 주세요",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
 					return;
 				}
 
@@ -697,14 +725,32 @@ hr {
 					}
 				}).done(function(resp) {
 					if (resp == "success") {
-						alert("신고가 접수되었습니다.");
+						Swal.fire({
+    						icon: "success",
+    						title: "Success  !",
+    						text: "신고가 접수되었습니다",
+    						iconColor: "#FFB300",
+    						confirmButtonColor: "#FFB300"
+    					});
 						card.find(".reportSelect, .reportBtn").hide();
 					} else {
-						alert("이미 신고했거나 처리에 실패했습니다.");
+						Swal.fire({
+    						icon: "info",
+    						title: "Already  !",
+    						text: "이미 신고한 글 입니다",
+    						iconColor: "#FFB300",
+    						confirmButtonColor: "#FFB300"
+    					});
 						card.find(".reportSelect, .reportBtn").hide();
 					}
 				}).fail(function() {
-					alert("서버와 통신 중 오류가 발생했습니다.");
+					Swal.fire({
+						icon: "error",
+						title: "Error  !",
+						text: "서버와 통신 중 오류가 발생했습니다",
+						iconColor: "#EB0000",
+						confirmButtonColor: "#FFB300"
+					});
 				});
 			});
 
@@ -738,8 +784,17 @@ hr {
 			}).done(function(likeCheck) {
 				
 				if(likeCheck == -1){
-					alert("로그인 후 이용 가능합니다.");
-					location.href = "/members/loginUi";
+					Swal.fire({
+				        icon: "warning",
+				        title: "Wait !",
+				        text: "로그인 후 이용 가능합니다",
+				        iconColor: "#FFB300",
+				        confirmButtonColor: "#FFB300"
+				    }).then((result) => {
+				    	if (result.isConfirmed) {
+							location.href = "/members/loginUi";
+				    	}
+				    });
 					return;
 				}
 

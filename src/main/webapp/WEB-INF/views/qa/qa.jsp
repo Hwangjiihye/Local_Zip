@@ -277,7 +277,7 @@ body, html {
 		</div>
 
 		<button class="writeBtn" type="button"
-			onclick="location.href='/qa/toWrite'">
+			onclick="location.href='/qa/toWrite?cPage=${cPage}'">
 			<i class="fa-solid fa-pencil"></i>
 		</button>
 		<div class="bottomBox">

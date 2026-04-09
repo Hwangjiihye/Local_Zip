@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -73,7 +74,7 @@ public class BoardController {
 				String oriName = file.getOriginalFilename();
 				String sysName = UUID.randomUUID() + "_" + oriName;
 				file.transferTo(new File(savePath + "/" + sysName));
-				aDao.insert(new AttachmentDTO(nextval, post_category, nextval, oriName, sysName));
+				aDao.insert(new AttachmentDTO(0, post_category, nextval, oriName, sysName));
 			}
 		}
 
@@ -306,7 +307,6 @@ public class BoardController {
 		// 파일리스트 뽑아오기
 		List<AttachmentDTO> aList = aDao.getAttachment(post_seq);
 		model.addAttribute("fileList", aList);
-		System.out.println(aList.size());
 
 		if (loginId != null) {
 			String allCategory = dao.getCategoryBySeq(post_seq);
@@ -345,9 +345,43 @@ public class BoardController {
 	// 게시글 수정
 	@ResponseBody
 	@RequestMapping("/updatePost")
-	public String updatePost(int post_seq, String post_title, String post_contents) {
-		dao.updatePost(post_seq, post_title, post_contents);
-
+	public String updatePost(BoardDTO dto,
+			@RequestParam(value="deleteFiles", required=false)List<String> deleteFiles,
+			MultipartFile[] attachments) throws Exception{
+		//글수정
+		dao.updatePost(dto.getPost_seq(), dto.getPost_title(), dto.getPost_contents());
+		
+		String savePath = "c:/files";
+        File savePathFile = new File(savePath);
+        if (!savePathFile.exists()) {
+            savePathFile.mkdir();
+        }
+        
+		//파일 삭제
+		if (deleteFiles != null && !deleteFiles.isEmpty()) {
+	        for (String sysName : deleteFiles) {
+	            aDao.deleteBySysName(sysName);
+	            File target = new File(savePath + "/" + sysName);
+	            if(target.exists()) {
+	            	target.delete();
+	            }
+	        }
+	    }
+		
+		//새 파일 업로드
+		if (attachments != null) {
+	        for (MultipartFile file : attachments) {
+	            if (file.isEmpty()) {
+	            	continue;
+	            }
+	            
+	            String oriName = file.getOriginalFilename();
+				String sysName = UUID.randomUUID() + "_" + oriName;
+				file.transferTo(new File(savePath + "/" + sysName));
+				aDao.insert(new AttachmentDTO(0, dto.getPost_category(), dto.getPost_seq(), oriName, sysName));
+	        }
+	    }
+		
 		return "success";
 	}
 

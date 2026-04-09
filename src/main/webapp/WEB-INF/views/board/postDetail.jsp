@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -6,7 +7,8 @@
 <meta charset="UTF-8">
 <title>postDetail</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 
 <style>
@@ -60,6 +62,8 @@ button, body {
 	/* 최소 높이 지정 : 브라우저 */
 	border: 1px solid black;
 	background-color: #fbe5c0;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 .headBoxDiv {
@@ -202,6 +206,10 @@ button, body {
 	padding-right: 40px;
 }
 
+.fileName:hover {
+	cursor: pointer;
+}
+
 .replyInfoDown {
 	margin-top: 0px;
 	width: 70%;
@@ -294,6 +302,7 @@ button, body {
 	border-radius: 5px;
 	padding: 0 10px;
 }
+
 .fileDownload {
 	margin: auto;
 	width: 95%;
@@ -322,8 +331,8 @@ button, body {
 }
 
 /* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
-.beforeHeart{
-	display : inline;
+.beforeHeart {
+	display: inline;
 }
 
 .afterHeart {
@@ -342,7 +351,7 @@ button, body {
 
 .navicon:hover, .applyBtn:hover, .backBtn:hover, .updateBtn:hover,
 	.deleteBtn:hover, .completeBtn:hover, .cancelBtn:hover, .upBtn:hover,
-	.delBtn:hover, .OBtn:hover, .XBtn:hover {
+	.delBtn:hover, .OBtn:hover, .XBtn:hover, .fileDelBtn:hover {
 	transform: translateY(-3px);
 	/* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
@@ -350,7 +359,7 @@ button, body {
 
 .navicon:active, .applyBtn:active, .backBtn:active, .updateBtn:active,
 	.deleteBtn:active, .completeBtn:active, .cancelBtn:active, .upBtn:active,
-	.delBtn:active, .OBtn:active, .XBtn:active {
+	.delBtn:active, .OBtn:active, .XBtn:active, .fileDelBtn:active {
 	transform: translateY(2px);
 	/* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -465,16 +474,15 @@ a {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-
-.report-menu{
-	 font-family: 'GMarketSans';
-     border: 1px solid #A66A3F;
-     border-radius: 5px;
-     background-color: #F2D3A2;
-     color: #A66A3F;
-     font-size: 12px;
-     padding: 2px;
-     outline: none;
+.report-menu {
+	font-family: 'GMarketSans';
+	border: 1px solid #A66A3F;
+	border-radius: 5px;
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	font-size: 12px;
+	padding: 2px;
+	outline: none;
 }
 
 .newReplyBox {
@@ -527,7 +535,7 @@ a {
 }
 
 .updateBtn, .deleteBtn, .completeBtn, .cancelBtn, .upBtn, .delBtn, .OBtn,
-	.XBtn {
+	.XBtn, .fileDelBtn {
 	background-color: #ffb300;
 	color: #5e361a;
 	border: 1px solid #ffb300;
@@ -535,7 +543,7 @@ a {
 	font-weight: bold;
 }
 
-.completeBtn, .cancelBtn, .OBtn, .XBtn {
+.completeBtn, .cancelBtn, .OBtn, .XBtn, .fileDelBtn {
 	display: none;
 }
 
@@ -555,26 +563,34 @@ hr {
 	border: 1px dotted #5e361a;
 }
 
-.replyContents[contenteditable="true"],
-.postTitle[contenteditable="true"],
-.postContents[contenteditable="true"]{
-    border: 1px solid #FFB300;
-    border-radius: 5px;
-    padding: 5px;
+.replyContents[contenteditable="true"], .postTitle[contenteditable="true"],
+	.postContents[contenteditable="true"] {
+	border: 1px solid #FFB300;
+	border-radius: 5px;
+	padding: 5px;
 }
 
-.replyContents[contenteditable="true"]:focus{
-    outline: none;
-    border: 1px solid #FFB300;
-    background-color: #fbe5c0;
+.replyContents[contenteditable="true"]:focus {
+	outline: none;
+	border: 1px solid #FFB300;
+	background-color: #fbe5c0;
 }
 
-.postTitle[contenteditable="true"]:focus,
-.postContents[contenteditable="true"]:focus{
+.postTitle[contenteditable="true"]:focus, .postContents[contenteditable="true"]:focus
+	{
 	outline: none;
 	border: 1px solid #FFB300;
 }
 
+.file-item .fileName {
+	color: #b24c4c;
+	font-size: 13px;
+}
+
+.newFileDiv{
+	display: none;
+	margin-top: 10px;
+}
 </style>
 
 </head>
@@ -593,7 +609,8 @@ hr {
 				<div class="postUpBox">
 
 					<div class="postProfile">
-						<img class="contentProfile" src="/resources/images/Profile.png" style="width: 60px;">
+						<img class="contentProfile" src="/resources/images/Profile.png"
+							style="width: 60px;">
 					</div>
 					<div class="postInfoBox">
 						<div class="postInfoUp">
@@ -607,10 +624,12 @@ hr {
 							<c:if test="${dto.mem_id == loginId}">
 								<div class="btnDiv">
 									<div class="editDiv">
-										<input class="updateBtn" type="button" value="수정"> <input class="deleteBtn" type="button" value="삭제">
+										<input class="updateBtn" type="button" value="수정"> <input
+											class="deleteBtn" type="button" value="삭제">
 									</div>
 									<div class="editCompleteDiv">
-										<input class="completeBtn" type="button" value="완료"> <input class="cancelBtn" type="button" value="취소">
+										<input class="completeBtn" type="button" value="완료"> <input
+											class="cancelBtn" type="button" value="취소">
 									</div>
 								</div>
 							</c:if>
@@ -621,17 +640,28 @@ hr {
 
 					<div class="postTitle">${dto.post_title }</div>
 					<div class="postContents">${dto.post_contents }</div>
-					<div class="fileDownload">첨부 파일 :
-						<c:forEach var="i" items="${fileList}">
-						<a href="/">${i.attach_oriname} </a>
+					<div class="fileDownload">
+						첨부 파일
+						<c:forEach var="i" items="${fileList}" varStatus="status">
+							<div class="file-item"">
+								<label class="fileName" data-ori="${i.attach_oriname}"
+									data-sys="${i.attach_sysname}"> ${i.attach_oriname} </label>
+								<button type="button" class="fileDelBtn"
+									data-sys="${i.attach_sysname}">X</button>
+							</div>
 						</c:forEach>
-					 </div>
+						<div class="newFileDiv" >
+							<input type="file" class="newFiles" name="newFiles" multiple>
+						</div>
+					</div>
 				</div>
 
 				<div class="postDownBox">
 
-					<div class="postLikeBox ${dto.post_like_check == 1 ? 'active' : ''}">
-						<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
+					<div
+						class="postLikeBox ${dto.post_like_check == 1 ? 'active' : ''}">
+						<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i
+							class="fa-solid fa-heart fa-xl afterHeart"></i>
 
 						<div class="likeCount infoCount">${dto.post_like}</div>
 					</div>
@@ -639,8 +669,8 @@ hr {
 					<div class="postCommentBox">
 						<i class="fa-regular fa-comment fa-xl comment"></i>
 
-							<div id="commentCount" class="commentCount infoCount">${dto.post_hit}</div>
-						
+						<div id="commentCount" class="commentCount infoCount">${dto.post_hit}</div>
+
 					</div>
 
 				</div>
@@ -651,7 +681,8 @@ hr {
 				<div class="replyBox">
 					<div class="newReplyBox">
 						<div class="newReplyDiv">
-							<textarea class="newReply" type="text" placeholder="댓글을 입력하세요." maxlength="300"></textarea>
+							<textarea class="newReply" type="text" placeholder="댓글을 입력하세요."
+								maxlength="300"></textarea>
 						</div>
 						<div class="applyBtnDiv">
 							<input class="applyBtn" type="submit" value="등록">
@@ -661,10 +692,14 @@ hr {
 				</div>
 			</div>
 			<div class="bottomBox">
-				<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
-					class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
-					class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
-					class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> <a href="/members/mypage"><i
+				<a href="/"><i class="navicon fa-solid fa-house fa-2xl"
+					style="color: #A66A3F"></i></a> <a href="/map/test"><i
+					class="navicon fa-solid fa-map-location-dot fa-2xl"
+					style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
+					class="navicon fa-solid fa-people-group fa-2xl"
+					style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
+					class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+				<a href="/members/mypage"><i
 					class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 
 			</div>
@@ -690,6 +725,8 @@ hr {
 			$(".cancelBtn").css({"display":"inline"});
 			$(".updateBtn").css({"display":"none"});
 			$(".deleteBtn").css({"display":"none"});
+			$(".fileDelBtn").show();
+			$(".newFileDiv").show();
 			
 			$(".postTitle").attr("contenteditable","true");
 			$(".postContents").attr("contenteditable","true");
@@ -698,24 +735,46 @@ hr {
 			$(".postContents").css({"border":"1px solid #F2D3A2"});
 		});
 		
+		// 파일 삭제 버튼을 눌렀을때
+		$(document).on("click", ".fileDelBtn", function() {
+		    $(this).closest(".file-item").addClass("delete-target").hide();
+		});
+		
 		// 게시글 수정 완료 버튼 클릭 시
 		$(".completeBtn").on("click",function(){
 			
 			let post_title = $(".postTitle").text();
 			let post_contents = $(".postContents").text();
-		    
+		   
 		    if(postTitle.text() == "" || postContents.text() == ""){
 		        alert("내용을 입력해주세요.");
 		        return;
 		    }
 		    
+		    let formData = new FormData();
+		    formData.append("post_seq", postSeq);
+		    formData.append("post_title", $(".postTitle").text());
+		    formData.append("post_contents", $(".postContents").text());
+		    formData.append("post_category","${category}");
+		    
+		    let deleteFiles = [];
+		    $(".delete-target").each(function() {
+		        deleteFiles.push($(this).find(".fileName").data("sys"));
+		    });
+		    if(deleteFiles.length > 0) {
+		        formData.append("deleteFiles", deleteFiles);
+		    }
+
+		    let newFiles = $(".newFiles")[0].files;
+		    for (let i = 0; i < newFiles.length; i++) {
+		        formData.append("attachments", newFiles[i]);
+		    }
+			
 			$.ajax({
 				url:"/board/updatePost",
-				data:{
-					post_seq: postSeq,
-					post_title: post_title,
-					post_contents: post_contents
-				},
+				data:formData,
+				processData: false,
+		        contentType: false,
 				type: "post"
 			}).done(function(){
 				alert("수정 완료!");
@@ -747,6 +806,12 @@ hr {
 		    postTitle.text(originTitle);
 		    postContents.text(originContents);
 		    
+		    $(".file-item").removeClass("delete-target").show();
+		    $(".newFiles").val("");
+		    
+		    $(".fileDelBtn").hide();
+			$(".newFileDiv").hide();
+			
 		    $(".completeBtn").css({"display":"none"});
 			$(".cancelBtn").css({"display":"none"});
 			$(".updateBtn").css({"display":"inline"});
@@ -757,8 +822,17 @@ hr {
 			
 			postTitle.css({"border":"none"});
 			postContents.css({"border":"none"});
+			
+			
 		    
 		});
+		
+		// 파일 눌렀을때 다운로드 
+		$(".fileName").on("click",function(){
+			let sys_name = $(this).data("sys");
+			let ori_name = $(this).data("ori");
+			location.href="/attach/download?sys_name="+sys_name+"&ori_name="+ori_name;
+		})
 		
 		// 댓글 목록 출력해오는 ajax -> 이름있는 함수로 만들고 밑에서 익명함수로 최초 실행
 		function loadReplyList(){

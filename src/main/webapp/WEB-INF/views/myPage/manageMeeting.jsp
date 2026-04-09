@@ -208,7 +208,7 @@
 			font-size: x-large;
 			background-color: #F2D3A2;
 			padding-left: 20px;
-			padding-top: 7px;
+			padding-top: 20px;
 		}
 		.title, .com_title{
 			min-height: 40px;
@@ -295,39 +295,47 @@
 		// 승인 버튼 클릭 시
 		$(document).on("click", ".acceptBtn", function(){
 			
-			let card = $(this).closest(".meeting-card");
-			let seq = card.data("seq");
-			let meetSeq = card.data("meet_seq");
-		    
-			console.log("seq : ", seq, "meetSeq : ", meetSeq);
-		    $.ajax({
-		        url:"/meetingMember/updateStatus",
-		        data:{
-		        	seq: seq,
-		        	meet_seq: meetSeq,
-		        	status: 1
-		        }
-		    }).done(function(){
-		        	location.reload();
-		    });
+			if(!confirm("신청을 승인하시겠습니까?")){
+				return false;
+			}else{
+				let card = $(this).closest(".meeting-card");
+				let seq = card.data("seq");
+				let meetSeq = card.data("meet_seq");
+			    
+				console.log("seq : ", seq, "meetSeq : ", meetSeq);
+			    $.ajax({
+			        url:"/meetingMember/updateStatus",
+			        data:{
+			        	seq: seq,
+			        	meet_seq: meetSeq,
+			        	status: 1
+			        }
+			    }).done(function(){
+			        	location.reload();
+			    });
+			}
 		});
+		
 		// 거절 버튼 클릭 시
 		$(document).on("click", ".rejectBtn", function(){
-		
-			let card = $(this).closest(".meeting-card");
-			let seq = card.data("seq");
-			let meetSeq = card.data("meet_seq");
-		
-		    $.ajax({
-		        url:"/meetingMember/updateStatus",
-		        data:{
-		        	seq: seq,
-		        	meet_seq: meetSeq,
-		        	status: 2
-		        }
-		    }).done(function(){
-		        location.reload();
-		    });
+			if(!confirm("신청을 거절하시겠습니까?")){
+				return false;
+			}else{
+				let card = $(this).closest(".meeting-card");
+				let seq = card.data("seq");
+				let meetSeq = card.data("meet_seq");
+			
+			    $.ajax({
+			        url:"/meetingMember/updateStatus",
+			        data:{
+			        	seq: seq,
+			        	meet_seq: meetSeq,
+			        	status: 2
+			        }
+			    }).done(function(){
+			        location.reload();
+			    });
+			}
 		});
 		
 		// 처리된 리스트 출력
@@ -367,10 +375,8 @@
 					
 					$(".completeMeeting").append(completeMeetingCard);
 				}
-				
-			})
-			
-		})
+			});
+		});
 	</script>
 </body>
 </html>

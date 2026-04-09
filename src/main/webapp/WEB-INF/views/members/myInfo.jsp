@@ -8,6 +8,7 @@
 <title>myInfo</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script
 	src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
@@ -177,6 +178,24 @@
 	.rightImg{
 		right: 0;
 	}
+	
+	.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-question .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-warning .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 </style>
 </head>
 <body>
@@ -262,7 +281,7 @@
 	            
 	            <div class="btnDiv">
 	            	<input class="updateBtn update_deleteBtn" type="button" value="정보 수정">
-	            	<a href="/members/delete"><input class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴"></a>
+	            	<input class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴">
 	            	<input class="completeBtn save_cancelBtn" type="submit" value="수정 완료">
 	            	<input class="cancelBtn save_cancelBtn" type="button" value="수정 취소">
 	            </div>
@@ -352,14 +371,26 @@
 				// nickname 정규표현식
 				let nickname = $(".nickname").text().trim();
 				if (nickname == "") {
-					alert("닉네임을 입력해주세요.");
+					Swal.fire({
+						icon: "info",
+						title: "Wait  !",
+						text: "닉네임을 입력해주세요.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
 					$(".nickname").focus();
 					return false;
 				} else {
 					let regex = /^[가-힣]{2,30}$|^[a-z]{2,30}$/;
 					nicknameResult = regex.test(nickname);
 					if (!nicknameResult) {
-						alert("2~30글자의 닉네임만 등록 가능합니다.");
+						Swal.fire({
+    						icon: "info",
+    						title: "Wait  !",
+    						text: "2~30글자의 닉네임만 등록 가능합니다.",
+    						iconColor: "#FFB300",
+    						confirmButtonColor: "#FFB300"
+    					});
 						$(".nickname").text("");
 						$(".nickname").focus();
 						return false;
@@ -369,14 +400,26 @@
 				// phone 정규표현식
 				let phone = $(".phone").text().trim();
 				if (phone == "") {
-					alert("전화번호를 입력해주세요.");
+					Swal.fire({
+						icon: "info",
+						title: "Wait  !",
+						text: "전화번호를 입력해주세요.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
 					$(".phone").focus();
 					return false;
 				} else {
 					let regex = /^010[\d]{8}$/;
 					let phoneResult = regex.test(phone);
 					if (!phoneResult) {
-						alert("연락처 형식은 010********(8자) 입니다.");
+						Swal.fire({
+    						icon: "info",
+    						title: "Wait  !",
+    						text: "연락처 형식은 010********(8자) 입니다.",
+    						iconColor: "#FFB300",
+    						confirmButtonColor: "#FFB300"
+    					});
 						$(".phone").text("");
 						$(".phone").focus();
 						return false;
@@ -386,7 +429,32 @@
 				// zonecode 정규표현식
 				let zip_code = $(".zonecode").text().trim();
 				if (zip_code == "") {
-					alert("우편번호 찾기를 눌러주세요.");
+					Swal.fire({
+						icon: "info",
+						title: "Wait  !",
+						text: "주소를 입력해주세요.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
+					$(".zonecode").focus();
+					return false;
+				}
+				
+				// address1 정규표현식
+				let address1 = $(".address1").text().trim();
+				let regex = /^(서울)|(서울시)|(서울특별)|(서울특별시)/;
+				let address1Result = regex.test(address1);
+				if (!address1Result) {
+					Swal.fire({
+						icon: "info",
+						title: "Sorry  !",
+						text: "현재는 서울시를 기준으로 한 서비스만 제공 중입니다.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
+					
+					$(".zonecode").text("");
+					$(".address1").text("");
 					$(".zonecode").focus();
 					return false;
 				}
@@ -401,11 +469,24 @@
 	            this.submit();
 		})
 		
-		
 		$(".deleteBtn").on("click", function(e){
-			if(!confirm("정말 회원 탈퇴를 하시겠습니까? 탈퇴 시 복구는 불가합니다.")){
-				e.preventDefault();
-			}
+			e.preventDefault();
+			
+			Swal.fire({
+			    icon: "question",
+			    title: "Wait  !",
+			    text: "정말 탈퇴하시겠습니까? 탈퇴 시 되돌릴 수 없습니다.",
+			    iconColor: "#FFB300",
+			    confirmButtonColor: "#FFB300",
+			    showCancelButton: true,
+			    confirmButtonText: "탈퇴",
+			    cancelButtonText: "취소",
+			    cancelButtonColor: "#d9d9d9"
+			}).then((result) => {
+		        if (result.isConfirmed) {
+		            location.href = "/members/delete"; // 확인 누르면 이동
+		        }
+			})
 		})
 		
     </script>
