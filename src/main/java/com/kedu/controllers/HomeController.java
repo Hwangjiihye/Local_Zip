@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kedu.dao.AttachmentDAO;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.ReplyDAO;
 import com.kedu.dao.VisitLogDAO;
+import com.kedu.dto.AttachmentDTO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.ReplyDTO;
 
@@ -35,6 +37,9 @@ public class HomeController {
 	
 	@Autowired
 	private PostLikeDAO likeDao;
+	
+	@Autowired
+	private AttachmentDAO aDao;
 	
 	// 전체 리스트 출력 내용 반영
 	@RequestMapping("/")
@@ -94,7 +99,11 @@ public class HomeController {
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
 
 		String loginId = (String)session.getAttribute("loginId");
-
+		
+		// 파일리스트 뽑아오기
+		List<AttachmentDTO> aList = aDao.getAttachment(post_seq);
+		model.addAttribute("fileList", aList);
+		
 		if(loginId != null) {
 			String category = dao.getCategoryBySeq(post_seq);
 			vdao.postClickVisit(loginId, category);

@@ -36,7 +36,8 @@ public class UserQaController {
 	}
 	
 	@RequestMapping("/toWrite")
-	public String toWrite() {
+	public String toWrite(int cPage,Model model) {
+		model.addAttribute("cPage",cPage);
 		return "/qa/qaWrite";
 	}
 	
