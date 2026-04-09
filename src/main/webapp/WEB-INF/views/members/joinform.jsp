@@ -680,8 +680,8 @@ a {
 				let regex = /^010[\d]{8}$/;
 				let phoneResult = regex.test(phone.value);
 				if (!phoneResult) {
-					$(".insertNickname").hide();
-					$(".x_nickname").show();
+					$(".insertPhone").hide();
+					$(".x_phone").show();
 					phone.value = "";
 					phone.focus();
 					return false;
