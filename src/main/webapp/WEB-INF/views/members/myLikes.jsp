@@ -365,6 +365,12 @@ hr {
 	color: #5e361a;
 	text-align: center;
 }
+
+.swal2-icon.swal2-warning .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 </style>
 
 </head>
@@ -519,8 +525,17 @@ hr {
 				console.log("서버 응답:" + likeCheck);
 				
 				if(likeCheck == -1){
-					alert("로그인 후 이용 가능합니다.");
-					location.href = "/members/loginUi";
+					Swal.fire({
+				        icon: "warning",
+				        title: "Wait !",
+				        text: "로그인 후 이용 가능합니다",
+				        iconColor: "#FFB300",
+				        confirmButtonColor: "#FFB300"
+				    }).then((result) => {
+				    	if (result.isConfirmed) {
+							location.href = "/members/loginUi";
+				    	}
+				    });
 					return;
 				}
 
