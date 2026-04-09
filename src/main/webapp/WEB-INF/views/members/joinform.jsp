@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script
 	src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 @font-face {
 	font-family: 'GMarketSans';
@@ -758,7 +759,13 @@ a {
 			let regex = /^(서울)|(서울시)|(서울특별)|(서울특별시)/;
 			let address1Result = regex.test(address1.value);
 			if (!address1Result) {
-				alert("죄송합니다!\n현재는 서울시를 기준으로 한 서비스만 제공 중입니다.");
+				Swal.fire({
+					icon: "info",
+					title: "Sorry  !",
+					text: "현재는 서울시를 기준으로 한 서비스만 제공 중입니다.",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				zonecode.value = "";
 				address1.value = "";
 				return false;
@@ -779,8 +786,18 @@ a {
 				data : {email : $(".email").val()}
 			}).done(function(resp){
 				if(resp=="1"){
-					alert("회원가입을 축하드립니다.");
-					frm.submit();
+					Swal.fire({
+						icon: "success",
+						title: "Welcome  !",
+						text: "회원가입을 축하드립니다.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					}).then((result) => {
+						if(result.isConfirmed) {
+							frm.submit();
+						}
+					});
+					
 				}else{
 					$(".insertEmail").hide();
 					$(".x_email").hide();

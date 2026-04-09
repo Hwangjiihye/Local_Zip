@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>login Page</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 @font-face {
@@ -237,6 +238,41 @@ hr {
 input{
 	outline: none;
 }
+.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-question .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-warning .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-question .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-error .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
 </style>
 </head>
 
@@ -295,7 +331,13 @@ input{
 		// 이메일 인증 요청 보내기
 		$(".requestBtn").on("click", function() {
 			if ($(".email").val() == "") {
-				alert("이메일을 입력해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "이메일을 입력해주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			} else {
 				$.ajax({
@@ -308,11 +350,29 @@ input{
 
 				}).done(function(resp) {
 					if (resp == "success") {
-						alert("이메일로 인증번호를 발송했습니다.");
+						Swal.fire({
+    						icon: "success",
+    						title: "Success  !",
+    						text: "이메일로 인증번호를 발송했습니다.",
+    						iconColor: "#FFB300",
+    						confirmButtonColor: "#FFB300"
+    					});
 					} else if (resp == "empty") {
-						alert("가입된 정보가 없습니다.");
+						Swal.fire({
+							icon: "error",
+							title: "Empty  !",
+							text: "가입된 정보가 없습니다.",
+							iconColor: "#EB0000",
+							confirmButtonColor: "#FFB300"
+						});
 					} else {
-						alert("인증번호 발송을 실패했습니다. 다시 시도해주세요.");
+						Swal.fire({
+							icon: "error",
+							title: "Error  !",
+							text: "인증번호 발송을 실패했습니다. 다시 시도해주세요.",
+							iconColor: "#EB0000",
+							confirmButtonColor: "#FFB300"
+						});
 					}
 				});
 			}
@@ -322,7 +382,13 @@ input{
 
 		$(".certifyBtn").on("click", function() {
 			if ($(".auth_code").val() === "") {
-				alert("인증코드를 입력해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "인증코드를 입력해주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			} else {
 				$.ajax({
@@ -335,7 +401,13 @@ input{
 					dataType : "json"
 				}).done(function(resp) {
 					if (resp.status === "success") {
-						alert("인증에 성공하였습니다.");
+						Swal.fire({
+    						icon: "success",
+    						title: "Success  !",
+    						text: "인증에 성공하였습니다.",
+    						iconColor: "#FFB300",
+    						confirmButtonColor: "#FFB300"
+    					});
 						$("#pwResetArea").show();
 						$(".okBtn").show();
 						
@@ -343,7 +415,13 @@ input{
 					} else if (resp.status === "fail") {
 						alert(resp.msg);
 					} else if (resp.status === "wrong_code") {
-						alert("인증번호가 일치하지 않습니다.");
+						Swal.fire({
+							icon: "error",
+							title: "InCorrect  !",
+							text: "인증번호가 일치하지 않습니다.",
+							iconColor: "#EB0000",
+							confirmButtonColor: "#FFB300"
+						});
 						$(".auth_code").val("").focus();
 					}
 
@@ -361,13 +439,25 @@ input{
 							let incorrect = document.getElementsByClassName("incorrect")[0];
 
 							if (pw1.value == "" || pw2.value == "") {
-								alert("비밀번호를 입력해주세요.");
+								Swal.fire({
+		    						icon: "info",
+		    						title: "Wait  !",
+		    						text: "비밀번호를 입력해주세요.",
+		    						iconColor: "#FFB300",
+		    						confirmButtonColor: "#FFB300"
+		    					});
 								return false;
 							} else {
 								let regex = /^[A-Za-z\d!@#$%^&*]{8,16}$/;
 								let pwResult = regex.test(pw1.value);
 								if (!pwResult) {
-									alert("비밀번호를 다시 설정해주세요.\n8~16자의 영문 대소문자,숫자,특수문자(!@#$%^&*) 사용 가능");
+									Swal.fire({
+										icon: "error",
+										title: "InCorrect  !",
+										text: "비밀번호를 다시 설정해주세요.\n8~16자의 영문 대소문자,숫자,특수문자(!@#$%^&*) 사용 가능",
+										iconColor: "#EB0000",
+										confirmButtonColor: "#FFB300"
+									});
 									pw1.value = "";
 									pw1.focus();
 									return false;
