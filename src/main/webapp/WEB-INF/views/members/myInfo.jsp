@@ -281,7 +281,7 @@
 	            
 	            <div class="btnDiv">
 	            	<input class="updateBtn update_deleteBtn" type="button" value="정보 수정">
-	            	<a href="/members/delete"><input class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴"></a>
+	            	<input class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴">
 	            	<input class="completeBtn save_cancelBtn" type="submit" value="수정 완료">
 	            	<input class="cancelBtn save_cancelBtn" type="button" value="수정 취소">
 	            </div>
@@ -432,10 +432,29 @@
 					Swal.fire({
 						icon: "info",
 						title: "Wait  !",
-						text: "우편번호 찾기를 눌러주세요.",
+						text: "주소를 입력해주세요.",
 						iconColor: "#FFB300",
 						confirmButtonColor: "#FFB300"
 					});
+					$(".zonecode").focus();
+					return false;
+				}
+				
+				// address1 정규표현식
+				let address1 = $(".address1").text().trim();
+				let regex = /^(서울)|(서울시)|(서울특별)|(서울특별시)/;
+				let address1Result = regex.test(address1);
+				if (!address1Result) {
+					Swal.fire({
+						icon: "info",
+						title: "Sorry  !",
+						text: "현재는 서울시를 기준으로 한 서비스만 제공 중입니다.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
+					
+					$(".zonecode").text("");
+					$(".address1").text("");
 					$(".zonecode").focus();
 					return false;
 				}
@@ -451,9 +470,23 @@
 		})
 		
 		$(".deleteBtn").on("click", function(e){
-			if(!confirm("정말 회원 탈퇴를 하시겠습니까? 탈퇴 시 복구는 불가합니다.")){
-				e.preventDefault(); 
-			}
+			e.preventDefault();
+			
+			Swal.fire({
+			    icon: "question",
+			    title: "Wait  !",
+			    text: "정말 탈퇴하시겠습니까? 탈퇴 시 되돌릴 수 없습니다.",
+			    iconColor: "#FFB300",
+			    confirmButtonColor: "#FFB300",
+			    showCancelButton: true,
+			    confirmButtonText: "탈퇴",
+			    cancelButtonText: "취소",
+			    cancelButtonColor: "#d9d9d9"
+			}).then((result) => {
+		        if (result.isConfirmed) {
+		            location.href = "/members/delete"; // 확인 누르면 이동
+		        }
+			})
 		})
 		
     </script>
