@@ -114,7 +114,6 @@ body, html {
 	border-radius: 10px;
 	margin-top: 10px;
 	margin-left: 20px;
-	
 	position: relative;
 	height: 300px; /* 적당히 고정 */
 	overflow: hidden;
@@ -190,10 +189,41 @@ body, html {
 }
 
 .orderBy {
-	text-align: right;
-	line-height: 70px;
+	display: flex;
+	justify-content: right; /* 가로(수평) 오른쪽 정렬 */
+	align-items: center; /* 세로(수직) 중앙 정렬 */
+
 	padding-right: 50px;
-	height: 20px;
+	height: 60px;
+	border: 2px solid blue;
+}
+
+.searchBox{
+	border: 1px solid red;
+	width: 300px;
+	
+	display: flex;
+}
+
+.inputSearch {
+	/* 수정: 고정 1500px 제거 */
+	width: 85%;
+	max-width: 500px;
+	min-height: 30px;
+}
+
+.searchIconBox{
+	width: 15%;
+	border: 1px solid green;
+	
+	display: flex;
+	justify-content: center; /* 가로(수평) 오른쪽 정렬 */
+	align-items: center; /* 세로(수직) 중앙 정렬 */
+	
+}
+
+.searchIcon{
+	
 }
 
 .popular {
@@ -295,6 +325,7 @@ body, html {
 	right: 30px;
 	top: 30px;
 }
+
 /*  ----------------------------------------------------------------------------------게시글       */
 .postBox {
 	/* 수정: 고정 1500px 제거 */
@@ -304,7 +335,8 @@ body, html {
 	min-height: 200px;
 	height: auto;
 	margin: auto;
-	margin-top: 30px;
+/* 	margin-top: 30px; */
+	margin-bottom: 30px;
 	border-radius: 10px;
 	/*  border: 2px solid #A66A3F; */
 	/* 그림자 효과 */
@@ -406,16 +438,15 @@ body, html {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-
-.report-menu{
-	 font-family: 'GMarketSans';
-     border: 1px solid #A66A3F;
-     border-radius: 5px;
-     background-color: #F2D3A2;
-     color: #A66A3F;
-     font-size: 12px;
-     padding: 2px;
-     outline: none;
+.report-menu {
+	font-family: 'GMarketSans';
+	border: 1px solid #A66A3F;
+	border-radius: 5px;
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	font-size: 12px;
+	padding: 2px;
+	outline: none;
 }
 
 .postMidBox {
@@ -527,73 +558,73 @@ body, html {
 	object-fit: cover;
 }
 
-		.pageBox{
-		    text-align: center;
-		    padding: 20px;
-		    font-size: 18px;
-		    color: #A66A3F;
-		    margin-bottom: 55px;
-		}
-		
-		.pageBox a{
-		    display: inline-block;
-		    min-width:35px;
-		    padding:6px 10px;
-		    margin: 0 8px;
-		    text-decoration: none;
-		    color: #A66A3F;
-		    border-radius:6px;
-		    transition:0.2s;
-		    font-weight: normal;
-		    cursor: pointer;
-		}
-		
-		.pageBox a.active{
-			background-color:#fecc56;
-		    font-weight: bold;
-		    color: #5e361a;
-		}
-		
-		.pageBox a:hover{
-		    background-color:#F2D3A2;
-		}
-		
-		.popup-overlay {
-		    position: fixed;
-		    top: 0; left: 0;
-		    width: 100%; height: 100%;
-		    background: rgba(0, 0, 0, 0.7); /* 배경을 조금 더 어둡게 */
-		    display: none; /* 기본은 숨김 */
-		    justify-content: center;
-		    align-items: center;
-		    z-index: 9999; /* 상단바보다 훨씬 높게 설정 */
-		}
-		
-		.popup-content img {
-		    max-width: 100%; /* 이미지가 팝업창을 넘어가지 않도록 */
-		    border-radius: 20px;
-		    width: 500px;
-		}
-		
-		/* 닫기 버튼 */
-		.close-btn {
-		    width: 100%;
-		    padding: 10px;
-		    margin-top: 10px;
-		    background-color: #FFB300;
-		    color: #5e361a;
-		    border: none;
-		    border-radius: 5px;
-		    cursor: pointer;
-		    font-weight: bold;
-		    font-size: 20px;
-		}
-		
-		.close-btn:hover {
-		    background-color: #fecc56;
-		}
-		
-		
+.pageBox {
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #A66A3F;
+	margin-bottom: 55px;
+}
+
+.pageBox a {
+	display: inline-block;
+	min-width: 35px;
+	padding: 6px 10px;
+	margin: 0 8px;
+	text-decoration: none;
+	color: #A66A3F;
+	border-radius: 6px;
+	transition: 0.2s;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.pageBox a.active {
+	background-color: #fecc56;
+	font-weight: bold;
+	color: #5e361a;
+}
+
+.pageBox a:hover {
+	background-color: #F2D3A2;
+}
+
+.popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7); /* 배경을 조금 더 어둡게 */
+	display: none; /* 기본은 숨김 */
+	justify-content: center;
+	align-items: center;
+	z-index: 9999; /* 상단바보다 훨씬 높게 설정 */
+}
+
+.popup-content img {
+	max-width: 100%; /* 이미지가 팝업창을 넘어가지 않도록 */
+	border-radius: 20px;
+	width: 500px;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+	width: 100%;
+	padding: 10px;
+	margin-top: 10px;
+	background-color: #FFB300;
+	color: #5e361a;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.close-btn:hover {
+	background-color: #fecc56;
+}
 </style>
 </head>
 
@@ -645,24 +676,21 @@ body, html {
 			<div class="categoryBtn">
 				<a href="/"><button type="button" class="nowBtn"
 						style="background-color: #fecc56; border-radius: 10px; height: 30px; margin-right: 10px;">
-						<i class="navicon fa-solid fa-house fa-lg"></i> 전체</button></a>
-						
-					 <a href="/board/lifeInfo"><button type="button"
+						<i class="navicon fa-solid fa-house fa-lg"></i> 전체
+					</button></a> <a href="/board/lifeInfo"><button type="button"
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-						<i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보</button></a>
-					
-				<a href="/board/food"><button type="button"
-					style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-					<i class="fa-solid fa-utensils fa-lg" style="color: #3e5e40;"></i> 맛집/카페</button></a>
-				
-				<a href="/board/talk"><button type="button"
+						<i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보
+					</button></a> <a href="/board/food"><button type="button"
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-						<i class="fa-regular fa-comment-dots fa-lg" style="color: #3e5e40;"></i> 고민/이야기</button></a>
-					
-				<a href="/board/beauty"><button type="button"
-					style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px;">
-					<i class="fa-solid fa-shirt fa-lg" style="color: #3e5e40;"></i> 미용/패션</button></a>
-				
+						<i class="fa-solid fa-utensils fa-lg" style="color: #3e5e40;"></i> 맛집/카페
+					</button></a> <a href="/board/talk"><button type="button"
+						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
+						<i class="fa-regular fa-comment-dots fa-lg" style="color: #3e5e40;"></i> 고민/이야기
+					</button></a> <a href="/board/beauty"><button type="button"
+						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px;">
+						<i class="fa-solid fa-shirt fa-lg" style="color: #3e5e40;"></i> 미용/패션
+					</button></a>
+
 			</div>
 
 			<div class="subBox">
@@ -682,6 +710,13 @@ body, html {
 						<c:otherwise>
 
 							<div class="orderBy">
+								<div class="searchBox">
+									<input class="inputSearch" placeholder="검색할 게시글의 제목을 입력해주세요.">
+									<div class="searchIconBox">
+										<i class="searchIcon fa-solid fa-magnifying-glass"></i>
+									</div>
+								</div>
+
 								<!-- 버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
 								<button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
 							</div>
@@ -689,7 +724,7 @@ body, html {
 							<!-- 게시글영역 -->
 							<c:forEach var="i" items="${list}">
 								<div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
-								<!-- data-seq는 ajax로 댓글 수 표시할 때 해당 게시글 번호를 기억하기 위해 달아놓음.	 -->
+									<!-- data-seq는 ajax로 댓글 수 표시할 때 해당 게시글 번호를 기억하기 위해 달아놓음.	 -->
 									<div class="postUpBox">
 
 										<div class="postProfile">
@@ -725,8 +760,7 @@ body, html {
 										<c:if test="${loginId != null && loginId != i.mem_id}">
 											<div class="reportArea">
 												<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
-													style="width: 25px; height: 25px; margin-bottom: 5px"></img> 
-												<select class="reportSelect">
+													style="width: 25px; height: 25px; margin-bottom: 5px"></img> <select class="reportSelect">
 													<option class="report-menu" disabled selected>신고 사유</option>
 													<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
 													<option class="report-menu" value="badWord">욕설/비방</option>
@@ -745,24 +779,24 @@ body, html {
 
 									</div>
 
-								<c:if test="${loginId != null}">
-									<div class="postDownBox">
+									<c:if test="${loginId != null}">
+										<div class="postDownBox">
 
-										<div class="postLikeBox  ${i.post_like_check == 1 ? 'active' : ''}">
-											<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
+											<div class="postLikeBox  ${i.post_like_check == 1 ? 'active' : ''}">
+												<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
 
-											<div class="likeCount infoCount">${i.post_like }</div>
+												<div class="likeCount infoCount">${i.post_like }</div>
+											</div>
+
+											<div class="postCommentBox">
+												<i class="fa-regular fa-comment fa-xl comment"></i>
+
+												<div class="commentCount infoCount">${i.post_hit}</div>
+											</div>
+
 										</div>
+									</c:if>
 
-										<div class="postCommentBox">
-											<i class="fa-regular fa-comment fa-xl comment"></i>
-
-											<div class="commentCount infoCount">${i.post_hit}</div>
-										</div>
-
-									</div>
-								</c:if>
-									
 								</div>
 							</c:forEach>
 						</c:otherwise>
@@ -805,23 +839,23 @@ body, html {
 		</div>
 
 	</div>
-	
-	
+
+
 	<!-- 팝업창 -->
 	<div class="mainPopup popup-overlay" style="display: none;">
-		<div class="popup-content"> 
-		
+		<div class="popup-content">
+
 			<div class="popup-body">
 				<img src="/resources/images/seoul.png">
 			</div>
-			
+
 			<div class="popup-footer">
 				<button onclick="closePopup()" class="close-btn">닫기</button>
 			</div>
-		
+
 		</div>
 	</div>
-	
+
 
 	<script>
 		
