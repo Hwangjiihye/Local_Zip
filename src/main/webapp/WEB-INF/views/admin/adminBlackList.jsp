@@ -346,6 +346,11 @@ img{
      outline: none;
 }
 
+.active {
+	color: red;
+	font-weight: bold;
+}
+
 </style>
 </head>
 
@@ -378,7 +383,7 @@ img{
 		
 		<div id="reportListWrap"></div>
 		
-		<div class="pageBox"></div>
+		<div class="pageNum"></div>
     	
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
@@ -390,6 +395,53 @@ img{
 	</div>
 	
 	<script>
+	
+			let recordTotalCount = ${recordTotalCount}; // 데이터개수
+			let recordCountPerPage = ${recordCountPerPage} // 몇 개 게시글 표시?
+			let naviCountPerPage = ${naviCountPerPage} // 네비게이터 몇 개 표시?
+			let currentPage = ${currentPage} // 시작페이지
+			
+			// 총 몇 페이지가 필요한지?
+			let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
+			
+			// 시작 / 끝 페이지 지정
+			let startNavi = Math.floor(((currentPage - 1) / naviCountPerPage)) * naviCountPerPage + 1;
+			let endNavi = startNavi + naviCountPerPage - 1;
+			
+			if(endNavi > pageTotalCount){
+				endNavi = pageTotalCount;
+			}
+			
+			let needPrev = true;
+			let needNext = true;
+			
+			if(startNavi == 1){needPrev = false};
+			if(endNavi == pageTotalCount){needNext = false};
+			
+			if(needPrev){
+				let prev = $("<a>");
+				prev.attr("href","/admin/adminBlackList?cpage=" + (startNavi-1));
+				prev.html("<< ");
+				$(".pageNum").append(prev);
+			}
+			
+			for(let i = startNavi; i <= endNavi; i++){
+				let navi = $("<a>");
+				navi.attr("href","/admin/adminBlackList?cpage=" + i);
+				navi.html(i + " ");
+				
+				if(i == currentPage){
+					navi.addClass("active");
+				}
+				$(".pageNum").append(navi);
+			}
+			
+			if(needNext){
+				let next = $("<a>");
+				next.attr("href", "/admin/adminBlackList?cpage=" + (endNavi+1));
+				next.html(">>");
+				$(".pageNum").append(next);
+			}
 
 				
 			// 신고목록 출력

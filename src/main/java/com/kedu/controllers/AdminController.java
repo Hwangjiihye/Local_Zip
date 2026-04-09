@@ -318,10 +318,12 @@ public class AdminController {
 	
 	
 	
-	// 신고관리 페이지로 이동
+// 신고관리 페이지로 이동
 	@RequestMapping("/adminBlackList")
-	public String adminBlackList(Model model) {
+	public String adminBlackList(Model model, int cpage, HttpSession session) {
 		model.addAttribute("menu", "report");
+		List<ReportDTO> list = dao.selectGetPage(cpage * 10 - 9, cpage * 10);
+		
 		
 		// 전체 신고목록 개수 카운트
 		int allCount = dao.reportAllCount();
@@ -334,6 +336,13 @@ public class AdminController {
 		model.addAttribute("handleCount", handleCount);
 		model.addAttribute("count", count);
 		
+		model.addAttribute("list", list);
+		model.addAttribute("recordCountPerPage", 10);
+		model.addAttribute("naviCountPerPage", 10);
+		model.addAttribute("recordTotalCount", count);
+		model.addAttribute("currentPage", cpage);
+		
+		session.setAttribute("cpage", cpage);
 		return "/admin/adminBlackList";
 	}
 	

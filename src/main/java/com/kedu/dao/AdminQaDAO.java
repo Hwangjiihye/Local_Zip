@@ -305,5 +305,9 @@ public class AdminQaDAO {
 		return jdbc.update(sql, reports_seq);
 	}
 	
+	public List<ReportDTO> selectGetPage(int start, int end){ // cpage
+		String sql = "select * from(select reports.*, row_number() over(order by seq desc) num from reports) where num between ? and ? ";
+		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class),start,end);
+	}
 	
 }
