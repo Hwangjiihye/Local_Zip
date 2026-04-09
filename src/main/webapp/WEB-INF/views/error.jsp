@@ -61,7 +61,6 @@ button, body {
 	width: 100%;
 	min-height: 100vh;
 	/* 최소 높이 지정 : 브라우저 */
-	border: 1px solid black;
 	background-color: #fbe5c0;
 }
 
@@ -71,7 +70,7 @@ button, body {
 	left: 0;
 	width: 100%;
 	height: 100px;
-	text-align: center; /* 글자 가로 중앙 정렬 */
+	padding-left:20px;
 	font-weight: bold;
 	font-size: 50px;
 	color: #A66A3F;
@@ -85,41 +84,40 @@ button, body {
 	position: absolute;
 	width: 100%;
 	height: 780px;
-	border: 3px solid red;
 	width: 100%;
 }
 
 .imgBox {
 	width: 100%;
-	height: 60%;
-	border: 1px solid blue;
+	height: 58%;
 }
 
 .errorCode {
 	width: 100%;
 	height: 10%;
-	border: 1px solid orange;
 	font-size: 45px;
 	font-weight: bold;
-/* 	color: #ffb300; */
+	/* 	color: #ffb300; */
 	color: #FF8200;
 	text-shadow: 1px 1px 1px #d49500; /* [가로위치][세로위치][번짐정도][색상] */
 	text-align: center;
 }
 
-.errorMsg {
+.errorMsgBox {
 	width: 100%;
 	height: 90px;
-	border: 1px solid green;
 	color: #5e361a;
-	display: flex;
-	justify-content: center; /* 가로(수평) 중앙 정렬 */
-	align-items: center;
-	display: flex; /* 세로(수직) 중앙 정렬 */
+
+}
+
+.errorMsg {
+	width: 100%;
+	text-align: center;	
 }
 
 .homeBtn {
 	margin: auto;
+	margin-top:5px;
 	width: 500px;
 	height: 80px;
 	border-top-right-radius: 50px;
@@ -166,19 +164,19 @@ button, body {
 	top: 115px;
 }
 
-.errorImg{
+.errorImg {
 	position: absolute;
 	left: 800px;
 	top: 50px;
-	width:350px;
+	width: 350px;
 }
 
-.leftWay{
+.leftWay {
 	left: 550px;
 	transform: rotate(-10deg); /* 회전 */
 }
 
-.rightWay{
+.rightWay {
 	right: 550px;
 	transform: rotate(15deg); /* 회전 */
 }
@@ -209,23 +207,20 @@ button, body {
 
 		<div class="midBox">
 			<div class="imgBox">
-				<img class="leftWay" src="/resources/images/path.png">
-				
-				<img class="errorImg" src="resources/images/errorImg.png">
-				
-				<img class="rightWay" src="/resources/images/pathway.png">
-			
-				<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
-			    <img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
-			
-			</div>
-		
-			<div class="errorCode">404 - 길을 잃으신 것 같아요!</div> 
+				<img class="leftWay" src="/resources/images/path.png"> <img class="errorImg"
+					src="resources/images/errorImg.png"> <img class="rightWay" src="/resources/images/pathway.png"> <img
+					class="leftImg" src="/resources/images/왼쪽 모서리 풀.png"> <img class="rightImg"
+					src="/resources/images/오른쪽 모서리 풀.png">
 
-			<div class="errorMsg">
-				입력하신 주소가 정확한지 확인해주세요.<br> 원하시는 페이지가 존재하지 않거나, 현재 사용할 수 없는 상태입니다.
 			</div>
 
+			<div class="errorCode">404 - 길을 잃으신 것 같아요!</div>
+
+			<div class="errorMsgBox">
+				<div class="errorMsg">
+					입력하신 주소가 정확한지 확인해주세요.<br> 원하시는 페이지가 존재하지 않거나, 현재 사용할 수 없는 상태입니다.
+				</div>
+			</div>
 			<div class="homeBtn" onclick="location.href='/';">우리동네.zip 홈으로 가기</div>
 		</div>
 
