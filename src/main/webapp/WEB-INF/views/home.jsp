@@ -571,7 +571,7 @@ body, html {
 		
 		.popup-content img {
 		    max-width: 100%; /* 이미지가 팝업창을 넘어가지 않도록 */
-		    border-radius: 10px;
+		    border-radius: 20px;
 		    width: 500px;
 		}
 		

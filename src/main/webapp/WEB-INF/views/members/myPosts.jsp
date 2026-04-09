@@ -339,6 +339,7 @@ button, body {
 				</div>
 				<div class="profileName profileInfo" style="color: #5e361a;">${nickname}</div>
 				<div class="profileLocal profileInfo" style="color: #5e361a;">( 지역(동) : ${dong} )</div>
+				<button onclick="location.href='/error';">에러페이지로 바로가기</button>
 			</div>
 
 			<c:choose>
