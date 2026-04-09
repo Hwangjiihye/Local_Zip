@@ -396,8 +396,11 @@ img{
 			// 버튼 클릭시 status값 컨트롤러로 전달
 			$(document).on("click", ".filterBtn", function(){
 			    let status = $(this).data("status");
-			
-			
+			 	// 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
+			    $(".filterBtn").removeClass("nowBtn");
+			 	// 2. 클릭한 버튼에만 활성화 클래스 추가
+			    $(this).addClass("nowBtn");
+			    
 			    $.ajax({
 					url : "/admin/getReportList",
 					type : "get",
@@ -410,24 +413,15 @@ img{
 					}
 				});
 			});
-			
-			$(document).on("click", ".filterBtn", function(){
-			    // 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
-			    $(".filterBtn").removeClass("nowBtn");
-			    
-			    // 2. 클릭한 버튼에만 활성화 클래스 추가
-			    $(this).addClass("nowBtn");
-			});
 
 			// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
 			$(function(){
 			    $(".filterBtn[data-status='all']").addClass("nowBtn");
-			    loadQaList("all", 1);
+			    loadList("all");
 			});
 			
 			// 페이지 진입시 전체 목록 출력
-			loadDefaultList();
-			function loadDefaultList() {
+			function loadList() {
 			    $.ajax({
 			        url: "/admin/getReportList",
 			        type: "get",
@@ -508,7 +502,7 @@ img{
 			            			</div>
 			        			</div>
 			        			<div class="reportAndBlackBtnDiv">
-			        				<div class="reportAndBlackBtnDiv">
+			        				<div class="reportAndBlackBtn">
 				        				\${btnHtml}
 			        				</div>
 			        					\${selectHtml}
@@ -547,10 +541,11 @@ img{
 					},
 					success : function(resp){
 						alert(mem_id + "님을 블랙리스트에 등록했습니다.");
-						btn.hide();
-						btn.siblings(".reportCheckBtn").hide();
-						btn.closest(".postBox").find(".endOption").hide();
-						btn.siblings(".blackOffBtn").show();
+// 						btn.hide();
+// 						btn.siblings(".reportCheckBtn").hide();
+// 						btn.closest(".postBox").find(".endOption").hide();
+// 						btn.siblings(".blackOffBtn").show();
+
 					}
 				});
 			});

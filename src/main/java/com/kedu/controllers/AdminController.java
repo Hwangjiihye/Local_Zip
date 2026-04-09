@@ -328,7 +328,7 @@ public class AdminController {
 	// 신고관리 -> 신고 목록 출력
 	@ResponseBody
 	@RequestMapping("/getReportList")
-	public Map<String, Object> getReportList(String status, HttpSession session) {
+	public Map<String, Object> getReportList(String status, HttpSession session, Model model) {
 		Map<String, Object> resp = new HashMap<>();
 		List<ReportDTO> list;
 		System.out.println("처리 요청 값 : " + status);
@@ -342,6 +342,7 @@ public class AdminController {
 		session.setAttribute("allCount", allCount);
 		session.setAttribute("handleCount", handleCount);
 		session.setAttribute("count", count);
+		
 		
 		if("3".equals(status)) { // 처리완료건들 출력 ( 3 : 블랙리스트 처리 완료 / 5: 블랙리스트 해제 처리 완료 )
 			list = dao.selectReportContentsByStatusHandle();
