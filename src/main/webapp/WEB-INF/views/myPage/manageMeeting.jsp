@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 		@font-face {
 			font-family: 'GMarketSans';
@@ -225,6 +226,11 @@
 		.btnDiv, .comBtnDiv{
 			margin-top: 20px;
 		}
+		.swal2-icon.swal2-question .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 </style>
 </head>
 <body>
@@ -295,47 +301,72 @@
 		// 승인 버튼 클릭 시
 		$(document).on("click", ".acceptBtn", function(){
 			
-			if(!confirm("신청을 승인하시겠습니까?")){
-				return false;
-			}else{
-				let card = $(this).closest(".meeting-card");
-				let seq = card.data("seq");
-				let meetSeq = card.data("meet_seq");
-			    
-				console.log("seq : ", seq, "meetSeq : ", meetSeq);
-			    $.ajax({
-			        url:"/meetingMember/updateStatus",
-			        data:{
-			        	seq: seq,
-			        	meet_seq: meetSeq,
-			        	status: 1
-			        }
-			    }).done(function(){
-			        	location.reload();
-			    });
-			}
+			let card = $(this).closest(".meeting-card");
+			let seq = card.data("seq");
+			let meetSeq = card.data("meet_seq");
+			
+			Swal.fire({
+		        icon: "question",
+		        title: "Question !",
+		        text: "신청을 승인하시겠습니까?",
+		        iconColor: "#FFB300",
+		        confirmButtonColor: "#FFB300",
+		        showCancelButton: true,
+		        confirmButtonText: "승인",
+		        cancelButtonText: "취소",
+		        cancelButtonColor: "#d9d9d9"
+		    }).then((result) => {
+
+		        if(result.isConfirmed){
+					console.log("seq : ", seq, "meetSeq : ", meetSeq);
+			    	
+					$.ajax({
+				        url:"/meetingMember/updateStatus",
+				        data:{
+				        	seq: seq,
+				        	meet_seq: meetSeq,
+				        	status: 1
+				        }
+				    }).done(function(){
+				        	location.reload();
+				    });
+				}
+		    });
 		});
-		
+			
 		// 거절 버튼 클릭 시
 		$(document).on("click", ".rejectBtn", function(){
-			if(!confirm("신청을 거절하시겠습니까?")){
-				return false;
-			}else{
-				let card = $(this).closest(".meeting-card");
-				let seq = card.data("seq");
-				let meetSeq = card.data("meet_seq");
 			
-			    $.ajax({
-			        url:"/meetingMember/updateStatus",
-			        data:{
-			        	seq: seq,
-			        	meet_seq: meetSeq,
-			        	status: 2
-			        }
-			    }).done(function(){
-			        location.reload();
-			    });
-			}
+			let card = $(this).closest(".meeting-card");
+			let seq = card.data("seq");
+			let meetSeq = card.data("meet_seq");
+			
+			Swal.fire({
+		        icon: "question",
+		        title: "Question !",
+		        text: "신청을 거절하시겠습니까?",
+		        iconColor: "#FFB300",
+		        confirmButtonColor: "#FFB300",
+		        showCancelButton: true,
+		        confirmButtonText: "거절",
+		        cancelButtonText: "취소",
+		        cancelButtonColor: "#d9d9d9"
+		    }).then((result) => {
+
+		        if(result.isConfirmed){
+			
+				    $.ajax({
+				        url:"/meetingMember/updateStatus",
+				        data:{
+				        	seq: seq,
+				        	meet_seq: meetSeq,
+				        	status: 2
+				        }
+				    }).done(function(){
+				        location.reload();
+				    });
+				}
+		    });
 		});
 		
 		// 처리된 리스트 출력
