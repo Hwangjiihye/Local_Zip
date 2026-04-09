@@ -114,6 +114,11 @@ public class MembersDAO {
 			return null;
 		}
 	}
+	
+	public int updateMemberStatus(String mem_id) { // 블랙리스트 기간 만료시 (membersTable status 업데이트) 로직
+		String sql = "update members set mem_status =3 where mem_id =? ";
+		return jdbc.update(sql, mem_id);
+	}
 }
 
 

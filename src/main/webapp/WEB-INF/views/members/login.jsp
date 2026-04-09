@@ -256,7 +256,7 @@ input{
 				if(endDate == "영구 정지"){
 					alertMsg += "상태 : 영구정지";
 				}else{
-					alert("제한 해제일 : "  + endDate);
+					alertMsg += "제한 해제일 : "  + endDate;
 				}
 			alert(alertMsg);
 		}

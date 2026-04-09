@@ -292,7 +292,7 @@ img{
  	padding-left:20px;
 }
 
-.reportCheckBtn, .blackOnBtn, .blackOffBtn{
+.reportCheckBtn, .blackOnBtn, .blackOffBtn, .blackOffCheckBtn{
 	width: 250px;
 	color: #5e361a;
     height: 35px;
@@ -312,6 +312,11 @@ img{
 }
 
 .blackOffBtn{
+	width: 270px;
+	background-color: #6DBE45;
+}
+
+.blackOffCheckBtn{
 	width: 270px;
 	background-color: #6DBE45;
 }
@@ -368,7 +373,7 @@ img{
 		<div class="reportBtnDiv">
 				<button class="navicon filterBtn" data-status="all">전체 ${allCount}</button>
 				<button class="navicon filterBtn" data-status="4">미처리 ${count}</button>
-				<button class="navicon filterBtn" data-status="3">처리완료 ${handelCount}</button>
+				<button class="navicon filterBtn" data-status="3">처리완료 ${handleCount}</button>
 		</div>
 		
 		<div id="reportListWrap"></div>
@@ -385,91 +390,7 @@ img{
 	</div>
 	
 	<script>
-// 			$(document).on("click", ".filterBtn", function(){
-// 			    // 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
-// 			    $(".filterBtn").removeClass("nowBtn");
-			    
-// 			    // 2. 클릭한 버튼에만 활성화 클래스 추가
-// 			    $(this).addClass("nowBtn");
-		
-// 			    let status = $(this).data("status");
-// 			    loadQaList(status, 1);
-// 			});
 
-// 			// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
-// 			$(function(){
-// 			    $(".filterBtn[data-status='all']").addClass("nowBtn");
-// 			    loadQaList("all", 1);
-// 			});
-
-// 			let currentStatus = "all";
-	
-// 			$(function(){
-// 			    loadQaList("all", 1);
-// 			});
-			
-			
-// 			function loadReportList(status,cpage){
-// 				currentStatus = status;
-				
-// 			    $.ajax({
-// 			        url : "/admin/qaList",
-// 			        type : "get",
-// 			        data : { 
-// 			        	status : status,
-// 			        	cpage : cpage
-// 			        },
-// 			        dataType : "json",
-// 			        success : function(resp){
-// 			        	console.log(resp);
-// 			            console.log(resp.pageNavi);
-// 			            drawReportList(resp.list);
-// 			            drawPageNavi(resp.pageNavi);
-// 			        }
-// 			    });
-// 			}
-			
-// 			$(document).on("click", ".filterBtn", function(){
-// 			    let status = $(this).data("status");
-// 			    loadReportList(status, 1);
-// 			});
-			
-// 			$(document).on("click", ".pageLink", function(){
-// 			    let page = $(this).data("page");
-// 			    loadReportList(currentStatus, page);
-// 			});
-			
-// 			function drawPageNavi(pageNavi){
-// 			    $(".pageBox").empty();
-// 			    let html = "";
-			    
-// 			    if(pageNavi.needPrev){
-// 			    	html += `
-// 			            <a href="javascript:void(0)" class="pageLink" data-page="\${pageNavi.startNavi - 1}">
-// 			                <i class="fa-solid fa-chevron-left"></i>
-// 			            </a>
-// 			        `;
-// 			    }
-
-// 			    for(let i = pageNavi.startNavi; i <= pageNavi.endNavi; i++){
-// 			        let activeClass = (i == pageNavi.cpage) ? "active" : "";
-
-// 			        html += `
-// 			            <a href="javascript:void(0)" class="pageLink \${activeClass}" data-page="\${i}">
-// 			                \${i}
-// 			            </a>
-// 			        `;
-// 			    }
-
-// 			    if(pageNavi.needNext){
-// 			    	html += `
-// 			            <a href="javascript:void(0)" class="pageLink" data-page="\${pageNavi.endNavi + 1}">
-// 			                <i class="fa-solid fa-chevron-right"></i>
-// 			            </a>
-// 			        `;
-// 			    }
-// 			    $(".pageBox").html(html);
-// 			}
 				
 			// 신고목록 출력
 			// 버튼 클릭시 status값 컨트롤러로 전달
@@ -539,7 +460,7 @@ img{
 				 	
 				 	if(i.reports_status == 4){
 				 		btnHtml = `
-				 			<button class="onBtn reportCheckBtn">신고 확인</button>
+				 			<button class="onBtn reportCheckBtn" data-reports_seq ="\${i.reports_seq}">반려</button>
 	        				<button class="onBtn blackOnBtn" data-target_id="\${i.target_id}" data-reports_reason="\${i.reports_reason}" data-reports_status="\${i.reports_status}" data-target_seq="\${i.target_seq}">블랙리스트</button>
 	        				<button class="offBtn blackOffBtn" style="display:none;" data-target_id="\${i.target_id}">해제</button>
 			 			`;
@@ -558,6 +479,11 @@ img{
 				 	}else if(i.reports_status == 3){
 				 		btnHtml = `
 				 			<button class="offBtn blackOffBtn" data-target_id="\${i.target_id}">해제</button>
+        				`;
+        				selectHtml = "";
+				 	}else if(i.reports_status == 5){
+				 		btnHtml = `
+				 			<button class="blackOffCheckBtn" disabled>해제완료</button>
         				`;
         				selectHtml = "";
 				 	}
@@ -622,8 +548,9 @@ img{
 					success : function(resp){
 						alert(mem_id + "님을 블랙리스트에 등록했습니다.");
 						btn.hide();
+						btn.siblings(".reportCheckBtn").hide();
+						btn.closest(".postBox").find(".endOption").hide();
 						btn.siblings(".blackOffBtn").show();
-						btn.closest(".postBox").find(".endOption").val("정지일수");
 					}
 				});
 			});
@@ -637,65 +564,37 @@ img{
 					type : "get",
 					data : {
 						mem_status : 3,
-						target_id : target_id
+						target_id : target_id,
+						reports_status : 5
 					},
 					success : function(resp){
 						alert(target_id + "님을 블랙리스트에서 해제했습니다.");
 						btn.hide();
-						btn.siblings(".blackOnBtn").show();
+						btn.closest(".reportAndBlackBtnDiv").html(`
+								<button class="blackOffCheckBtn" disabled>해제완료</button>
+						`);
 					}
 				});
 			});
-// 				for(let i of list){
-					
-// 					let categoryText = "";
-					
-// 					if(i.qa_category == 0){
-// 						categoryText = "계정/로그인";
-// 					}else if(i.qa_category == 1){
-// 						categoryText = "이용문의";
-// 					}else if(i.qa_category == 2){
-// 						categoryText = "기타";
-// 					}
-					
-// 					let reportHtml = "";
-					
-// 						reportHtml = `
-// 							<div class="qaReply">
-// 	        					<div class="qaReplyRow">
-// 				        			<div class="adminProfileDiv">
-// 				        				<div class="replyAdminId">관리자</div>
-// 			        				</div>
-// 			        				<div class="replyTextAndBtn">
-// 				            			<div class="answerDiv">\${i.admin_answer}</div>
-// 					            		<div class="adminBtnArea">
-// 					            			<button class="adminBtn updateBtn" type="button" data-seq="\${i.qa_seq}">신고확인</button>
-// 					            			<button class="adminBtn deleteBtn" type="button" data-seq="\${i.qa_seq}">블랙리스트</button>
-// 					            			<button class="UpdateBtn saveBtn replyBtn" type="button" data-seq="\${i.qa_seq}" style="display:none">해제</button>
-// 						            	</div>
-// 				            		</div>
-// 				            	</div>
-// 		        			</div>
-// 	        			`;
-// 					}
-					
 			
-			
-			
-			
-// 				$(document).on("click", ".cenBtn", function(){
-// 					let parentRow = $(this).closest(".replyTextAndBtn");
-// 				    let answerDiv = parentRow.find(".answerDiv");
-				    
-// 				    let originalText = answerDiv.data("origin");
-// 				    answerDiv.html(originalText);
-// 				    answerDiv.removeClass("editing");
-				    
-// 				    parentRow.find(".saveBtn, .cenBtn").hide();
-// 				    parentRow.find(".updateBtn, .deleteBtn").show();
-// 				});
+			$(document).on("click", ".reportCheckBtn", function(){ // 반려버튼 눌렀을 때, 신고목록 삭제 / 리스트 미출력
+				let btn = $(this);
+				let reports_seq = btn.data("reports_seq");
 				
-				
+				if(confirm("정말 반려 처리하시겠습니까?")){
+					$.ajax({
+						url : "/admin/reportReject",
+						type : "get",
+						data : {
+							reports_seq : reports_seq
+						},
+						success : function(resp){
+							alert("반려 처리가 완료되었습니다.");
+							btn.closest(".postBox").remove(); // 반려 처리된 목록 바로 제거 ( 새로고침해도 DB는 연동되어 목록 출력되지 않음. )
+						}
+					});
+				}
+			});
 	</script>
 </body>
 </html>
