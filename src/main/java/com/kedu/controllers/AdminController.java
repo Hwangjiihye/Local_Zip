@@ -198,6 +198,126 @@ public class AdminController {
 		return "fail";
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 신고관리 페이지로 이동
 	@RequestMapping("/adminBlackList")
 	public String adminBlackList(Model model) {
@@ -259,18 +379,18 @@ public class AdminController {
 			dao.updateBlackEndDate(banDays, target_id);
 		}
 		// 블랙리스트 등록 시 reports 테이블 status 업데이트
-		dao.updateReportsStatus(reports_status, target_seq);
+		dao.updateReportStatus(reports_status, target_id, target_seq);
 		return "success";
 	}
 	
 	// 블랙리스트 해제
 	@ResponseBody
 	@RequestMapping("/blackOff")
-	public String blackOff(int mem_status, int reports_status, String target_id, int target_seq) {
+	public String blackOff(int mem_status, int reports_status, String target_id) {
 		
 		dao.deleteMembersStatus(mem_status, target_id); // 블랙리스트 해제 (membersTable status 업데이트) 로직
 		dao.deleteBlackList(target_id); // 블랙리스트 정지시작/종료일수 비우기 (blackList Table) 로직
-		dao.updateReportStatus(reports_status, target_seq); // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
+		dao.updateReportStatus(reports_status, target_id); // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
 		
 		return "success";
 	}
@@ -286,11 +406,3 @@ public class AdminController {
 	}
 	
 }
-
-
-
-
-
-
-
-

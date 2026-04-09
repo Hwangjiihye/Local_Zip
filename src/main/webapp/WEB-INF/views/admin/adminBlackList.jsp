@@ -390,18 +390,19 @@ img{
 	</div>
 	
 	<script>
-			let currentStatus = "all";
+
+				
 			// 신고목록 출력
 			// 버튼 클릭시 status값 컨트롤러로 전달
 			$(document).on("click", ".filterBtn", function(){
-			    currentStatus = $(this).data("status");
-				
+			    let status = $(this).data("status");
+			
 			
 			    $.ajax({
 					url : "/admin/getReportList",
 					type : "get",
 					data : {
-						status : currentStatus
+						status : status
 					},
 					dataType : "json",
 					success : function(resp){
@@ -421,6 +422,7 @@ img{
 			// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
 			$(function(){
 			    $(".filterBtn[data-status='all']").addClass("nowBtn");
+			    loadQaList("all", 1);
 			});
 			
 			// 페이지 진입시 전체 목록 출력
@@ -440,11 +442,11 @@ img{
 			// status값으로 처리완료/미처리 리스트 출력
 			function drawreportList(list){
 				$("#reportListWrap").empty();
-				console.log("리스트 다시 그림");
+				
 				
 				if(list.length == 0){
 					$("#reportListWrap").append(`
-						<div class="postBox" data-target_seq="\${i.target_seq}">
+						<div class="postBox">
 							<div class="postBody">처리할 신고 내역이 없습니다.</div>
 						</div>		
 					`);
@@ -460,7 +462,7 @@ img{
 				 		btnHtml = `
 				 			<button class="onBtn reportCheckBtn" data-reports_seq ="\${i.reports_seq}">반려</button>
 	        				<button class="onBtn blackOnBtn" data-target_id="\${i.target_id}" data-reports_reason="\${i.reports_reason}" data-reports_status="\${i.reports_status}" data-target_seq="\${i.target_seq}">블랙리스트</button>
-	        				<button class="offBtn blackOffBtn" style="display:none;" data-target_id="\${i.target_id}" data-target_seq="\${i.target_seq}">해제</button>
+	        				<button class="offBtn blackOffBtn" style="display:none;" data-target_id="\${i.target_id}">해제</button>
 			 			`;
 				 	
 				 		selectHtml = `
@@ -476,7 +478,7 @@ img{
         				`;
 				 	}else if(i.reports_status == 3){
 				 		btnHtml = `
-				 			<button class="offBtn blackOffBtn" data-target_id="\${i.target_id}" data-target_seq="\${i.target_seq}">해제</button>
+				 			<button class="offBtn blackOffBtn" data-target_id="\${i.target_id}">해제</button>
         				`;
         				selectHtml = "";
 				 	}else if(i.reports_status == 5){
@@ -487,7 +489,7 @@ img{
 				 	}
 				 	
 						html = `
-							<div class="postBox" data-target_seq="\${i.target_seq}">
+							<div class="postBox">
 					        	<div class="postHeader">
 					       			<div class="reportWriter">
 					           			<div class="writer">신고자: \${i.mem_id}</div> 
@@ -506,7 +508,7 @@ img{
 			            			</div>
 			        			</div>
 			        			<div class="reportAndBlackBtnDiv">
-			        				<div class="reportAndBlackBtn">
+			        				<div class="reportAndBlackBtnDiv">
 				        				\${btnHtml}
 			        				</div>
 			        					\${selectHtml}
@@ -527,7 +529,6 @@ img{
 				let reports_status = btn.data("reports_status");
 				let target_seq = btn.data("target_seq");
 				
-				
 				if(day == null){
 					alert("정지일수를 먼저 선택해 주세요.");
 					return;
@@ -542,48 +543,20 @@ img{
 						target_seq : target_seq,
 						black_option : reports_reason,
 						reports_status : 3,
-						day : day,
-						status : currentStatus
+						day : day
 					},
 					success : function(resp){
 						alert(mem_id + "님을 블랙리스트에 등록했습니다.");
-						console.log("버튼 바꾸기 실행됨");
-// 						let boxes = $(`.postBox[data-target_seq='${target_seq}']`);
-						
-// 						boxes.each(function(){
-// 							let box = $(this)
-							
-// 							box.find(".reportCheckBtn").hide();
-// 							box.find(".blackOnBtn").hide();
-// 							box.find(".endOption").hide();
-// 							box.find(".blackOffBtn").show();
-// 					        box.find(".reportAndBlackBtn").html(`
-// 						            <button class="offBtn blackOffBtn" 
-// 						                data-target_id="${mem_id}" 
-// 						                data-target_seq="${target_seq}">
-// 						                해제
-// 						            </button>
-// 			                `);
-// 						});
-
-						let boxes = $(`.postBox[data-target_seq='${target_seq}']`);
-			            boxes.each(function() {
-			                let box = $(this);
-			                // 1. 기존 버튼 영역(반려, 블랙리스트, 선택창)을 비웁니다.
-			                box.find(".reportAndBlackBtn").empty(); 
-			                box.find(".endDiv").remove(); // select를 감싸는 div 삭제
-			                
-			                // 2. 새 버튼(해제)을 추가합니다.
-			                let newBtn = `<button class="offBtn blackOffBtn" data-target_id="${mem_id}" data-target_seq="${target_seq}">해제</button>`;
-			                box.find(".reportAndBlackBtn").append(newBtn);
-			            });
+						btn.hide();
+						btn.siblings(".reportCheckBtn").hide();
+						btn.closest(".postBox").find(".endOption").hide();
+						btn.siblings(".blackOffBtn").show();
 					}
 				});
 			});
 			
 			$(document).on("click", ".blackOffBtn",  function(){
 				let btn = $(this)
-				let target_seq = btn.data("target_seq");
 				let target_id = btn.data("target_id");
 				
 				$.ajax({
@@ -592,24 +565,14 @@ img{
 					data : {
 						mem_status : 3,
 						target_id : target_id,
-						target_seq : target_seq,
-						reports_status : 5,
-						status : currentStatus
+						reports_status : 5
 					},
 					success : function(resp){
 						alert(target_id + "님을 블랙리스트에서 해제했습니다.");
-						
-						let boxes = $(`.postBox[data-target_seq='${target_seq}']`);
-						
-						boxes.each(function(){
-							let box = $(this);
-							
-							box.find(".blackOffBtn").hide();
-							box.find(".blackOffCheckBtn").show();
-// 							box.find(".reportAndBlackBtn").html(`
-// 						            <button class="blackOffCheckBtn" disabled>해제완료</button>
-// 						        `);
-						});
+						btn.hide();
+						btn.closest(".reportAndBlackBtnDiv").html(`
+								<button class="blackOffCheckBtn" disabled>해제완료</button>
+						`);
 					}
 				});
 			});
