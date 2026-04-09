@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kedu.dao.AdminQaDAO;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.NoticeDAO;
-import com.kedu.dao.ReportDAO;
 import com.kedu.dao.VisitLogDAO;
+import com.kedu.dto.BlackListDTO;
 import com.kedu.dto.NoticeDTO;
 import com.kedu.dto.QaDTO;
 import com.kedu.dto.ReportDTO;
@@ -211,21 +211,20 @@ public class AdminController {
 	public Map<String, Object> getReportList(String status, HttpSession session) {
 		Map<String, Object> resp = new HashMap<>();
 		List<ReportDTO> list;
-		
+		System.out.println("처리 요청 값 : " + status);
 		// 전체 신고목록 개수 카운트
 		int allCount = dao.reportAllCount();
 		// 처리완료 신고목록 개수 카운트
-		int handelCount = dao.reportHandleCount();
+		int handleCount = dao.reportHandleCount();
 		// 미처리 신고목록 개수 카운트
 		int count = dao.reportCount();
 		
 		session.setAttribute("allCount", allCount);
-		session.setAttribute("handelCount", handelCount);
+		session.setAttribute("handleCount", handleCount);
 		session.setAttribute("count", count);
 		
-		if("3".equals(status)) { // 처리완료건들 출력
-			int reportStatus = Integer.parseInt(status);
-			list = dao.selectReportContentsByStatusHandle(reportStatus);
+		if("3".equals(status)) { // 처리완료건들 출력 ( 3 : 블랙리스트 처리 완료 / 5: 블랙리스트 해제 처리 완료 )
+			list = dao.selectReportContentsByStatusHandle();
 		}else if("4".equals(status)) { // 미처리건들 출력
 			int reportStatus = Integer.parseInt(status);
 			list = dao.selectReportContentsByStatus(reportStatus);
@@ -241,7 +240,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping("/blackOn")
 	public String blackOn(int mem_status, String target_id, String black_option, int day, int reports_status, int target_seq) {
-			
+		
 		int banDays;
 			if(day == -1) {
 				banDays = 99999;
@@ -252,9 +251,13 @@ public class AdminController {
 		// members table mem_status 업데이트
 		dao.updateMemberStatus(mem_status, target_id);
 		
-		// blackList table blackList Table status 업데이트
-		dao.insertBlcakList(target_id, black_option, banDays);
-		
+		// blackList table 정지시작/종료일수 업데이트
+		List<BlackListDTO> list = dao.selectById(target_id);
+		if(list == null || list.isEmpty()) {
+			dao.insertBlcakList(target_id, black_option, banDays);
+		}else{
+			dao.updateBlackEndDate(banDays, target_id);
+		}
 		// 블랙리스트 등록 시 reports 테이블 status 업데이트
 		dao.updateReportStatus(reports_status, target_id, target_seq);
 		return "success";
@@ -263,14 +266,25 @@ public class AdminController {
 	// 블랙리스트 해제
 	@ResponseBody
 	@RequestMapping("/blackOff")
-	public String blackOff(int mem_status, String target_id) {
+	public String blackOff(int mem_status, int reports_status, String target_id) {
 		
-		dao.deleteMembersStatus(mem_status, target_id);
-		dao.deleteBlackList(target_id);
+		dao.deleteMembersStatus(mem_status, target_id); // 블랙리스트 해제 (membersTable status 업데이트) 로직
+		dao.deleteBlackList(target_id); // 블랙리스트 정지시작/종료일수 비우기 (blackList Table) 로직
+		dao.updateReportStatus(reports_status, target_id); // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
 		
 		return "success";
-		
 	}
+	
+	// 신고 반려
+	@ResponseBody
+	@RequestMapping("/reportReject")
+	public String reportReject(int reports_seq) {
+		
+		dao.reportReject(reports_seq);
+		
+		return "success";
+	}
+	
 }
 
 
