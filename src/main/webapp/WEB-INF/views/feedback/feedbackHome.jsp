@@ -564,13 +564,16 @@
         			
         			if(resp == "login") {
         				Swal.fire({
-     						icon: "warning",
-     						title: "Wait  !",
-     						text: "로그인 후 이용해주세요",
-     						iconColor: "#FFB300",
-     						confirmButtonColor: "#FFB300"
-     					});
-        			    location.href = "/members/loginUi";
+    				        icon: "warning",
+    				        title: "Wait !",
+    				        text: "로그인 후 이용해주세요",
+    				        iconColor: "#FFB300",
+    				        confirmButtonColor: "#FFB300"
+    				    }).then((result) => {
+    				    	if (result.isConfirmed) {
+        			    		location.href = "/members/loginUi";
+    				    	}
+    				    });
         			    return;
         			}
         			
@@ -637,13 +640,16 @@
         				
         				if(resp == "login") {
         					Swal.fire({
-         						icon: "warning",
-         						title: "Wait  !",
-         						text: "로그인 후 이용해주세요",
-         						iconColor: "#FFB300",
-         						confirmButtonColor: "#FFB300"
-         					});
-        				    location.href = "/members/loginUi";
+        				        icon: "warning",
+        				        title: "Wait !",
+        				        text: "로그인 후 이용해주세요",
+        				        iconColor: "#FFB300",
+        				        confirmButtonColor: "#FFB300"
+        				    }).then((result) => {
+        				    	if (result.isConfirmed) {
+        				    		location.href = "/members/loginUi";
+        				    	}
+        				    });
         				    return;
         				}
         				
