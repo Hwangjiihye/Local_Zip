@@ -13,6 +13,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 		@font-face {
 			font-family: 'GMarketSans';
@@ -264,6 +265,11 @@
 		    overflow:hidden;
 		    text-overflow:ellipsis;
 		}
+		.swal2-icon.swal2-question .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 		
 
 </style>
@@ -354,34 +360,65 @@
 			// 모임 삭제 버튼 클릭 시
 			$(document).on("click",".deleteBtn",function(){
 				let seq = $(this).closest(".meeting-card").data("seq");
-				if(!confirm("정말로 삭제하시겠습니까?")){
-					return;
-				}
-				$.ajax({
-					url:"/meeting/deleteMeeting",
-					data:{
-						seq: seq,
-						status: 2
-					}
-				}).done(function(){
-					location.reload();
-				});
 				
+				Swal.fire({
+			        icon: "warning",
+			        title: "삭제 확인",
+			        text: "정말로 삭제하시겠습니까?",
+			        iconColor: "#FFB300",
+			        confirmButtonColor: "#FFB300",
+			        showCancelButton: true,
+			        confirmButtonText: "삭제",
+			        cancelButtonText: "취소",
+			        cancelButtonColor: "#d9d9d9"
+			    }).then((result) => {
+
+			        if(result.isConfirmed){
+			        	$.ajax({
+							url:"/meeting/deleteMeeting",
+							data:{
+								seq: seq,
+								status: 2
+							}
+						}).done(function(){
+							location.reload();
+						});
+			        }
+				});
 			});
 			
 			// 모임 탈퇴 버튼 클릭 시
 			$(document).on("click",".outBtn",function(){
 				let seq = $(this).closest(".meeting-card").data("seq");
-				if(!confirm("정말로 탈퇴하시겠습니까?")){
-					return;
-				}
-				$.ajax({
-					url:"/meetingMember/outMeeting",
-					data:{seq: seq}
-				}).done(function(){
-					location.reload();
-				})
-			})
+				
+				 Swal.fire({
+				        icon: "warning",
+				        title: "탈퇴 확인",
+				        text: "정말로 탈퇴하시겠습니까?",
+				        iconColor: "#FFB300",
+				        confirmButtonColor: "#FFB300",
+				        showCancelButton: true,
+				        confirmButtonText: "탈퇴",
+				        cancelButtonText: "취소",
+				        cancelButtonColor: "#d9d9d9"
+				    }).then((result) => {
+
+				        if(result.isConfirmed){
+							$.ajax({
+								url:"/meetingMember/outMeeting",
+								data:{seq: seq}
+							}).done(function(){
+								
+								Swal.fire({
+				                    icon: "success",
+				                    title: "탈퇴 완료",
+				                    timer: 1200,
+				                    showConfirmButton: false
+				                }).then(() => location.reload());
+							});
+				        }
+					});
+				});
 	</script>
 </body>
 </html>
