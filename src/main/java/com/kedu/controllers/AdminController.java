@@ -254,23 +254,23 @@ public class AdminController {
 		// blackList table 정지시작/종료일수 업데이트
 		List<BlackListDTO> list = dao.selectById(target_id);
 		if(list == null || list.isEmpty()) {
-			dao.insertBlcakList(target_id, black_option, banDays);
+			dao.insertBlackList(target_id, black_option, banDays);
 		}else{
 			dao.updateBlackEndDate(banDays, target_id);
 		}
 		// 블랙리스트 등록 시 reports 테이블 status 업데이트
-		dao.updateReportStatus(reports_status, target_id, target_seq);
+		dao.updateReportsStatus(reports_status, target_seq);
 		return "success";
 	}
 	
 	// 블랙리스트 해제
 	@ResponseBody
 	@RequestMapping("/blackOff")
-	public String blackOff(int mem_status, int reports_status, String target_id) {
+	public String blackOff(int mem_status, int reports_status, String target_id, int target_seq) {
 		
 		dao.deleteMembersStatus(mem_status, target_id); // 블랙리스트 해제 (membersTable status 업데이트) 로직
 		dao.deleteBlackList(target_id); // 블랙리스트 정지시작/종료일수 비우기 (blackList Table) 로직
-		dao.updateReportStatus(reports_status, target_id); // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
+		dao.updateReportStatus(reports_status, target_seq); // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
 		
 		return "success";
 	}

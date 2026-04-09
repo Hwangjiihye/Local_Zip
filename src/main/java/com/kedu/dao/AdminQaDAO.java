@@ -262,7 +262,7 @@ public class AdminQaDAO {
 		return jdbc.update(sql, mem_status, target_id);
 	}
 	
-	public int insertBlcakList(String targer_id, String black_option, int day) { // 블랙리스트 정지시작/종료일수 (blackList Table 업데이트) 로직
+	public int insertBlackList(String targer_id, String black_option, int day) { // 블랙리스트 정지시작/종료일수 (blackList Table 업데이트) 로직
 		String sql = "insert into blackList (black_seq, mem_id, black_option, start_date, end_date) "
 				+ "values(blackList_seq.nextval, ? , ? , sysdate, sysdate + ?)";
 		return jdbc.update(sql, targer_id, black_option, day);
@@ -280,9 +280,9 @@ public class AdminQaDAO {
 		return jdbc.update(sql , day, mem_id);
 	}
 	
-	public int updateReportStatus(int reports_type, String targer_id, int target_seq) { // 블랙리스트 등록 시 reports 테이블 status 업데이트
-		String sql = "update reports set reports_status =? where target_id =? and target_seq = ?";
-		return jdbc.update(sql, reports_type, targer_id, target_seq);
+	public int updateReportsStatus(int reports_type, int target_seq) { // 블랙리스트 등록 시 reports 테이블 status 업데이트
+		String sql = "update reports set reports_status =? where target_seq = ?";
+		return jdbc.update(sql, reports_type, target_seq);
 	}
 	
 	public int deleteMembersStatus(int mem_status, String target_id) { // 블랙리스트 해제 (membersTable status 업데이트) 로직
@@ -295,9 +295,9 @@ public class AdminQaDAO {
 		return jdbc.update(sql, target_id);
 	}
 	
-	public int updateReportStatus(int reports_status, String target_id) { // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
-		String sql = "update reports set reports_status = ? where target_id = ? and reports_status = 3 ";
-		return jdbc.update(sql, reports_status, target_id);
+	public int updateReportStatus(int reports_status, int target_seq) { // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
+		String sql = "update reports set reports_status = ? where target_seq = ? and reports_status = 3 ";
+		return jdbc.update(sql, reports_status, target_seq);
 	}
 	
 	public int reportReject(int reports_seq) { // 신고 반려 처리 로직
