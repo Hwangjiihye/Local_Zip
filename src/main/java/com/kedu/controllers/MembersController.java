@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
+import com.kedu.dao.AdminQaDAO;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.MembersDAO;
 import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.VisitLogDAO;
+import com.kedu.dto.BlackListDTO;
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.MembersDTO;
 
@@ -36,6 +38,9 @@ public class MembersController {
 	private BoardDAO BoardDao;
 	@Autowired
 	private PostLikeDAO likeDao;
+	
+	@Autowired
+	private AdminQaDAO adao;
 	
 	// 회원가입 창으로 이동 클릭 시
 	@RequestMapping("/join")
@@ -96,42 +101,48 @@ public class MembersController {
 		int result = dao.login(mem_id,  mem_password);
 		
 		if(result == 1) {
-			MembersDTO member = dao.blackListLoginCheck(mem_id, mem_password);
+//			MembersDTO member = dao.blackListLoginCheck(mem_id, mem_password);
 			
+			 List<BlackListDTO> blackList = adao.selectById(mem_id);
 			
-			if(member == null){
-			    rttr.addFlashAttribute("lmsg", "loginFail");
-			    return "redirect:/members/loginUi";
-			    
-			}
-			if(member.getEnd_date() != null) {
-			
+//			if(black == null){
+//			    rttr.addFlashAttribute("lmsg", "loginFail");
+//			    return "redirect:/members/loginUi";
+//			    
+//			}
+			if(blackList != null && !blackList.isEmpty()) {
+				BlackListDTO black = blackList.get(0);
+				
+				if(black.getEnd_date() != null) {
 					try {
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						Date endDate = sdf.parse(member.getEnd_date());
+						Date endDate = sdf.parse(black.getEnd_date());
 						Date now = new Date();
 						
 						if(endDate.after(now)) {
-							Calendar cal = Calendar.getInstance();
-						    cal.setTime(endDate);
-						    int endYear = cal.get(Calendar.YEAR);
-
-						    String dateResult = "";
-					    if (endYear > 2099) {
-					        dateResult = "영구 정지";
-					    }else {
-					    	SimpleDateFormat displaySdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
-					    	dateResult = displaySdf.format(endDate);
-						}
-							rttr.addFlashAttribute("msg", "banned");
-							rttr.addFlashAttribute("endDate", dateResult);
-							return "redirect:/members/loginUi";
+								Calendar cal = Calendar.getInstance();
+							    cal.setTime(endDate);
+							    int endYear = cal.get(Calendar.YEAR);
+	
+							    String dateResult = "";
+						    if (endYear > 2099) {
+						        dateResult = "영구 정지";
+						    }else {
+						    	SimpleDateFormat displaySdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
+						    	dateResult = displaySdf.format(endDate);
+							}
+								rttr.addFlashAttribute("msg", "banned");
+								rttr.addFlashAttribute("endDate", dateResult);
+								return "redirect:/members/loginUi";
+						}else {
+							adao.deleteBlackList(mem_id);
+							dao.updateMemberStatus(mem_id);
 						}
 					}catch(Exception e) {
 						e.printStackTrace();
 						System.out.println("블랙리스트 체크 로직 오류");
 					}
-				
+				}
 			}
 			
 			String nickname = dao.nickname(mem_id);
