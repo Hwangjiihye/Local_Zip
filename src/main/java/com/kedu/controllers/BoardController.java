@@ -306,7 +306,6 @@ public class BoardController {
 		// 파일리스트 뽑아오기
 		List<AttachmentDTO> aList = aDao.getAttachment(post_seq);
 		model.addAttribute("fileList", aList);
-		System.out.println(aList.size());
 
 		if (loginId != null) {
 			String allCategory = dao.getCategoryBySeq(post_seq);

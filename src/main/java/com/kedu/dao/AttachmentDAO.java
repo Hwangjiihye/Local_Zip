@@ -26,4 +26,5 @@ public class AttachmentDAO {
 		String sql = "SELECT * FROM ATTACHMENT WHERE PARENT_SEQ=?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<AttachmentDTO>(AttachmentDTO.class),seq);
 	}
+	
 }
