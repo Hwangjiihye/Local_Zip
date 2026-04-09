@@ -10,7 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 /* 폰트 */
@@ -200,6 +200,11 @@ button, body, div, input {
 	padding: 2px;
 	outline: none;
 }
+.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 </style>
 
 
@@ -236,20 +241,40 @@ button, body, div, input {
 
 	<script>
 		// submit 전 공백에 대한 안내메시지
-		$(".frm").on("submit",function(){
+		$(".frm").on("submit",function(e){
+			e.preventDefault(); // 기본 제출 막기
 			
 			// 공백 예외 처리
 			if($(".inputBox").val() == ""){
-				alert("제목을 입력해주세요.");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "제목을 입력해주세요.",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				$(".inputBox").focus();
 				return false;
 			}else if($(".TextDetail").val() == ""){
-				alert("내용을 입력해주세요.");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "내용을 입력해주세요.",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				$(".TextDetail").focus();
 				return false;
 			}
-			alert("글이 등록되었습니다!");
-			return true;
+			Swal.fire({
+				icon: "success",
+				title: "Success  !",
+				text: "글이 등록되었습니다!",
+				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300"
+			}).then(() => {
+				this.submit();
+			});
 		});
 	</script>
 </body>

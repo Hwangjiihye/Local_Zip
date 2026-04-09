@@ -10,7 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 /* 폰트 */
@@ -289,6 +289,17 @@ a {
 hr {
 	border: 1px dotted #5e361a;
 }
+.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-question .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 </style>
 
 </head>
@@ -388,11 +399,23 @@ hr {
 				type:"post"
 			}).done(function(resp){
 				if(resp=="success"){
-					alert("공지사항 수정 완료");
+					Swal.fire({
+						icon: "success",
+						title: "Success  !",
+						text: "공지사항 수정이 완료 되었습니다.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
 					currentTitle = newTitle;
 					currentContent = newContent;
 				}else{
-					alert("공지사항 수정 실패");
+					Swal.fire({
+						icon: "error",
+						title: "Info  !",
+						text: "공지사항 수정에 실패 했습니다.",
+						iconColor: "#EB0000",
+						confirmButtonColor: "#FFB300"
+					});
 				}
 			});
 			
@@ -405,22 +428,49 @@ hr {
 		})
 		
 		$(".deleteBtn").on("click",function(){
-			if(confirm("정말 삭제하시겠습니까?")){
-				$.ajax({
-		            url: "/admin/deleteNotice",
-		            type: "POST",
-		            data: { notice_seq: "${dto.notice_seq}" }
-		        })
-		        .done(function(resp) {
-		            if (resp === "success") {
-		                alert("성공적으로 삭제되었습니다.");
-		                location.href = "/admin/toAdminNotice?cPage="+${cPage};
-		            } else {
-		                alert("삭제 처리에 실패했습니다.");
-		            }
-		        })
-			}
-		})
+			
+			Swal.fire({
+		        icon: "question",
+		        title: "Question !",
+		        text: "정말 삭제하시겠습니까?",
+		        iconColor: "#FFB300",
+		        confirmButtonColor: "#FFB300",
+		        showCancelButton: true,
+		        confirmButtonText: "삭제",
+		        cancelButtonText: "취소",
+		        cancelButtonColor: "#d9d9d9"
+		    }).then((result) => {
+
+		        if(result.isConfirmed){
+					$.ajax({
+			            url: "/admin/deleteNotice",
+			            type: "POST",
+			            data: { notice_seq: "${dto.notice_seq}" }
+			        })
+			        .done(function(resp) {
+			            if (resp === "success") {
+			            	Swal.fire({
+								icon: "success",
+								title: "Success  !",
+								text: "성공적으로 삭제되었습니다.",
+								iconColor: "#FFB300",
+								confirmButtonColor: "#FFB300"
+							}).then(() => {
+									location.href = "/admin/toAdminNotice?cPage="+${cPage};
+								});
+			            } else {
+			            	Swal.fire({
+								icon: "error",
+								title: "Info  !",
+								text: "삭제 처리에 실패했습니다.",
+								iconColor: "#EB0000",
+								confirmButtonColor: "#FFB300"
+							});
+					           	   }
+					            });
+					         }
+		   			 	});
+					});
 		
 	</script>
 </body>
