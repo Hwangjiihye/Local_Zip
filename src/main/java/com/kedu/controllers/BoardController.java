@@ -73,7 +73,7 @@ public class BoardController {
 				String oriName = file.getOriginalFilename();
 				String sysName = UUID.randomUUID() + "_" + oriName;
 				file.transferTo(new File(savePath + "/" + sysName));
-				aDao.insert(new AttachmentDTO(nextval, post_category, nextval, oriName, sysName));
+				aDao.insert(new AttachmentDTO(0, post_category, nextval, oriName, sysName));
 			}
 		}
 

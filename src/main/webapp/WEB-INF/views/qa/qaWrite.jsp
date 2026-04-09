@@ -273,7 +273,7 @@ button, body, div, input {
 	
 				<div class="bottomBtn">
 					<button class="requestBtn">작성 완료</button>
-					<a href="/qa/toQa"><button class="backBtn" type="button">뒤로가기</button></a>
+					<a href="/qa/toQa?cPage=${cPage}"><button class="backBtn" type="button">뒤로가기</button></a>
 				</div>
 
 		</form>
