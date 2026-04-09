@@ -752,15 +752,29 @@ hr {
 		    }
 		    
 		    let formData = new FormData();
-			formData.append()
+		    formData.append("post_seq", postSeq);
+		    formData.append("post_title", $(".postTitle").text());
+		    formData.append("post_contents", $(".postContents").text());
+		    formData.append("post_category","${category}");
+		    
+		    let deleteFiles = [];
+		    $(".delete-target").each(function() {
+		        deleteFiles.push($(this).find(".fileName").data("sys"));
+		    });
+		    if(deleteFiles.length > 0) {
+		        formData.append("deleteFiles", deleteFiles);
+		    }
+
+		    let newFiles = $(".newFiles")[0].files;
+		    for (let i = 0; i < newFiles.length; i++) {
+		        formData.append("attachments", newFiles[i]);
+		    }
 			
 			$.ajax({
 				url:"/board/updatePost",
-				data:{
-					post_seq: postSeq,
-					post_title: post_title,
-					post_contents: post_contents
-				},
+				data:formData,
+				processData: false,
+		        contentType: false,
 				type: "post"
 			}).done(function(){
 				alert("수정 완료!");

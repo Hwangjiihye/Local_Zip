@@ -27,4 +27,10 @@ public class AttachmentDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<AttachmentDTO>(AttachmentDTO.class),seq);
 	}
 	
+	//파일 삭제
+	public void deleteBySysName(String sys_name) {
+		String sql = "DELETE FROM ATTACHMENT WHERE ATTACH_SYSNAME=?";
+		jdbc.update(sql,sys_name);
+	}
+	
 }
