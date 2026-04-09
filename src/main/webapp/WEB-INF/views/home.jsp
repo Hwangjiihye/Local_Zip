@@ -186,10 +186,13 @@ body, html {
 	display: flex;
 	justify-content: right; /* 가로(수평) 오른쪽 정렬 */
 	align-items: center; /* 세로(수직) 중앙 정렬 */
+	
+	gap: 15px;
 
 	padding-right: 50px;
-	height: 60px;
-	border: 2px solid blue;
+	height: auto;
+	margin-top: 30px;
+	margin-bottom: 10px;
 }
 
 .searchBox{
@@ -234,7 +237,7 @@ body, html {
 }
 
 .searchIconBox:active{
-	background-color: #f0a902;
+	background-color: #FFB300;
 }
 
 .popular {
@@ -722,7 +725,7 @@ body, html {
 
 							<div class="orderBy">
 								<div class="searchBox">
-									<input class="inputSearch" placeholder="검색할 게시글의 제목을 입력해주세요.">
+									<input name="" class="inputSearch" placeholder="검색할 게시글의 제목을 입력해주세요.">
 									<div class="searchIconBox">
 										<i class="searchIcon fa-solid fa-magnifying-glass"></i>
 									</div>
