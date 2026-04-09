@@ -322,6 +322,18 @@ public class AdminController {
 	@RequestMapping("/adminBlackList")
 	public String adminBlackList(Model model) {
 		model.addAttribute("menu", "report");
+		
+		// 전체 신고목록 개수 카운트
+		int allCount = dao.reportAllCount();
+		// 처리완료 신고목록 개수 카운트
+		int handleCount = dao.reportHandleCount();
+		// 미처리 신고목록 개수 카운트
+		int count = dao.reportCount();
+		
+		model.addAttribute("allCount", allCount);
+		model.addAttribute("handleCount", handleCount);
+		model.addAttribute("count", count);
+		
 		return "/admin/adminBlackList";
 	}
 	
@@ -332,16 +344,6 @@ public class AdminController {
 		Map<String, Object> resp = new HashMap<>();
 		List<ReportDTO> list;
 		System.out.println("처리 요청 값 : " + status);
-		// 전체 신고목록 개수 카운트
-		int allCount = dao.reportAllCount();
-		// 처리완료 신고목록 개수 카운트
-		int handleCount = dao.reportHandleCount();
-		// 미처리 신고목록 개수 카운트
-		int count = dao.reportCount();
-		
-		session.setAttribute("allCount", allCount);
-		session.setAttribute("handleCount", handleCount);
-		session.setAttribute("count", count);
 		
 		
 		if("3".equals(status)) { // 처리완료건들 출력 ( 3 : 블랙리스트 처리 완료 / 5: 블랙리스트 해제 처리 완료 )
@@ -369,18 +371,19 @@ public class AdminController {
 				banDays = day;
 			}
 			
-		// members table mem_status 업데이트
-		dao.updateMemberStatus(mem_status, target_id);
+		// 블랙리스트 테이블에 해당 유저가 있는지 먼저 검사
+		List<BlackListDTO> list = dao.selectById(target_id);
 		
 		// blackList table 정지시작/종료일수 업데이트
-		List<BlackListDTO> list = dao.selectById(target_id);
 		if(list == null || list.isEmpty()) {
+			// members table mem_status 업데이트
+			dao.updateMemberStatus(mem_status, target_id);
 			dao.insertBlackList(target_id, black_option, banDays);
 		}else{
 			dao.updateBlackEndDate(banDays, target_id);
 		}
 		// 블랙리스트 등록 시 reports 테이블 status 업데이트
-		dao.updateReportStatus(reports_status, target_id, target_seq);
+		dao.updateReportsStatus(reports_status, target_id);
 		return "success";
 	}
 	

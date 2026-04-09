@@ -455,10 +455,10 @@ img{
 				 	if(i.reports_status == 4){
 				 		btnHtml = `
 				 			<button class="onBtn reportCheckBtn" data-reports_seq ="\${i.reports_seq}">반려</button>
-	        				<button class="onBtn blackOnBtn" data-target_id="\${i.target_id}" data-reports_reason="\${i.reports_reason}" data-reports_status="\${i.reports_status}" data-target_seq="\${i.target_seq}">블랙리스트</button>
+	        				<button class="onBtn blackOnBtn" data-target-id="\${i.target_id}" data-reports_reason="\${i.reports_reason}" data-reports_status="\${i.reports_status}" data-target-seq="\${i.target_seq}">블랙리스트</button>
 	        				<button class="offBtn blackOffBtn" style="display:none;" data-target_id="\${i.target_id}">해제</button>
 			 			`;
-				 	
+				 		
 				 		selectHtml = `
 				 			<div class="endDiv">
 		        				<select class="endOption">
@@ -517,35 +517,42 @@ img{
 			// 블랙리스트 버튼을 눌렀을 때
 			$(document).on("click", ".blackOnBtn",  function(){
 				let btn = $(this)
-				let mem_id = btn.data("target_id");
+				let target_id = btn.data("targetId");
 				let day = btn.closest(".postBox").find(".endOption").val();
 				let reports_reason = btn.data("reports_reason");
 				let reports_status = btn.data("reports_status");
-				let target_seq = btn.data("target_seq");
-				
+				let target_seq = btn.data("targetSeq");
+				console.log(target_id);
+				console.log($(".blackOnBtn[data-target-id='" + target_id + "']").length);
 				if(day == null){
 					alert("정지일수를 먼저 선택해 주세요.");
 					return;
 				}
+				let currentStatus = $(".filterBtn.nowBtn").data("status");
 				
 				$.ajax({
 					url : "/admin/blackOn",
 					type : "get",
 					data : { 
 						mem_status : 4,
-						target_id : mem_id,
+						target_id : target_id,
 						target_seq : target_seq,
 						black_option : reports_reason,
 						reports_status : 3,
-						day : day
+						day : day,
+						status : currentStatus
 					},
 					success : function(resp){
-						alert(mem_id + "님을 블랙리스트에 등록했습니다.");
+						alert(target_id + "님을 블랙리스트에 등록했습니다.");
+						drawreportList(resp.list);
 // 						btn.hide();
 // 						btn.siblings(".reportCheckBtn").hide();
 // 						btn.closest(".postBox").find(".endOption").hide();
 // 						btn.siblings(".blackOffBtn").show();
-
+						
+// 						$(".blackOnBtn[data-target-id='" + target_id + "']")
+// 		                .text("처리완료")
+// 		                .prop("disabled", true);
 					}
 				});
 			});

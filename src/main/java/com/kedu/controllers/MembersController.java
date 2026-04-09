@@ -101,15 +101,9 @@ public class MembersController {
 		int result = dao.login(mem_id,  mem_password);
 		
 		if(result == 1) {
-//			MembersDTO member = dao.blackListLoginCheck(mem_id, mem_password);
 			
-			 List<BlackListDTO> blackList = adao.selectById(mem_id);
+			List<BlackListDTO> blackList = adao.selectById(mem_id);
 			
-//			if(black == null){
-//			    rttr.addFlashAttribute("lmsg", "loginFail");
-//			    return "redirect:/members/loginUi";
-//			    
-//			}
 			if(blackList != null && !blackList.isEmpty()) {
 				BlackListDTO black = blackList.get(0);
 				
