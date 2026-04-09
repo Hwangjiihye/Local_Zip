@@ -9,7 +9,10 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+<!--  summernote -->
+<script src="/resources/summernote/summernote-lite.js"></script>
+<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 
 <style>
 /* 폰트 */
@@ -48,6 +51,8 @@ body, html {
 	margin: 0;
 	padding: 0;
 }
+
+
 
 /* 폰트 지정 */
 button, body {
@@ -301,6 +306,15 @@ button, body {
 	background-color: #f0d8af;
 	border-radius: 5px;
 	padding: 0 10px;
+}
+
+.postImages img {
+    max-width: 100%;
+    max-height: 500px; /* 부모 너비를 넘지 않게 함 */
+    display: block;
+    margin: 10px auto;
+    border-radius: 8px;
+    width:200px;
 }
 
 .fileDownload {
@@ -587,9 +601,10 @@ hr {
 	font-size: 13px;
 }
 
-.newFileDiv{
+.newFileDiv {
 	display: none;
 	margin-top: 10px;
+	margin-left : 45px;
 }
 </style>
 
@@ -639,20 +654,44 @@ hr {
 				<div class="postMidBox">
 
 					<div class="postTitle">${dto.post_title }</div>
-					<div class="postContents">${dto.post_contents }</div>
-					<div class="fileDownload">
-						첨부 파일
-						<c:forEach var="i" items="${fileList}" varStatus="status">
-							<div class="file-item"">
-								<label class="fileName" data-ori="${i.attach_oriname}"
-									data-sys="${i.attach_sysname}"> ${i.attach_oriname} </label>
-								<button type="button" class="fileDelBtn"
-									data-sys="${i.attach_sysname}">X</button>
-							</div>
-						</c:forEach>
-						<div class="newFileDiv" >
-							<input type="file" class="newFiles" name="newFiles" multiple>
+					
+					<div class="postContents">
+					<c:if test="${not empty fileList}">
+					<textarea id="summernote" name="content">
+					<div class="postImages">
+							<c:forEach var="file" items="${fileList}">
+								<c:set var="fileName" value="${file.attach_sysname}" />
+								<c:set var="lowerName" value="${fileName.toLowerCase()}" />
+
+								<c:if
+									test="${lowerName.endsWith('.jpg') || lowerName.endsWith('.jpeg') || 
+                          lowerName.endsWith('.png') || lowerName.endsWith('.gif') || 
+                          lowerName.endsWith('.webp')}">
+									<div class="img-wrapper" style="margin-bottom: 20px;">
+										<img src="/upload/${file.attach_sysname}">
+									</div>
+								</c:if>
+							</c:forEach>
 						</div>
+						</textarea>
+						</c:if>
+					${dto.post_contents}</div>
+
+					<c:if test="${not empty fileList}">
+						<div class="fileDownload">
+							첨부 파일
+							<c:forEach var="i" items="${fileList}" varStatus="status">
+								<div class="file-item">
+									<label class="fileName" data-ori="${i.attach_oriname}"
+										data-sys="${i.attach_sysname}"> ${i.attach_oriname} </label>
+									<button type="button" class="fileDelBtn"
+										data-sys="${i.attach_sysname}">X</button>
+								</div>
+							</c:forEach>
+						</div>
+					</c:if>
+					<div class="newFileDiv">
+						<input type="file" class="newFiles" name="newFiles" multiple>
 					</div>
 				</div>
 
@@ -676,6 +715,7 @@ hr {
 				</div>
 
 			</div>
+			
 			<div class="replyContainer">
 				<div class="replyTitle">댓글</div>
 				<div class="replyBox">
@@ -714,6 +754,16 @@ hr {
 		let postContents = $(".postContents");
 		
 		
+		
+		$(document).ready(function() {
+			  $('#summernote').summernote({
+			    height: 300,                 // 에디터 높이
+			    minHeight: null,             // 최소 높이
+			    maxHeight: null,             // 최대 높이
+			    focus: true,                  // 에디터 로딩 후 포커스 여부
+			    lang: "ko-KR"                // 한글 설정 (lang 파일 추가 시)
+			  });
+			});
 		
 		// 게시글 수정 버튼 클릭 시
 		$(".updateBtn").on("click",function(){
