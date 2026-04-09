@@ -41,7 +41,7 @@
 	font-display: swap;
 }
 
-button, body {
+input, button, body {
 	font-family: 'GMarketSans', sans-serif;
 }
 
@@ -82,17 +82,11 @@ body, html {
 	gap: 0px;
 }
 
-/* .loginBtn{
-            margin-left: 1400px;
-            margin-top: 30px; 
-        } */
+
 .joinBtn {
 	margin-left: -1px;
 }
 
-/*  .logoutBtn{
-            margin-left: 1400px;
-        } */
 .bottomBar {
 	border: 2px solid #A66A3F;
 	background-color: #F2D3A2;
@@ -199,9 +193,8 @@ body, html {
 }
 
 .searchBox{
-	border: 1px solid red;
 	width: 300px;
-	
+	border-radius: 10px;
 	display: flex;
 }
 
@@ -210,20 +203,38 @@ body, html {
 	width: 85%;
 	max-width: 500px;
 	min-height: 30px;
+	padding-left: 10px;
+	color: #5e361a;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border: none;
+	outline:none; /* 눌렀을 때 선 안보이게 */
+	background-color: #FFEFD5;
 }
 
 .searchIconBox{
 	width: 15%;
-	border: 1px solid green;
 	
 	display: flex;
 	justify-content: center; /* 가로(수평) 오른쪽 정렬 */
 	align-items: center; /* 세로(수직) 중앙 정렬 */
 	
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	background-color: #FFB300;
+	color: #3e5e40;
+	
+	transition: 0.2s;
 }
 
-.searchIcon{
-	
+.searchIconBox:hover{
+	background-color: #fecc56;
+	color: #A66A3F;
+}
+
+.searchIconBox:active{
+	background-color: #f0a902;
 }
 
 .popular {
