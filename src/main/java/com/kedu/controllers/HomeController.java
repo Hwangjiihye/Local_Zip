@@ -106,7 +106,12 @@ public class HomeController {
 
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
-	public String postDetail(Model model, int post_seq, HttpSession session, String category) throws Exception{
+	public String postDetail(Model model, int post_seq, HttpSession session, String category, String sort) throws Exception{
+		
+		// 기본 정렬
+		if (sort == null) {
+			sort = "latest";
+		}
 
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
 
@@ -128,6 +133,9 @@ public class HomeController {
 		LikeStatus(dto, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1) 담아줌.
 		model.addAttribute("category",category); //  카테고리를 저장해서 사용하는 코드
 	    model.addAttribute("dto",dto);
+	    
+	    model.addAttribute("sort", sort);               // 추가
+
 	    
 		return "board/postDetail";
 	}

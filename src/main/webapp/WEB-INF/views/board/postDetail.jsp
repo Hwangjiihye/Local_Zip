@@ -1206,6 +1206,8 @@ hr {
 		    	location.href = "/board/food?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "beauty"){
 		    	location.href = "/board/beauty?sort=" + sort + "&cPage=" + currentPage;
+		    }else if(category == "all" || category == ""){
+		    	location.href = "/?sort=" + sort;
 		    }else {
 		    	location.href = "/";
 		    }
