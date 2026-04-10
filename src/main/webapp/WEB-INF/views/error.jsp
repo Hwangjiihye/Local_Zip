@@ -208,7 +208,7 @@ button, body {
 		<div class="midBox">
 			<div class="imgBox">
 				<img class="leftWay" src="/resources/images/path.png"> 
-				<img class="errorImg" src="resources/images/errorImg.png">
+				<img class="errorImg" src="/resources/images/errorImg.png">
 				<img class="rightWay" src="/resources/images/pathway.png"> 
 				<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
 				<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
