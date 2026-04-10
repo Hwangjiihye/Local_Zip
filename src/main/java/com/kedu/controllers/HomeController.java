@@ -43,7 +43,7 @@ public class HomeController {
 	
 	// 전체 리스트 출력 내용 반영
 	@RequestMapping("/")
-	public String home(String sort, Model model, HttpSession session, ReplyDTO rdto) throws Exception{
+	public String home(String sort, Model model, HttpSession session, ReplyDTO rdto, BoardDTO post) throws Exception{
 
 		String loginId = (String)session.getAttribute("loginId"); // 하트 수 체크시 필요
 		
@@ -56,11 +56,23 @@ public class HomeController {
 		// 출력을 어떤 종류를 기준으로 할 지 검사
 		// dao에 카테고리 별로 최신순, 인기순 정렬하는 다오 생성하면서, dao 이름 반영
 		if ("like".equals(sort)) {
-			list = dao.list_home_like(loginId);
+			list = dao.list_home_like(loginId); // join문 전용
+//			list = dao.list_home_like();
 		}else {
 			list = dao.list_home_latest(loginId);
+//			list = dao.list_home_latest();
 		}
 
+//        // *(댓글)
+//        // post_seq를 기준으로 replyDAO에서 count한 댓글 수
+//        int commentCount = ReplyDao.commentCount(post.getPost_seq());
+//        // replyDAO에서 뽑아온 Count한 댓글 수를 / BoardDAO > post_hit(=> 댓글 수 저장용 컬럼)에 update 반영
+//        dao.setCommentCount(commentCount , post.getPost_seq());
+//		
+        // *(좋아요)
+        // 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.
+        LikeStatus(list, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
+		
 		model.addAttribute("list", list);
 		model.addAttribute("sort",sort);
 		
@@ -94,7 +106,12 @@ public class HomeController {
 
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
-	public String postDetail(Model model, int post_seq, HttpSession session) throws Exception{
+	public String postDetail(Model model, int post_seq, HttpSession session, String category, String sort) throws Exception{
+		
+		// 기본 정렬
+		if (sort == null) {
+			sort = "latest";
+		}
 
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
 
@@ -105,16 +122,25 @@ public class HomeController {
 		model.addAttribute("fileList", aList);
 		
 		if(loginId != null) {
-			String category = dao.getCategoryBySeq(post_seq);
-			vdao.postClickVisit(loginId, category);
+			String getCategory = dao.getCategoryBySeq(post_seq);
+			vdao.postClickVisit(loginId, getCategory);
+		}
+		
+		if(category == null || category.equals("")) {
+			category = dao.getCategoryBySeq(post_seq); // String을 빼고 값만 할당
 		}
 		
 		LikeStatus(dto, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1) 담아줌.
+		model.addAttribute("category",category); //  카테고리를 저장해서 사용하는 코드
 	    model.addAttribute("dto",dto);
+	    
+	    model.addAttribute("sort", sort);               // 추가
+
 	    
 		return "board/postDetail";
 	}
 
+	
 	// postDetail 페이지,로그인 한 아이디를 기준으로 하트를 눌러놨는지 체크하는 메서드
 	private void LikeStatus(BoardDTO dto, String loginId) {
 			

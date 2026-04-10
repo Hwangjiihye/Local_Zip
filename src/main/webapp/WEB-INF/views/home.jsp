@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 * {
@@ -41,7 +42,7 @@
 	font-display: swap;
 }
 
-button, body {
+input, button, body {
 	font-family: 'GMarketSans', sans-serif;
 }
 
@@ -82,17 +83,11 @@ body, html {
 	gap: 0px;
 }
 
-/* .loginBtn{
-            margin-left: 1400px;
-            margin-top: 30px; 
-        } */
+
 .joinBtn {
 	margin-left: -1px;
 }
 
-/*  .logoutBtn{
-            margin-left: 1400px;
-        } */
 .bottomBar {
 	border: 2px solid #A66A3F;
 	background-color: #F2D3A2;
@@ -114,7 +109,6 @@ body, html {
 	border-radius: 10px;
 	margin-top: 10px;
 	margin-left: 20px;
-	
 	position: relative;
 	height: 300px; /* 적당히 고정 */
 	overflow: hidden;
@@ -190,10 +184,61 @@ body, html {
 }
 
 .orderBy {
-	text-align: right;
-	line-height: 70px;
+	display: flex;
+	justify-content: right; /* 가로(수평) 오른쪽 정렬 */
+	align-items: center; /* 세로(수직) 중앙 정렬 */
+	
+	gap: 15px;
+
 	padding-right: 50px;
-	height: 20px;
+	height: auto;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+.searchBox{
+	width: 300px;
+	border-radius: 10px;
+	display: flex;
+}
+
+.inputSearch {
+	/* 수정: 고정 1500px 제거 */
+	width: 85%;
+	max-width: 500px;
+	min-height: 30px;
+	padding-left: 10px;
+	color: #5e361a;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border: none;
+	outline:none; /* 눌렀을 때 선 안보이게 */
+	background-color: #FFEFD5;
+}
+
+.searchIconBox{
+	width: 15%;
+	
+	display: flex;
+	justify-content: center; /* 가로(수평) 오른쪽 정렬 */
+	align-items: center; /* 세로(수직) 중앙 정렬 */
+	
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	background-color: #FFB300;
+	color: #3e5e40;
+	
+	transition: 0.2s;
+}
+
+.searchIconBox:hover{
+	background-color: #fecc56;
+	color: #A66A3F;
+}
+
+.searchIconBox:active{
+	background-color: #FFB300;
 }
 
 .popular {
@@ -295,6 +340,7 @@ body, html {
 	right: 30px;
 	top: 30px;
 }
+
 /*  ----------------------------------------------------------------------------------게시글       */
 .postBox {
 	/* 수정: 고정 1500px 제거 */
@@ -304,7 +350,8 @@ body, html {
 	min-height: 200px;
 	height: auto;
 	margin: auto;
-	margin-top: 30px;
+/* 	margin-top: 30px; */
+	margin-bottom: 30px;
 	border-radius: 10px;
 	/*  border: 2px solid #A66A3F; */
 	/* 그림자 효과 */
@@ -406,16 +453,15 @@ body, html {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-
-.report-menu{
-	 font-family: 'GMarketSans';
-     border: 1px solid #A66A3F;
-     border-radius: 5px;
-     background-color: #F2D3A2;
-     color: #A66A3F;
-     font-size: 12px;
-     padding: 2px;
-     outline: none;
+.report-menu {
+	font-family: 'GMarketSans';
+	border: 1px solid #A66A3F;
+	border-radius: 5px;
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	font-size: 12px;
+	padding: 2px;
+	outline: none;
 }
 
 .postMidBox {
@@ -527,73 +573,84 @@ body, html {
 	object-fit: cover;
 }
 
-		.pageBox{
-		    text-align: center;
-		    padding: 20px;
-		    font-size: 18px;
-		    color: #A66A3F;
-		    margin-bottom: 55px;
-		}
-		
-		.pageBox a{
-		    display: inline-block;
-		    min-width:35px;
-		    padding:6px 10px;
-		    margin: 0 8px;
-		    text-decoration: none;
-		    color: #A66A3F;
-		    border-radius:6px;
-		    transition:0.2s;
-		    font-weight: normal;
-		    cursor: pointer;
-		}
-		
-		.pageBox a.active{
-			background-color:#fecc56;
-		    font-weight: bold;
-		    color: #5e361a;
-		}
-		
-		.pageBox a:hover{
-		    background-color:#F2D3A2;
-		}
-		
-		.popup-overlay {
-		    position: fixed;
-		    top: 0; left: 0;
-		    width: 100%; height: 100%;
-		    background: rgba(0, 0, 0, 0.7); /* 배경을 조금 더 어둡게 */
-		    display: none; /* 기본은 숨김 */
-		    justify-content: center;
-		    align-items: center;
-		    z-index: 9999; /* 상단바보다 훨씬 높게 설정 */
-		}
-		
-		.popup-content img {
-		    max-width: 100%; /* 이미지가 팝업창을 넘어가지 않도록 */
-		    border-radius: 20px;
-		    width: 500px;
-		}
-		
-		/* 닫기 버튼 */
-		.close-btn {
-		    width: 100%;
-		    padding: 10px;
-		    margin-top: 10px;
-		    background-color: #FFB300;
-		    color: #5e361a;
-		    border: none;
-		    border-radius: 5px;
-		    cursor: pointer;
-		    font-weight: bold;
-		    font-size: 20px;
-		}
-		
-		.close-btn:hover {
-		    background-color: #fecc56;
-		}
-		
-		
+.pageBox {
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #A66A3F;
+	margin-bottom: 55px;
+}
+
+.pageBox a {
+	display: inline-block;
+	min-width: 35px;
+	padding: 6px 10px;
+	margin: 0 8px;
+	text-decoration: none;
+	color: #A66A3F;
+	border-radius: 6px;
+	transition: 0.2s;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.pageBox a.active {
+	background-color: #fecc56;
+	font-weight: bold;
+	color: #5e361a;
+}
+
+.pageBox a:hover {
+	background-color: #F2D3A2;
+}
+
+.popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7); /* 배경을 조금 더 어둡게 */
+	display: none; /* 기본은 숨김 */
+	justify-content: center;
+	align-items: center;
+	z-index: 9999; /* 상단바보다 훨씬 높게 설정 */
+}
+
+.popup-content img {
+	max-width: 100%; /* 이미지가 팝업창을 넘어가지 않도록 */
+	border-radius: 20px;
+	width: 500px;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+	width: 100%;
+	padding: 10px;
+	margin-top: 10px;
+	background-color: #FFB300;
+	color: #5e361a;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.close-btn:hover {
+	background-color: #fecc56;
+}
+
+.swal2-icon.swal2-info .swal2-icon-content {
+          font-size: 50px;     /* i 크기 */
+          transform: translateY(5px);
+          line-height: 70px;   /* 세로 위치 (핵심🔥) */
+}
+.swal2-icon.swal2-warning .swal2-icon-content {
+          font-size: 50px;     /* i 크기 */
+          transform: translateY(5px);
+          line-height: 70px;   /* 세로 위치 (핵심🔥) */
+}   
 </style>
 </head>
 
@@ -645,24 +702,21 @@ body, html {
 			<div class="categoryBtn">
 				<a href="/"><button type="button" class="nowBtn"
 						style="background-color: #fecc56; border-radius: 10px; height: 30px; margin-right: 10px;">
-						<i class="navicon fa-solid fa-house fa-lg"></i> 전체</button></a>
-						
-					 <a href="/board/lifeInfo"><button type="button"
+						<i class="navicon fa-solid fa-house fa-lg"></i> 전체
+					</button></a> <a href="/board/lifeInfo"><button type="button"
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-						<i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보</button></a>
-					
-				<a href="/board/food"><button type="button"
-					style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-					<i class="fa-solid fa-utensils fa-lg" style="color: #3e5e40;"></i> 맛집/카페</button></a>
-				
-				<a href="/board/talk"><button type="button"
+						<i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보
+					</button></a> <a href="/board/food"><button type="button"
 						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-						<i class="fa-regular fa-comment-dots fa-lg" style="color: #3e5e40;"></i> 고민/이야기</button></a>
-					
-				<a href="/board/beauty"><button type="button"
-					style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px;">
-					<i class="fa-solid fa-shirt fa-lg" style="color: #3e5e40;"></i> 미용/패션</button></a>
-				
+						<i class="fa-solid fa-utensils fa-lg" style="color: #3e5e40;"></i> 맛집/카페
+					</button></a> <a href="/board/talk"><button type="button"
+						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
+						<i class="fa-regular fa-comment-dots fa-lg" style="color: #3e5e40;"></i> 고민/이야기
+					</button></a> <a href="/board/beauty"><button type="button"
+						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px;">
+						<i class="fa-solid fa-shirt fa-lg" style="color: #3e5e40;"></i> 미용/패션
+					</button></a>
+
 			</div>
 
 			<div class="subBox">
@@ -682,6 +736,13 @@ body, html {
 						<c:otherwise>
 
 							<div class="orderBy">
+								<div class="searchBox">
+									<input name="" class="inputSearch" placeholder="검색할 게시글의 제목을 입력해주세요.">
+									<div class="searchIconBox">
+										<i class="searchIcon fa-solid fa-magnifying-glass"></i>
+									</div>
+								</div>
+
 								<!-- 버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
 								<button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
 							</div>
@@ -689,7 +750,7 @@ body, html {
 							<!-- 게시글영역 -->
 							<c:forEach var="i" items="${list}">
 								<div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
-								<!-- data-seq는 ajax로 댓글 수 표시할 때 해당 게시글 번호를 기억하기 위해 달아놓음.	 -->
+									<!-- data-seq는 ajax로 댓글 수 표시할 때 해당 게시글 번호를 기억하기 위해 달아놓음.	 -->
 									<div class="postUpBox">
 
 										<div class="postProfile">
@@ -725,8 +786,7 @@ body, html {
 										<c:if test="${loginId != null && loginId != i.mem_id}">
 											<div class="reportArea">
 												<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
-													style="width: 25px; height: 25px; margin-bottom: 5px"></img> 
-												<select class="reportSelect">
+													style="width: 25px; height: 25px; margin-bottom: 5px"></img> <select class="reportSelect">
 													<option class="report-menu" disabled selected>신고 사유</option>
 													<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
 													<option class="report-menu" value="badWord">욕설/비방</option>
@@ -745,24 +805,24 @@ body, html {
 
 									</div>
 
-								<c:if test="${loginId != null}">
-									<div class="postDownBox">
+									<c:if test="${loginId != null}">
+										<div class="postDownBox">
 
-										<div class="postLikeBox  ${i.post_like_check == 1 ? 'active' : ''}">
-											<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
+											<div class="postLikeBox  ${i.post_like_check == 1 ? 'active' : ''}">
+												<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
 
-											<div class="likeCount infoCount">${i.post_like }</div>
+												<div class="likeCount infoCount">${i.post_like_count}</div>
+											</div>
+
+											<div class="postCommentBox">
+												<i class="fa-regular fa-comment fa-xl comment"></i>
+
+												<div class="commentCount infoCount">${i.post_hit}</div>
+											</div>
+
 										</div>
+									</c:if>
 
-										<div class="postCommentBox">
-											<i class="fa-regular fa-comment fa-xl comment"></i>
-
-											<div class="commentCount infoCount">${i.post_hit}</div>
-										</div>
-
-									</div>
-								</c:if>
-									
 								</div>
 							</c:forEach>
 						</c:otherwise>
@@ -805,23 +865,23 @@ body, html {
 		</div>
 
 	</div>
-	
-	
+
+
 	<!-- 팝업창 -->
 	<div class="mainPopup popup-overlay" style="display: none;">
-		<div class="popup-content"> 
-		
+		<div class="popup-content">
+
 			<div class="popup-body">
 				<img src="/resources/images/seoul.png">
 			</div>
-			
+
 			<div class="popup-footer">
 				<button onclick="closePopup()" class="close-btn">닫기</button>
 			</div>
-		
+
 		</div>
 	</div>
-	
+
 
 	<script>
 		
@@ -870,13 +930,20 @@ body, html {
 		        // 게시글 상세보기 이동 제어
 		        let loginId = "${loginId}";
 		        if (loginId === "") {
-		            alert("로그인 후 이용 가능합니다.");
-		            location.href = "/members/loginUi";
+		        	Swal.fire({
+	                      icon: "info",
+	                      title: "Wait  !",
+	                      text: "로그인 후 이용 가능합니다.",
+	                      iconColor: "#FFB300",
+	                      confirmButtonColor: "#FFB300"
+	                   }).then(() => {
+	                	   location.href = "/members/loginUi";
+	                   });
 		            return;
 		        }
 		
 		        let post_seq = $(this).data("seq");
-		        location.href = "/postDetail?post_seq=" + post_seq;
+		        location.href = "/postDetail?post_seq=" + post_seq + "&category=all";
 		    });
 		
 		    // 신고 ---------------------------------------------
@@ -905,12 +972,29 @@ body, html {
 		        let reportReason = card.find(".reportSelect").val(); 
 		        
 		        if(!reportReason || reportReason === "신고 사유"){
-		            alert("신고 사유를 선택해 주세요.");
+		        	Swal.fire({
+		                icon: "info",
+		                title: "Wait  !",
+		                text: "신고 사유를 선택해 주세요",
+		                iconColor: "#FFB300",
+		                confirmButtonColor: "#FFB300"
+		             });
 		            return;
 		        }
 		        
-		        if(confirm("정말 신고하시겠습니까?")) {
-		        	$.ajax({
+		        Swal.fire({
+		            icon: "question",
+		            title: "Wait  !",
+		            text: "정말 신고하시겠습니까?",
+		            iconColor: "#FFB300",
+		            confirmButtonColor: "#FFB300",
+		               showCancelButton: true,
+		               confirmButtonText: "신고",
+		               cancelButtonText: "취소",
+		               cancelButtonColor: "#d9d9d9"
+		         }).then((result) => {
+		        	 if(result.isConfirmed) {
+		        		 $.ajax({
 		            url : "/report/insert",
 		            type : "post",
 		            data : {
@@ -921,19 +1005,45 @@ body, html {
 		            }
 		        }).done(function(resp){
 		            if(resp == "success"){
-		                alert("신고가 접수되었습니다.");
+		            	Swal.fire({
+		                      icon: "success",
+		                      title: "Success  !",
+		                      text: "신고가 접수되었습니다.",
+		                      iconColor: "#FFB300",
+		                      confirmButtonColor: "#FFB300"
+		                   });
 		                card.find(".reportSelect, .reportBtn").hide();
 		            } else {
-		                alert("이미 신고한 게시글 입니다.");
+		            	Swal.fire({
+		                      icon: "info",
+		                      title: "Already  !",
+		                      text: "이미 신고한 글 입니다",
+		                      iconColor: "#FFB300",
+		                      confirmButtonColor: "#FFB300"
+		                   });
 		                card.find(".reportSelect, .reportBtn").hide();
 		            }
 		        }).fail(function(){
-		            alert("서버와 통신 중 오류가 발생했습니다.");
+		        	Swal.fire({
+		                  icon: "error",
+		                  title: "Error  !",
+		                  text: "서버와 통신 중 오류가 발생했습니다",
+		                  iconColor: "#EB0000",
+		                  confirmButtonColor: "#FFB300"
+		               });
 		        });
 		  } else {
-			  alert("취소 되었습니다");
-		  }
-	});
+			  Swal.fire({
+                  icon: "info",
+                  title: "Cancel  !",
+                  text: "취소 되었습니다",
+                  iconColor: "#FFB300",
+                  confirmButtonColor: "#FFB300"
+			  });
+		    }
+		 });
+	  });
+		        	
 		
 		 	// 좋아요 버튼을 눌렀을 때
 			$(".postLikeBox").on("click", function(e) {
@@ -952,8 +1062,17 @@ body, html {
 					console.log("서버 응답:" + likeCheck);
 					
 					if(likeCheck == -1){
-						alert("로그인 후 이용 가능합니다.");
-						location.href = "/members/loginUi";
+						Swal.fire({
+		                    icon: "warning",
+		                    title: "Wait !",
+		                    text: "로그인 후 이용 가능합니다.",
+		                    iconColor: "#FFB300",
+		                    confirmButtonColor: "#FFB300"
+		                }).then((result) => {
+		                   if (result.isConfirmed) {
+								location.href = "/members/loginUi";
+		                   }
+		                });
 						return;
 					}
 
