@@ -273,17 +273,32 @@ public class BoardDAO {
 
 
 	// 홈에서 제목(포함)으로 검색한 게시글 목록 출력용 메서드
-	public List<BoardDTO> searchByTitle(String title, String sort){
-		
-		// 기본 정렬(최신순)
-	    String sql = "select * from post where post_title like ? order by post_seq desc";
+		public List<BoardDTO> searchByTitle(String mem_id, String title, String sort) {
+		    
+		    // 로그인을 안 했을 때를 대비한 null 처리
+		    if (mem_id == null) mem_id = "";
 
-	    // 인기순일 경우, post_like 수를 기준으로 정렬
-	    if ("like".equals(sort)) {
-	        sql = "select * from post where post_title like ? order by post_like desc, post_seq desc";
-	    }
-	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), "%" + title + "%");
-	};
+		    // 1. 공통 쿼리 (댓글 수, 좋아요 수, 내 좋아요 여부 포함)
+		    // ? 순서: 1번(mem_id), 2번(title)
+		    String sql = "SELECT p.*, " +
+		                 " (SELECT COUNT(*) FROM reply r WHERE r.post_seq = p.post_seq) AS post_hit, " + 
+		                 " (SELECT COUNT(*) FROM post_like l WHERE l.post_seq = p.post_seq) AS post_like_count, " + 
+		                 " (SELECT COUNT(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) AS post_like_check " + 
+		                 " FROM post p " +
+		                 " WHERE p.post_title LIKE ? ";
+
+		    // 2. 정렬 조건만 뒤에 붙이기 (sql = "select..." 로 새로 쓰면 절대 안 됩니다!)
+		    if ("like".equals(sort)) {
+		        // 인기순 정렬 (이미 계산된 post_like_count 별칭 사용)
+		        sql += " ORDER BY post_like_count DESC, p.post_seq DESC";
+		    } else {
+		        // 최신순 정렬
+		        sql += " ORDER BY p.post_seq DESC";
+		    }
+
+		    // 3. 파라미터 전달 (순서: mem_id -> title)
+		    return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), mem_id, "%" + title + "%");
+		}
 
 
 

@@ -153,16 +153,17 @@ public class HomeController {
 	@RequestMapping("/searchByTitle")
 	public String searchByTitle(String title, String sort, Model model, HttpSession session) throws Exception {
 		
+	    String loginId = (String)session.getAttribute("loginId");
+		
 		// 기본 정렬
 		if(sort == null) {
 			sort = "latest";
 		}
 	    
 	    // 1. DAO 호출 (제목과 정렬 기준을 같이 보냄)
-	    List<BoardDTO> searchList = dao.searchByTitle(title, sort);
+	    List<BoardDTO> searchList = dao.searchByTitle(loginId,title, sort);
 	    
 	    // 2. 좋아요 상태 및 댓글 수 체크 (기존 로직 유지)
-	    String loginId = (String)session.getAttribute("loginId");
 	    LikeStatus(searchList, loginId);
 	    
 	    // 3. JSP로 데이터 전달
