@@ -13,6 +13,7 @@
 <!--  summernote -->
 <script src="/resources/summernote/summernote-lite.js"></script>
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 /* 폰트 */
@@ -804,7 +805,13 @@ hr {
 			let post_contents = $(".postContents").html();
 		   
 		    if(postTitle.text() == "" || postContents.text() == ""){
-		        alert("내용을 입력해주세요.");
+		    	Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "수정 완료!",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 		        return;
 		    }
 		    

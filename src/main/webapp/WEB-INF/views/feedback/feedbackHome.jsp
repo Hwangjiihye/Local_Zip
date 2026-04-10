@@ -292,7 +292,7 @@
             margin: auto;
 
             width: 95%;
-            height: 1.5em;       /* 한 줄 높이만큼 고정 */
+            /* height: 1.5em;       /* 한 줄 높이만큼 고정 */ */
     		line-height: 1.5em;
 
             font-size: 18px;
@@ -302,10 +302,11 @@
             color: #5e361a;
             padding: 0 10px;
              
-            white-space: nowrap;
-            overflow: hidden;
+            white-space: pre-wrap;
+            word-break: break-all;
+            /* overflow: hidden;
     		text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
-    		display: block;
+    		display: block; */
         }
         
         .postDownBox {
@@ -473,7 +474,8 @@
 	                    	</div>
 	                  </c:if>
 	                    </div>
-	
+	                    
+					<c:if test="${loginId != i.mem_id}">
 		                    <div class="reportArea">
 								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 								<select class="reportSelect" name="reports_reason">
@@ -483,9 +485,10 @@
 	                               <option value="AD" class="reportOption">광고/스팸</option>
 	                           	</select>
 	                           	
+	                           	
 		                        	<input class="reportBtn" type="button" value="신고하기" data-seq="${i.suggestion_seq}" data-targetid="${i.mem_id}">
-		                    	
 		                    </div>
+		               </c:if>
 	                </div>
 	
 	                <div class="postMidBox">
@@ -697,7 +700,7 @@
         			}
         		});
         	});
-
+    		
         // 신고버튼을 눌렀을 때, 내가 누른 게시글 신고버튼만 눌림
         $(".reportIcon").on("click", function () {
         	$(this).siblings(".reportSelect, .reportBtn").css({"display" : "inline"});
@@ -826,8 +829,8 @@
         	
         	let box = $(this).closest(".postBox");
         	let seq = $(this).data("seq");
-        	let title = box.find(".postTitle").text();
-        	let contents = box.find(".postContent").text();
+        	let title = box.find(".postTitle").html(); //
+        	let contents = box.find(".postContent").html();
         	
             box.find(".postTitle").attr("contenteditable", "false");
             box.find(".postContent").attr("contenteditable", "false");
@@ -880,7 +883,7 @@
         					// 삭제 성공 알림
         					Swal.fire({
 								icon: "success",
-								title: "Scuccess  !",
+								title: "Success  !",
 								text: "삭제 되었습니다",
 								iconColor: "#FFB300",
 								confirmButtonColor: "#FFB300"
@@ -920,6 +923,26 @@
         });
 	});
 			
+        $(document).on("keydown", ".postMidBox[contenteditable='true']", function(e){
+            if(e.key === "Enter"){
+                e.preventDefault(); // 기본 동작 막기
+
+                document.execCommand("insertLineBreak"); // 줄바꿈 삽입
+            }
+        });
+        
+        // 입력창 테두리 속성
+        /* .postMidBox[contenteditable="true"] {
+		    border: 1px solid #FFB300;
+		    border-radius: 5px;
+		    padding: 5px;
+		} */
+/* 
+		.postTitle[contenteditable="true"]:focus {
+		    outline: none;
+		    border: 1px solid #FFB300;
+		    background-color: #fbe5c0;
+		} */
         
         // 하단 네비게이션 바 구현
         $("document").ready(function(){
