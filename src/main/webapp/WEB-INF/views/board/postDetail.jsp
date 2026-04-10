@@ -855,9 +855,14 @@ hr {
 		        url: "/board/deletePost",
 		        data: { post_seq: postSeq },
 		        type: "post"
-		    }).done(function(){
-		    	alert("삭제 완료!");
- 		        location.href = "/";
+		    }).done(function(resp){
+		    	if(resp == "fail"){
+		    		alert("삭제 불가");
+		    		return;
+		    	}else{
+		    		alert("삭제 완료!");
+ 		        	location.href = "/";
+		    	}
 		    });
 		});
 		
@@ -1154,9 +1159,11 @@ hr {
         	$.ajax({
         		url: "/reply/deleteReply",
         		data: {reply_seq : reply_seq}
-        	}).done(function(){
+        	}).done(function(resp){
         		if(!confirm("정말로 삭제하시겠습니까?")){
         			return;
+        		}else if(resp == "fail"){
+        			alert("삭제가 불가합니다.")
         		}else{
         			alert("삭제가 완료되었습니다!")
         		}

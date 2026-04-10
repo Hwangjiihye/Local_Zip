@@ -20,6 +20,7 @@ import com.kedu.dao.AttachmentDAO;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.ReplyDAO;
+import com.kedu.dao.ReportDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.AttachmentDTO;
 import com.kedu.dto.BoardDTO;
@@ -42,6 +43,8 @@ public class BoardController {
 	private PostLikeDAO likeDao;
 	@Autowired
 	private AttachmentDAO aDao;
+	@Autowired
+	private ReportDAO rdao;
 
 	@RequestMapping("/write")
 	public String write_lifeInfo(HttpSession session) {
@@ -337,8 +340,14 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping("/deletePost")
 	public String deletePost(int post_seq) {
+		
+		int count = rdao.reportDeleteBlock(post_seq);
+		
+		if(count > 0) {
+			return "fail";
+		}
+		
 		dao.deletePost(post_seq);
-
 		return "success";
 	}
 
