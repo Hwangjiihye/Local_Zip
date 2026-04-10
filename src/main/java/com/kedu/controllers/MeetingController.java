@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.MeetingDAO;
 import com.kedu.dao.MeetingMemberDAO;
+import com.kedu.dao.ReportDAO;
 import com.kedu.dto.MeetingDTO;
 
 @Controller
@@ -24,10 +25,13 @@ import com.kedu.dto.MeetingDTO;
 public class MeetingController {
 	
 	@Autowired
-	public MeetingDAO dao;
+	private MeetingDAO dao;
 	
 	@Autowired
-	public MeetingMemberDAO mdao;
+	private MeetingMemberDAO mdao;
+	
+	@Autowired
+	private ReportDAO rdao;
 	
 	// 모임 신청 폼 출력
 	@RequestMapping("/list")
@@ -235,6 +239,12 @@ public class MeetingController {
 	@RequestMapping("/deleteMeeting")
 	public int deleteMeeting(int seq, int status) throws Exception{
 		
+		// 신고된 모임 삭제 불가 로직
+		int count = rdao.reportDeleteBlock(seq);
+		
+		if(count > 0) {
+			return -1;
+		}
 		return dao.deleteMeeting(seq, status);
 	}
 }

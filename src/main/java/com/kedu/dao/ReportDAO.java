@@ -26,4 +26,9 @@ public class ReportDAO {
 				+ "and reports_type =? ";
 		return jdbc.queryForObject(sql, Integer.class, mem_id, target_seq, reports_type);
 	}
+	
+	public int reportDeleteBlock(int target_seq) {
+		String sql = "select count(*) from reports where target_seq =? ";
+		return jdbc.queryForObject(sql, Integer.class, target_seq);
+	}
 }

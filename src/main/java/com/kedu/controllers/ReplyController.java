@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.ReplyDAO;
+import com.kedu.dao.ReportDAO;
 
 @Controller
 @RequestMapping("/reply")
@@ -15,6 +16,9 @@ public class ReplyController {
 	
 	@Autowired
 	private ReplyDAO dao;
+	
+	@Autowired
+	private ReportDAO rdao;
 	
 	// 댓글 입력
 	@ResponseBody
@@ -31,6 +35,14 @@ public class ReplyController {
 	@ResponseBody
 	@RequestMapping("/deleteReply")
 	public String deleteReply(int reply_seq) {
+		
+		// 신고 이력 있는 댓글 삭제 막기 로직
+		int count = rdao.reportDeleteBlock(reply_seq);
+		
+		if(count > 0) {
+			return "fail";
+		}
+		
 		dao.deleteReply(reply_seq);
 		return "success";
 	}

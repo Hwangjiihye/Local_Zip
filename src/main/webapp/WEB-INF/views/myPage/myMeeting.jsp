@@ -380,8 +380,26 @@
 								seq: seq,
 								status: 2
 							}
-						}).done(function(){
-							location.reload();
+						}).done(function(resp){
+							if(Number(resp) == -1){
+								Swal.fire({
+							        icon: "warning",
+							        title: "삭제 불가",
+							        text: "신고된 모임은 삭제할 수 없습니다.",
+							        confirmButtonColor: "#FFB300"
+						        });
+								return;
+							}
+							
+							if(Number(resp) == 1){
+								Swal.fire({
+							        icon: "warning",
+							        title: "삭제 완료",
+							        confirmButtonColor: "#FFB300"
+						        }).then(() => {
+									location.reload();
+						        });
+							}
 						});
 			        }
 				});
