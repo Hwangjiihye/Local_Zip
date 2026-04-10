@@ -650,7 +650,17 @@ body, html {
           font-size: 50px;     /* i 크기 */
           transform: translateY(5px);
           line-height: 70px;   /* 세로 위치 (핵심🔥) */
-}   
+}
+
+.emptyBox {
+	width: 100%;
+	height: 600px;
+	font-size: 25px;
+	color: #5e361a;
+	text-align: center;
+	margin-top: 80px;
+}
+
 </style>
 </head>
 
@@ -1155,6 +1165,33 @@ body, html {
         	$(".pageBox").append(navi);
         }
     });
+     	
+     	
+        $(function() {
+            // 검색 버튼(돋보기) 클릭 이벤트
+            $(".searchIconBox").on("click", function() {
+                let keyword = $(".inputSearch").val();
+                
+                if (keyword === "") {
+                    Swal.fire({
+                        icon: "warning",
+                        text: "검색어를 입력해주세요!"
+                    });
+                    return;
+                }
+                
+                // 검색 요청 보내기
+                location.href = "/searchByTitle?title=" + encodeURIComponent(keyword);
+            });
+
+            // 엔터키 검색 허용
+            $(".inputSearch").on("keyup", function(e) {
+                if (e.keyCode === 13) {
+                    $(".searchIconBox").trigger("click");
+                }
+            });
+        });
+     	
 	</script>
 
 </body>

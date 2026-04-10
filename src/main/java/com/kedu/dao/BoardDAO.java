@@ -272,7 +272,11 @@ public class BoardDAO {
 	}
 
 
-
+	// 홈에서 제목(포함)으로 검색한 게시글 목록 출력용 메서드
+	public List<BoardDTO> searchByTitle(String title){
+		String sql = "select * from post where post_title like ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), "%"+ title +"%");
+	};
 
 
 
