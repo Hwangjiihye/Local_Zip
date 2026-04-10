@@ -1125,16 +1125,31 @@ body, html {
 		    	});
 			});
 		
-		// 최신순 인기순 정렬
+		// 최신순 인기순 정렬( 홈에서 검색하는 것도 포함. )
         $(".sortBtn").on("click",function(){
         	
-        	let currentSort = "${sort}";
+//         	let currentSort = "${sort}";
         	
-        	if(currentSort == "latest"){
-        		location.href = "/?sort=like";
-        	}else{
-        		location.href = "/?sort=latest";
-        	}
+//         	if(currentSort == "latest"){
+//         		location.href = "/?sort=like";
+//         	}else{
+//         		location.href = "/?sort=latest";
+//         	}
+        	
+        	let currentSort = "${sort}";
+            let keyword = "${searchKeyword}"; // home 컨트롤러에서 보낸 검색어 (없으면 빈 문자열)
+            
+            let nextSort = (currentSort == "latest") ? "like" : "latest"; // 정렬 타겟 결정
+            
+            let url = "/?sort=" + nextSort; // 이동할 기본 URL (/?sort=like 또는 /?sort=latest)
+            
+            if (keyword !== "") { // 만약 검색어가 있는 상태라면, 검색어 파라미터도 추가
+                url = "/searchByTitle?title=" + encodeURIComponent(keyword) + "&sort=" + nextSort;
+             // **encodeURIComponent : 주소창에 한글, 공백, 특수문자가 포함될 때 발생할 수 있는 오류를 방지(예: 치킨&피자 <- &같은거 오류 방지)
+            }
+            
+            location.href = url; // 검색어가 있거나 없거나, 인기순 최신순 정렬 기준으로 주소 창 이동.     
+            
         });
 		
      	// 하단 네비게이션 바 구현
