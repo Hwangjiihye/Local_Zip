@@ -194,6 +194,9 @@
 	.rightImg{
 		right: 0;
 	}
+	.descTextDetail{
+		white-space: pre-wrap;
+	}
 </style>
 </head>
 <body>

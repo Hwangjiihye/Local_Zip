@@ -57,6 +57,10 @@ public class AuthDAO {
 		    return jdbc.queryForObject(sql, Integer.class, email);
 		}
 	 
+	 public int isIdEmailExists(String id, String email) {
+		    String sql = "SELECT COUNT(*) FROM MEMBERS WHERE MEM_ID=? AND MEM_EMAIL = ?";
+		    return jdbc.queryForObject(sql, Integer.class,id,email);
+		}
 	 //비밀번호 업데이트
 	 public int updatePwById(String id,String pw) {
 		
