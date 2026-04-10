@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 * {
@@ -639,6 +640,17 @@ body, html {
 .close-btn:hover {
 	background-color: #fecc56;
 }
+
+.swal2-icon.swal2-info .swal2-icon-content {
+          font-size: 50px;     /* i 크기 */
+          transform: translateY(5px);
+          line-height: 70px;   /* 세로 위치 (핵심🔥) */
+}
+.swal2-icon.swal2-warning .swal2-icon-content {
+          font-size: 50px;     /* i 크기 */
+          transform: translateY(5px);
+          line-height: 70px;   /* 세로 위치 (핵심🔥) */
+}   
 </style>
 </head>
 
@@ -918,8 +930,15 @@ body, html {
 		        // 게시글 상세보기 이동 제어
 		        let loginId = "${loginId}";
 		        if (loginId === "") {
-		            alert("로그인 후 이용 가능합니다.");
-		            location.href = "/members/loginUi";
+		        	Swal.fire({
+	                      icon: "info",
+	                      title: "Wait  !",
+	                      text: "로그인 후 이용 가능합니다.",
+	                      iconColor: "#FFB300",
+	                      confirmButtonColor: "#FFB300"
+	                   }).then(() => {
+	                	   location.href = "/members/loginUi";
+	                   });
 		            return;
 		        }
 		
@@ -953,12 +972,29 @@ body, html {
 		        let reportReason = card.find(".reportSelect").val(); 
 		        
 		        if(!reportReason || reportReason === "신고 사유"){
-		            alert("신고 사유를 선택해 주세요.");
+		        	Swal.fire({
+		                icon: "info",
+		                title: "Wait  !",
+		                text: "신고 사유를 선택해 주세요",
+		                iconColor: "#FFB300",
+		                confirmButtonColor: "#FFB300"
+		             });
 		            return;
 		        }
 		        
-		        if(confirm("정말 신고하시겠습니까?")) {
-		        	$.ajax({
+		        Swal.fire({
+		            icon: "question",
+		            title: "Wait  !",
+		            text: "정말 신고하시겠습니까?",
+		            iconColor: "#FFB300",
+		            confirmButtonColor: "#FFB300",
+		               showCancelButton: true,
+		               confirmButtonText: "신고",
+		               cancelButtonText: "취소",
+		               cancelButtonColor: "#d9d9d9"
+		         }).then((result) => {
+		        	 if(result.isConfirmed) {
+		        		 $.ajax({
 		            url : "/report/insert",
 		            type : "post",
 		            data : {
@@ -969,19 +1005,45 @@ body, html {
 		            }
 		        }).done(function(resp){
 		            if(resp == "success"){
-		                alert("신고가 접수되었습니다.");
+		            	Swal.fire({
+		                      icon: "success",
+		                      title: "Success  !",
+		                      text: "신고가 접수되었습니다.",
+		                      iconColor: "#FFB300",
+		                      confirmButtonColor: "#FFB300"
+		                   });
 		                card.find(".reportSelect, .reportBtn").hide();
 		            } else {
-		                alert("이미 신고한 게시글 입니다.");
+		            	Swal.fire({
+		                      icon: "info",
+		                      title: "Already  !",
+		                      text: "이미 신고한 글 입니다",
+		                      iconColor: "#FFB300",
+		                      confirmButtonColor: "#FFB300"
+		                   });
 		                card.find(".reportSelect, .reportBtn").hide();
 		            }
 		        }).fail(function(){
-		            alert("서버와 통신 중 오류가 발생했습니다.");
+		        	Swal.fire({
+		                  icon: "error",
+		                  title: "Error  !",
+		                  text: "서버와 통신 중 오류가 발생했습니다",
+		                  iconColor: "#EB0000",
+		                  confirmButtonColor: "#FFB300"
+		               });
 		        });
 		  } else {
-			  alert("취소 되었습니다");
-		  }
-	});
+			  Swal.fire({
+                  icon: "info",
+                  title: "Cancel  !",
+                  text: "취소 되었습니다",
+                  iconColor: "#FFB300",
+                  confirmButtonColor: "#FFB300"
+			  });
+		    }
+		 });
+	  });
+		        	
 		
 		 	// 좋아요 버튼을 눌렀을 때
 			$(".postLikeBox").on("click", function(e) {
@@ -1000,8 +1062,17 @@ body, html {
 					console.log("서버 응답:" + likeCheck);
 					
 					if(likeCheck == -1){
-						alert("로그인 후 이용 가능합니다.");
-						location.href = "/members/loginUi";
+						Swal.fire({
+		                    icon: "warning",
+		                    title: "Wait !",
+		                    text: "로그인 후 이용 가능합니다.",
+		                    iconColor: "#FFB300",
+		                    confirmButtonColor: "#FFB300"
+		                }).then((result) => {
+		                   if (result.isConfirmed) {
+								location.href = "/members/loginUi";
+		                   }
+		                });
 						return;
 					}
 
