@@ -811,7 +811,7 @@ body, html {
 											<div class="postLikeBox  ${i.post_like_check == 1 ? 'active' : ''}">
 												<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
 
-												<div class="likeCount infoCount">${i.post_like }</div>
+												<div class="likeCount infoCount">${i.post_like_count}</div>
 											</div>
 
 											<div class="postCommentBox">
