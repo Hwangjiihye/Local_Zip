@@ -23,7 +23,6 @@ import com.kedu.dao.ReplyDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.AttachmentDTO;
 import com.kedu.dto.BoardDTO;
-import com.kedu.dto.NoticeDTO;
 import com.kedu.dto.ReplyDTO;
 
 @Controller
@@ -422,110 +421,4 @@ public class BoardController {
 		return "error";
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping("/toPosts")
-	public String toPosts(int cPage,Model model, HttpSession session) {
-		
-		String loginId = (String)session.getAttribute("loginId");
-		
-		//list 뽑기
-		int start = (cPage-1)*10+1;
-		int end = cPage*10;
-		List<BoardDTO> list = dao.getPostsNavi(start,end);
-		
-		//게시글 갯수 가져오기
-		int totalCount = dao.getTotalPosts(loginId); // 내가 작성한 글 목록 보여주는
-		
-		model.addAttribute("listAll",list);
-		model.addAttribute("cPage",cPage);
-		model.addAttribute("totalCount",totalCount);
-		
-		return "/members/myPosts";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

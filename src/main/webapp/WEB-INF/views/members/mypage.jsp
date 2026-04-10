@@ -271,7 +271,7 @@
 			    	</div>
 	 	        </div>
 	 	    </a>
-	 	    <a href="/members/myPosts">
+	 	    <a href="/members/myPosts?cPage=1">
 	    	<div class="myWrite">
 	    		<div class="myWriteIcon"><img src="/resources/images/text1.png" class="icon"></div>
 	    		<div class="myWriteContents">
