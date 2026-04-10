@@ -292,7 +292,7 @@
             margin: auto;
 
             width: 95%;
-            height: 1.5em;       /* 한 줄 높이만큼 고정 */
+            /* height: 1.5em;       /* 한 줄 높이만큼 고정 */ */
     		line-height: 1.5em;
 
             font-size: 18px;
@@ -302,10 +302,11 @@
             color: #5e361a;
             padding: 0 10px;
              
-            white-space: nowrap;
-            overflow: hidden;
+            white-space: pre-wrap;
+            word-break: break-all;
+            /* overflow: hidden;
     		text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
-    		display: block;
+    		display: block; */
         }
         
         .postDownBox {
@@ -826,8 +827,8 @@
         	
         	let box = $(this).closest(".postBox");
         	let seq = $(this).data("seq");
-        	let title = box.find(".postTitle").text();
-        	let contents = box.find(".postContent").text();
+        	let title = box.find(".postTitle").html(); //
+        	let contents = box.find(".postContent").html();
         	
             box.find(".postTitle").attr("contenteditable", "false");
             box.find(".postContent").attr("contenteditable", "false");
@@ -880,7 +881,7 @@
         					// 삭제 성공 알림
         					Swal.fire({
 								icon: "success",
-								title: "Scuccess  !",
+								title: "Success  !",
 								text: "삭제 되었습니다",
 								iconColor: "#FFB300",
 								confirmButtonColor: "#FFB300"
@@ -920,6 +921,13 @@
         });
 	});
 			
+        $(document).on("keydown", ".postMidBox[contenteditable='true']", function(e){
+            if(e.key === "Enter"){
+                e.preventDefault(); // 기본 동작 막기
+
+                document.execCommand("insertLineBreak"); // 줄바꿈 삽입
+            }
+        });
         
         // 하단 네비게이션 바 구현
         $("document").ready(function(){
