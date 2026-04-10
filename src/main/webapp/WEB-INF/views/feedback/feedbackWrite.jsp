@@ -125,6 +125,7 @@
 		padding: 2px;
 		outline: none;
 		resize: none; /*늘어나기 방지*/
+		white-space: pre-wrap;
 	}
 	
 	.fileDetail {

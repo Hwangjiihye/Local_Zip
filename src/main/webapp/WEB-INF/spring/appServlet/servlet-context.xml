@@ -33,6 +33,7 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10485760" />
 	</beans:bean>
+	<resources mapping="/upload/**" location="file:///c:/files/" />
 	<!-- 추가 끝 -->
 
 
