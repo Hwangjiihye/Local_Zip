@@ -200,6 +200,20 @@ button, body, div, input {
 	padding: 2px;
 	outline: none;
 }
+.leftImg, .rightImg{
+	position: absolute;
+	width: 450px;
+	height: 170px;
+	z-index: 10;
+	bottom: 0;
+}
+.leftImg{
+    left: 0;
+}
+.rightImg{
+	right: 0;
+}
+
 .swal2-icon.swal2-info .swal2-icon-content {
 		    font-size: 50px;     /* i 크기 */
 		    transform: translateY(5px);
@@ -237,6 +251,8 @@ button, body, div, input {
 					<button class="backBtn" type="button" onclick="history.back();">뒤로가기</button>
 				</div>
 		</form>
+		<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 	</div>
 
 	<script>
