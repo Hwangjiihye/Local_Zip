@@ -251,6 +251,10 @@ body, html {
 .pageBox a:hover{
     background-color:#F2D3A2;
 }
+.textContent, .answerText{
+	white-space: pre-wrap;
+}
+
 </style>
 </head>
 <body>
