@@ -457,7 +457,9 @@ body {
 		<div class="top-section">
 			<div class="mainTitle">
 			<span>동네 모임.zip</span>
-			<a href="/meeting/meetCreate"><button class="topBtn" type="button">+ 모임 만들기</button></a>
+				<c:if test="${admin != 1}">
+					<a href="/meeting/meetCreate"><button class="topBtn" type="button">+ 모임 만들기</button></a>
+				</c:if>
 			</div>
 			
 				

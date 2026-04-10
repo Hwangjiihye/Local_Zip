@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.AdminQaDAO;
 import com.kedu.dao.BoardDAO;
+import com.kedu.dao.MembersDAO;
 import com.kedu.dao.NoticeDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.BlackListDTO;
 import com.kedu.dto.NoticeDTO;
 import com.kedu.dto.QaDTO;
+import com.kedu.dto.ReplyDTO;
 import com.kedu.dto.ReportDTO;
 
 @Controller
@@ -317,6 +319,8 @@ public class AdminController {
 	
 	
 	
+	@Autowired
+	private MembersDAO mdao;
 	
 	// 신고관리 페이지로 이동
 	@RequestMapping("/adminBlackList")
@@ -382,6 +386,11 @@ public class AdminController {
 				banDays = day;
 			}
 			
+		int result = mdao.getRole(target_id);
+		
+		if(result == 0) {
+			return "fail";
+		}
 		// 블랙리스트 테이블에 해당 유저가 있는지 먼저 검사
 		List<BlackListDTO> list = dao.selectById(target_id);
 		

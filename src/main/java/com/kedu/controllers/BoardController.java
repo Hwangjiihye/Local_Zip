@@ -305,11 +305,13 @@ public class BoardController {
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
 	public String postDetail(Model model, int post_seq, HttpSession session, String category, Integer cPage, String sort) throws Exception {
-
-		BoardDTO dto = dao.selectByPost_seq(post_seq);
 		
+		
+		BoardDTO dto = dao.selectByPost_seq(post_seq);
+		System.out.println(post_seq);
 		String loginId = (String) session.getAttribute("loginId");
-		List<ReplyDTO> mlist = mdao.memRole(post_seq);
+		System.out.println(loginId);
+		
 		// 파일리스트 뽑아오기
 		List<AttachmentDTO> aList = aDao.getAttachment(post_seq);
 		model.addAttribute("fileList", aList);
@@ -399,8 +401,12 @@ public class BoardController {
 	// ajax 댓글 리스트 출력
 	@ResponseBody
 	@RequestMapping("/replyList")
-	public String replyList(int post_seq) {
-		List<ReplyDTO> list = ReplyDao.selectByPostSeq(post_seq);
+	public String replyList(int post_seq, Model model) {
+//		List<ReplyDTO> list = ReplyDao.selectByPostSeq(post_seq);
+		
+		// 관리자 댓글에 신고 버튼 안 뜨게 하는 로직 ( 관리자 여부 확인 )
+		List<ReplyDTO> list = mdao.memRole(post_seq);
+		
 		return gson.toJson(list);
 	}
 

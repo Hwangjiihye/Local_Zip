@@ -905,12 +905,14 @@ hr {
 		})
 		
 		// 댓글 목록 출력해오는 ajax -> 이름있는 함수로 만들고 밑에서 익명함수로 최초 실행
+		
 		function loadReplyList(){
 			$.ajax({
 				url:"/board/replyList",
 				dataType:"json",
 				data: { post_seq: postSeq }
 			}).done(function(resp){
+				console.log(resp);
 				$(".replyUpBox, .hr").remove(); // 기존 댓글 목록 비우기,(새로 등록된 것까지 포함해서 다시 그려야 하므로)
 				
 				for(let i of resp){ // 댓글 for문 돌리면서 뽑기.
@@ -948,8 +950,11 @@ hr {
 							);
 							btnDiv.append(replyEditDiv, replyEditCompleteDiv);
 							replyInfoUp.append(btnDiv);
-						}else if(i.mem_id = 1){
-							// 관리자는 아무 버튼 안 뜨게 구현
+						}else if(i.mem_role == 0){
+							console.log("role" , i.mem_role);
+							console.log("loginId", loginId);
+							console.log("loginId:", loginId);
+							console.log("댓글 작성자:", i.mem_id);
 						}else{
 							let reportArea = $("<div>").addClass("reportArea");
 							let reportIcon = $("<img>").addClass("reportIcon");
