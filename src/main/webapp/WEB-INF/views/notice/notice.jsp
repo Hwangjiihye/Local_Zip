@@ -182,6 +182,30 @@ body, html {
 	color: #5e361a;
 	text-align: center;
 }
+
+.page a{
+	margin: 10px;
+	color: #A66A3F;
+	display: inline-block;
+	text-decoration: none;
+	min-width:35px;
+    padding:6px 0px 6px 0px;
+	border-radius:6px;
+    transition:0.2s;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.pageBox a.active{
+	background-color:#fecc56;
+    font-weight: bold;
+    color: #5e361a;
+}
+
+.pageBox a:hover{
+    background-color:#F2D3A2;
+}
+
 </style>
 </head>
 <body>
@@ -224,52 +248,47 @@ body, html {
 	<script>
 	let recordTotalCount = ${totalCount};
 	let recordCountPerPage = 10;
-	let naviCountPerPage = 5;
+	let naviCountPerPage = 10;
 	let currentPage = ${cPage};
 
 	let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
 	
 	let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
-	let endNavi = startNavi*naviCountPerPage;
+	let endNavi = startNavi + naviCountPerPage - 1;
 	
 	if(endNavi > pageTotalCount) {
 		endNavi = pageTotalCount;
 	}
-	$(".page").empty();	
+	$(".page").empty();
 	
 	let needPrev = true; // <<
 	let needNext = true; // >>
 	
-	if(startNavi == 1) {needPrev = false;}
-	if(endNavi == pageTotalCount) {needNext = false;}
-	
-	
+	if(startNavi == 1){needPrev = false;}
+	if(endNavi == pageTotalCount){needNext = false;}
 	
 	if(needPrev) {
 		let prev = $("<a>"); 
-		prev.attr("href", "/notice/toNotice?cPage="+(startNavi-1)); 
-		prev.html("<i class='fa-solid fa-chevron-left'></i>");
+		prev.attr("href","/notice/toNotice?cPage="+(startNavi-1)); 
+		prev.html("<< ");
 		$(".page").append(prev);
-	}else{
-		$(".page").append("<i class='fa-solid fa-chevron-left'></i>");
 	}
 		
 	for(let i = startNavi; i <= endNavi; i++) {
 		let navi = $("<a>");
 		navi.attr("href", "/notice/toNotice?cPage="+i);
 		navi.html(i + " ");
-		if (i === currentPage) {
-	        navi.css({"font-weight": "bold"}); 
-	    }
 		$(".page").append(navi);
+		
+		if (i === currentPage) {
+	        navi.addClass("active");
+	    }
 	}
 	if(needNext) {
 		let next = $("<a>");
 		next.attr("href", "/notice/toNotice?cPage="+(endNavi+1));
-		next.html("<i class='fa-solid fa-chevron-right'></i>");
+		next.html(" >>");
 		$(".page").append(next);
-	}else{
-		$(".page").append("<i class='fa-solid fa-chevron-right'></i>");
 	}
 	</script>
 	
