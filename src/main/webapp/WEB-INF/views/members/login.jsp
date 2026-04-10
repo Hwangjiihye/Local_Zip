@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>login Page</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 @font-face {
@@ -239,32 +240,69 @@ input{
 	<script>
 		let pwMsg = "${pwMsg}";
 	    if (pwMsg && pwMsg !== "") {
-	        alert(pwMsg);
+	    	Swal.fire({
+	            icon: "success",
+	            title: "Success !",
+	            text: pwMsg,
+	            iconColor: "#FFB300",
+	            confirmButtonColor: "#FFB300"
+	        });
+	        /* alert(pwMsg); */
 	    }
 	
 		let msg = "${msg}";
 		let endDate = "${endDate}";
 		
 		if(msg == "empty"){
-			alert("아이디와 비밀번호를 입력해주세요");
+			Swal.fire({
+				icon: "info",
+				title: "Wait  !",
+				text: "아이디와 비밀번호를 입력해주세요",
+				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300"
+			});
 		}else if(msg == "idFail") {
-			alert("존재하지 않는 계정입니다.");
+			Swal.fire({
+				icon: "error",
+				title: "Fail  !",
+				text: "존재하지 않는 계정입니다.",
+				iconColor: "#EB0000",
+				confirmButtonColor: "#FFB300"
+			});
 		}else if(msg == "pwFail") {
-			alert("비밀번호가 틀립니다.");
+			Swal.fire({
+				icon: "info",
+				title: "Wait  !",
+				text: "비밀번호가 틀립니다.",
+				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300"
+			});
 		}else if(msg == "banned"){
 			let alertMsg = "🚨 서비스 이용이 제한된 계정입니다.\n";
 				if(endDate == "영구 정지"){
-					alertMsg += "상태 : 영구정지";
+					alertMsg += "<br>상태 : 영구정지</br>";
 				}else{
-					alertMsg += "제한 해제일 : "  + endDate;
+					alertMsg += "<br>제한 해제일 : "  + endDate + "</br>";
 				}
-			alert(alertMsg);
-		}
+				Swal.fire({
+			        icon: "error",
+			        title: "접근 제한",
+			        html: alertMsg,   // 👉 기존 문자열 그대로
+			        iconColor: "#EB0000",
+			        confirmButtonColor: "#FFB300"
+			    });
+			}
 		
 		let lmsg = "${lmsg}";
 		
 		if(lmsg == "loginFail"){
-			alert("로그인에 실패했습니다. 다시 시도해 주세요.");
+			Swal.fire({
+				icon: "error",
+				title: "Error  !",
+				text: "로그인에 실패했습니다. 다시 시도해 주세요.",
+				iconColor: "#EB0000",
+				confirmButtonColor: "#FFB300"
+			});
 		}
 	</script>
 	

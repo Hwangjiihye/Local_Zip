@@ -13,6 +13,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 	<style>
@@ -271,6 +272,11 @@
 		.rightImg{
 			right: 0;
 		}
+		.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 	</style>
 <body><!-- /meeting/test -->
 <form action="/meeting/meetGenerate" class="frm" method="post" onsubmit="return checkForm();">
@@ -361,28 +367,76 @@
 			let pw = document.getElementById("pw").value;
 			
 			if(title == ""){
-				alert("모임명을 입력해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "모임명을 입력해주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			} else if(category == "") {
-				alert("카테고리를 선택해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "카테고리를 선택해주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			} else if(peopleNumber == "") {
-				alert("정원수를 선택해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "정원수를 선택해주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			} else if(intro == "") {
-				alert("한 줄 소개를 작성해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "한 줄 소개를 작성해주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			} else if(detail == "") {
-				alert("모임 소개를 작성해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "모임 소개를 작성해주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			} else if(address == "") {
-				alert("활동 지역을 작성해주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "활동 지역을 작성해주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			} else if(link == "") {
-				alert("오픈채팅 링크를 넣어주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "오픈채팅 링크를 넣어주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			} else if(pw == "") {
-				alert("오픈채팅 비밀번호를 넣어주세요");
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "오픈채팅 비밀번호를 넣어주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 				return false;
 			}
 			return true;

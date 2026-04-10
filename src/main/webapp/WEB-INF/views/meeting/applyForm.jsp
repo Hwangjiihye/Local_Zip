@@ -11,7 +11,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 	integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<style>
 	button, body {
 		font-family: 'GMarketSans', sans-serif;
@@ -106,7 +106,39 @@
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
 	
+	.my-swal {
+	    width: 420px !important;   /* 박스 크기 고정 */
+	    padding: 15px !important;
+	}
 	
+	.my-swal .swal2-title {
+    	font-size: 22px;
+    	margin: 5px 0;
+	}
+
+	.my-swal .swal2-html-container {
+    	font-size: 16px;
+    	margin: 5px 0;
+	}
+	
+	.my-swal .swal2-actions{
+		margin-top: 10px;
+	}
+	
+	.my-swal .swal2-icon {
+	    width: 50px !important;
+	    height: 50px !important;
+	    margin: 10px auto;
+	}
+	
+	.my-swal .swal2-confirm{
+		padding: 8px 18px;
+	}
+
+	.my-swal .swal2-icon-content {
+	    font-size: 30px !important;
+	    line-height: 60px !important;
+	}
 	
 	</style>
 </head>
@@ -134,7 +166,16 @@
 		let intro = document.getElementById("intro").value;
 		
 		if(intro == ""){
-			alert("한 줄 소개를 작성해주세요")
+			Swal.fire({
+				icon: "info",
+				title: "Wait  !",
+				text: "한 줄 소개를 작성해주세요",
+				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300",
+				customClass: {
+				       popup: "my-swal"
+				   }
+			});
 			return false;
 		} else {
 			return true;

@@ -11,6 +11,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 	integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
 <style>
@@ -430,6 +431,23 @@ body {
     color: #5e361a;
     margin-top: auto;
 }
+.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-question .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
+		
+		.swal2-icon.swal2-warning .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 
 </style>
 </head>
@@ -445,7 +463,13 @@ body {
 				
 				<c:if test="${msg == 'over'}">
 					<script>
-					alert("모임은 최대 3개까지만 생성할 수 있습니다.");
+						Swal.fire({
+							icon: "info",
+							title: "Wait  !",
+							text: "모임은 최대 3개까지만 생성할 수 있습니다.",
+							iconColor: "#FFB300",
+							confirmButtonColor: "#FFB300"
+						});
 					</script>
 					</c:if>
 				<c:remove var="msg" scope="session"/>
@@ -617,36 +641,67 @@ body {
 				let reportReason = card.find(".report").val();
 				
 				if(!reportReason){
-					alert("신고 사유를 선택해 주세요.");
+					Swal.fire({
+						icon: "info",
+						title: "Wait  !",
+						text: "신고 사유를 선택해 주세요",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
 					return;
 				}
-				
-				if(!confirm("정말 이 모임을 신고하시겠습니까?")){
-			        return;
-			    }
-				
-				$.ajax({
-					url : "/report/insert",
-					type : "post",
-					data : {
-						target_seq : targetSeq,
-						target_id : targetId,
-						reports_type : 2,
-						reports_reason : reportReason
-					},
-					success : function(resp){
-						if(resp == "success"){
-							alert("신고가 접수되었습니다.");
-							card.find(".report").hide();
-							card.find(".reportBtn").hide();
-						}else if(resp == "fail"){
-							alert("이미 신고한 모임입니다.");
-							card.find(".report").hide();
-							card.find(".reportBtn").hide();
-						}
-					}
-				})
-			});
+					Swal.fire({
+				        icon: "question",
+				        title: "Wait !",
+				        text: "정말 이 모임을 신고하시겠습니까?",
+				        iconColor: "#FFB300",
+				        confirmButtonColor: "#FFB300",
+				        showCancelButton: true,
+				        confirmButtonText: "신고",
+				        cancelButtonText: "취소",
+				        cancelButtonColor: "#d9d9d9"
+				    }).then((result) => {
+	
+				        // ✅ 확인 눌렀을 때만 실행
+				        if(result.isConfirmed){
+				        	$.ajax({
+								url : "/report/insert",
+								type : "post",
+								data : {
+									target_seq : targetSeq,
+									target_id : targetId,
+									reports_type : 2,
+									reports_reason : reportReason
+								},
+								success : function(resp){
+									if(resp == "success"){
+										Swal.fire({
+				    						icon: "success",
+				    						title: "Success  !",
+				    						text: "신고가 접수되었습니다",
+				    						iconColor: "#FFB300",
+				    						confirmButtonColor: "#FFB300"
+				    					});
+										card.find(".report").hide();
+										card.find(".reportBtn").hide();
+									}else if(resp == "fail"){
+										Swal.fire({
+				    						icon: "info",
+				    						title: "Already  !",
+				    						text: "이미 신고한 모임 입니다",
+				    						iconColor: "#FFB300",
+				    						confirmButtonColor: "#FFB300"
+				    					});
+										card.find(".report").hide();
+										card.find(".reportBtn").hide();
+									 }
+								 }
+							});
+				          }
+					  });
+				  });
+							
+								
 			
 			
 			$(".join-btn").on("click", function(){
