@@ -966,7 +966,7 @@ hr {
 							});
 							let reportSelect = $("<select>").addClass("reportSelect")
 							reportSelect.append(
-								$("<option>").html("신고 사유"),
+								$("<option disabled selected>").html("신고 사유"),
 								$("<option>").addClass("reportOption").html("부적절한 콘텐츠").val("badContents"),
 								$("<option>").addClass("reportOption").html("욕설/비방").val("badWord"),
 								$("<option>").addClass("reportOption").html("광고/스팸").val("AD")
@@ -1047,7 +1047,8 @@ hr {
 		    let target_seq = btn.attr("data-target_seq"); // 댓글 번호
 		    let reports_type = 1; // 신고 종류(댓글)
 		    let report_reason = btn.siblings(".reportSelect").val(); // 선택한 신고 사유 값 저장.
-
+			
+		    
 		    if(!report_reason) {
 		        alert("신고 사유를 선택해주세요.");
 		        return;
