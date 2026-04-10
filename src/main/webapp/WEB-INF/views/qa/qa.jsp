@@ -10,7 +10,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 <style>
 /* 기존 폰트 및 기본 스타일 유지 */
 @font-face {

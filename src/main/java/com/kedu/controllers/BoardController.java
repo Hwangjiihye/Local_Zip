@@ -18,8 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.kedu.dao.AttachmentDAO;
 import com.kedu.dao.BoardDAO;
+import com.kedu.dao.MembersDAO;
 import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.ReplyDAO;
+import com.kedu.dao.ReportDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.AttachmentDTO;
 import com.kedu.dto.BoardDTO;
@@ -42,6 +44,10 @@ public class BoardController {
 	private PostLikeDAO likeDao;
 	@Autowired
 	private AttachmentDAO aDao;
+	@Autowired
+	private ReportDAO rdao;
+	@Autowired
+	private MembersDAO mdao;
 
 	@RequestMapping("/write")
 	public String write_lifeInfo(HttpSession session) {
@@ -299,15 +305,17 @@ public class BoardController {
 	// 게시물 상세보기
 	@RequestMapping("/postDetail")
 	public String postDetail(Model model, int post_seq, HttpSession session, String category, Integer cPage, String sort) throws Exception {
-
+		
+		
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
-
+		System.out.println(post_seq);
 		String loginId = (String) session.getAttribute("loginId");
-
+		System.out.println(loginId);
+		
 		// 파일리스트 뽑아오기
 		List<AttachmentDTO> aList = aDao.getAttachment(post_seq);
 		model.addAttribute("fileList", aList);
-
+		
 		if (loginId != null) {
 			String allCategory = dao.getCategoryBySeq(post_seq);
 			vdao.postClickVisit(loginId, allCategory);
@@ -328,7 +336,6 @@ public class BoardController {
 		model.addAttribute("category", category);
 		model.addAttribute("cPage", cPage);
 		model.addAttribute("sort", sort);
-
 		session.setAttribute("category", category);
 		return "board/postDetail";
 	}
@@ -337,8 +344,14 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping("/deletePost")
 	public String deletePost(int post_seq) {
+		
+		int count = rdao.reportDeleteBlock(post_seq);
+		
+		if(count > 0) {
+			return "fail";
+		}
+		
 		dao.deletePost(post_seq);
-
 		return "success";
 	}
 
@@ -388,8 +401,12 @@ public class BoardController {
 	// ajax 댓글 리스트 출력
 	@ResponseBody
 	@RequestMapping("/replyList")
-	public String replyList(int post_seq) {
-		List<ReplyDTO> list = ReplyDao.selectByPostSeq(post_seq);
+	public String replyList(int post_seq, Model model) {
+//		List<ReplyDTO> list = ReplyDao.selectByPostSeq(post_seq);
+		
+		// 관리자 댓글에 신고 버튼 안 뜨게 하는 로직 ( 관리자 여부 확인 )
+		List<ReplyDTO> list = mdao.memRole(post_seq);
+		
 		return gson.toJson(list);
 	}
 
