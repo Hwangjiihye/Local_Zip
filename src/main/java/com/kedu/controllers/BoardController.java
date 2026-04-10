@@ -374,7 +374,7 @@ public class BoardController {
 	            if (file.isEmpty()) {
 	            	continue;
 	            }
-	            
+	            System.out.println(dto.getPost_category()+":"+dto.getPost_seq());
 	            String oriName = file.getOriginalFilename();
 				String sysName = UUID.randomUUID() + "_" + oriName;
 				file.transferTo(new File(savePath + "/" + sysName));
