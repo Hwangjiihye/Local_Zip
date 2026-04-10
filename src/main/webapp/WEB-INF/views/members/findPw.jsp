@@ -344,6 +344,7 @@ input{
 					url : "/auth/mailCheck",
 					type : "post",
 					data : {
+						mem_id : $(".mem_id").val(),
 						email : $(".email").val(),
 						auth_type : 3
 					}
@@ -365,7 +366,15 @@ input{
 							iconColor: "#EB0000",
 							confirmButtonColor: "#FFB300"
 						});
-					} else {
+					}else if(resp=="failEmail"){
+						Swal.fire({
+							icon: "error",
+							title: "Empty  !",
+							text: "이메일이 정확하지 않습니다.",
+							iconColor: "#EB0000",
+							confirmButtonColor: "#FFB300"
+						});
+					}else {
 						Swal.fire({
 							icon: "error",
 							title: "Error  !",
