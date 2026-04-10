@@ -349,6 +349,7 @@ public class AdminController {
 			int reportStatus = Integer.parseInt(status);
 			dto = dao.selectReportContentsByStatus(reportStatus, start, end);
 			recordTotalCount = count;
+			
 			System.out.println("미처리완료 : " + status);
 		}else{ // 전체
 			dto = dao.selectReportContents(start, end);
@@ -360,7 +361,7 @@ public class AdminController {
 		model.addAttribute("list", list);
 		model.addAttribute("recordCountPerPage", 10);
 		model.addAttribute("naviCountPerPage", 10);
-		model.addAttribute("recordTotalCount", allCount);
+		model.addAttribute("recordTotalCount", recordTotalCount);
 		model.addAttribute("currentPage", cpage);
 		// 페이지 끝
 		

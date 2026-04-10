@@ -426,7 +426,7 @@ img{
 			</c:when>
 				<c:otherwise>
 						<c:forEach var="i" items="${dto}">
-							<div class="postBox">
+							<div class="postBox" data-group_seq="${i.target_seq}">
 					        	<div class="postHeader">
 					       			<div class="reportWriter">
 					           			<div class="writer"> 카테고리 statsu값 : ${status} / 신고처리값 : ${i.reports_status} : 신고자: ${i.mem_id}</div> 
@@ -548,10 +548,6 @@ img{
 				next.html(">>");
 				$(".pageNum").append(next);
 			}
-			
-			if(recordTotalCount == 0){
-				$(".pageNum").empty();
-			}
 				
 // 				// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
 // 				$(function(){
@@ -619,6 +615,10 @@ img{
 				let reports_status = btn.data("reports_status");
 				let target_seq = btn.data("target_seq");
 				
+				let currentBox = btn.closest(".postBox");
+				let target_box = currentBox.data("group_seq");
+				
+				console.log("찾은 박스 개수: " + target_box.length);
 				console.log(target_id);
 				
 				if(day == null){
@@ -640,10 +640,19 @@ img{
 					success : function(resp){
 						alert(target_id + "님을 블랙리스트에 등록했습니다.");
 						
-						btn.hide();
-						btn.siblings(".reportCheckBtn").hide();
-						btn.closest(".postBox").find(".endOption").hide();
-						btn.siblings(".blackOffBtn").show();
+// 						btn.hide();
+// 						btn.siblings(".reportCheckBtn").hide();
+// 						btn.closest(".postBox").find(".endOption").hide();
+// 						btn.siblings(".blackOffBtn").show();
+						
+						if(currentStatus == 'all'){
+							let completeBtn = $('<button class="offBtn blackOffBtn" data-target_id="${i.target_id}">해제</button>');
+							
+							target_box.find(".reportAndBlackBtn").html(completeBtn);
+							target_box.find(".endDiv").hide();
+						}else{
+							target_box.remove();
+						}
 					}
 				});
 			});
@@ -651,6 +660,8 @@ img{
 			$(document).on("click", ".blackOffBtn",  function(){
 				let btn = $(this)
 				let target_id = btn.data("target_id");
+				let target_seq = btn.data("target_seq");
+				let target_box = $(`.postBox[data-group_seq='${i.reports_seq}']`);
 				
 				$.ajax({
 					url : "/admin/blackOff",
@@ -663,12 +674,8 @@ img{
 					success : function(resp){
 						alert(target_id + "님을 블랙리스트에서 해제했습니다.");
 						
-						if (currentStatus == "3") {
-			                btn.closest(".postBox").remove();
-			            } else {
-			                let completeBtn = $('<button class="offBtn blackOffCheckBtn" disabled style="background-color: #6DBE45; color: white; width: 270px; border-radius: 10px; height: 35px; border:none;">해제완료</button>');
-			                btn.replaceWith(completeBtn);
-			            }
+						let completeBtn = $('<button class="offBtn blackOffCheckBtn" disabled style="background-color: #6DBE45; color: white; width: 270px; border-radius: 10px; height: 35px; border:none;">해제완료</button>');
+			            btn.replaceWith(completeBtn);
 					}
 				});
 			});
