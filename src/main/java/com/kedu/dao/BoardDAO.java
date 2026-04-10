@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.CategoryVisitDTO;
+import com.kedu.dto.NoticeDTO;
 
 @Repository
 public class BoardDAO {
@@ -363,5 +364,17 @@ public class BoardDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
-
+	
+	// 내 작성글 리스트 뽑아오기
+	public List<BoardDTO> getPostsNavi(int start, int end){
+		String sql = "SELECT * FROM (SELECT post.*, ROW_NUMBER() OVER (ORDER BY post_date DESC) a FROM post) WHERE a BETWEEN ? AND ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),start,end);
+	}
+	
+	// 내 작성글 개수 세기
+	public int getTotalPosts(String mem_id) {
+		String sql = "select count(*) from post where mem_id = ?";
+		return jdbc.queryForObject(sql, Integer.class);
+	}
+	
 }

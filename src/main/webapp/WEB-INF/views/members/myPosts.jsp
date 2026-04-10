@@ -316,6 +316,31 @@ button, body {
 	color: #5e361a;
 	text-align: center;
 }
+
+.page a{
+   margin: 10px;
+   color: #A66A3F;
+   display: inline-block;
+   text-decoration: none;
+   min-width:35px;
+    padding:6px 0px 6px 0px;
+   border-radius:6px;
+    transition:0.2s;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.pageBox a.active{
+   background-color:#fecc56;
+    font-weight: bold;
+    color: #5e361a;
+}
+
+.pageBox a:hover{
+    background-color:#F2D3A2;
+}
+
+
 </style>
 
 </head>
@@ -387,7 +412,9 @@ button, body {
 						</div>
 
 					</c:forEach>
-					<div class="pageBox">1 2 3</div>
+					<div class="pageBox">
+						<span class="page"></span>
+					</div>
 
 				</c:otherwise>
 			</c:choose>
@@ -414,6 +441,58 @@ button, body {
 		</div>
 
 	</div>
+	
+	<script>
+		
+		// 하단 네비바 구성 cpage
+		let recordTotalCount = ${totalCount};
+		let recordCountPerPage = 10;
+		let naviCountPerPage = 10;
+		let currentPage = ${cPage};
+	
+		let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
+		   
+		let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
+		let endNavi = startNavi + naviCountPerPage - 1;
+		   
+		if(endNavi > pageTotalCount) {
+		   endNavi = pageTotalCount;
+		}
+		$(".page").empty();
+		   
+		let needPrev = true; // <<
+		let needNext = true; // >>
+		   
+		if(startNavi == 1){needPrev = false;}
+		if(endNavi == pageTotalCount){needNext = false;}
+		   
+		if(needPrev) {
+		   let prev = $("<a>"); 
+		   prev.attr("href","/board/toPosts?cPage="+(startNavi-1)); 
+		   prev.html("<< ");
+		   $(".page").append(prev);
+		}
+		      
+		for(let i = startNavi; i <= endNavi; i++) {
+		  let navi = $("<a>");
+		  navi.attr("href", "/board/toPosts?cPage="+i);
+		  navi.html(i + " ");
+		  $(".page").append(navi);
+		      
+		  if (i === currentPage) {
+		       navi.addClass("active");
+		   }
+		}
+		
+		if(needNext) {
+		   let next = $("<a>");
+		   next.attr("href", "/board/toPosts?cPage="+(endNavi+1));
+		   next.html(" >>");
+		   $(".page").append(next);
+		}
+
+	
+	</script>
 
 </body>
 </html>
