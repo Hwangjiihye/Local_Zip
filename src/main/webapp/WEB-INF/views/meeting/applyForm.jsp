@@ -105,12 +105,40 @@
 		transform: translateY(2px);
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
-	.swal2-icon.swal2-info .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
 	
+	.my-swal {
+	    width: 420px !important;   /* 박스 크기 고정 */
+	    padding: 15px !important;
+	}
+	
+	.my-swal .swal2-title {
+    	font-size: 22px;
+    	margin: 5px 0;
+	}
+
+	.my-swal .swal2-html-container {
+    	font-size: 16px;
+    	margin: 5px 0;
+	}
+	
+	.my-swal .swal2-actions{
+		margin-top: 10px;
+	}
+	
+	.my-swal .swal2-icon {
+	    width: 50px !important;
+	    height: 50px !important;
+	    margin: 10px auto;
+	}
+	
+	.my-swal .swal2-confirm{
+		padding: 8px 18px;
+	}
+
+	.my-swal .swal2-icon-content {
+	    font-size: 30px !important;
+	    line-height: 60px !important;
+	}
 	
 	</style>
 </head>
@@ -143,8 +171,10 @@
 				title: "Wait  !",
 				text: "한 줄 소개를 작성해주세요",
 				iconColor: "#FFB300",
-				confirmButtonColor: "#FFB300"
-				/* width: "300px", */
+				confirmButtonColor: "#FFB300",
+				customClass: {
+				       popup: "my-swal"
+				   }
 			});
 			return false;
 		} else {
