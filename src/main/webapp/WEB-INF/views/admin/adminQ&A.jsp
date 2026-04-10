@@ -14,6 +14,7 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 * {box-sizing: border-box;}
 
@@ -425,7 +426,7 @@ img{
 				<a href="/admin/adminPage"><button class="categoryBtnAll ${menu == 'dashboard' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
-				<a href="/admin/adminBlackList"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}"> 
+				<a href="/admin/adminBlackList?cpage=1"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}"> 
 					<img src="/resources/images/adminSiren.png"></img> 신고관리
 				</button></a>
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
@@ -675,7 +676,13 @@ img{
 					let updateContents = $("#inputUpdate_" + seq).val();
 					
 					if(updateContents.trim() == ""){
-						alert("내용을 입력해 주세요.");
+						Swal.fire({
+    						icon: "info",
+    						title: "Info  !",
+    						text: "내용을 입력해 주세요.",
+    						iconColor: "#FFB300",
+    						confirmButtonColor: "#FFB300"
+    					});
 						return;
 					}
 					
@@ -691,7 +698,15 @@ img{
 								let parentRow = btn.closest(".replyTextAndBtn");
 							    let answerDiv = parentRow.find(".answerDiv");
 							    
-								alert("수정되었습니다.");
+							    
+							    Swal.fire({
+		    						icon: "success",
+		    						title: "Success  !",
+		    						text: "수정되었습니다.",
+		    						iconColor: "#FFB300",
+		    						confirmButtonColor: "#FFB300"
+		    					});
+							    
 								answerDiv.removeClass("editing");
 								answerDiv.html(updateContents);
 								
@@ -700,24 +715,52 @@ img{
 							
 						},
 						error : function(){
-							alert("수정 실패");
+							Swal.fire({
+								icon: "error",
+								title: "Error  !",
+								text: "수정 실패",
+								iconColor: "#EB0000",
+								confirmButtonColor: "#FFB300"
+							});
 						}
 					});
 				});
 				
 			$(document).on("click", ".deleteBtn", function(){
 				let seq = $(this).data("seq");
-				if(confirm("정말 삭제하시겠습니까?")){
-					$.ajax({
-						url : "/admin/answerReset",
-						type : "post",
-						data : {qa_seq : seq},
-						success : function(resp){
-							alert("삭제되었습니다.");
-							location.reload();
-						}
-					});
-				}
+				
+				Swal.fire({
+			        icon: "question",
+			        title: "Wait  !",
+			        text: "정말 삭제하시겠습니까?",
+			        iconColor: "#FFB300",
+			        confirmButtonColor: "#FFB300",
+			        showCancelButton: true,
+			        confirmButtonText: "삭제",
+			        cancelButtonText: "취소",
+			        cancelButtonColor: "#d9d9d9"
+			    }).then((result) => {
+				
+					if(result.isConfirmed){
+						$.ajax({
+							url : "/admin/answerReset",
+							type : "post",
+							data : {qa_seq : seq},
+							success : function(resp){
+								
+								Swal.fire({
+			                        icon: "success",
+			                        title: "Success !",
+			                        text: "삭제되었습니다.",
+			                        iconColor: "#FFB300",
+			                        confirmButtonColor: "#FFB300"
+			                    }).then(() => {
+			                        location.reload();
+			                    });
+							 }
+						});
+					}
+				});
 			});
 			
 			$(document).on("input", ".inputQaReply", function(){
