@@ -318,54 +318,55 @@ public class AdminController {
 	
 	
 	
-// 신고관리 페이지로 이동
+	// 신고관리 페이지로 이동
 	@RequestMapping("/adminBlackList")
-	public String adminBlackList(Model model, int cpage, HttpSession session) {
+	public String adminBlackList(String status, Model model, int cpage, HttpSession session) {
 		model.addAttribute("menu", "report");
 		List<ReportDTO> list = dao.selectGetPage(cpage * 10 - 9, cpage * 10);
-		
-		
 		// 전체 신고목록 개수 카운트
 		int allCount = dao.reportAllCount();
 		// 처리완료 신고목록 개수 카운트
 		int handleCount = dao.reportHandleCount();
 		// 미처리 신고목록 개수 카운트
 		int count = dao.reportCount();
+		// 페이지
+		int start = cpage * 10 - 9;
+		int end = cpage * 10;
 		
+		// 처리상태 jsp에서 숫자 출력
 		model.addAttribute("allCount", allCount);
 		model.addAttribute("handleCount", handleCount);
 		model.addAttribute("count", count);
+		model.addAttribute("status",status);
+		List<ReportDTO> dto;
+		int recordTotalCount;
 		
+		if("3".equals(status)) { // 처리완료건들 출력 ( 3 : 블랙리스트 처리 완료 / 5: 블랙리스트 해제 처리 완료 )
+			dto = dao.selectReportContentsByStatusHandle(start,end);
+			recordTotalCount = handleCount;
+			System.out.println("처리완료건 : " + status);
+		}else if("4".equals(status)) { // 미처리건들 출력
+			int reportStatus = Integer.parseInt(status);
+			dto = dao.selectReportContentsByStatus(reportStatus, start, end);
+			recordTotalCount = count;
+			System.out.println("미처리완료 : " + status);
+		}else{ // 전체
+			dto = dao.selectReportContents(start, end);
+			recordTotalCount = allCount;
+			System.out.println("전체 : " + status);
+		}
+		
+		// 페이지 시작
 		model.addAttribute("list", list);
 		model.addAttribute("recordCountPerPage", 10);
 		model.addAttribute("naviCountPerPage", 10);
-		model.addAttribute("recordTotalCount", count);
+		model.addAttribute("recordTotalCount", allCount);
 		model.addAttribute("currentPage", cpage);
+		// 페이지 끝
 		
+		model.addAttribute("dto", dto);
 		session.setAttribute("cpage", cpage);
 		return "/admin/adminBlackList";
-	}
-	
-	// 신고관리 -> 신고 목록 출력
-	@ResponseBody
-	@RequestMapping("/getReportList")
-	public Map<String, Object> getReportList(String status, HttpSession session, Model model) {
-		Map<String, Object> resp = new HashMap<>();
-		List<ReportDTO> list;
-		System.out.println("처리 요청 값 : " + status);
-		
-		
-		if("3".equals(status)) { // 처리완료건들 출력 ( 3 : 블랙리스트 처리 완료 / 5: 블랙리스트 해제 처리 완료 )
-			list = dao.selectReportContentsByStatusHandle();
-		}else if("4".equals(status)) { // 미처리건들 출력
-			int reportStatus = Integer.parseInt(status);
-			list = dao.selectReportContentsByStatus(reportStatus);
-		}else {
-			list = dao.selectReportContents();
-		}
-		
-		resp.put("list", list);
-		return resp;
 	}
 	
 	// 블랙리스트 등록 로직
@@ -387,12 +388,22 @@ public class AdminController {
 		if(list == null || list.isEmpty()) {
 			// members table mem_status 업데이트
 			dao.updateMemberStatus(mem_status, target_id);
+			System.out.println("블랙등록: 멤버테이블 status 업데이트 로직 작동함");
+			System.out.println("===================================================");
+			
 			dao.insertBlackList(target_id, black_option, banDays);
+			System.out.println("블랙등록: 블랙리스트 insert 로직 작동함");
+			System.out.println("===================================================");
 		}else{
 			dao.updateBlackEndDate(banDays, target_id);
+			System.out.println("블랙등록: 블랙리스트 endDate update 로직 작동됨.");
+			System.out.println("===================================================");
 		}
 		// 블랙리스트 등록 시 reports 테이블 status 업데이트
 		dao.updateReportsStatus(reports_status, target_id);
+		System.out.println("블랙등록: reports status 업데이트 작동함.");
+		System.out.println("블랙등록: reports 상태 업데이트값 : "+ reports_status + "target_id : " + target_id);
+		System.out.println("===================================================");
 		return "success";
 	}
 	
@@ -402,8 +413,16 @@ public class AdminController {
 	public String blackOff(int mem_status, int reports_status, String target_id) {
 		
 		dao.deleteMembersStatus(mem_status, target_id); // 블랙리스트 해제 (membersTable status 업데이트) 로직
+		System.out.println("블랙해제: 멤버테이블 status 업데이트 로직 작동함");
+		System.out.println("===================================================");
+		
 		dao.deleteBlackList(target_id); // 블랙리스트 정지시작/종료일수 비우기 (blackList Table) 로직
+		System.out.println("블랙해제: 블랙리스트 endDate 비우기 로직 작동함");
+		System.out.println("===================================================");
+		
 		dao.updateReportStatus(reports_status, target_id); // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
+		System.out.println("블랙해제: 블랙리스트 status 비우기 로직 작동함");
+		System.out.println("===================================================");
 		
 		return "success";
 	}

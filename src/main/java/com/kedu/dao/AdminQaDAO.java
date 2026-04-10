@@ -201,8 +201,10 @@ public class AdminQaDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));
 	}
 	
-	public List<ReportDTO> selectReportContents(){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (전체)
-		String sql = "select r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq, r.reports_status, r.reports_seq, "
+	public List<ReportDTO> selectReportContents(int start, int end){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (전체)
+		String sql = "select * from( "
+				+ "select row_number() over(order by r.reports_date desc) as rn, "
+				+ "r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq, r.reports_status, r.reports_seq, "
 				+ "coalesce(p.post_contents, reply.reply_contents, m.meet_introcontents, '원문 삭제됨(번호:' || r.target_seq || ')') as target_content, "
 				+ "case "
 				+ "when r.reports_type = 0 then '게시글' when r.reports_type = 1 then '댓글' else '모임' end as target_type_name "
@@ -210,12 +212,14 @@ public class AdminQaDAO {
 				+ "left join post p on r.target_seq = p.post_seq and r.reports_type = 0 "
 				+ "left join reply on r.target_seq = reply.reply_seq and r.reports_type = 1 "
 				+ "left join meeting m on r.target_seq = m.meet_seq and r.reports_type = 2 "
-				+ "order by r.reports_date";
-		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));
+				+ ") where rn between ? and ? ";
+		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class), start, end);
 	}
 	
-	public List<ReportDTO> selectReportContentsByStatus(int status){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (미처리건들 출력)
-		String sql = "select r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq,  r.reports_status, r.reports_seq, "
+	public List<ReportDTO> selectReportContentsByStatus(int status, int start, int end){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (미처리건들 출력)
+		String sql = "select * from( "
+				+ "select row_number() over(order by r.reports_date desc) as rn, "
+				+ "r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq,  r.reports_status, r.reports_seq, "
 				+ "coalesce(p.post_contents, reply.reply_contents, m.meet_introcontents, '원문 삭제됨(번호:' || r.target_seq || ')') as target_content, "
 				+ "case "
 				+ "when r.reports_type = 0 then '게시글' when r.reports_type = 1 then '댓글' else '모임' end as target_type_name "
@@ -224,12 +228,14 @@ public class AdminQaDAO {
 				+ "left join reply on r.target_seq = reply.reply_seq and r.reports_type = 1 "
 				+ "left join meeting m on r.target_seq = m.meet_seq and r.reports_type = 2 "
 				+ "where r.reports_status = ? "
-				+ "order by r.reports_date";
-		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class),status);
+				+ ") where rn between ? and ? ";
+		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class),status, start, end);
 	}
 	
-	public List<ReportDTO> selectReportContentsByStatusHandle(){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (처리완료건들 출력)
-		String sql = "select r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq,  r.reports_status, r.reports_seq, "
+	public List<ReportDTO> selectReportContentsByStatusHandle(int start, int end){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (처리완료건들 출력)
+		String sql = "select * from( "
+				+ "select row_number() over(order by r.reports_date desc) as rn, "
+				+ "r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq,  r.reports_status, r.reports_seq, "
 				+ "coalesce(p.post_contents, reply.reply_contents, m.meet_introcontents, '원문 삭제됨(번호:' || r.target_seq || ')') as target_content, "
 				+ "case "
 				+ "when r.reports_type = 0 then '게시글' when r.reports_type = 1 then '댓글' else '모임' end as target_type_name "
@@ -238,8 +244,8 @@ public class AdminQaDAO {
 				+ "left join reply on r.target_seq = reply.reply_seq and r.reports_type = 1 "
 				+ "left join meeting m on r.target_seq = m.meet_seq and r.reports_type = 2 "
 				+ "where r.reports_status in (3,5) "
-				+ "order by r.reports_date desc ";
-		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));
+				+ ") where rn between ? and ? ";
+		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class), start, end);
 	}
 	
 	public int reportAllCount() { // 전체 신고목록 개수 카운트
@@ -306,7 +312,7 @@ public class AdminQaDAO {
 	}
 	
 	public List<ReportDTO> selectGetPage(int start, int end){ // cpage
-		String sql = "select * from(select reports.*, row_number() over(order by seq desc) num from reports) where num between ? and ? ";
+		String sql = "select * from(select reports.*, row_number() over(order by reports_seq desc) num from reports) where num between ? and ? ";
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class),start,end);
 	}
 	

@@ -239,35 +239,6 @@ body {
  	font-size:15px;
  }
  
-.pageBox{
-    text-align: center;
-    padding: 20px;
-    font-size: 18px;
-    color: #A66A3F;
-}
-
-.pageBox a{
-    display: inline-block;
-    min-width:35px;
-    padding:6px 10px;
-    margin: 0 8px;
-    text-decoration: none;
-    color: #A66A3F;
-    border-radius:6px;
-    transition:0.2s;
-    font-weight: normal;
-    cursor: pointer;
-}
-
-.pageBox a.active{
-	background-color:#fecc56;
-    font-weight: bold;
-    color: #5e361a;
-}
-
-.pageBox a:hover{
-    background-color:#F2D3A2;
-}
 
 .answerDiv.editing {
     background-color: transparent !important;
@@ -346,11 +317,77 @@ img{
      outline: none;
 }
 
-.active {
-	color: red;
-	font-weight: bold;
+.pageNum{
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #A66A3F;
 }
 
+.pageNum a{
+    display: inline-block;
+    min-width:35px;
+    padding:6px 10px;
+    margin: 0 8px;
+    text-decoration: none;
+    color: #A66A3F;
+    border-radius:6px;
+    transition:0.2s;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.pageNum a.active{
+	background-color:#fecc56;
+    font-weight: bold;
+    color: #5e361a;
+}
+
+.pageNum a:hover{
+    background-color:#F2D3A2;
+}
+
+.navicon:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+} 
+
+.navicon:active {
+	transform: translateY(2px); /*아래로 눌림*/
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.nowBtn{
+	background-color: #fecc56;
+	color: #A66A3F;
+	transform: translateY(-3px);
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	height: 30px;
+	border: 1px solid #FFB300;
+	align-items: center;
+	vertical-align: middle;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.reportBtnDiv{
+ 	margin: 30px auto 0 auto;
+ 	display: flex;
+ 	justify-content: center;
+ 	align-items: center;
+ 	gap: 100px;
+ }
+ 
+.reportBtnDiv button{
+ 	 background-color: #fbe5c0;
+     color: #5e361a;
+     font-weight: bold;
+     border:none;
+     width: 110px;
+ 	 height: 40px;
+ 	 font-size:15px;
+ } 
+ 
 </style>
 </head>
 
@@ -376,14 +413,80 @@ img{
 		</div>
 		
 		<div class="reportBtnDiv">
-				<button class="navicon filterBtn" data-status="all">전체 ${allCount}</button>
-				<button class="navicon filterBtn" data-status="4">미처리 ${count}</button>
-				<button class="navicon filterBtn" data-status="3">처리완료 ${handleCount}</button>
+				<a href="/admin/adminBlackList?cpage=1&status=all"><button class="navicon filterBtn">전체 ${allCount}</button></a>
+				<a href="/admin/adminBlackList?cpage=1&status=4"><button class="navicon filterBtn">미처리 ${count}</button></a>
+				<a href="/admin/adminBlackList?cpage=1&status=3"><button class="navicon filterBtn">처리완료 ${handleCount}</button></a>
 		</div>
-		
-		<div id="reportListWrap"></div>
-		
-		<div class="pageNum"></div>
+		<div id="reportListWrap">
+		<c:choose>
+			<c:when test="${empty dto}">
+				<div class="postBox">
+					<div class="postBody">처리할 신고 내역이 없습니다.</div>
+				</div>	
+			</c:when>
+				<c:otherwise>
+						<c:forEach var="i" items="${dto}">
+							<div class="postBox">
+					        	<div class="postHeader">
+					       			<div class="reportWriter">
+					           			<div class="writer"> 카테고리 statsu값 : ${status} / 신고처리값 : ${i.reports_status} : 신고자: ${i.mem_id}</div> 
+					           			<div class="writeData">신고 시간 : ${i.reports_date}</div> 
+					        		</div>
+					        	</div>
+			        			<div class="postBody">
+			            			<div class="rowItem2">
+						                <div class="reportReason">
+						                	신고 대상 SEQ :${i.target_seq} , 
+						                	신고 대상 종류 : ${i.target_type_name} ,
+						                	신고 대상 ID : ${i.target_id} ,
+						                	신고 내용 : ${i.target_content} ,
+						                	신고 사유 : ${i.reports_reason}
+						                </div>
+			            			</div>
+			        			</div>
+				        		<c:choose>
+									<c:when test="${i.reports_status == 4}">
+					        			<div class="reportAndBlackBtnDiv">
+					        				<div class="reportAndBlackBtn">
+						        				<button class="onBtn reportCheckBtn" data-reports_seq ="${i.reports_seq}">반려</button>
+						        				<button class="onBtn blackOnBtn" data-target_id="${i.target_id}" data-reports_reason="${i.reports_reason}" data-reports_status="${i.reports_status}" data-target_seq="${i.target_seq}">블랙리스트</button>
+						        				<button class="offBtn blackOffBtn" style="display:none;" data-target_id="${i.target_id}">해제</button>
+					        				</div>
+					        					<div class="endDiv">
+							        				<select class="endOption">
+							        					<option class="end_date" disabled selected>정지일수</option>
+							        					<option class="end_date" value="3">3일</option>
+							        					<option class="end_date" value="7">7일</option>
+							        					<option class="end_date" value="30">30일</option>
+							        					<option class="end_date" value="-1">영구정지</option>
+							        				</select>
+			        						</div>
+					        			</div>
+								</c:when>
+								<c:when test="${i.reports_status == 3}">
+					        			<div class="reportAndBlackBtnDiv">
+					        				<div class="reportAndBlackBtn">
+						        				<button class="offBtn blackOffBtn" data-target_id="${i.target_id}">해제</button>
+						        				<button class="offBtn blackOffCheckBtn" style="display:none;" disabled>해제완료</button>
+					        				</div>
+					        			</div>
+								</c:when>
+								<c:when test="${i.reports_status == '5'}">
+									<div class="reportAndBlackBtnDiv">
+					        				<div class="reportAndBlackBtn">
+						        				<button class="offBtn blackOffCheckBtn" disabled>해제완료</button>
+					        				</div>
+					        			</div>
+								</c:when>
+							</c:choose>
+						</div>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div class="pageNum">
+			
+		</div>
     	
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
@@ -400,13 +503,14 @@ img{
 			let recordCountPerPage = ${recordCountPerPage} // 몇 개 게시글 표시?
 			let naviCountPerPage = ${naviCountPerPage} // 네비게이터 몇 개 표시?
 			let currentPage = ${currentPage} // 시작페이지
-			
-			// 총 몇 페이지가 필요한지?
+			let currentStatus = "${status}"
+					
 			let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
-			
+			console.log(pageTotalCount);
 			// 시작 / 끝 페이지 지정
 			let startNavi = Math.floor(((currentPage - 1) / naviCountPerPage)) * naviCountPerPage + 1;
 			let endNavi = startNavi + naviCountPerPage - 1;
+			console.log(startNavi, endNavi);
 			
 			if(endNavi > pageTotalCount){
 				endNavi = pageTotalCount;
@@ -418,169 +522,109 @@ img{
 			if(startNavi == 1){needPrev = false};
 			if(endNavi == pageTotalCount){needNext = false};
 			
+			
 			if(needPrev){
 				let prev = $("<a>");
-				prev.attr("href","/admin/adminBlackList?cpage=" + (startNavi-1));
+				prev.attr("href","/admin/adminBlackList?cpage=" + (startNavi-1) + "&status=" + currentStatus);
 				prev.html("<< ");
 				$(".pageNum").append(prev);
 			}
 			
 			for(let i = startNavi; i <= endNavi; i++){
 				let navi = $("<a>");
-				navi.attr("href","/admin/adminBlackList?cpage=" + i);
+				navi.attr("href","/admin/adminBlackList?cpage=" + i + "&status=" + currentStatus);
 				navi.html(i + " ");
 				
 				if(i == currentPage){
 					navi.addClass("active");
 				}
 				$(".pageNum").append(navi);
+				console.log(startNavi, endNavi);
 			}
 			
 			if(needNext){
 				let next = $("<a>");
-				next.attr("href", "/admin/adminBlackList?cpage=" + (endNavi+1));
+				next.attr("href", "/admin/adminBlackList?cpage=" + (endNavi+1) + "&status=" + currentStatus);
 				next.html(">>");
 				$(".pageNum").append(next);
 			}
-
+			
+			if(recordTotalCount == 0){
+				$(".pageNum").empty();
+			}
 				
+// 				// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
+// 				$(function(){
+// 				    $(".filterBtn[data-status='all']").addClass("nowBtn");
+// 				    loadList("all");
+// 			    });
+				
+// 				// 페이지 진입시 전체 목록 출력
+// 				function loadList() {
+					
+// 				    $.ajax({
+// 				        url: "/admin/getReportList",
+// 				        type: "get",
+// 				        data: { 
+// 				        	status: "all",
+// 				        	cpage:currentPage
+// 				        },
+// 				        success: function(resp) {
+// 				            drawreportList(resp.list);
+// 						    drawPagination();
+// 				        }
+// 				    });
+// 				}
+			
 			// 신고목록 출력
 			// 버튼 클릭시 status값 컨트롤러로 전달
-			$(document).on("click", ".filterBtn", function(){
-			    let status = $(this).data("status");
-			 	// 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
-			    $(".filterBtn").removeClass("nowBtn");
-			 	// 2. 클릭한 버튼에만 활성화 클래스 추가
-			    $(this).addClass("nowBtn");
+// 			$(document).on("click", ".filterBtn", function(){
+// 			    let status = $(this).data("status");
+// 			 	// 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
+// 			    $(".filterBtn").removeClass("nowBtn");
+// 			 	// 2. 클릭한 버튼에만 활성화 클래스 추가
+// 			    $(this).addClass("nowBtn");
+// // 			    $(".pageNum").empty();
 			    
-			    $.ajax({
-					url : "/admin/getReportList",
-					type : "get",
-					data : {
-						status : status
-					},
-					dataType : "json",
-					success : function(resp){
-						drawreportList(resp.list);
-					}
-				});
-			});
-
-			// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
-			$(function(){
-			    $(".filterBtn[data-status='all']").addClass("nowBtn");
-			    loadList("all");
-			});
-			
-			// 페이지 진입시 전체 목록 출력
-			function loadList() {
-			    $.ajax({
-			        url: "/admin/getReportList",
-			        type: "get",
-			        data: { status: "all" },
-			        success: function(resp) {
-			            drawreportList(resp.list);
-			        }
-			    });
-			}
-			
+// 				currentPage = 1; // 전체/미처리/처리완료 버튼 누를 때 마다 1page 고정
+// 				if(status == "all"){ // 전체
+// 					recordTotalCount = ${allCount}
+// 				}else if(status == "4"){ // 미처리
+// 					recordTotalCount = ${count}
+// 				}else if(status == "3"){ // 처리완료
+// 					recordTotalCount = ${handleCount}
+// 				}
 				
-			// status값으로 처리완료/미처리 리스트 출력
-			function drawreportList(list){
-				$("#reportListWrap").empty();
-				
-				
-				if(list.length == 0){
-					$("#reportListWrap").append(`
-						<div class="postBox">
-							<div class="postBody">처리할 신고 내역이 없습니다.</div>
-						</div>		
-					`);
-					return;
-				}
-				
-			for(let i of list){
-					let html = "";
-				 	let btnHtml = "";
-				 	let selectHtml = "";
-				 	
-				 	if(i.reports_status == 4){
-				 		btnHtml = `
-				 			<button class="onBtn reportCheckBtn" data-reports_seq ="\${i.reports_seq}">반려</button>
-	        				<button class="onBtn blackOnBtn" data-target-id="\${i.target_id}" data-reports_reason="\${i.reports_reason}" data-reports_status="\${i.reports_status}" data-target-seq="\${i.target_seq}">블랙리스트</button>
-	        				<button class="offBtn blackOffBtn" style="display:none;" data-target_id="\${i.target_id}">해제</button>
-			 			`;
-				 		
-				 		selectHtml = `
-				 			<div class="endDiv">
-		        				<select class="endOption">
-		        					<option class="end_date" disabled selected>정지일수</option>
-		        					<option class="end_date" value="3">3일</option>
-		        					<option class="end_date" value="7">7일</option>
-		        					<option class="end_date" value="30">30일</option>
-		        					<option class="end_date" value="-1">영구정지</option>
-		        				</select>
-	        				</div>
-        				`;
-				 	}else if(i.reports_status == 3){
-				 		btnHtml = `
-				 			<button class="offBtn blackOffBtn" data-target_id="\${i.target_id}">해제</button>
-        				`;
-        				selectHtml = "";
-				 	}else if(i.reports_status == 5){
-				 		btnHtml = `
-				 			<button class="blackOffCheckBtn" disabled>해제완료</button>
-        				`;
-        				selectHtml = "";
-				 	}
-				 	
-						html = `
-							<div class="postBox">
-					        	<div class="postHeader">
-					       			<div class="reportWriter">
-					           			<div class="writer">신고자: \${i.mem_id}</div> 
-					           			<div class="writeData">신고 시간 : \${i.reports_date}</div> 
-					        		</div>
-					        	</div>
-			        			<div class="postBody">
-			            			<div class="rowItem2">
-						                <div class="reportReason">
-						                	<신고 대상 SEQ : \${i.target_seq} >
-						                	<신고 대상 종류 : \${i.target_type_name} >
-						                	<신고 대상 ID : \${i.target_id} >
-						                	<신고 내용 : \${i.target_content} >
-						                	<신고 사유 : \${i.reports_reason} >
-						                </div>
-			            			</div>
-			        			</div>
-			        			<div class="reportAndBlackBtnDiv">
-			        				<div class="reportAndBlackBtn">
-				        				\${btnHtml}
-			        				</div>
-			        					\${selectHtml}
-			        			</div>
-							</div>
-						`;
-						$("#reportListWrap").append(html);
-					}
-				}
-			
+// 			    $.ajax({
+// 					url : "/admin/getReportList",
+// 					type : "get",
+// 					data : {
+// 						status : status,
+// 						cpage : currentPage
+// 					},
+// 					dataType : "json",
+// 					success : function(resp){
+// 						drawreportList(resp.list);
+// 						drawPagination();
+// 					}
+// 				});
+// 			});
 			
 			// 블랙리스트 버튼을 눌렀을 때
 			$(document).on("click", ".blackOnBtn",  function(){
 				let btn = $(this)
-				let target_id = btn.data("targetId");
+				let target_id = btn.data("target_id");
 				let day = btn.closest(".postBox").find(".endOption").val();
 				let reports_reason = btn.data("reports_reason");
 				let reports_status = btn.data("reports_status");
-				let target_seq = btn.data("targetSeq");
+				let target_seq = btn.data("target_seq");
+				
 				console.log(target_id);
-				console.log($(".blackOnBtn[data-target-id='" + target_id + "']").length);
+				
 				if(day == null){
 					alert("정지일수를 먼저 선택해 주세요.");
 					return;
 				}
-				let currentStatus = $(".filterBtn.nowBtn").data("status");
 				
 				$.ajax({
 					url : "/admin/blackOn",
@@ -591,20 +635,15 @@ img{
 						target_seq : target_seq,
 						black_option : reports_reason,
 						reports_status : 3,
-						day : day,
-						status : currentStatus
+						day : day
 					},
 					success : function(resp){
 						alert(target_id + "님을 블랙리스트에 등록했습니다.");
-						drawreportList(resp.list);
-// 						btn.hide();
-// 						btn.siblings(".reportCheckBtn").hide();
-// 						btn.closest(".postBox").find(".endOption").hide();
-// 						btn.siblings(".blackOffBtn").show();
 						
-// 						$(".blackOnBtn[data-target-id='" + target_id + "']")
-// 		                .text("처리완료")
-// 		                .prop("disabled", true);
+						btn.hide();
+						btn.siblings(".reportCheckBtn").hide();
+						btn.closest(".postBox").find(".endOption").hide();
+						btn.siblings(".blackOffBtn").show();
 					}
 				});
 			});
@@ -623,10 +662,13 @@ img{
 					},
 					success : function(resp){
 						alert(target_id + "님을 블랙리스트에서 해제했습니다.");
-						btn.hide();
-						btn.closest(".reportAndBlackBtnDiv").html(`
-								<button class="blackOffCheckBtn" disabled>해제완료</button>
-						`);
+						
+						if (currentStatus == "3") {
+			                btn.closest(".postBox").remove();
+			            } else {
+			                let completeBtn = $('<button class="offBtn blackOffCheckBtn" disabled style="background-color: #6DBE45; color: white; width: 270px; border-radius: 10px; height: 35px; border:none;">해제완료</button>');
+			                btn.replaceWith(completeBtn);
+			            }
 					}
 				});
 			});
