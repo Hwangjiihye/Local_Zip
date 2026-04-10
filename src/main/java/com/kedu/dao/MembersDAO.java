@@ -1,5 +1,7 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kedu.commons.EncryptionUtils;
 import com.kedu.dto.MembersDTO;
+import com.kedu.dto.ReplyDTO;
 
 @Repository
 public class MembersDAO {
@@ -68,6 +71,12 @@ public class MembersDAO {
 		return jdbc.queryForObject(role, Integer.class, id);
 	}
 	
+	public List<ReplyDTO> memRole(int post_seq) {
+		String sql = "select r.* m.mem_role "
+				+ "from reply r join members m on r.mem_id = m.mem_id "
+				+ "where post_seq = ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<ReplyDTO>(ReplyDTO.class), post_seq);
+	}
 	
 	
 	// 홈 화면에서 닉네임 조회 후 띄우기

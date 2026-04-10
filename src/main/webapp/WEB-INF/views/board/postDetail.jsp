@@ -896,6 +896,7 @@ hr {
 		    
 		});
 		
+		
 		// 파일 눌렀을때 다운로드 
 		$(".fileName").on("click",function(){
 			let sys_name = $(this).data("sys");
@@ -910,7 +911,6 @@ hr {
 				dataType:"json",
 				data: { post_seq: postSeq }
 			}).done(function(resp){
-				
 				$(".replyUpBox, .hr").remove(); // 기존 댓글 목록 비우기,(새로 등록된 것까지 포함해서 다시 그려야 하므로)
 				
 				for(let i of resp){ // 댓글 for문 돌리면서 뽑기.
@@ -948,6 +948,8 @@ hr {
 							);
 							btnDiv.append(replyEditDiv, replyEditCompleteDiv);
 							replyInfoUp.append(btnDiv);
+						}else if(i.mem_id = 1){
+							// 관리자는 아무 버튼 안 뜨게 구현
 						}else{
 							let reportArea = $("<div>").addClass("reportArea");
 							let reportIcon = $("<img>").addClass("reportIcon");
@@ -1064,6 +1066,10 @@ hr {
 				            btn.siblings(".reportSelect").hide();
 		            	}else if(resp == "fail"){
 		            		alert("이미 신고한 댓글입니다.");
+		            		btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
+				            btn.siblings(".reportSelect").hide();
+		            	}else if(resp == "adminFail"){
+		            		alert("관리자의 댓글은 신고가 불가합니다.");
 		            		btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
 				            btn.siblings(".reportSelect").hide();
 		            	}

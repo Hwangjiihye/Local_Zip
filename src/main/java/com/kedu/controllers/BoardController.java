@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.kedu.dao.AttachmentDAO;
 import com.kedu.dao.BoardDAO;
+import com.kedu.dao.MembersDAO;
 import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.ReplyDAO;
 import com.kedu.dao.ReportDAO;
@@ -45,6 +46,8 @@ public class BoardController {
 	private AttachmentDAO aDao;
 	@Autowired
 	private ReportDAO rdao;
+	@Autowired
+	private MembersDAO mdao;
 
 	@RequestMapping("/write")
 	public String write_lifeInfo(HttpSession session) {
@@ -304,13 +307,13 @@ public class BoardController {
 	public String postDetail(Model model, int post_seq, HttpSession session, String category, Integer cPage, String sort) throws Exception {
 
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
-
+		
 		String loginId = (String) session.getAttribute("loginId");
-
+		List<ReplyDTO> mlist = mdao.memRole(post_seq);
 		// 파일리스트 뽑아오기
 		List<AttachmentDTO> aList = aDao.getAttachment(post_seq);
 		model.addAttribute("fileList", aList);
-
+		
 		if (loginId != null) {
 			String allCategory = dao.getCategoryBySeq(post_seq);
 			vdao.postClickVisit(loginId, allCategory);
@@ -331,7 +334,6 @@ public class BoardController {
 		model.addAttribute("category", category);
 		model.addAttribute("cPage", cPage);
 		model.addAttribute("sort", sort);
-
 		session.setAttribute("category", category);
 		return "board/postDetail";
 	}
