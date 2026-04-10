@@ -1044,7 +1044,7 @@ hr {
 			
 		    let btn = $(this); // 클릭한 버튼(신고하기)
 		    let target_id = btn.attr("data-target_id"); // 작성자의 id값 가져오기
-		    let tatget_seq = btn.attr("data-target_seq"); // 댓글 번호
+		    let target_seq = btn.attr("data-target_seq"); // 댓글 번호
 		    let reports_type = 1; // 신고 종류(댓글)
 		    let report_reason = btn.siblings(".reportSelect").val(); // 선택한 신고 사유 값 저장.
 
@@ -1059,7 +1059,7 @@ hr {
 		            type: "post",
 		            data: {
 		            	target_id: target_id,
-		                target_seq: tatget_seq,
+		                target_seq: target_seq,
 		                reports_type: reports_type,
 		                reports_reason: report_reason
 		            },

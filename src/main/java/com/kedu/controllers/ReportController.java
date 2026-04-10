@@ -29,10 +29,10 @@ public class ReportController {
 			return "redirect:/members/loginUi";
 		}
 		
-		// 관리자 신고 불가 로직
-		int role = mdao.getRole(loginId);
+		// 관리자 신고 불가 로직 // 신고 당하는 사람이 관리자인지, 일반 사용자인지 체크
+		int role = mdao.getRole(dto.getTarget_id());
 		
-		if(role == 1) {
+		if(role == 0) {
 			return "adminFail";
 		}
 		
