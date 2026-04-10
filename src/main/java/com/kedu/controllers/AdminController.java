@@ -198,6 +198,126 @@ public class AdminController {
 		return "fail";
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 신고관리 페이지로 이동
 	@RequestMapping("/adminBlackList")
 	public String adminBlackList(Model model) {
@@ -254,7 +374,7 @@ public class AdminController {
 		// blackList table 정지시작/종료일수 업데이트
 		List<BlackListDTO> list = dao.selectById(target_id);
 		if(list == null || list.isEmpty()) {
-			dao.insertBlcakList(target_id, black_option, banDays);
+			dao.insertBlackList(target_id, black_option, banDays);
 		}else{
 			dao.updateBlackEndDate(banDays, target_id);
 		}
@@ -286,11 +406,3 @@ public class AdminController {
 	}
 	
 }
-
-
-
-
-
-
-
-

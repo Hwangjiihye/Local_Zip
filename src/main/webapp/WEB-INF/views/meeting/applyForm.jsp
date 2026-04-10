@@ -11,7 +11,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 	integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<style>
 	button, body {
 		font-family: 'GMarketSans', sans-serif;
@@ -105,7 +105,11 @@
 		transform: translateY(2px);
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
-	
+	.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 	
 	
 	</style>
@@ -134,7 +138,14 @@
 		let intro = document.getElementById("intro").value;
 		
 		if(intro == ""){
-			alert("한 줄 소개를 작성해주세요")
+			Swal.fire({
+				icon: "info",
+				title: "Wait  !",
+				text: "한 줄 소개를 작성해주세요",
+				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300"
+				/* width: "300px", */
+			});
 			return false;
 		} else {
 			return true;

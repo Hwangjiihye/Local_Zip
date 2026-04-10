@@ -262,7 +262,7 @@ public class AdminQaDAO {
 		return jdbc.update(sql, mem_status, target_id);
 	}
 	
-	public int insertBlcakList(String targer_id, String black_option, int day) { // 블랙리스트 정지시작/종료일수 (blackList Table 업데이트) 로직
+	public int insertBlackList(String targer_id, String black_option, int day) { // 블랙리스트 정지시작/종료일수 (blackList Table 업데이트) 로직
 		String sql = "insert into blackList (black_seq, mem_id, black_option, start_date, end_date) "
 				+ "values(blackList_seq.nextval, ? , ? , sysdate, sysdate + ?)";
 		return jdbc.update(sql, targer_id, black_option, day);
@@ -307,7 +307,3 @@ public class AdminQaDAO {
 	
 	
 }
-
-
-
-
