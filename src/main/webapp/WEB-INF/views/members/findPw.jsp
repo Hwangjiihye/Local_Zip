@@ -413,7 +413,14 @@ input{
 						
 
 					} else if (resp.status === "fail") {
-						alert(resp.msg);
+						Swal.fire({
+	                        icon: "error",
+	                        title: "Fail !",
+	                        text: resp.msg,
+	                        iconColor: "#EB0000",
+	                        confirmButtonColor: "#FFB300"
+	                    });
+						/* alert(resp.msg); */
 					} else if (resp.status === "wrong_code") {
 						Swal.fire({
 							icon: "error",
@@ -472,11 +479,20 @@ input{
 								}
 							}
 						})
-						
-	let message = "${pwMsg}";
+	$(document).ready(function(){
+		let message = "${pwMsg}";
+		
     if (message && message !== "") {
-        alert(message);
+    	Swal.fire({
+			icon: "success",
+			title: "Success  !",
+			text: message,
+			iconColor: "#FFB300",
+			confirmButtonColor: "#FFB300"
+		});
     }
+});
+	
 	</script>
 
 </body>

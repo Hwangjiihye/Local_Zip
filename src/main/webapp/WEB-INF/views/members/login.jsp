@@ -240,7 +240,14 @@ input{
 	<script>
 		let pwMsg = "${pwMsg}";
 	    if (pwMsg && pwMsg !== "") {
-	        alert(pwMsg);
+	    	Swal.fire({
+	            icon: "success",
+	            title: "Success !",
+	            text: pwMsg,
+	            iconColor: "#FFB300",
+	            confirmButtonColor: "#FFB300"
+	        });
+	        /* alert(pwMsg); */
 	    }
 	
 		let msg = "${msg}";

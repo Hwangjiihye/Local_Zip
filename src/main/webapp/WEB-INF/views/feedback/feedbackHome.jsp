@@ -712,6 +712,16 @@
         	let target_id = $(this).data("targetid");
         	let reports_reason = $(this).closest(".postBox").find(".reportSelect").val();
         	
+        	if(!reports_reason || reports_reason === "신고 사유"){
+        		Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "신고 사유를 선택해 주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
+        		return;
+        	} 
         	// 신고 사유 가져오는 코드
         	$.ajax({
         		url:"/report/insert",
