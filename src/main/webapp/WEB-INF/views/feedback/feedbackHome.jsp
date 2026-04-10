@@ -474,7 +474,8 @@
 	                    	</div>
 	                  </c:if>
 	                    </div>
-	
+	                    
+					<c:if test="${loginId != i.mem_id}">
 		                    <div class="reportArea">
 								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
 								<select class="reportSelect" name="reports_reason">
@@ -484,9 +485,10 @@
 	                               <option value="AD" class="reportOption">광고/스팸</option>
 	                           	</select>
 	                           	
+	                           	
 		                        	<input class="reportBtn" type="button" value="신고하기" data-seq="${i.suggestion_seq}" data-targetid="${i.mem_id}">
-		                    	
 		                    </div>
+		               </c:if>
 	                </div>
 	
 	                <div class="postMidBox">
@@ -698,7 +700,7 @@
         			}
         		});
         	});
-
+    		
         // 신고버튼을 눌렀을 때, 내가 누른 게시글 신고버튼만 눌림
         $(".reportIcon").on("click", function () {
         	$(this).siblings(".reportSelect, .reportBtn").css({"display" : "inline"});
@@ -928,6 +930,19 @@
                 document.execCommand("insertLineBreak"); // 줄바꿈 삽입
             }
         });
+        
+        // 입력창 테두리 속성
+        /* .postMidBox[contenteditable="true"] {
+		    border: 1px solid #FFB300;
+		    border-radius: 5px;
+		    padding: 5px;
+		} */
+/* 
+		.postTitle[contenteditable="true"]:focus {
+		    outline: none;
+		    border: 1px solid #FFB300;
+		    background-color: #fbe5c0;
+		} */
         
         // 하단 네비게이션 바 구현
         $("document").ready(function(){
