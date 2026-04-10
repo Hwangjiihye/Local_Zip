@@ -25,19 +25,14 @@ public class HomeController {
 
 	@Autowired
 	private Gson gson;
-
 	@Autowired
 	private BoardDAO dao;
-
 	@Autowired
 	private ReplyDAO ReplyDao;
-
 	@Autowired
 	private VisitLogDAO vdao;
-	
 	@Autowired
 	private PostLikeDAO likeDao;
-	
 	@Autowired
 	private AttachmentDAO aDao;
 	
@@ -139,6 +134,23 @@ public class HomeController {
 	    
 		return "board/postDetail";
 	}
+	
+	
+	// 홈에서 게시글을 제목으로 검색했을 때,
+	@RequestMapping("/searchByTitle")
+	public String searchByTitle(String title, Model model, HttpSession session) throws Exception{
+		
+		List<BoardDTO> searchList = dao.searchByTitle(title); // 제목 일치 게시글 검색
+		
+		String loginId = (String)session.getAttribute("loginId"); // 좋아요 상태 확인
+		LikeStatus(searchList, loginId);
+		
+		model.addAttribute("list",searchList); // 제목 검색 결과 모델에 담기.
+		
+		return "home";
+	};
+	
+	// 네비게이션 바
 
 	
 	// postDetail 페이지,로그인 한 아이디를 기준으로 하트를 눌러놨는지 체크하는 메서드
@@ -149,9 +161,6 @@ public class HomeController {
 			dto.setPost_like_check(check); // check의 값이 1 또는 0으로 나온 값을 dto에 set으로 기록.
 		}
 	};
-	
-	// 네비게이션 바
-	
-	
+		
 
 }
