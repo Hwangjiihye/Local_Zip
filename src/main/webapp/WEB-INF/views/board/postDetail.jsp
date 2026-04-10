@@ -52,8 +52,6 @@ body, html {
 	padding: 0;
 }
 
-
-
 /* 폰트 지정 */
 button, body {
 	font-family: 'GMarketSans', sans-serif;
@@ -299,22 +297,34 @@ button, body {
 	margin-top: 5px;
 }
 
-.postContents {
+.postContents, .fileContainer {
+	overflow: hidden;
 	margin: auto;
 	width: 95%;
 	font-size: 15px;
 	background-color: #f0d8af;
 	border-radius: 5px;
-	padding: 0 10px;
+	padding: 0px 4px;
+	margin: auto;
+}
+
+#summernote {
+	display: none;
+}
+
+.postImages {
+	min-height: auto;
+	line-height: 0;
 }
 
 .postImages img {
-    max-width: 100%;
-    max-height: 500px; /* 부모 너비를 넘지 않게 함 */
-    display: block;
-    margin: 10px auto;
-    border-radius: 8px;
-    width:200px;
+	max-width: 100%;
+	max-height: 500px; /* 부모 너비를 넘지 않게 함 */
+	display: block;
+	border-radius: 8px;
+	width: 500px;
+	padding: 10px 0 0 10px;
+	margin: 0;
 }
 
 .fileDownload {
@@ -604,7 +614,16 @@ hr {
 .newFileDiv {
 	display: none;
 	margin-top: 10px;
-	margin-left : 45px;
+	margin-left: 45px;
+}
+
+.replyContents, .postContents {
+	white-space: pre-wrap;
+}
+
+.postContents {
+	white-space: pre-line;
+	/* 	text-align: left; */
 }
 </style>
 
@@ -654,28 +673,26 @@ hr {
 				<div class="postMidBox">
 
 					<div class="postTitle">${dto.post_title }</div>
-					
-					<div class="postContents">
-					<c:if test="${not empty fileList}">
-					<textarea id="summernote" name="content">
-					<div class="postImages">
-							<c:forEach var="file" items="${fileList}">
-								<c:set var="fileName" value="${file.attach_sysname}" />
-								<c:set var="lowerName" value="${fileName.toLowerCase()}" />
+					<div class="fileContainer">
+						<c:if test="${not empty fileList}">
+							<div class="postImages">
+								<c:forEach var="file" items="${fileList}">
+									<c:set var="fileName" value="${file.attach_sysname}" />
+									<c:set var="lowerName" value="${fileName.toLowerCase()}" />
 
-								<c:if
-									test="${lowerName.endsWith('.jpg') || lowerName.endsWith('.jpeg') || 
+									<c:if
+										test="${lowerName.endsWith('.jpg') || lowerName.endsWith('.jpeg') || 
                           lowerName.endsWith('.png') || lowerName.endsWith('.gif') || 
                           lowerName.endsWith('.webp')}">
-									<div class="img-wrapper" style="margin-bottom: 20px;">
-										<img src="/upload/${file.attach_sysname}">
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
-						</textarea>
+										<div class="img-wrapper">
+											<img src="/upload/${file.attach_sysname}">
+										</div>
+									</c:if>
+								</c:forEach>
+							</div>
 						</c:if>
-					${dto.post_contents}</div>
+					</div>
+					<div class="postContents">${dto.post_contents}</div>
 
 					<c:if test="${not empty fileList}">
 						<div class="fileDownload">
@@ -715,7 +732,7 @@ hr {
 				</div>
 
 			</div>
-			
+
 			<div class="replyContainer">
 				<div class="replyTitle">댓글</div>
 				<div class="replyBox">
@@ -755,21 +772,11 @@ hr {
 		
 		
 		
-		$(document).ready(function() {
-			  $('#summernote').summernote({
-			    height: 300,                 // 에디터 높이
-			    minHeight: null,             // 최소 높이
-			    maxHeight: null,             // 최대 높이
-			    focus: true,                  // 에디터 로딩 후 포커스 여부
-			    lang: "ko-KR"                // 한글 설정 (lang 파일 추가 시)
-			  });
-			});
-		
 		// 게시글 수정 버튼 클릭 시
 		$(".updateBtn").on("click",function(){
 			// 기존 내용 저장
 			postTitle.data("originTitle", postTitle.text());
-		    postContents.data("originContents", postContents.text());
+		    postContents.data("originContents", postContents.html());
 		    
 			$(".completeBtn").css({"display":"inline"});
 			$(".cancelBtn").css({"display":"inline"});
@@ -794,7 +801,7 @@ hr {
 		$(".completeBtn").on("click",function(){
 			
 			let post_title = $(".postTitle").text();
-			let post_contents = $(".postContents").text();
+			let post_contents = $(".postContents").html();
 		   
 		    if(postTitle.text() == "" || postContents.text() == ""){
 		        alert("내용을 입력해주세요.");
@@ -804,7 +811,7 @@ hr {
 		    let formData = new FormData();
 		    formData.append("post_seq", postSeq);
 		    formData.append("post_title", $(".postTitle").text());
-		    formData.append("post_contents", $(".postContents").text());
+		    formData.append("post_contents", $(".postContents").html());
 		    formData.append("post_category","${category}");
 		    
 		    let deleteFiles = [];
@@ -854,7 +861,7 @@ hr {
 			let originContents = postContents.data("originContents");
 
 		    postTitle.text(originTitle);
-		    postContents.text(originContents);
+		    postContents.html(originContents);
 		    
 		    $(".file-item").removeClass("delete-target").show();
 		    $(".newFiles").val("");
@@ -1107,6 +1114,14 @@ hr {
         	replyContents.attr("contenteditable", "true");
         });
         
+        $(document).on("keydown", ".replyContents[contenteditable='true']", function(e){
+            if(e.key === "Enter"){
+                e.preventDefault(); // 기본 동작 막기
+
+                document.execCommand("insertLineBreak"); // 줄바꿈 삽입
+            }
+        });
+        
         // 댓글 수정 취소 버튼을 눌렀을 때
         $(document).on("click",".XBtn",function(){
 			let replyUpBox = $(this).closest(".replyUpBox");
@@ -1152,7 +1167,7 @@ hr {
 			let replyUpBox = $(this).closest(".replyUpBox");
         	
         	let reply_seq = $(this).data("reply_seq");
-        	let reply_contents = replyUpBox.find(".replyContents").text();
+        	let reply_contents = replyUpBox.find(".replyContents").html();
         	
         	if(reply_contents.trim() == ""){
 		        alert("내용을 입력해주세요.");
@@ -1194,7 +1209,14 @@ hr {
 		    }else {
 		    	location.href = "/";
 		    }
-		});  
+		}); 
+        
+        $(function() {
+            let contents = $(".postContents").html();
+            if(contents){
+                $(".postContents").html(contents.trim());
+            }
+        });
     </script>
 </body>
 </html>
