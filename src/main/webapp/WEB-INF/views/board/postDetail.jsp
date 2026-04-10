@@ -9,7 +9,11 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
+<!--  summernote -->
+<script src="/resources/summernote/summernote-lite.js"></script>
+<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 /* 폰트 */
@@ -294,13 +298,34 @@ button, body {
 	margin-top: 5px;
 }
 
-.postContents {
+.postContents, .fileContainer {
+	overflow: hidden;
 	margin: auto;
 	width: 95%;
 	font-size: 15px;
 	background-color: #f0d8af;
 	border-radius: 5px;
-	padding: 0 10px;
+	padding: 0px 4px;
+	margin: auto;
+}
+
+#summernote {
+	display: none;
+}
+
+.postImages {
+	min-height: auto;
+	line-height: 0;
+}
+
+.postImages img {
+	max-width: 100%;
+	max-height: 500px; /* 부모 너비를 넘지 않게 함 */
+	display: block;
+	border-radius: 8px;
+	width: 500px;
+	padding: 10px 0 0 10px;
+	margin: 0;
 }
 
 .fileDownload {
@@ -587,9 +612,19 @@ hr {
 	font-size: 13px;
 }
 
-.newFileDiv{
+.newFileDiv {
 	display: none;
 	margin-top: 10px;
+	margin-left: 45px;
+}
+
+.replyContents, .postContents {
+	white-space: pre-wrap;
+}
+
+.postContents {
+	white-space: pre-line;
+	/* 	text-align: left; */
 }
 </style>
 
@@ -639,20 +674,42 @@ hr {
 				<div class="postMidBox">
 
 					<div class="postTitle">${dto.post_title }</div>
-					<div class="postContents">${dto.post_contents }</div>
-					<div class="fileDownload">
-						첨부 파일
-						<c:forEach var="i" items="${fileList}" varStatus="status">
-							<div class="file-item"">
-								<label class="fileName" data-ori="${i.attach_oriname}"
-									data-sys="${i.attach_sysname}"> ${i.attach_oriname} </label>
-								<button type="button" class="fileDelBtn"
-									data-sys="${i.attach_sysname}">X</button>
+					<div class="fileContainer">
+						<c:if test="${not empty fileList}">
+							<div class="postImages">
+								<c:forEach var="file" items="${fileList}">
+									<c:set var="fileName" value="${file.attach_sysname}" />
+									<c:set var="lowerName" value="${fileName.toLowerCase()}" />
+
+									<c:if
+										test="${lowerName.endsWith('.jpg') || lowerName.endsWith('.jpeg') || 
+                          lowerName.endsWith('.png') || lowerName.endsWith('.gif') || 
+                          lowerName.endsWith('.webp')}">
+										<div class="img-wrapper">
+											<img src="/upload/${file.attach_sysname}">
+										</div>
+									</c:if>
+								</c:forEach>
 							</div>
-						</c:forEach>
-						<div class="newFileDiv" >
-							<input type="file" class="newFiles" name="newFiles" multiple>
+						</c:if>
+					</div>
+					<div class="postContents">${dto.post_contents}</div>
+
+					<c:if test="${not empty fileList}">
+						<div class="fileDownload">
+							첨부 파일
+							<c:forEach var="i" items="${fileList}" varStatus="status">
+								<div class="file-item">
+									<label class="fileName" data-ori="${i.attach_oriname}"
+										data-sys="${i.attach_sysname}"> ${i.attach_oriname} </label>
+									<button type="button" class="fileDelBtn"
+										data-sys="${i.attach_sysname}">X</button>
+								</div>
+							</c:forEach>
 						</div>
+					</c:if>
+					<div class="newFileDiv">
+						<input type="file" class="newFiles" name="newFiles" multiple>
 					</div>
 				</div>
 
@@ -676,6 +733,7 @@ hr {
 				</div>
 
 			</div>
+
 			<div class="replyContainer">
 				<div class="replyTitle">댓글</div>
 				<div class="replyBox">
@@ -719,7 +777,7 @@ hr {
 		$(".updateBtn").on("click",function(){
 			// 기존 내용 저장
 			postTitle.data("originTitle", postTitle.text());
-		    postContents.data("originContents", postContents.text());
+		    postContents.data("originContents", postContents.html());
 		    
 			$(".completeBtn").css({"display":"inline"});
 			$(".cancelBtn").css({"display":"inline"});
@@ -744,17 +802,23 @@ hr {
 		$(".completeBtn").on("click",function(){
 			
 			let post_title = $(".postTitle").text();
-			let post_contents = $(".postContents").text();
+			let post_contents = $(".postContents").html();
 		   
 		    if(postTitle.text() == "" || postContents.text() == ""){
-		        alert("내용을 입력해주세요.");
+		    	Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "수정 완료!",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 		        return;
 		    }
 		    
 		    let formData = new FormData();
 		    formData.append("post_seq", postSeq);
 		    formData.append("post_title", $(".postTitle").text());
-		    formData.append("post_contents", $(".postContents").text());
+		    formData.append("post_contents", $(".postContents").html());
 		    formData.append("post_category","${category}");
 		    
 		    let deleteFiles = [];
@@ -804,7 +868,7 @@ hr {
 			let originContents = postContents.data("originContents");
 
 		    postTitle.text(originTitle);
-		    postContents.text(originContents);
+		    postContents.html(originContents);
 		    
 		    $(".file-item").removeClass("delete-target").show();
 		    $(".newFiles").val("");
@@ -1057,6 +1121,14 @@ hr {
         	replyContents.attr("contenteditable", "true");
         });
         
+        $(document).on("keydown", ".replyContents[contenteditable='true']", function(e){
+            if(e.key === "Enter"){
+                e.preventDefault(); // 기본 동작 막기
+
+                document.execCommand("insertLineBreak"); // 줄바꿈 삽입
+            }
+        });
+        
         // 댓글 수정 취소 버튼을 눌렀을 때
         $(document).on("click",".XBtn",function(){
 			let replyUpBox = $(this).closest(".replyUpBox");
@@ -1102,7 +1174,7 @@ hr {
 			let replyUpBox = $(this).closest(".replyUpBox");
         	
         	let reply_seq = $(this).data("reply_seq");
-        	let reply_contents = replyUpBox.find(".replyContents").text();
+        	let reply_contents = replyUpBox.find(".replyContents").html();
         	
         	if(reply_contents.trim() == ""){
 		        alert("내용을 입력해주세요.");
@@ -1141,10 +1213,19 @@ hr {
 		    	location.href = "/board/food?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "beauty"){
 		    	location.href = "/board/beauty?sort=" + sort + "&cPage=" + currentPage;
+		    }else if(category == "all" || category == ""){
+		    	location.href = "/?sort=" + sort;
 		    }else {
 		    	location.href = "/";
 		    }
-		});  
+		}); 
+        
+        $(function() {
+            let contents = $(".postContents").html();
+            if(contents){
+                $(".postContents").html(contents.trim());
+            }
+        });
     </script>
 </body>
 </html>

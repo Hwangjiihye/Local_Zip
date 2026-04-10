@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
 import javax.mail.internet.MimeMessage;
 
@@ -37,7 +38,8 @@ public class AuthController {
 	// 인증번호 발송 요청
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.POST)
 	@ResponseBody
-	public String mailCheck(@RequestParam("email") String email, @RequestParam("auth_type") int auth_type) {
+	public String mailCheck(@RequestParam("email") String email, @RequestParam("auth_type") int auth_type
+							,@RequestParam(value = "mem_id", required = false)String id) {
 
 		// 이메일 존재 여부 확인
 		if (auth_type == 1 && (dao.isEmailExists(email) > 0)) {
@@ -46,31 +48,47 @@ public class AuthController {
 		if (auth_type == 2 && (dao.isEmailExists(email) == 0)) {
 			return "empty";
 		}
-		if (auth_type == 3 && (dao.isEmailExists(email) == 0)) {
-			return "empty";
+		if (auth_type == 3) {
+			if (dao.isEmailExists(email) == 0) {
+	            return "empty";
+	        }
+	        if (id == null || dao.isIdEmailExists(id, email) == 0) {
+	            return "failEmail";
+	        }
 		}
+		
 
 		// 6자리 랜덤번호 생성
 		String authCode = String.valueOf(new Random().nextInt(888888) + 111111);
 
-		try {
+		CompletableFuture.runAsync(() -> {
+			try {
+				// 메일 발송 로직
+				MimeMessage mail = mailSender.createMimeMessage();
+				MimeMessageHelper helper = new MimeMessageHelper(mail, true, "utf-8");
+				String htmlContent = "<div style='background-color: #fbe5c0; padding: 40px; font-family: GMarketSans, sans-serif;width: 700px; margin: auto;'>"
+						+ "<div style='background-color: #ffffff; padding: 20px; border-radius: 10px; border: 2px solid #A66A3F; text-align: center;'>"
+						+ "  <h2 style='color: #A66A3F;'>🏠 우리동네.zip 회원가입 인증</h2>"
+						+ "  <p style='color: #5e361a;'>안녕하세요! 동네의 모든 것을 담는 Local_Zip입니다.</p>"
+						+ "  <p style='color: #5e361a;'>아래 인증번호를 입력하여 회원가입을 완료해 주세요.</p>"
+						+ "  <div style='background-color: #F2D3A2; padding: 15px; font-size: 24px; font-weight: bold; color: #A66A3F; margin: 20px 0;'>"
+						+ authCode + "  </div>"
+						+ "  <p style='font-size: 12px; color: #888;'>본 메일은 발신 전용입니다. 문의사항은 고객센터를 이용해 주세요.</p>"
+						+ "</div>" + "</div>";
+				helper.setTo(email);
+				helper.setSubject("[우리 동네.zip] 이메일 인증번호 안내");
+				helper.setText(htmlContent, true);
+				mailSender.send(mail);
+				System.out.println(authCode);
+				// db에 저장
+				dao.saveAuth(new AuthDTO(email, authCode, auth_type, 0, "0"));
 
-			// 메일 발송 로직
-			MimeMessage mail = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(mail, true, "utf-8");
-			helper.setTo(email);
-			helper.setSubject("[게시판] 인증번호 안내");
-			helper.setText("인증번호: " + authCode, true);
-			mailSender.send(mail);
-			System.out.println(authCode);
-			// db에 저장
-			dao.saveAuth(new AuthDTO(email, authCode, auth_type, 0, "0"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		return "success";
 
-			return "success";
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "fail";
-		}
 	}
 
 	// 인증번호 확인
@@ -121,7 +139,7 @@ public class AuthController {
 	// 새 비밀번호 생성
 	@RequestMapping(value = "/updateMyPw", method = RequestMethod.POST)
 	public String updateMyPw(@RequestParam("mem_id") String id, @RequestParam("pw") String pw,
-			@RequestParam("email") String email,RedirectAttributes rttr) {
+			@RequestParam("email") String email, RedirectAttributes rttr) {
 		// 인증상태확인
 		if (dao.isVerified(email) <= 0 || dao.updatePwById(id, pw) <= 0) {
 			rttr.addFlashAttribute("pwMsg", "인증 정보가 만료되었거나 변경에 실패했습니다.");

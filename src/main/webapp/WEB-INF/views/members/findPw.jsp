@@ -344,6 +344,7 @@ input{
 					url : "/auth/mailCheck",
 					type : "post",
 					data : {
+						mem_id : $(".mem_id").val(),
 						email : $(".email").val(),
 						auth_type : 3
 					}
@@ -365,7 +366,15 @@ input{
 							iconColor: "#EB0000",
 							confirmButtonColor: "#FFB300"
 						});
-					} else {
+					}else if(resp=="failEmail"){
+						Swal.fire({
+							icon: "error",
+							title: "Empty  !",
+							text: "이메일이 정확하지 않습니다.",
+							iconColor: "#EB0000",
+							confirmButtonColor: "#FFB300"
+						});
+					}else {
 						Swal.fire({
 							icon: "error",
 							title: "Error  !",
@@ -413,7 +422,14 @@ input{
 						
 
 					} else if (resp.status === "fail") {
-						alert(resp.msg);
+						Swal.fire({
+	                        icon: "error",
+	                        title: "Fail !",
+	                        text: resp.msg,
+	                        iconColor: "#EB0000",
+	                        confirmButtonColor: "#FFB300"
+	                    });
+						/* alert(resp.msg); */
 					} else if (resp.status === "wrong_code") {
 						Swal.fire({
 							icon: "error",
@@ -472,11 +488,20 @@ input{
 								}
 							}
 						})
-						
-	let message = "${pwMsg}";
+	$(document).ready(function(){
+		let message = "${pwMsg}";
+		
     if (message && message !== "") {
-        alert(message);
+    	Swal.fire({
+			icon: "success",
+			title: "Success  !",
+			text: message,
+			iconColor: "#FFB300",
+			confirmButtonColor: "#FFB300"
+		});
     }
+});
+	
 	</script>
 
 </body>

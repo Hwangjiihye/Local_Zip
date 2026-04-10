@@ -182,17 +182,12 @@ body {
 }
 
 .inputQaReply{
- 	padding:5px;
  	background-color: #F2D3A2;
  	color: #A66A3F;
  	border-radius: 10px;
  	border:none;
- 	margin: 0 0 5px 0;
  	font-size:15px;
  	width:100%;
- 	height: 40px;
- 	word-break: break-all;
- 	white-space: normal;
  	resize: none;
  	outline: none;
  	font-family: 'GMarketSans';
@@ -206,7 +201,7 @@ body {
  	border:none;
  	margin: 0 0 5px 0;
  	font-size: 15px;
- 	height: 40px;
+/*  	height: 40px; */
  	flex:1;
  	width:auto;
  	min-width:0;
@@ -228,7 +223,7 @@ body {
 
 .replyTextAndBtn{
  	display:flex;
- 	align-items:flex-start;
+/*  	align-items: stretch; /* textarea랑 버튼 영역 높이 맞추기 */ */
  	gap:10px;
 }
 
@@ -355,6 +350,7 @@ body {
  	display:flex;
 	gap:10px;
 	flex-shrink:0;
+/* 	align-self: flex-start; /*버튼 영역 위로 붙이기*/ */
  }
 .adminBtn, .replyBtn{
  	margin: 0 0 7px 15px;
@@ -412,6 +408,10 @@ a{
 img{
 	width: 16.67px;
 	height: 16.10px;
+}
+
+.textContent, .answerDiv, .inputQaReply, .inputUpdate{
+	white-space: pre-wrap;
 }
 </style>
 </head>
@@ -647,13 +647,11 @@ img{
 				answerDiv.data("origin", originText);
 				
 				answerDiv.addClass("editing");
-				answerDiv.html(`
-					<textarea class="inputQaReply inputUpdate" id="inputUpdate_\${seq}" data-origin="\${originText}" style="height:40px">\${originText}</textarea>		
-				`);
+				answerDiv.html(`<textarea class="inputQaReply inputUpdate" id="inputUpdate_\${seq}" data-origin="\${originText}">\${originText}</textarea>`);
 				
 				let textarea = $("#inputUpdate_" + seq)[0];
 				textarea.style.height = "auto";
-			    textarea.style.height = 40+"px";
+				textarea.style.height = textarea.scrollHeight + "px";
 			    
 					parentRow.find(".adminBtn").hide();
 					parentRow.find(".UpdateBtn").show();
@@ -720,6 +718,11 @@ img{
 						}
 					});
 				}
+			});
+			
+			$(document).on("input", ".inputQaReply", function(){
+			    this.style.height = "auto";
+			    this.style.height = this.scrollHeight + "px";
 			});
 	</script>
 </body>

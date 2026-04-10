@@ -228,6 +228,10 @@ p{
 .rightImg{
 	right: 0;
 }
+
+.descTextDetail{
+	white-space: pre-wrap;
+}
 </style>
 </head>
 <body>
@@ -263,7 +267,7 @@ p{
 					</div>
 					
 					<div class="locationDiv">	
-						<div class="location">활동지역</div>	
+						<div class="location">활동지역</div>
 						<div class="locationDetail">${i.mem_address1}</div>
 					</div>
 					
