@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>myPosts</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -86,11 +86,19 @@ button, body {
 	position: relative;
 	right: 30px;
 	cursor: pointer;
+	transition: all 0.3s ease;/* 애니메이션 부드럽게 */
 }
 
 .backBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+}
+
+.backBtn:active{
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	background-color: #ffb300;
 }
 
 .mainTitle {
@@ -316,6 +324,31 @@ button, body {
 	color: #5e361a;
 	text-align: center;
 }
+
+.page a{
+   margin: 10px;
+   color: #A66A3F;
+   display: inline-block;
+   text-decoration: none;
+   min-width:35px;
+    padding:6px 0px 6px 0px;
+   border-radius:6px;
+    transition:0.2s;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.pageBox a.active{
+   background-color:#fecc56;
+    font-weight: bold;
+    color: #5e361a;
+}
+
+.pageBox a:hover{
+    background-color:#F2D3A2;
+}
+
+
 </style>
 
 </head>
@@ -352,7 +385,7 @@ button, body {
 	
 					<c:forEach var="i" items="${listAll}">
 
-						<div class="postBox" onclick="location.href='/board/postDetail?post_seq=${i.post_seq}'" style="cursor:pointer;">
+						<div class="postBox" data-seq="${i.post_seq}" style="cursor:pointer;">
 
 							<div class="postUpBox">
 
@@ -387,7 +420,9 @@ button, body {
 						</div>
 
 					</c:forEach>
-					<div class="pageBox">1 2 3</div>
+					<div class="pageBox">
+						<span class="page"></span>
+					</div>
 
 				</c:otherwise>
 			</c:choose>
@@ -414,6 +449,65 @@ button, body {
 		</div>
 
 	</div>
+	
+	<script>
+	
+		// 게시글 목록을 눌렀을때, => postDetail.jsp 이동 시.
+		$(document).on("click", ".postBox", function(e) {
+		    let post_seq = $(this).data("seq");
+		    location.href = "/board/postDetail?post_seq=" + post_seq + "&cPage=${cPage}&from=myPosts";
+		});
+		
+		
+		// 하단 네비바 구성 cpage
+		let recordTotalCount = ${totalCount};
+		let recordCountPerPage = 10;
+		let naviCountPerPage = 10;
+		let currentPage = ${cPage};
+	
+		let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
+		   
+		let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
+		let endNavi = startNavi + naviCountPerPage - 1;
+		   
+		if(endNavi > pageTotalCount) {
+		   endNavi = pageTotalCount;
+		}
+		$(".page").empty();
+		   
+		let needPrev = true; // <<
+		let needNext = true; // >>
+		   
+		if(startNavi == 1){needPrev = false;}
+		if(endNavi == pageTotalCount){needNext = false;}
+		   
+		if(needPrev) {
+		   let prev = $("<a>"); 
+		   prev.attr("href","/members/myPosts?cPage="+(startNavi-1)); 
+		   prev.html("<< ");
+		   $(".page").append(prev);
+		}
+		      
+		for(let i = startNavi; i <= endNavi; i++) {
+		  let navi = $("<a>");
+		  navi.attr("href", "/members/myPosts?cPage="+i);
+		  navi.html(i + " ");
+		  $(".page").append(navi);
+		      
+		  if (i === currentPage) {
+		       navi.addClass("active");
+		   }
+		}
+		
+		if(needNext) {
+		   let next = $("<a>");
+		   next.attr("href", "/members/myPosts?cPage="+(endNavi+1));
+		   next.html(" >>");
+		   $(".page").append(next);
+		}
+
+	
+	</script>
 
 </body>
 </html>

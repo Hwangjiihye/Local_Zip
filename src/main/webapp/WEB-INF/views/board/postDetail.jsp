@@ -296,6 +296,7 @@ button, body {
 	height: 40px;
 	font-size: 20px;
 	margin-top: 5px;
+	line-height: 40px;
 }
 
 .postContents, .fileContainer {
@@ -1343,15 +1344,22 @@ hr {
         // 뒤로가기 버튼을 눌렀을 때
         $(document).on("click", ".backBtn", function(){
         	
+            // 현재 입력된 URL에서 'from' 파라미터가 있는지 확인.
+            let urlParams = new URLSearchParams(window.location.search);
+            let from = urlParams.get('from');
+		    let cPage = urlParams.get('cPage') || 1 // 마이페이지 작성글/관심글 전용 cpage, 페이지 번호가 없으면 기본 1
+        	
 		    let category = "${category}";
 		    let currentPage = "${currentPage}";
 		    let sort = "${sort}";
 		    
-		    console.log("현재 카테고리:", category);
-		    console.log("넘어온 페이지 번호:", currentPage); 
-		    console.log("정렬 상태:", sort); 
-		
-		    if(category === "talk"){
+			if(from == "myLikes"){
+				location.href = "/members/myLikes?cPage=" + cPage + "&from=myLikes";
+
+			}else if(from == "myPosts"){
+				location.href = "/members/myPosts?cPage=" + cPage + "&from=myPosts";
+				
+			}else if(category === "talk"){ // 카테고리 받아서 해당 목록 페이지로 이동
 		        location.href = "/board/talk?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "lifeInfo"){
 		        location.href = "/board/lifeInfo?sort=" + sort + "&cPage=" + currentPage;
