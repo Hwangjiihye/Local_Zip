@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -69,7 +69,6 @@ body, html {
 	height: 100px;
 	z-index: 1000;
 	position: fixed;
-	display: fixed;
 	top: 0;
 	left: 0;
 }
@@ -173,7 +172,7 @@ body, html {
 
 .rightBox {
 	width: 300px;
-	height: 500px;
+	height: 498px;
 	border-radius: 10px;
 	margin-left: 40px;
 }
@@ -282,32 +281,10 @@ body, html {
 	/* display: block; */
 }
 
-.writeBtn {
-	width: 50px;
-	height: 50px;
-	right: 30px;
-	bottom: 90px;
-	cursor: pointer;
-	margin-top: 90%;
-	border-radius: 50%;
-	background-color: #A66A3F;
-	border: #fbe5c0;
-	color: #fbe5c0;
-	font-size: 30px;
-	position: fixed; /* 버튼 따라다니게 만들기 */
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	/* 그림자 효과 */
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-	/* 애니메이션 부드럽게 */
-	transition: all 0.2s ease;
-}
-
-.writeBtn:hover, .loginBtn:hover, .logoutBtn:hover, .joinBtn:hover,
-	.navicon:hover, .categoryBtn button:hover {
+.loginBtn:hover, .logoutBtn:hover, .joinBtn:hover, .categoryBtn button:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
 }
 
 .writeBtn:active, .loginBtn:active, .logoutBtn:active, .joinBtn:active,
@@ -316,20 +293,6 @@ body, html {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.pageBox {
-	width: 100%;
-	text-align: center; /* 가운데 정렬 */
-	/* 	padding: 20px 0; /* 상하 여백 */ */
-	/* 	margin-bottom: 80px; /* 중요: 하단 바에 가려지지 않도록 아래쪽 여백 확보 */ */
-	font-size: 18px;
-	color: #A66A3F;
-	font-weight: bold;
-	/* 위쪽 여백은 늘리고(50px), 아래쪽 여백은 확 줄였습니다(10px) */
-	padding: 50px 0 10px 0;
-	/* 하단 바에 너무 붙지 않게 최소한의 마진만 부여 */
-	margin-bottom: 10px;
-	clear: both;
-}
 
 .welcome2 {
 	font-size: 12px;
@@ -343,45 +306,40 @@ body, html {
 
 /*  ----------------------------------------------------------------------------------게시글       */
 .postBox {
-	/* 수정: 고정 1500px 제거 */
 	width: 95%;
 	max-width: 1500px;
-	/* 적당히 보기 좋은 최대 너비 설정 */
 	min-height: 200px;
 	height: auto;
 	margin: auto;
-/* 	margin-top: 30px; */
 	margin-bottom: 30px;
 	border-radius: 10px;
-	/*  border: 2px solid #A66A3F; */
-	/* 그림자 효과 */
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .postUpBox {
 	width: 100%;
-	height: 95px;
-	display: flex;
-	border-radius: 10px 10px 0 0;
-	background-color: #F2D3A2;
+    height: 95px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border-radius: 10px 10px 0 0;
+    background-color: #F2D3A2;
 }
 
 .postProfile {
 	width: 75px;
-	height: 75px;
-	position: relative;
-	top: 10px;
-	left: 10px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .postInfoBox {
-	width: 300px;
-	min-height: 50px;
-	position: relative;
-	left: 20px;
-	top: 23px;
-	flex-grow: 1;
-	/* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
+    margin-left: 15px;
+    flex-grow: 1; /* 남은 공간 다 차지 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .postInfoUp, .postInfoDown {
@@ -391,8 +349,6 @@ body, html {
 .profileInfo {
 	width: auto;
 	margin-right: 15px;
-	/* 정보 사이의 간격 일정하게 부여 */
-	/*수직 정렬*/
 	display: flex;
 	align-items: center;
 	font-size: 14px;
@@ -401,15 +357,11 @@ body, html {
 
 /* 신고 영역 스타일 */
 .reportArea {
-	position: relative;
-	top: 10px;
-	right: 12px;
 	display: flex;
-	flex-direction: column;
-	/* 아이콘과 선택창을 세로로 배치 */
-	align-items: flex-end;
-	/* 오른쪽 정렬 */
-	gap: 5px;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center; /* 세로 중앙 */
+    margin-left: 10px;
 }
 
 .reportIcon {
@@ -555,7 +507,22 @@ body, html {
 	transition: 0.3s;
 }
 
-.topBtn {
+.topBtn{
+	 background-color: #FFB300;
+	 border-radius: 10px;
+	 border: 1px solid #FFB300;
+	 color: #3e5e40;
+	 height: 30px;
+	 margin-right: 10px;
+	transition: all 0.2s ease;/* 애니메이션 부드럽게 */
+}
+
+.topBtn:hover{
+	color: #A66A3F;
+	background-color: #fecc56;
+}
+
+.PostCategory {
 	height: 25px;
 	background-color: #FFB300;
 	border-radius: 10px;
@@ -566,42 +533,10 @@ body, html {
 }
 
 .contentProfile {
-	margin-top: 4px;
-	width: 80px;
-	height: 80px;
-	border-radius: 70%;
-	object-fit: cover;
-}
-
-.pageBox {
-	text-align: center;
-	padding: 20px;
-	font-size: 18px;
-	color: #A66A3F;
-	margin-bottom: 55px;
-}
-
-.pageBox a {
-	display: inline-block;
-	min-width: 35px;
-	padding: 6px 10px;
-	margin: 0 8px;
-	text-decoration: none;
-	color: #A66A3F;
-	border-radius: 6px;
-	transition: 0.2s;
-	font-weight: normal;
-	cursor: pointer;
-}
-
-.pageBox a.active {
-	background-color: #fecc56;
-	font-weight: bold;
-	color: #5e361a;
-}
-
-.pageBox a:hover {
-	background-color: #F2D3A2;
+	width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .popup-overlay {
@@ -661,6 +596,85 @@ body, html {
 	margin-top: 80px;
 }
 
+a{
+	/* a태그로 인해 topBtn앞에 -작대기 뜨는거 없애는 코드 */
+	text-decoration: none !important;
+}
+
+
+
+.writeBtn {
+	width: 50px;
+	height: 50px;
+	right: 30px;
+	bottom: 90px;
+	cursor: pointer;
+	margin-top: 90%;
+	border-radius: 50%;
+	background-color: #A66A3F;
+	border: #fbe5c0;
+	color: rgb(255, 179, 0);
+	font-size: 30px;
+	position: fixed; /* 버튼 따라다니게 만들기 */
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);/* 그림자 효과 */	
+	transition: all 0.3s ease;/* 애니메이션 부드럽게 */
+    z-index: 1001;
+}
+
+.writeBtn:hover{
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	color: #fecc56;
+}
+
+.moveTopBtn{
+/* 	color: rgb(255, 179, 0); */
+	width: 50px;
+	height: 50px;
+	right: 35px;
+	bottom: 90px; /* 기본 위치는 글쓰기 버튼과 동일하게 시작 */
+	cursor: pointer;
+	margin-top: 90%;
+	border-radius: 50%;
+	background-color: #A66A3F;
+	border: #fbe5c0;
+	color: #fbe5c0;
+	font-size: 30px;
+	position: fixed; /* 버튼 따라다니게 만들기 */
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	/* 그림자 효과 */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    transition: all 0.3s ease; /* 애니메이션 부드럽게 */
+    display: none; /* 초기에는 숨김 */
+    
+    /* 추가/수정할 부분 */
+    padding: 0;                /* 패딩 초기화 */
+    line-height: 0;            /* 텍스트 줄바꿈 간격 제거 */
+}
+
+.moveTopBtn i {
+    /* 아이콘 자체에 걸린 기본 여백 제거 */
+    margin: 0;
+    padding: 0;
+}
+
+/* 상단 이동 버튼이 위로 올라갔을 때의 위치 */
+.moveTopBtn.up-pos {
+    bottom: 175px; 
+}
+
+.moveTopBtn:hover{
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	color: #f5deb8;
+}
+
 </style>
 </head>
 
@@ -673,10 +687,12 @@ body, html {
 			<c:choose>
 				<c:when test="${loginId == null}">
 					<div class="loginBox">
-						<a href="/members/loginUi"><input type="button" value="로그인" class="loginBtn"
-							style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;"></a>
-						<a href="/members/join"><input type="button" value="회원가입" class="joinBtn"
-							style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;"></a>
+						<a href="/members/loginUi">
+							<input type="button" value="로그인" class="loginBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;">
+						</a>
+						<a href="/members/join">
+							<input type="button" value="회원가입" class="joinBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;">
+						</a>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -710,22 +726,31 @@ body, html {
 
 
 			<div class="categoryBtn">
-				<a href="/"><button type="button" class="nowBtn"
-						style="background-color: #fecc56; border-radius: 10px; height: 30px; margin-right: 10px;">
+				<a href="/">
+					<button type="button" class="nowBtn" style="background-color: #fecc56; border-radius: 10px; height: 30px; margin-right: 10px;">
 						<i class="navicon fa-solid fa-house fa-lg"></i> 전체
-					</button></a> <a href="/board/lifeInfo"><button type="button"
-						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-						<i class="fa-regular fa-lightbulb fa-lg" style="color: #3e5e40;"></i> 생활정보
-					</button></a> <a href="/board/food"><button type="button"
-						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-						<i class="fa-solid fa-utensils fa-lg" style="color: #3e5e40;"></i> 맛집/카페
-					</button></a> <a href="/board/talk"><button type="button"
-						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px; margin-right: 10px;">
-						<i class="fa-regular fa-comment-dots fa-lg" style="color: #3e5e40;"></i> 고민/이야기
-					</button></a> <a href="/board/beauty"><button type="button"
-						style="background-color: #FFB300; border-radius: 10px; border: 1px solid #FFB300; color: #3e5e40; height: 30px;">
-						<i class="fa-solid fa-shirt fa-lg" style="color: #3e5e40;"></i> 미용/패션
-					</button></a>
+					</button>
+				</a>
+				<a href="/board/lifeInfo">
+					<button type="button" class="topBtn">
+						<i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보
+					</button>
+				</a>
+				<a href="/board/food">
+					<button type="button" class="topBtn">
+						<i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페
+					</button>
+				</a>
+				<a href="/board/talk">
+					<button type="button" class="topBtn">
+						<i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기
+					</button>
+				</a>
+				<a href="/board/beauty">
+					<button type="button" class="topBtn">
+						<i class="fa-solid fa-shirt fa-lg"></i> 미용/패션
+					</button>
+				</a>
 
 			</div>
 
@@ -734,7 +759,7 @@ body, html {
 					<div class="localBanner">
 						<div class="notice">
 							<img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;"
-								height="100%;"> <img class="slideBanner" src="/resources/images/fleaMarket.jpg"
+								height="100%;"><img class="slideBanner" src="/resources/images/fleaMarket.jpg"
 								style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
 						</div>
 					</div>
@@ -764,7 +789,7 @@ body, html {
 									<div class="postUpBox">
 
 										<div class="postProfile">
-											<img class="contentProfile" src="/resources/images/user1.png" width="60px">
+											<img class="contentProfile" src="/resources/images/user1.png">
 										</div>
 
 										<div class="postInfoBox">
@@ -774,7 +799,7 @@ body, html {
 
 												<div class="profileCatagory profileInfo">
 													<!-- 카테고리에서 영어로 불러와지는걸 한글로 변환 -->
-													<button class="topBtn">
+													<button class="PostCategory">
 														<c:choose>
 															<c:when test="${i.post_category == 'lifeInfo'}">생활정보</c:when>
 															<c:when test="${i.post_category == 'food'}">맛집/카페</c:when>
@@ -841,17 +866,21 @@ body, html {
 				</div>
 
 				<div class="rightBox">
-					<img src="/resources/images/localCafe.jpg" style="border-radius: 10px;" width="298px" height="498px">
+					<img src="/resources/images/localCafe.jpg" style="border-radius: 10px;" width="100%" height="100%">
 				</div>
 
-				<a href="/board/write"><button type="button" class="writeBtn">
-						<i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i>
-					</button></a>
+				<a href="/board/write">
+					<button type="button" class="writeBtn">
+						<i class="fa-solid fa-circle-plus fa-2xl"></i>
+					</button>
+				</a>
+
+				<button type="button" class="moveTopBtn">
+					<i class="fa-solid fa-circle-arrow-up fa-2xl"></i>
+				</button>
+
 			</div>
 
-			<c:if test="${not empty list }">
-				<div class="pageBox"></div>
-			</c:if>
 		</div>
 
 		<div class="bottomBar">
@@ -894,6 +923,47 @@ body, html {
 
 
 	<script>
+		
+	// 스크롤 시 글쓰기 버튼 및 상단 이동 버튼용
+		$(function() {
+			
+		    let lastScrollTop = 0; // 마지막 스크롤 위치 저장
+		    const $writeBtn = $(".writeBtn");
+		    const $moveTopBtn = $(".moveTopBtn");
+	
+		    $(window).on("scroll", function() {
+		        let scrollTop = $(this).scrollTop();
+		        console.log(this);
+	
+		        // 1. 최상단일 때는 상단 이동 버튼 숨기기 (선택 사항)
+		        if (scrollTop <= 100) {
+		            $moveTopBtn.fadeOut();
+		            $writeBtn.fadeIn();
+		        } else {
+		            $moveTopBtn.fadeIn();
+	
+		            // 2. 스크롤 방향 감지
+		            if (scrollTop > lastScrollTop) {
+		                // [아래로 스크롤 중]
+		                // 글쓰기 버튼 숨기고 상단 이동 버튼을 글쓰기 버튼 위치로 내림
+		                $writeBtn.css("opacity", "0").css("pointer-events", "none");
+		                $moveTopBtn.removeClass("up-pos");
+		            } else {
+		                // [위로 스크롤 중]
+		                // 글쓰기 버튼 보여주고 상단 이동 버튼을 그 위로 올림
+		                $writeBtn.css("opacity", "1").css("pointer-events", "auto");
+		                $moveTopBtn.addClass("up-pos");
+		            }
+		        }
+		        lastScrollTop = scrollTop;
+		    });
+	
+		    // 상단으로 부드럽게 이동하는 기능
+		    $moveTopBtn.on("click", function() {
+		        $('html, body').animate({ scrollTop: 0 }, 400);
+		    });
+		});
+	
 		
 	    // 팝업 닫기 함수
 	    function closePopup() {
@@ -1125,46 +1195,24 @@ body, html {
 		    	});
 			});
 		
-		// 최신순 인기순 정렬
+		// 최신순 인기순 정렬( 홈에서 검색하는 것도 포함. )
         $(".sortBtn").on("click",function(){
         	
         	let currentSort = "${sort}";
-        	
-        	if(currentSort == "latest"){
-        		location.href = "/?sort=like";
-        	}else{
-        		location.href = "/?sort=latest";
-        	}
+            let keyword = "${searchKeyword}"; // home 컨트롤러에서 보낸 검색어 (없으면 빈 문자열)
+            
+            let nextSort = (currentSort == "latest") ? "like" : "latest"; // 정렬 타겟 결정
+            
+            let url = "/?sort=" + nextSort; // 이동할 기본 URL (/?sort=like 또는 /?sort=latest)
+            
+            if (keyword !== "") { // 만약 검색어가 있는 상태라면, 검색어 파라미터도 추가
+                url = "/searchByTitle?title=" + encodeURIComponent(keyword) + "&sort=" + nextSort;
+             // **encodeURIComponent : 주소창에 한글, 공백, 특수문자가 포함될 때 발생할 수 있는 오류를 방지(예: 치킨&피자 <- &같은거 오류 방지)
+            }
+            
+            location.href = url; // 검색어가 있거나 없거나, 인기순 최신순 정렬 기준으로 주소 창 이동.     
+            
         });
-		
-     	// 하단 네비게이션 바 구현
-        $(document).ready(function(){
-        let recordTotalCount = Number("${recordTotalCount}"); // 전체 게시물 수
-        let recordCountPerPage = Number("${recordCountPerPage}"); // 한 페이지에 몇 개 보여줄지
-        let naviCountPerPage = Number("${naviCountPerPage}"); //  한 번에 몇 개 페이지 번호 보여줄지
-        let currentPage = Number("${currentPage}"); // 현재 페이지
-        
-        let pageTotalCount = Math.ceil(recordTotalCount / recordCountPerPage); //  총 페이지 개수 구하기
-        
-       	let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
-        let endNavi = startNavi + naviCountPerPage - 1;
-        
-        if(endNavi > pageTotalCount) {
-        	endNavi = pageTotalCount;
-        }
-        
-        for(let i = startNavi; i <= endNavi; i++) {
-        	let navi = $("<a>");
-        	navi.attr("href", "/home?cPage="+i);
-        	navi.html(i + " ");
-        	
-        	if(i == currentPage) {
-        		navi.addClass("active");
-        	}
-        	
-        	$(".pageBox").append(navi);
-        }
-    });
      	
      	
         $(function() {
