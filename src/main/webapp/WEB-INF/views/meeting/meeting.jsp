@@ -564,7 +564,7 @@ body {
 				</div>
 			</c:forEach>
 	</div>
-
+<c:if test="${not empty navi}">
 		<div class="pageBox">
 
 			<c:if test="${navi.needPrev}">
@@ -580,6 +580,7 @@ body {
 			</c:if>
 	
 		</div>
+	</c:if>
 		
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>

@@ -44,7 +44,7 @@ public class MeetingDAO {
 	}
 	
 	public int getAllCount() {
-		String sql = "select count(*) from meeting";
+		String sql = "select count(*) from meeting where meet_status in (0,1)";
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
@@ -64,7 +64,7 @@ public class MeetingDAO {
 	}
 	
 	public int getCategoryCount(String category) {
-		String sql = "select count(*) from meeting where meet_category = ?";
+		String sql = "select count(*) from meeting where meet_category = ? and meet_status in (0,1)";
 		return jdbc.queryForObject(sql, Integer.class, category);
 	}
 	
