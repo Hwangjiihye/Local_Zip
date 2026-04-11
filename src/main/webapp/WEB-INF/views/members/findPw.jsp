@@ -272,7 +272,14 @@ input{
 		    transform: translateY(5px);
 		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
 		}
-		
+		.correct{
+			color: #286708;
+			margin-top: 5px;
+		}
+		.incorrect{
+			color: #de4f28;
+			margin-top: 5px;
+		}
 </style>
 </head>
 
