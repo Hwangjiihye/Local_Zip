@@ -388,6 +388,52 @@ img{
  	 font-size:15px;
  } 
  
+ .writer{
+ 	display:flex;
+ 	gap:20px;
+ }
+ 
+ .reports{
+ 	font-size:15px;
+ 	background-color: #F2D3A2;
+ 	padding-left: 10px;
+ }
+ 
+ .reportsId{
+ 	border-top-left-radius: 10px;
+ 	border-top-right-radius: 10px;
+ 	padding-top: 10px;
+ }
+ .reportsReason{
+ 	border-bottom-left-radius: 10px;
+ 	border-bottom-right-radius: 10px;
+ 	padding-bottom: 10px;
+ }
+ 
+ .reportTitle{
+ 	font-weight:bold;
+ 	font-size: 18px;
+ 	padding-top:5px;
+ 	padding-left: 10px;
+ }
+ .reportContents{
+ 	font-size:15px;
+ 	padding: 13px 0 10px 10px;
+ 	white-space: pre-wrap;
+ }
+ 
+ hr{
+ 	margin-top:20px;
+ 	width: 98%;
+ 	border: none;
+ 	height:1px;
+ 	background: #5e361a;
+ }
+ 
+ .sirenImg{
+	width: 16.67px;
+	height: 16.10px;
+}
 </style>
 </head>
 
@@ -429,19 +475,25 @@ img{
 							<div class="postBox" data-group_seq="${i.target_seq}" data-target_id="${i.target_id}">
 					        	<div class="postHeader">
 					       			<div class="reportWriter">
-					           			<div class="writer"> 카테고리 statsu값 : ${status} / 신고처리값 : ${i.reports_status} : 신고자: ${i.mem_id}</div> 
-					           			<div class="writeData">신고 시간 : ${i.reports_date}</div> 
+					           			<div class="writer"><div>신고자 : ${i.mem_id}</div><div>(신고 시간 : ${i.reports_date})</div></div>
+					           			<div class="writeData">신고 대상 종류 : ${i.target_type_name}</div>
 					        		</div>
 					        	</div>
 			        			<div class="postBody">
 			            			<div class="rowItem2">
 						                <div class="reportReason">
-						                	신고 대상 SEQ :${i.target_seq} , 
-						                	신고 대상 종류 : ${i.target_type_name} ,
-						                	신고 대상 ID : ${i.target_id} ,
-						                	신고 내용 : ${i.target_content} ,
-						                	신고 사유 : ${i.reports_reason}
-						                </div>
+						                <div class="reports reportsId">신고 대상 ID : ${i.target_id}</div>
+								           <div class="reports reportsReason"> 
+									           <c:choose>
+									               	<c:when test="${i.reports_reason == 'badContents'}">신고 사유 : 부적절한 컨텐츠</c:when>
+									                <c:when test="${i.reports_reason == 'badWord'}">신고 사유 : 욕설/비방</c:when>
+									                <c:when test="${i.reports_reason == 'AD'}">신고 사유 : 광고/스팸</c:when>
+								                </c:choose>
+							                </div>
+						                <hr>
+						                <div class="reportTitle"><img src="/resources/images/sirenImg.png" class="sirenImg"> 내용</div>
+						                <div class="reportContents">${i.target_content}</div>
+						                 </div>
 			            			</div>
 			        			</div>
 				        		<c:choose>
@@ -549,44 +601,20 @@ img{
 				$(".pageNum").append(next);
 			}
 				
-				// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
-				$(function(){
-				    $(".filterBtn.allbtn").addClass("nowBtn");
-			    });
-				
-				
+			// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
+			$(function(){
+			    $(".filterBtn.allbtn").addClass("nowBtn");
+		    });
 			
-				$(document).on("click", ".filterBtn", function(){
-				 	// 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
-				    $(".filterBtn").removeClass("nowBtn");
-				 	// 2. 클릭한 버튼에만 활성화 클래스 추가
-				    $(this).addClass("nowBtn");
-				});
+			
+		
+			$(document).on("click", ".filterBtn", function(){
+			 	// 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
+			    $(".filterBtn").removeClass("nowBtn");
+			 	// 2. 클릭한 버튼에만 활성화 클래스 추가
+			    $(this).addClass("nowBtn");
+			});
 				
-			    
-// 				currentPage = 1; // 전체/미처리/처리완료 버튼 누를 때 마다 1page 고정
-// 				if(status == "all"){ // 전체
-// 					recordTotalCount = ${allCount}
-// 				}else if(status == "4"){ // 미처리
-// 					recordTotalCount = ${count}
-// 				}else if(status == "3"){ // 처리완료
-// 					recordTotalCount = ${handleCount}
-// 				}
-				
-// 			    $.ajax({
-// 					url : "/admin/getReportList",
-// 					type : "get",
-// 					data : {
-// 						status : status,
-// 						cpage : currentPage
-// 					},
-// 					dataType : "json",
-// 					success : function(resp){
-// 						drawreportList(resp.list);
-// 						drawPagination();
-// 					}
-// 				});
-// 			});
 			
 			// 블랙리스트 버튼을 눌렀을 때
 			$(document).on("click", ".blackOnBtn",  function(){

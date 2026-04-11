@@ -398,22 +398,12 @@ public class AdminController {
 		if(list == null || list.isEmpty()) {
 			// members table mem_status 업데이트
 			dao.updateMemberStatus(mem_status, target_id);
-			System.out.println("블랙등록: 멤버테이블 status 업데이트 로직 작동함");
-			System.out.println("===================================================");
-			
 			dao.insertBlackList(target_id, black_option, banDays);
-			System.out.println("블랙등록: 블랙리스트 insert 로직 작동함");
-			System.out.println("===================================================");
 		}else{
 			dao.updateBlackEndDate(banDays, target_id);
-			System.out.println("블랙등록: 블랙리스트 endDate update 로직 작동됨.");
-			System.out.println("===================================================");
 		}
 		// 블랙리스트 등록 시 reports 테이블 status 업데이트
 		dao.updateReportsStatus(reports_status, target_id, target_seq);
-		System.out.println("블랙등록: reports status 업데이트 작동함.");
-		System.out.println("블랙등록: reports 상태 업데이트값 : "+ reports_status + "target_id : " + target_id + "target_seq : " + target_seq);
-		System.out.println("===================================================");
 		return "success";
 	}
 	
@@ -423,16 +413,8 @@ public class AdminController {
 	public String blackOff(int mem_status, int reports_status, String target_id) {
 		
 		dao.deleteMembersStatus(mem_status, target_id); // 블랙리스트 해제 (membersTable status 업데이트) 로직
-		System.out.println("블랙해제: 멤버테이블 status 업데이트 로직 작동함");
-		System.out.println("===================================================");
-		
 		dao.deleteBlackList(target_id); // 블랙리스트 정지시작/종료일수 비우기 (blackList Table) 로직
-		System.out.println("블랙해제: 블랙리스트 endDate 비우기 로직 작동함");
-		System.out.println("===================================================");
-		
 		dao.updateReportStatus(reports_status, target_id); // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
-		System.out.println("블랙해제: 블랙리스트 status 비우기 로직 작동함");
-		System.out.println("===================================================");
 		
 		return "success";
 	}

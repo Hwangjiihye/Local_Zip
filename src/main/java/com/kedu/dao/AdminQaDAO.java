@@ -218,7 +218,7 @@ public class AdminQaDAO {
 	
 	public List<ReportDTO> selectReportContentsByStatus(int status, int start, int end){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (미처리건들 출력)
 		String sql = "select * from( "
-				+ "select row_number() over(order by r.reports_date desc) as rn, "
+				+ "select row_number() over(order by r.reports_date) as rn, "
 				+ "r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq,  r.reports_status, r.reports_seq, "
 				+ "coalesce(p.post_contents, reply.reply_contents, m.meet_introcontents, '원문 삭제됨(번호:' || r.target_seq || ')') as target_content, "
 				+ "case "
@@ -234,7 +234,7 @@ public class AdminQaDAO {
 	
 	public List<ReportDTO> selectReportContentsByStatusHandle(int start, int end){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (처리완료건들 출력)
 		String sql = "select * from( "
-				+ "select row_number() over(order by r.reports_date desc) as rn, "
+				+ "select row_number() over(order by r.reports_status) as rn, "
 				+ "r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq,  r.reports_status, r.reports_seq, "
 				+ "coalesce(p.post_contents, reply.reply_contents, m.meet_introcontents, '원문 삭제됨(번호:' || r.target_seq || ')') as target_content, "
 				+ "case "
