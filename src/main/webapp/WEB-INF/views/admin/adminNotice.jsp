@@ -434,7 +434,7 @@ img{
 				<a href="/admin/adminBlackList?cpage=1&status=all"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}"> 
 					<img src="/resources/images/adminSiren.png"></img> 신고관리
 				</button></a>
-				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
+				<a href="/admin/adminQA?cpage=1&status=all"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>
 				<a href="/admin/toAdminNotice"><button class="categoryBtnAll ${menu == 'notice' ? 'nowBtn' : ''}">

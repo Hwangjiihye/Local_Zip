@@ -80,122 +80,33 @@ public class AdminQaDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
-	public List<QaDTO> selectAllByPage(int cpage){
-		int recordCountPerPage = 10;
-
-		int start = cpage * recordCountPerPage - (recordCountPerPage - 1);
-		int end = cpage * recordCountPerPage;
-
+	public List<QaDTO> selectAllCount(int start, int end){ // 전체 cpage
 		String sql = "select * from ("
 				+ "    select row_number() over(order by qa_seq desc) rnum, q.* "
 				+ "    from qa q"
 				+ ") where rnum between ? and ?";
 
-		return jdbc.query(sql, new BeanPropertyRowMapper<>(QaDTO.class), start, end);
+		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class), start, end);
 	}
-	
-	public List<QaDTO> selectByStatusByPage(int status, int cpage){
-		int recordCountPerPage = 10;
 
-		int start = cpage * recordCountPerPage - (recordCountPerPage - 1);
-		int end = cpage * recordCountPerPage;
-
+	public List<QaDTO> selectByAdminAnswerWait(int start, int end){ // qa 답변대기 목록 출력
 		String sql = "select * from ("
-				+ "    select row_number() over(order by qa_seq desc) rnum, q.* "
-				+ "    from qa q where qa_status = ?"
+				+ "    select row_number() over(order by qa_seq) rnum, q.* "
+				+ "    from qa q where qa_status = 0"
 				+ ") where rnum between ? and ?";
 
-		return jdbc.query(sql, new BeanPropertyRowMapper<>(QaDTO.class), status, start, end);
+		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class), start, end);
 	}
 	
-	public Map<String, Object> getPageNaviAll(int cpage){
+	public List<QaDTO> selectByAdminAnswerFinish(int start, int end){ // qa 답변완료 목록 출력
+		String sql = "select * from ("
+				+ "    select row_number() over(order by qa_seq desc) rnum, q.* "
+				+ "    from qa q where qa_status = 1"
+				+ ") where rnum between ? and ?";
 
-		int recordCountPerPage = 10;
-		int naviCountPerPage = 10;
-
-		int recordTotalCount = getAllCount();
-		int pageTotalCount = 0;
-
-		if(recordTotalCount % recordCountPerPage > 0){
-			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
-		}else{
-			pageTotalCount = recordTotalCount / recordCountPerPage;
-		}
-
-		if(cpage < 1) cpage = 1;
-		if(cpage > pageTotalCount) cpage = pageTotalCount;
-
-		int startNavi = ((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
-		int endNavi = startNavi + (naviCountPerPage - 1);
-
-		if(endNavi > pageTotalCount){
-			endNavi = pageTotalCount;
-		}
-
-		boolean needPrev = true;
-		boolean needNext = true;
-
-		if(startNavi == 1){
-			needPrev = false;
-		}
-		if(endNavi == pageTotalCount){
-			needNext = false;
-		}
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("cpage", cpage);
-		map.put("startNavi", startNavi);
-		map.put("endNavi", endNavi);
-		map.put("needPrev", needPrev);
-		map.put("needNext", needNext);
-
-		return map;
+		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class),start, end);
 	}
-	
-	public Map<String, Object> getPageNaviByStatus(int status, int cpage){
 
-		int recordCountPerPage = 10;
-		int naviCountPerPage = 10;
-
-		int recordTotalCount = getCountByStatus(status);
-		int pageTotalCount = 0;
-
-		if(recordTotalCount % recordCountPerPage > 0){
-			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
-		}else{
-			pageTotalCount = recordTotalCount / recordCountPerPage;
-		}
-
-		if(cpage < 1) cpage = 1;
-		if(cpage > pageTotalCount) cpage = pageTotalCount;
-
-		int startNavi = ((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
-		int endNavi = startNavi + (naviCountPerPage - 1);
-
-		if(endNavi > pageTotalCount){
-			endNavi = pageTotalCount;
-		}
-
-		boolean needPrev = true;
-		boolean needNext = true;
-
-		if(startNavi == 1){
-			needPrev = false;
-		}
-		if(endNavi == pageTotalCount){
-			needNext = false;
-		}
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("cpage", cpage);
-		map.put("startNavi", startNavi);
-		map.put("endNavi", endNavi);
-		map.put("needPrev", needPrev);
-		map.put("needNext", needNext);
-
-		return map;
-	}
-	
 	public List<ReportDTO> selectReportAll(){ // 신고 목록 출력 메서드
 		String sql = "select * from reports";
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));

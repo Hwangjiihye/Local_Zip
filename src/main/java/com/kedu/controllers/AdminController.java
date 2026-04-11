@@ -59,57 +59,60 @@ public class AdminController {
 		return "admin/admin";
 	}
 	
-	@RequestMapping("/adminQA")
-	public String adminQA(Model model, HttpSession session) {
+	@RequestMapping("/adminQA") // 고객지원 페이지 진입
+	public String adminQA(String status, int cpage, Model model, HttpSession session) {
 		
-		List<QaDTO> list = dao.selectById();
-		model.addAttribute("list", list);
-		
-		int qaCount = dao.qaCount();
-		int qaDoneCount = dao.qaDoneCount();
-		int qaAllCount = dao.qaAllCount();
+		int recordCountPerPage = 10;
+	    int start = cpage * recordCountPerPage - (recordCountPerPage - 1);
+	    int end = cpage * recordCountPerPage;
 
-		session.setAttribute("qaCount", qaCount);
-		session.setAttribute("qaDoneCount", qaDoneCount);
-		session.setAttribute("qaAllCount", qaAllCount);
-		
-		model.addAttribute("menu", "qa");
-		
-		return "admin/adminQ&A";
-	}
+	    List<QaDTO> list;
+	    int recordTotalCount;
 
-	@ResponseBody
-	@RequestMapping("/qaList")
-	public Map<String, Object> qaList(String status, int cpage){
-		
-		Map<String, Object> resp = new HashMap<>();
-		
-		List<QaDTO> list;
-		Map<String, Object> pageNavi;
-		
-		
-		if("all".equals(status)) {
-			list = dao.selectAllByPage(cpage);
-			pageNavi = dao.getPageNaviAll(cpage);
-		}else {
-			int qaStatus = Integer.parseInt(status);
-			list = dao.selectByStatusByPage(qaStatus, cpage);
-			pageNavi = dao.getPageNaviByStatus(qaStatus, cpage);
-		}
-		resp.put("list", list);
-		resp.put("pageNavi", pageNavi);
+	    int qaCount = dao.qaCount();
+	    int qaDoneCount = dao.qaDoneCount();
+	    int qaAllCount = dao.qaAllCount();
 
-		return resp;
+	    if("0".equals(status)){ // qa 답변대기 목록
+	        list = dao.selectByAdminAnswerWait(start, end);
+	        recordTotalCount = qaCount;
+
+	    } else if("1".equals(status)){ // qa 답변완료 목록
+	        list = dao.selectByAdminAnswerFinish(start, end);
+	        recordTotalCount = qaDoneCount;
+
+	    } else { // qa 전체 목록
+	        list = dao.selectAllCount(start, end);
+	        recordTotalCount = qaAllCount;
+	    }
+	    
+		model.addAttribute("menu" , "qa");
+	    model.addAttribute("list", list);
+	    
+	    model.addAttribute("qaCount", qaCount);
+	    model.addAttribute("qaDoneCount", qaDoneCount);
+	    model.addAttribute("qaAllCount", qaAllCount);
+
+	    model.addAttribute("recordTotalCount", recordTotalCount);
+	    model.addAttribute("recordCountPerPage", 10);
+	    model.addAttribute("naviCountPerPage", 10);
+	    model.addAttribute("currentPage", cpage);
+	    model.addAttribute("status", status);
+	    
+	    session.setAttribute("currentPage", cpage);
+	    session.setAttribute("status", status);
+	    
+	    return "admin/adminQ&A";
 	}
 	
 	@RequestMapping("/answer")
-	public String answer(QaDTO dto, int qa_seq, HttpSession session) {
+	public String answer(QaDTO dto, int qa_seq, HttpSession session,int cpage,String status) {
 		
 		String adminId = (String) session.getAttribute("loginId");
+	    
 	    dto.setMem_admin_id(adminId);
 	    dao.updateReply(dto, qa_seq);
-	    
-		return "redirect:/admin/adminQA";
+		return "redirect:/admin/adminQA?cpage=" + cpage + "&status=" + status;
 	}
 	
 	@ResponseBody
@@ -348,17 +351,13 @@ public class AdminController {
 		if("3".equals(status)) { // 처리완료건들 출력 ( 3 : 블랙리스트 처리 완료 / 5: 블랙리스트 해제 처리 완료 )
 			dto = dao.selectReportContentsByStatusHandle(start,end);
 			recordTotalCount = handleCount;
-			System.out.println("처리완료건 : " + status);
 		}else if("4".equals(status)) { // 미처리건들 출력
 			int reportStatus = Integer.parseInt(status);
 			dto = dao.selectReportContentsByStatus(reportStatus, start, end);
 			recordTotalCount = count;
-			
-			System.out.println("미처리완료 : " + status);
 		}else{ // 전체
 			dto = dao.selectReportContents(start, end);
 			recordTotalCount = allCount;
-			System.out.println("전체 : " + status);
 		}
 		
 		// 페이지 시작

@@ -301,7 +301,7 @@ img{
 				<a href="/admin/adminBlackList?cpage=1&status=all"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}" type="button">
 					<img src="/resources/images/adminSiren.png"></img> 신고관리
 				</button></a>
-				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}" type="button">
+				<a href="/admin/adminQA?cpage=1&status=all"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}" type="button">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>
 				<a href="/admin/toAdminNotice?cPage=1"><button class="categoryBtnAll ${menu == 'notice' ? 'nowBtn' : ''}" type="button">
