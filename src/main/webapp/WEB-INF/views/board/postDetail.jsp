@@ -878,7 +878,7 @@ hr {
 		    		Swal.fire({
                         icon: "error",
                         title: "Fail !",
-                        text: "삭제할 수 없습니다.",
+                        text: "신고된 게시물은 삭제할 수 없습니다.",
                         iconColor: "#EB0000",
                         confirmButtonColor: "#FFB300"
                     });
@@ -1256,7 +1256,7 @@ hr {
         	
         	Swal.fire({
                 title: "정말 삭제하시겠습니까?",
-                text: "신고된 댓글은 삭제가 불가합니다",
+                text: "삭제 후에는 복구할 수 없습니다.",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#FFB300",
@@ -1276,7 +1276,7 @@ hr {
 		        			Swal.fire({
 		                        icon: "error",
 		                        title: "Fail !",
-		                        text: "삭제가 불가합니다.",
+		                        text: "신고된 댓글은 삭제가 불가합니다.",
 		                        iconColor: "#EB0000",
 		                        confirmButtonColor: "#FFB300"
 		                    });

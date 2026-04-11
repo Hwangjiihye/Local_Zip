@@ -346,7 +346,7 @@ public class BoardController {
 	public String deletePost(int post_seq) {
 		
 		int count = rdao.reportDeleteBlock(post_seq);
-		
+		System.out.println(count);
 		if(count > 0) {
 			return "fail";
 		}

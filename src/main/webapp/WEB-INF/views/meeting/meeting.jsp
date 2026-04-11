@@ -524,7 +524,7 @@ body {
 					
 					<div class="info">	
 						<div class="location">📍 ${i.mem_address1}</div>	
-						<div class="count">👥 ${i.meet_currentpeople}</div>
+						<div class="count">👥 ${i.meet_maxpeople}</div>
 					</div>
 
 					<div class="card-footer">
