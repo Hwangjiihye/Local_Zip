@@ -262,7 +262,7 @@
 	<div class="container">
 		<div class="headBox">건의사항 작성</div>
 
-		<form action="/feedback/feedbackInsert" method="post" class="frm">
+		<form action="/feedback/feedbackInsert" method="post" class="frm" enctype="multipart/form-data">
 			<div class="writeDetail">
 				<div class="titleDiv">
 					<div class="title">제목</div>
@@ -277,7 +277,7 @@
 						첨부파일 <i class="fa-solid fa-file-circle-plus fa-sm"></i>
 					</div>
 					<div class="fileDetail">
-						<input class="fileBtn" type="file" name="files" multiple>
+						<input class="fileBtn" type="file" name="files" accept="image/*" multiple>
 					</div>
 				</div>
 	
@@ -296,8 +296,26 @@
     	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 	</div>
 	<script>
+		//파일이 비어있거나 잘못된 파일형식을 올렸을때 alert
+		$(".fileBtn").on("change", function() {
+	    let file = this.files[0];	
+
+	    // 1. MIME 타입 체크 (가장 권장)
+	    if (!file.type.match("image.*")) {
+	        Swal.fire({
+				icon: "info",
+				title: "Wait  !",
+				text: "이미지 파일만 업로드 가능합니다!",
+				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300"
+			});
+	        $(this).val(""); // 선택된 파일 초기화
+	        return;
+	    }
+		});
 		// 제목, 내용 빈칸 일시, alert 띄움
 		$(".frm").on("submit", function(){
+			
 			
 			if($(".inputBox").val() == "") {
 				Swal.fire({
