@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>myPosts</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -447,7 +447,7 @@ button, body {
 		// 게시글 목록을 눌렀을때, => postDetail.jsp 이동 시.
 		$(document).on("click", ".postBox", function(e) {
 		    let post_seq = $(this).data("seq");
-		    location.href = "/board/postDetail?post_seq=" + post_seq + "&from=myPosts";
+		    location.href = "/board/postDetail?post_seq=" + post_seq + "&cPage=${cPage}&from=myPosts";
 		});
 		
 		

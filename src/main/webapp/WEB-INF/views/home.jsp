@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -306,45 +306,40 @@ body, html {
 
 /*  ----------------------------------------------------------------------------------게시글       */
 .postBox {
-	/* 수정: 고정 1500px 제거 */
 	width: 95%;
 	max-width: 1500px;
-	/* 적당히 보기 좋은 최대 너비 설정 */
 	min-height: 200px;
 	height: auto;
 	margin: auto;
-/* 	margin-top: 30px; */
 	margin-bottom: 30px;
 	border-radius: 10px;
-	/*  border: 2px solid #A66A3F; */
-	/* 그림자 효과 */
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .postUpBox {
 	width: 100%;
-	height: 95px;
-	display: flex;
-	border-radius: 10px 10px 0 0;
-	background-color: #F2D3A2;
+    height: 95px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border-radius: 10px 10px 0 0;
+    background-color: #F2D3A2;
 }
 
 .postProfile {
 	width: 75px;
-	height: 75px;
-	position: relative;
-	top: 10px;
-	left: 10px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .postInfoBox {
-	width: 300px;
-	min-height: 50px;
-	position: relative;
-	left: 20px;
-	top: 23px;
-	flex-grow: 1;
-	/* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
+    margin-left: 15px;
+    flex-grow: 1; /* 남은 공간 다 차지 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .postInfoUp, .postInfoDown {
@@ -354,8 +349,6 @@ body, html {
 .profileInfo {
 	width: auto;
 	margin-right: 15px;
-	/* 정보 사이의 간격 일정하게 부여 */
-	/*수직 정렬*/
 	display: flex;
 	align-items: center;
 	font-size: 14px;
@@ -364,15 +357,11 @@ body, html {
 
 /* 신고 영역 스타일 */
 .reportArea {
-	position: relative;
-	top: 10px;
-	right: 12px;
 	display: flex;
-	flex-direction: column;
-	/* 아이콘과 선택창을 세로로 배치 */
-	align-items: flex-end;
-	/* 오른쪽 정렬 */
-	gap: 5px;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center; /* 세로 중앙 */
+    margin-left: 10px;
 }
 
 .reportIcon {
@@ -544,11 +533,10 @@ body, html {
 }
 
 .contentProfile {
-	margin-top: 4px;
-	width: 80px;
-	height: 80px;
-	border-radius: 70%;
-	object-fit: cover;
+	width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .popup-overlay {
@@ -801,7 +789,7 @@ a{
 									<div class="postUpBox">
 
 										<div class="postProfile">
-											<img class="contentProfile" src="/resources/images/user1.png" width="60px">
+											<img class="contentProfile" src="/resources/images/user1.png">
 										</div>
 
 										<div class="postInfoBox">

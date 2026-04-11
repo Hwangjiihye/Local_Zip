@@ -162,11 +162,6 @@ public class BoardDAO {
 	//----------------------------------------------------------------------
 
 	//게시글 상세 내용 출력
-//	public BoardDTO selectByPost_seq(int post_seq) throws Exception{
-//		String sql = "select * from post where post_seq = ?";
-//		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),post_seq);
-//	}
-	
 	public BoardDTO selectByPost_seq(int post_seq) throws Exception{
 		String sql = "select p.*, " +
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count " +
@@ -245,6 +240,38 @@ public class BoardDAO {
 		String sql = "select count(*) from post_like where mem_id = ?";
 		return jdbc.queryForObject(sql, Integer.class, mem_id);
 	}
+	
+	// 아래 작성글/관심글은 네비게이터 용도로 만듬. ---------
+	
+	// 내 작성글 리스트 뽑아오기
+	public List<BoardDTO> getPostsNavi(String mem_id,int start, int end){
+		String sql = "SELECT * FROM (SELECT post.*, ROW_NUMBER() OVER (ORDER BY post_date DESC) a FROM post where mem_id = ?) WHERE a BETWEEN ? AND ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id,start,end);
+	}
+	
+	// 내 작성글 개수 세기
+	public int getTotalPosts(String mem_id) {
+		String sql = "select count(*) from post where mem_id = ?";
+		return jdbc.queryForObject(sql, Integer.class, mem_id);
+	}
+	
+	// 내 관심글 리스트 뽑아오기
+	public List<BoardDTO> getLikesNavi(String mem_id,int start, int end){
+		String sql = "SELECT * FROM ("
+	               + "    SELECT p.*, 1 as post_like_check, " // 하트를 눌렀는지 안눌렀는지 체크하는 코드
+	               + "    ROW_NUMBER() OVER (ORDER BY l.like_date DESC) a " // 좋아요 누른 순서로 정렬 권장
+	               + "    FROM post p "
+	               + "    JOIN post_like l ON p.post_seq = l.post_seq "
+	               + "    WHERE l.mem_id = ?"
+	               + ") WHERE a BETWEEN ? AND ?";
+	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), mem_id, start, end);
+	}
+	
+	// 내 관심글 개수 세기
+	public int getTotalLikes(String mem_id) {
+		String sql = "select count(*) from post_like where mem_id = ?";
+		return jdbc.queryForObject(sql, Integer.class, mem_id);
+	}
 
 	//----------------------------------------------------
 	
@@ -271,7 +298,6 @@ public class BoardDAO {
 			String sql = "select count(*) from post where post_category = 'beauty'";
 			return jdbc.queryForObject(sql, Integer.class);
 	}
-
 
 	// 홈에서 제목(포함)으로 검색한 게시글 목록 출력용 메서드
 		public List<BoardDTO> searchByTitle(String mem_id, String title, String sort) {
@@ -301,101 +327,11 @@ public class BoardDAO {
 		    return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), mem_id, "%" + title + "%");
 		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	public int getNextval() {
-		String sql = "SELECT post_seq.NEXTVAL FROM DUAL";
-		return jdbc.queryForObject(sql, Integer.class);
-	}
+		
+		public int getNextval() {
+			String sql = "SELECT post_seq.NEXTVAL FROM DUAL";
+			return jdbc.queryForObject(sql, Integer.class);
+		}
 	
-	
-	// 내 작성글 리스트 뽑아오기
-	public List<BoardDTO> getPostsNavi(String mem_id,int start, int end){
-		String sql = "SELECT * FROM (SELECT post.*, ROW_NUMBER() OVER (ORDER BY post_date DESC) a FROM post where mem_id = ?) WHERE a BETWEEN ? AND ?";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id,start,end);
-	}
-	
-	// 내 작성글 개수 세기
-	public int getTotalPosts(String mem_id) {
-		String sql = "select count(*) from post where mem_id = ?";
-		return jdbc.queryForObject(sql, Integer.class, mem_id);
-	}
-	
-	// 내 관심글 리스트 뽑아오기
-	public List<BoardDTO> getLikesNavi(String mem_id,int start, int end){
-		// 1. likes 테이블(L)과 post 테이블(P)을 조인합니다.
-	    // 2. 내 아이디(L.mem_id)가 좋아요 한 글만 뽑습니다.
-	    // 3. 최신순으로 정렬 후 번호(a)를 매깁니다.
-		String sql = "SELECT * FROM ("
-	               + "    SELECT p.*, 1 as post_like_check, " // 하트를 눌렀는지 안눌렀는지 체크하는 코드
-	               + "    ROW_NUMBER() OVER (ORDER BY l.like_date DESC) a " // 좋아요 누른 순서로 정렬 권장
-	               + "    FROM post p "
-	               + "    JOIN post_like l ON p.post_seq = l.post_seq "
-	               + "    WHERE l.mem_id = ?"
-	               + ") WHERE a BETWEEN ? AND ?";
-	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), mem_id, start, end);
-	}
-	
-	// 내 관심글 개수 세기
-	public int getTotalLikes(String mem_id) {
-		String sql = "select count(*) from post_like where mem_id = ?";
-		return jdbc.queryForObject(sql, Integer.class, mem_id);
-	}
 	
 }
