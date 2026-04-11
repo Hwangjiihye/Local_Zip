@@ -289,6 +289,7 @@
 	            <input type="hidden" id="input_address1" name="mem_address1">
 	            <input type="hidden" id="input_address2" name="mem_address2">
 	            <input type="hidden" id="input_dong" name="mem_dong" value="${mem_dong}">
+	            <input type="hidden" id="origin_dong" value="${list.mem_dong}">
 	            <input type="hidden" id="mem_id" name="mem_id" value="${loginId}">
 	            
 	            <div class="btnDiv">
@@ -304,6 +305,7 @@
     </div>
     
     <script>
+    	let origin_dong = "${list.mem_dong}";
     	let nickname = $(".nickname").html();
     	let phone = $(".phone").html();
     	let zip_code = $(".zonecode").html();
@@ -471,12 +473,15 @@
 					return false;
 				}
 				
+				if($("#input_dong").val().trim() == ""){
+					$("#input_dong").val(origin_dong);
+				};
+				
 	            $("#input_nickname").val($(".nickname").text().trim());
 	            $("#input_phone").val($(".phone").text().trim());
 	            $("#input_zip_code").val($(".zonecode").text().trim());
 	            $("#input_address1").val($(".address1").text().trim());
 	            $("#input_address2").val($(".address2").text().trim());
-	            $("#input_dong").val($("#input_dong").val().trim());
 	            
 	            this.submit();
 		})
