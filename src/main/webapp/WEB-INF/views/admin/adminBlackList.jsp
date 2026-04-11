@@ -638,20 +638,24 @@ img{
 						day : day
 					},
 					success : function(resp){
-						alert(target_id + "님을 블랙리스트에 등록했습니다.");
-						
-// 						btn.hide();
-// 						btn.siblings(".reportCheckBtn").hide();
-// 						btn.closest(".postBox").find(".endOption").hide();
-// 						btn.siblings(".blackOffBtn").show();
-						
-						if(currentStatus == 'all'){
-							let completeBtn = $('<button class="offBtn blackOffBtn" data-target_id="${i.target_id}">해제</button>');
+						if(resp == "fail"){
+							alert("관리자는 블랙리스트로 등록할 수 없습니다.")
+						}else if(resp == "success"){
+							alert(target_id + "님을 블랙리스트에 등록했습니다.");
 							
-							target_box.find(".reportAndBlackBtn").html(completeBtn);
-							target_box.find(".endDiv").hide();
-						}else{
-							target_box.remove();
+//	 						btn.hide();
+//	 						btn.siblings(".reportCheckBtn").hide();
+//	 						btn.closest(".postBox").find(".endOption").hide();
+//	 						btn.siblings(".blackOffBtn").show();
+							
+							if(currentStatus == 'all'){
+								let completeBtn = $('<button class="offBtn blackOffBtn" data-target_id="${i.target_id}">해제</button>');
+								
+								target_box.find(".reportAndBlackBtn").html(completeBtn);
+								target_box.find(".endDiv").hide();
+							}else{
+								target_box.remove();
+							}
 						}
 					}
 				});

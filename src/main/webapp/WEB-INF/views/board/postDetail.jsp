@@ -855,9 +855,14 @@ hr {
 		        url: "/board/deletePost",
 		        data: { post_seq: postSeq },
 		        type: "post"
-		    }).done(function(){
-		    	alert("삭제 완료!");
- 		        location.href = "/";
+		    }).done(function(resp){
+		    	if(resp == "fail"){
+		    		alert("삭제 불가");
+		    		return;
+		    	}else{
+		    		alert("삭제 완료!");
+ 		        	location.href = "/";
+		    	}
 		    });
 		});
 		
@@ -891,6 +896,7 @@ hr {
 		    
 		});
 		
+		
 		// 파일 눌렀을때 다운로드 
 		$(".fileName").on("click",function(){
 			let sys_name = $(this).data("sys");
@@ -899,13 +905,14 @@ hr {
 		})
 		
 		// 댓글 목록 출력해오는 ajax -> 이름있는 함수로 만들고 밑에서 익명함수로 최초 실행
+		
 		function loadReplyList(){
 			$.ajax({
 				url:"/board/replyList",
 				dataType:"json",
 				data: { post_seq: postSeq }
 			}).done(function(resp){
-				
+				console.log(resp);
 				$(".replyUpBox, .hr").remove(); // 기존 댓글 목록 비우기,(새로 등록된 것까지 포함해서 다시 그려야 하므로)
 				
 				for(let i of resp){ // 댓글 for문 돌리면서 뽑기.
@@ -943,6 +950,11 @@ hr {
 							);
 							btnDiv.append(replyEditDiv, replyEditCompleteDiv);
 							replyInfoUp.append(btnDiv);
+						}else if(i.mem_role == 0){
+							console.log("role" , i.mem_role);
+							console.log("loginId", loginId);
+							console.log("loginId:", loginId);
+							console.log("댓글 작성자:", i.mem_id);
 						}else{
 							let reportArea = $("<div>").addClass("reportArea");
 							let reportIcon = $("<img>").addClass("reportIcon");
@@ -954,7 +966,7 @@ hr {
 							});
 							let reportSelect = $("<select>").addClass("reportSelect")
 							reportSelect.append(
-								$("<option>").html("신고 사유"),
+								$("<option disabled selected>").html("신고 사유"),
 								$("<option>").addClass("reportOption").html("부적절한 콘텐츠").val("badContents"),
 								$("<option>").addClass("reportOption").html("욕설/비방").val("badWord"),
 								$("<option>").addClass("reportOption").html("광고/스팸").val("AD")
@@ -1032,10 +1044,11 @@ hr {
 			
 		    let btn = $(this); // 클릭한 버튼(신고하기)
 		    let target_id = btn.attr("data-target_id"); // 작성자의 id값 가져오기
-		    let tatget_seq = btn.attr("data-target_seq"); // 댓글 번호
+		    let target_seq = btn.attr("data-target_seq"); // 댓글 번호
 		    let reports_type = 1; // 신고 종류(댓글)
 		    let report_reason = btn.siblings(".reportSelect").val(); // 선택한 신고 사유 값 저장.
-
+			
+		    
 		    if(!report_reason) {
 		        alert("신고 사유를 선택해주세요.");
 		        return;
@@ -1047,7 +1060,7 @@ hr {
 		            type: "post",
 		            data: {
 		            	target_id: target_id,
-		                target_seq: tatget_seq,
+		                target_seq: target_seq,
 		                reports_type: reports_type,
 		                reports_reason: report_reason
 		            },
@@ -1059,6 +1072,10 @@ hr {
 				            btn.siblings(".reportSelect").hide();
 		            	}else if(resp == "fail"){
 		            		alert("이미 신고한 댓글입니다.");
+		            		btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
+				            btn.siblings(".reportSelect").hide();
+		            	}else if(resp == "adminFail"){
+		            		alert("관리자의 댓글은 신고가 불가합니다.");
 		            		btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
 				            btn.siblings(".reportSelect").hide();
 		            	}
@@ -1154,9 +1171,11 @@ hr {
         	$.ajax({
         		url: "/reply/deleteReply",
         		data: {reply_seq : reply_seq}
-        	}).done(function(){
+        	}).done(function(resp){
         		if(!confirm("정말로 삭제하시겠습니까?")){
         			return;
+        		}else if(resp == "fail"){
+        			alert("삭제가 불가합니다.")
         		}else{
         			alert("삭제가 완료되었습니다!")
         		}
