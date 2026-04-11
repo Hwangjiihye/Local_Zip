@@ -21,9 +21,15 @@ public class AttachmentDAO {
 		return jdbc.update(sql,dto.getParent_type(),dto.getParent_seq(),dto.getAttach_oriname(),dto.getAttach_sysname());
 	}
 	
-	//list 받기
+	//board에서 list 받기
 	public List<AttachmentDTO> getAttachment(int seq){
 		String sql = "SELECT * FROM ATTACHMENT WHERE PARENT_SEQ=?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<AttachmentDTO>(AttachmentDTO.class),seq);
+	}
+	
+	//feedback에서 list 받기
+	public List<AttachmentDTO> getAttachmentSuggestion(int seq){
+		String sql = "SELECT * FROM ATTACHMENT WHERE PARENT_SEQ=? AND PARENT_TYPE='feedback'";
 		return jdbc.query(sql, new BeanPropertyRowMapper<AttachmentDTO>(AttachmentDTO.class),seq);
 	}
 	
