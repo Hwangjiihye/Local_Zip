@@ -945,6 +945,7 @@ a{
 	
 		    $(window).on("scroll", function() {
 		        let scrollTop = $(this).scrollTop();
+		        console.log(this);
 	
 		        // 1. 최상단일 때는 상단 이동 버튼 숨기기 (선택 사항)
 		        if (scrollTop <= 100) {
