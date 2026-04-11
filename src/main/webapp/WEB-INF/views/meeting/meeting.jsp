@@ -564,23 +564,8 @@ body {
 				</div>
 			</c:forEach>
 	</div>
-<c:if test="${not empty navi}">
-		<div class="pageBox">
 
-			<c:if test="${navi.needPrev}">
-				<a href="/meeting/list?category=${category}&cpage=${navi.startNavi - 1}" class="naviArrow"><i class="fa-solid fa-chevron-left"></i></a>
-			</c:if>
-		
-			<c:forEach var="i" begin="${navi.startNavi}" end="${navi.endNavi}">
-				<a href="/meeting/list?category=${category}&cpage=${i}" class="${i == navi.cpage ? 'active' : 'naviNum'}">${i}</a>
-			</c:forEach>
-		
-			<c:if test="${navi.needNext}">
-				<a href="/meeting/list?category=${category}&cpage=${navi.endNavi + 1}" class="naviArrow"><i class="fa-solid fa-chevron-right"></i></a>
-			</c:if>
-	
-		</div>
-	</c:if>
+		<div class="pageBox"></div>
 		
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
@@ -604,6 +589,57 @@ body {
 		</div>
 		
 	<script>
+	
+			let recordTotalCount = ${recordTotalCount}; // 데이터개수
+			let recordCountPerPage = ${recordCountPerPage} // 몇 개 게시글 표시?
+			let naviCountPerPage = ${naviCountPerPage} // 네비게이터 몇 개 표시?
+			let currentPage = ${currentPage}; // 시작페이지
+			let category = "${category}";
+			console.log(category);
+			let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
+			console.log(pageTotalCount);
+			// 시작 / 끝 페이지 지정
+			let startNavi = Math.floor(((currentPage - 1) / naviCountPerPage)) * naviCountPerPage + 1;
+			let endNavi = startNavi + naviCountPerPage - 1;
+			console.log(startNavi, endNavi);
+			
+			if(endNavi > pageTotalCount){
+				endNavi = pageTotalCount;
+			}
+			
+			let needPrev = true;
+			let needNext = true;
+			
+			if(startNavi == 1){needPrev = false};
+			if(endNavi == pageTotalCount){needNext = false};
+			
+			
+			if(needPrev){
+				let prev = $("<a>");
+				prev.attr("href","/meeting/list?category=" + category + "&cpage=" + (startNavi-1));
+				prev.html("<< ");
+				$(".pageBox").append(prev);
+			}
+			
+			for(let i = startNavi; i <= endNavi; i++){
+				let navi = $("<a>");
+				navi.attr("href","/meeting/list?category=" + category + "&cpage=" + i);
+				navi.html(i + " ");
+				
+				if(i == currentPage){
+					navi.addClass("active");
+				}
+				$(".pageBox").append(navi);
+				console.log(startNavi, endNavi);
+			}
+			
+			if(needNext){
+				let next = $("<a>");
+				next.attr("href", "/meeting/list?category=" + category + "&cpage=" + (endNavi+1));
+				next.html(">>");
+				$(".pageBox").append(next);
+			}
+		
 			$(".categoryBtnAll").on("click", function(){
 			    $(".categoryBtnAll").removeClass("nowBtn");
 			    $(this).addClass("nowBtn");

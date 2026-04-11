@@ -73,20 +73,31 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class, loginId, status);
 	}
 	
-	public List<Map<String, Object>> isApplied(String loginId) { // 0, 승인 대기 상태
-		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 0";
-		return jdbc.queryForList(sql, loginId);
+	public List<MeetingDTO> selectByMeetStatus(String loginId, String category, int start, int end){
+		String sql = "select * from ( "
+				+ "select m.*, mm.meetmem_status as my_status, "
+				+ "row_number() over (order by m.meet_seq desc) rnum "
+				+ "from meeting m "
+				+ "left join meeting_member mm "
+				+ "on m.meet_seq = mm.meetmem_seq and mm.mem_id = ? "
+				+ "where (? = 'all' or m.meet_category = ? )) "
+				+ "where rnum between ? and ? ";
+		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), loginId, category, start, end);
 	}
-	
-	public List<Map<String, Object>> joinMeet(String loginId){ // 1, 승인 상태
-		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 1";
-		return jdbc.queryForList(sql, loginId);
-	}
-	
-	public List<Map<String, Object>> companionMeet(String loginId){ // 2, 거절 상태
-		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 2";
-		return jdbc.queryForList(sql, loginId);
-	}
+//	public List<Map<String, Object>> isApplied(String loginId) { // 0, 승인 대기 상태
+//		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 0";
+//		return jdbc.queryForList(sql, loginId);
+//	}
+//	
+//	public List<Map<String, Object>> joinMeet(String loginId){ // 1, 승인 상태
+//		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 1";
+//		return jdbc.queryForList(sql, loginId);
+//	}
+//	
+//	public List<Map<String, Object>> companionMeet(String loginId){ // 2, 거절 상태
+//		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 2";
+//		return jdbc.queryForList(sql, loginId);
+//	}
 	
 	public int currentUpdate(int meetSeq) { // 모임 승인시 참여인원 1 증가
 		String sql = "update meeting set meet_currentpeople = meet_currentpeople + 1 where meet_seq = ?";

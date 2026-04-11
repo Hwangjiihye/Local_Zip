@@ -35,64 +35,48 @@ public class MeetingController {
 	
 	// 모임 신청 폼 출력
 	@RequestMapping("/list")
-	public String list(Model model, HttpSession session, String category, Integer cpage) throws Exception {
+	public String list(Model model, HttpSession session, String category, int cpage) throws Exception {
 		String loginId = (String)session.getAttribute("loginId"); 
 		
 		if(loginId == null) { // 로그인을 안한 상태면 로그인 화면으로 보내기
 			return "redirect:/members/loginUi";
 		}
 		
-		if(cpage == null) {
-	        cpage = 1;
-	    }
 
-	    int start = (cpage - 1) * 8 + 1;
-	    int end = cpage * 8;
+		int recordCountPerPage = 8;
+	    int naviCountPerPage = 10;
+
+	    int start = (cpage - 1) * recordCountPerPage + 1;
+	    int end = cpage * recordCountPerPage;
 	    
-	    List<MeetingDTO> list;
-		if(category.equals("all")) {
-			list = dao.selectAllByPage(start, end);
+	    List<MeetingDTO> list = dao.selectByMeetStatus(loginId, category, start, end);
+	    int recordTotalCount;
+	    
+		if(category.equals("all")) { // 모임 전체 목록
+//			list = dao.selectAllByPage(start, end);
+			recordTotalCount = dao.getAllCount();
 		}else {
-			list = dao.selectByPage(category, start, end);
+//			list = dao.selectByPage(category, start, end);
+			recordTotalCount = dao.getCategoryCount(category);
 		}
 		
-		List<Map<String, Object>> vlist = dao.isApplied(loginId);
-		Set<Integer> appliedSet = new HashSet<>();
+		
 
-		for(Map<String,Object> m : vlist){
-			appliedSet.add(((Number)m.get("meet_seq")).intValue());
-		}
-		
-		List<Map<String, Object>> jlist = dao.joinMeet(loginId);
-		Set<Integer> joinedSet = new HashSet<>();
-
-		for(Map<String,Object> m : jlist){
-			joinedSet.add(((Number)m.get("meet_seq")).intValue());
-		}
-		
-		List<Map<String, Object>> clist = dao.companionMeet(loginId);
-		Set<Integer> companionSet = new HashSet<>();
-
-		for(Map<String,Object> m : clist){
-			companionSet.add(((Number)m.get("meet_seq")).intValue());
-		}
-		
-		Map<String, Object> navi = this.getPageNaviAll(category, cpage);
 		
 		session.setAttribute("admin", mdao.adminCheck(loginId));
 		int admin = (Integer)session.getAttribute("admin");
 		model.addAttribute("admin", admin);
 		
-	    model.addAttribute("navi", navi);
 		model.addAttribute("list", list);
 		session.setAttribute("category", category);
 		model.addAttribute("category", category);
-		model.addAttribute("appliedSet", appliedSet);
-		model.addAttribute("joinedSet", joinedSet);
-		model.addAttribute("companionSet", companionSet);
 		
-		session.setAttribute("cPage", cpage);
-		model.addAttribute("cPage", cpage);
+		
+		model.addAttribute("recordTotalCount", recordTotalCount);
+	    model.addAttribute("recordCountPerPage", recordCountPerPage);
+	    model.addAttribute("naviCountPerPage", naviCountPerPage);
+		session.setAttribute("currentPage", cpage);
+		model.addAttribute("currentPage", cpage);
 		return "meeting/meeting";
 	}
 	
@@ -110,24 +94,24 @@ public class MeetingController {
 		session.setAttribute("host", mdao.hostCheck(seq, loginId));
 		
 		
-		List<Map<String, Object>> vlist = dao.isApplied(loginId);
-		Set<Integer> appliedSet = new HashSet<>();
-
-		for(Map<String,Object> m : vlist){
-			appliedSet.add(((Number)m.get("meet_seq")).intValue());
-		}
-		
-		List<Map<String, Object>> jlist = dao.joinMeet(loginId);
-		Set<Integer> joinedSet = new HashSet<>();
-
-		for(Map<String,Object> m : jlist){
-			joinedSet.add(((Number)m.get("meet_seq")).intValue());
-		}
+//		List<Map<String, Object>> vlist = dao.isApplied(loginId);
+//		Set<Integer> appliedSet = new HashSet<>();
+//
+//		for(Map<String,Object> m : vlist){
+//			appliedSet.add(((Number)m.get("meet_seq")).intValue());
+//		}
+//		
+//		List<Map<String, Object>> jlist = dao.joinMeet(loginId);
+//		Set<Integer> joinedSet = new HashSet<>();
+//
+//		for(Map<String,Object> m : jlist){
+//			joinedSet.add(((Number)m.get("meet_seq")).intValue());
+//		}
 		
 		String category = (String)session.getAttribute("category");
 		model.addAttribute("category", category);
-		model.addAttribute("appliedSet", appliedSet);
-		model.addAttribute("joinedSet", joinedSet);
+//		model.addAttribute("appliedSet", appliedSet);
+//		model.addAttribute("joinedSet", joinedSet);
 		
 		return "meeting/meetingDetail";
 	}
