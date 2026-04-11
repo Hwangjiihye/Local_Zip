@@ -388,6 +388,52 @@ img{
  	 font-size:15px;
  } 
  
+ .writer{
+ 	display:flex;
+ 	gap:20px;
+ }
+ 
+ .reports{
+ 	font-size:15px;
+ 	background-color: #F2D3A2;
+ 	padding-left: 10px;
+ }
+ 
+ .reportsId{
+ 	border-top-left-radius: 10px;
+ 	border-top-right-radius: 10px;
+ 	padding-top: 10px;
+ }
+ .reportsReason{
+ 	border-bottom-left-radius: 10px;
+ 	border-bottom-right-radius: 10px;
+ 	padding-bottom: 10px;
+ }
+ 
+ .reportTitle{
+ 	font-weight:bold;
+ 	font-size: 18px;
+ 	padding-top:5px;
+ 	padding-left: 10px;
+ }
+ .reportContents{
+ 	font-size:15px;
+ 	padding: 13px 0 10px 10px;
+ 	white-space: pre-wrap;
+ }
+ 
+ hr{
+ 	margin-top:20px;
+ 	width: 98%;
+ 	border: none;
+ 	height:1px;
+ 	background: #5e361a;
+ }
+ 
+ .sirenImg{
+	width: 16.67px;
+	height: 16.10px;
+}
 </style>
 </head>
 
@@ -400,10 +446,10 @@ img{
 				<a href="/admin/adminPage"><button class="categoryBtnAll ${menu == 'dashboard' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
-				<a href="/admin/adminBlackList"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}"> 
+				<a href="/admin/adminBlackList?cpage=1&status=all"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}"> 
 					<img src="/resources/images/adminSiren.png"></img> 신고관리
 				</button></a>
-				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
+				<a href="/admin/adminQA?cpage=1&status=all"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>
 				<a href="/admin/toAdminNotice?cPage=1"><button class="categoryBtnAll ${menu == 'notice' ? 'nowBtn' : ''}">
@@ -413,9 +459,9 @@ img{
 		</div>
 		
 		<div class="reportBtnDiv">
-				<a href="/admin/adminBlackList?cpage=1&status=all"><button class="navicon filterBtn">전체 ${allCount}</button></a>
-				<a href="/admin/adminBlackList?cpage=1&status=4"><button class="navicon filterBtn">미처리 ${count}</button></a>
-				<a href="/admin/adminBlackList?cpage=1&status=3"><button class="navicon filterBtn">처리완료 ${handleCount}</button></a>
+				<a href="/admin/adminBlackList?cpage=1&status=all"><button class="navicon filterBtn allBtn ${status == 'all' ? 'nowBtn' : ''}">전체 ${allCount}</button></a>
+				<a href="/admin/adminBlackList?cpage=1&status=4"><button class="navicon filterBtn ${status == '4' ? 'nowBtn' : ''}">미처리 ${count}</button></a>
+				<a href="/admin/adminBlackList?cpage=1&status=3"><button class="navicon filterBtn ${status == '3' ? 'nowBtn' : ''}">처리완료 ${handleCount}</button></a>
 		</div>
 		<div id="reportListWrap">
 		<c:choose>
@@ -426,22 +472,28 @@ img{
 			</c:when>
 				<c:otherwise>
 						<c:forEach var="i" items="${dto}">
-							<div class="postBox" data-group_seq="${i.target_seq}">
+							<div class="postBox" data-group_seq="${i.target_seq}" data-target_id="${i.target_id}">
 					        	<div class="postHeader">
 					       			<div class="reportWriter">
-					           			<div class="writer"> 카테고리 statsu값 : ${status} / 신고처리값 : ${i.reports_status} : 신고자: ${i.mem_id}</div> 
-					           			<div class="writeData">신고 시간 : ${i.reports_date}</div> 
+					           			<div class="writer"><div>신고자 : ${i.mem_id}</div><div>(신고 시간 : ${i.reports_date})</div></div>
+					           			<div class="writeData">신고 대상 종류 : ${i.target_type_name}</div>
 					        		</div>
 					        	</div>
 			        			<div class="postBody">
 			            			<div class="rowItem2">
 						                <div class="reportReason">
-						                	신고 대상 SEQ :${i.target_seq} , 
-						                	신고 대상 종류 : ${i.target_type_name} ,
-						                	신고 대상 ID : ${i.target_id} ,
-						                	신고 내용 : ${i.target_content} ,
-						                	신고 사유 : ${i.reports_reason}
-						                </div>
+						                <div class="reports reportsId">신고 대상 ID : ${i.target_id}</div>
+								           <div class="reports reportsReason"> 
+									           <c:choose>
+									               	<c:when test="${i.reports_reason == 'badContents'}">신고 사유 : 부적절한 컨텐츠</c:when>
+									                <c:when test="${i.reports_reason == 'badWord'}">신고 사유 : 욕설/비방</c:when>
+									                <c:when test="${i.reports_reason == 'AD'}">신고 사유 : 광고/스팸</c:when>
+								                </c:choose>
+							                </div>
+						                <hr>
+						                <div class="reportTitle"><img src="/resources/images/sirenImg.png" class="sirenImg"> 내용</div>
+						                <div class="reportContents">${i.target_content}</div>
+						                 </div>
 			            			</div>
 			        			</div>
 				        		<c:choose>
@@ -549,62 +601,20 @@ img{
 				$(".pageNum").append(next);
 			}
 				
-// 				// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
-// 				$(function(){
-// 				    $(".filterBtn[data-status='all']").addClass("nowBtn");
-// 				    loadList("all");
-// 			    });
-				
-// 				// 페이지 진입시 전체 목록 출력
-// 				function loadList() {
-					
-// 				    $.ajax({
-// 				        url: "/admin/getReportList",
-// 				        type: "get",
-// 				        data: { 
-// 				        	status: "all",
-// 				        	cpage:currentPage
-// 				        },
-// 				        success: function(resp) {
-// 				            drawreportList(resp.list);
-// 						    drawPagination();
-// 				        }
-// 				    });
-// 				}
+			// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
+			$(function(){
+			    $(".filterBtn.allbtn").addClass("nowBtn");
+		    });
 			
-			// 신고목록 출력
-			// 버튼 클릭시 status값 컨트롤러로 전달
-// 			$(document).on("click", ".filterBtn", function(){
-// 			    let status = $(this).data("status");
-// 			 	// 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
-// 			    $(".filterBtn").removeClass("nowBtn");
-// 			 	// 2. 클릭한 버튼에만 활성화 클래스 추가
-// 			    $(this).addClass("nowBtn");
-// // 			    $(".pageNum").empty();
-			    
-// 				currentPage = 1; // 전체/미처리/처리완료 버튼 누를 때 마다 1page 고정
-// 				if(status == "all"){ // 전체
-// 					recordTotalCount = ${allCount}
-// 				}else if(status == "4"){ // 미처리
-// 					recordTotalCount = ${count}
-// 				}else if(status == "3"){ // 처리완료
-// 					recordTotalCount = ${handleCount}
-// 				}
+			
+		
+			$(document).on("click", ".filterBtn", function(){
+			 	// 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
+			    $(".filterBtn").removeClass("nowBtn");
+			 	// 2. 클릭한 버튼에만 활성화 클래스 추가
+			    $(this).addClass("nowBtn");
+			});
 				
-// 			    $.ajax({
-// 					url : "/admin/getReportList",
-// 					type : "get",
-// 					data : {
-// 						status : status,
-// 						cpage : currentPage
-// 					},
-// 					dataType : "json",
-// 					success : function(resp){
-// 						drawreportList(resp.list);
-// 						drawPagination();
-// 					}
-// 				});
-// 			});
 			
 			// 블랙리스트 버튼을 눌렀을 때
 			$(document).on("click", ".blackOnBtn",  function(){
@@ -615,11 +625,13 @@ img{
 				let reports_status = btn.data("reports_status");
 				let target_seq = btn.data("target_seq");
 				
+				// 같은 게시글 찾기
 				let currentBox = btn.closest(".postBox");
-				let target_box = currentBox.data("group_seq");
+				let group_seq = currentBox.data("group_seq");
 				
-				console.log("찾은 박스 개수: " + target_box.length);
-				console.log(target_id);
+				let box = $(".postBox[data-group_seq='" + group_seq + "']");
+				console.log("찾은 박스 개수: " + box.length);
+				console.log(group_seq);
 				
 				if(day == null){
 					alert("정지일수를 먼저 선택해 주세요.");
@@ -642,20 +654,8 @@ img{
 							alert("관리자는 블랙리스트로 등록할 수 없습니다.")
 						}else if(resp == "success"){
 							alert(target_id + "님을 블랙리스트에 등록했습니다.");
-							
-//	 						btn.hide();
-//	 						btn.siblings(".reportCheckBtn").hide();
-//	 						btn.closest(".postBox").find(".endOption").hide();
-//	 						btn.siblings(".blackOffBtn").show();
-							
-							if(currentStatus == 'all'){
-								let completeBtn = $('<button class="offBtn blackOffBtn" data-target_id="${i.target_id}">해제</button>');
-								
-								target_box.find(".reportAndBlackBtn").html(completeBtn);
-								target_box.find(".endDiv").hide();
-							}else{
-								target_box.remove();
-							}
+							box.find(".reportAndBlackBtn").html('<button class="offBtn blackOffBtn" data-target_id="' + target_id +'">해제</button>');
+							box.find(".endDiv").hide();
 						}
 					}
 				});
@@ -664,8 +664,7 @@ img{
 			$(document).on("click", ".blackOffBtn",  function(){
 				let btn = $(this)
 				let target_id = btn.data("target_id");
-				let target_seq = btn.data("target_seq");
-				let target_box = $(`.postBox[data-group_seq='${i.reports_seq}']`);
+				let box = $(".postBox[data-target_id='" + target_id + "']");
 				
 				$.ajax({
 					url : "/admin/blackOff",
@@ -678,8 +677,7 @@ img{
 					success : function(resp){
 						alert(target_id + "님을 블랙리스트에서 해제했습니다.");
 						
-						let completeBtn = $('<button class="offBtn blackOffCheckBtn" disabled style="background-color: #6DBE45; color: white; width: 270px; border-radius: 10px; height: 35px; border:none;">해제완료</button>');
-			            btn.replaceWith(completeBtn);
+						box.find(".reportAndBlackBtn").html('<button class="offBtn blackOffCheckBtn" disabled style="background-color: #6DBE45; color: white; width: 270px; border-radius: 10px; height: 35px; border:none;">해제완료</button>');
 					}
 				});
 			});
