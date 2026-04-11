@@ -41,7 +41,7 @@ public class HomeController {
 	public String home(String sort, Model model, HttpSession session, ReplyDTO rdto, BoardDTO post) throws Exception{
 
 		String loginId = (String)session.getAttribute("loginId"); // 하트 수 체크시 필요
-		session.getAttribute("nickname");
+		
 		// 기본 정렬
 		if(sort == null) {
 			sort = "latest";
