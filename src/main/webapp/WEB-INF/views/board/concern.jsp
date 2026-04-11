@@ -342,10 +342,10 @@
 
         .postTitle {
             margin: auto;
-
+			margin-top: 5px;
             width: 95%;
             height: 40px;
-
+			line-height: 40px;
             font-size: 20px;
             color: #5e361a;
         }

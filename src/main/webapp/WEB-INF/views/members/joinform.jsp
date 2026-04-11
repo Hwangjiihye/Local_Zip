@@ -267,14 +267,14 @@ a {
 						type="text" placeholder="이름을 입력해주세요. [필수]">
 				</div>
 				<div class="insertName">이름을 입력해주세요.</div>
-				<div class="x_name">2~10글자의 이름만 등록 가능합니다.</div>
+				<div class="x_name">공백 없는 2~10글자의 이름만 등록 가능합니다.(한/영)</div>
 				
 				<div class="form-row">
 					<label>·NICKNAME : </label> <input name="mem_nickname"
 						class="nickname" type="text" placeholder="닉네임을 입력해주세요. [필수]">
 				</div>
 				<div class="insertNickname">닉네임을 입력해주세요.</div>
-				<div class="x_nickname">2~30글자의 닉네임만 등록 가능합니다.</div>
+				<div class="x_nickname">공백 없는 2~30글자의 닉네임만 등록 가능합니다.(한/영)</div>
 				
 				<div class="form-row">
 					<label>· PHONE : </label> <input name="mem_phone" class="phone"
@@ -288,7 +288,7 @@ a {
 						type="text" placeholder="주민등록번호를 입력해주세요. ('-' 포함) [필수]">
 				</div>
 				<div class="insertSsn">주민등록번호를 입력해주세요.</div>
-				<div class="x_ssn">주민등록번호는 생년월일(6글자)-(뒷자리7글자)로 입력바랍니다.</div>
+				<div class="x_ssn">주민등록번호 형식이 맞지 않습니다.</div>
 				
 				<div class="form-row">
 					<label>· EMAIL : </label> <input name="mem_email" class="email"
@@ -697,7 +697,7 @@ a {
 				ssn.focus();
 				return false;
 			} else {
-				let regex = /^[\d]{6}-[1234]{1}[\d]{6}$/;
+				let regex = /^(\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01]))-[1-4]\d{6}$/;
 				let ssnResult = regex.test(ssn.value);
 				if (!ssnResult) {
 					$(".insertSsn").hide();
