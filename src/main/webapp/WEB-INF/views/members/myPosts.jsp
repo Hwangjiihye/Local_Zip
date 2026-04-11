@@ -377,7 +377,7 @@ button, body {
 	
 					<c:forEach var="i" items="${listAll}">
 
-						<div class="postBox" onclick="location.href='/board/postDetail?post_seq=${i.post_seq}'" style="cursor:pointer;">
+						<div class="postBox" data-seq="${i.post_seq}" style="cursor:pointer;">
 
 							<div class="postUpBox">
 
@@ -443,6 +443,13 @@ button, body {
 	</div>
 	
 	<script>
+	
+		// 게시글 목록을 눌렀을때, => postDetail.jsp 이동 시.
+		$(document).on("click", ".postBox", function(e) {
+		    let post_seq = $(this).data("seq");
+		    location.href = "/board/postDetail?post_seq=" + post_seq + "&from=myPosts";
+		});
+		
 		
 		// 하단 네비바 구성 cpage
 		let recordTotalCount = ${totalCount};
@@ -468,14 +475,14 @@ button, body {
 		   
 		if(needPrev) {
 		   let prev = $("<a>"); 
-		   prev.attr("href","/board/toPosts?cPage="+(startNavi-1)); 
+		   prev.attr("href","/members/myPosts?cPage="+(startNavi-1)); 
 		   prev.html("<< ");
 		   $(".page").append(prev);
 		}
 		      
 		for(let i = startNavi; i <= endNavi; i++) {
 		  let navi = $("<a>");
-		  navi.attr("href", "/board/toPosts?cPage="+i);
+		  navi.attr("href", "/members/myPosts?cPage="+i);
 		  navi.html(i + " ");
 		  $(".page").append(navi);
 		      
@@ -486,7 +493,7 @@ button, body {
 		
 		if(needNext) {
 		   let next = $("<a>");
-		   next.attr("href", "/board/toPosts?cPage="+(endNavi+1));
+		   next.attr("href", "/members/myPosts?cPage="+(endNavi+1));
 		   next.html(" >>");
 		   $(".page").append(next);
 		}

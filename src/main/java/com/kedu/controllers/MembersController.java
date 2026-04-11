@@ -411,7 +411,6 @@ public class MembersController {
 		
 		//게시글 갯수 가져오기
 		int totalCount = BoardDao.getTotalPosts(mem_id); // 내가 작성한 글 목록 보여주는
-		System.out.println("토탈카운트 : "+totalCount);
 		
 		model.addAttribute("listAll",list);
 		model.addAttribute("cPage",cPage);
@@ -423,12 +422,21 @@ public class MembersController {
 	
 	// 마이페이지 > 관심 게시글을 눌렀을 때,
 	@RequestMapping("/myLikes")
-	public String myLikes(HttpSession session, Model model) throws Exception{
+	public String myLikes(HttpSession session, Model model, int cPage) throws Exception{
 		
 		String mem_id = (String)session.getAttribute("loginId");
 		
-		List<BoardDTO> list = BoardDao.getMyLikes(mem_id); // 로그인 아이디 기준, 하트 누른글 모아보기.(join)
+		int start = (cPage-1)*10+1;
+		int end = cPage*10;
+		List<BoardDTO> list = BoardDao.getLikesNavi(mem_id,start,end);
+		
+		//게시글 갯수 가져오기
+		int totalCount = BoardDao.getTotalLikes(mem_id); // 내가 작성한 글 목록 보여주는
+		
+		// List<BoardDTO> list = BoardDao.getMyLikes(mem_id); // 로그인 아이디 기준, 하트 누른글 모아보기.(join)
 		model.addAttribute("likeList",list);
+		model.addAttribute("cPage",cPage);
+		model.addAttribute("totalCount",totalCount);
 		
 		return "members/myLikes";
 	}

@@ -281,7 +281,7 @@
 	    	</div>
 	    	</a>
 	    	
-	    	<a href="/members/myLikes">
+	    	<a href="/members/myLikes?cPage=1">
 	    	<div class="myLike">
 	    		<div class="myLikeIcon"><img src="/resources/images/love.png" class="icon"></div>
 	    		<div class="myLikeContents">

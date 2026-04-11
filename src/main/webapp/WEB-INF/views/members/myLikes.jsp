@@ -84,11 +84,11 @@ button, body {
 
 .myLikeIcon {
 	width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5px; /* 👈 아이콘도 텍스트랑 라인 맞추기 위해 살짝 조정 */
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 5px; /* 👈 아이콘도 텍스트랑 라인 맞추기 위해 살짝 조정 */
 }
 
 .icon {
@@ -367,10 +367,52 @@ hr {
 }
 
 .swal2-icon.swal2-warning .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.pageBox {
+	width: 100%;
+	text-align: center; /* 가운데 정렬 */
+	padding: 20px 0; /* 상하 여백 */
+	margin-bottom: 80px; /* 중요: 하단 바에 가려지지 않도록 아래쪽 여백 확보 */
+	font-size: 18px;
+	color: #A66A3F;
+	font-weight: bold;
+}
+
+.emptyBox {
+	width: 100%;
+	height: auto;
+	padding: 50px 0;
+	font-size: 25px;
+	color: #5e361a;
+	text-align: center;
+}
+
+.page a {
+	margin: 10px;
+	color: #A66A3F;
+	display: inline-block;
+	text-decoration: none;
+	min-width: 35px;
+	padding: 6px 0px 6px 0px;
+	border-radius: 6px;
+	transition: 0.2s;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.pageBox a.active {
+	background-color: #fecc56;
+	font-weight: bold;
+	color: #5e361a;
+}
+
+.pageBox a:hover {
+	background-color: #F2D3A2;
+}
 </style>
 
 </head>
@@ -437,9 +479,7 @@ hr {
 								<div class="postDownBox">
 
 									<div class="postLikeBox ${i.post_like_check == 1 ? 'active' : ''}">
-										<i class="fa-regular fa-heart fa-xl beforeHeart"></i>
-										
-										<i class="fa-solid fa-heart fa-xl afterHeart"></i>
+										<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i class="fa-solid fa-heart fa-xl afterHeart"></i>
 
 										<div class="likeCount infoCount">${i.post_like}</div>
 									</div>
@@ -456,7 +496,9 @@ hr {
 					</c:forEach>
 				</div>
 
-				<div class="pageBox">1 2 3</div>
+					<div class="pageBox">
+						<span class="page"></span>
+					</div>
 
 			</c:otherwise>
 		</c:choose>
@@ -483,14 +525,13 @@ hr {
 	<script>
 
 		$(function() {
-			// 1. 게시글 상세 페이지 이동 (통합 제어)
-			// .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동
+			// 1. 게시글 상세 페이지 이동 (통합 제어)		
+			
+			// 게시글 목록을 눌렀을때, => postDetail.jsp 이동 시.
 			$(document).on("click", ".postBox", function(e) {
-
-				let post_seq = $(this).data("seq");
-				location.href = "/board/postDetail?post_seq=" + post_seq;
+			    let post_seq = $(this).data("seq");
+			    location.href = "/board/postDetail?post_seq=" + post_seq + "&from=myLikes";
 			});
-
 
 			// 댓글 수 갱신
 			$(".postBox").each(function() {
@@ -560,6 +601,55 @@ hr {
 			});
 
 		});
+		
+		
+		// 하단 네비바 구성 cpage
+		let recordTotalCount = ${totalCount};
+		let recordCountPerPage = 10;
+		let naviCountPerPage = 10;
+		let currentPage = ${cPage};
+	
+		let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
+		   
+		let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
+		let endNavi = startNavi + naviCountPerPage - 1;
+		   
+		if(endNavi > pageTotalCount) {
+		   endNavi = pageTotalCount;
+		}
+		$(".page").empty();
+		   
+		let needPrev = true; // <<
+		let needNext = true; // >>
+		   
+		if(startNavi == 1){needPrev = false;}
+		if(endNavi == pageTotalCount){needNext = false;}
+		   
+		if(needPrev) {
+		   let prev = $("<a>"); 
+		   prev.attr("href","/members/myLikes?cPage="+(startNavi-1)); 
+		   prev.html("<< ");
+		   $(".page").append(prev);
+		}
+		      
+		for(let i = startNavi; i <= endNavi; i++) {
+		  let navi = $("<a>");
+		  navi.attr("href", "/members/myLikes?cPage="+i);
+		  navi.html(i + " ");
+		  $(".page").append(navi);
+		      
+		  if (i === currentPage) {
+		       navi.addClass("active");
+		   }
+		}
+		
+		if(needNext) {
+		   let next = $("<a>");
+		   next.attr("href", "/members/myLikes?cPage="+(endNavi+1));
+		   next.html(" >>");
+		   $(".page").append(next);
+		}
+		
 	</script>
 
 </body>
