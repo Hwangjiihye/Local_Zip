@@ -28,7 +28,7 @@ public class ReportDAO {
 	}
 	
 	public int reportDeleteBlock(int target_seq) {
-		String sql = "select count(*) from reports where target_seq =? ";
+		String sql = "select count(*) from reports where target_seq =? and reports_status = 4 ";
 		return jdbc.queryForObject(sql, Integer.class, target_seq);
 	}
 }
