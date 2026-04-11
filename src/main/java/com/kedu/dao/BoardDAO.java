@@ -25,16 +25,8 @@ public class BoardDAO {
 				dto.getPost_hit(),dto.getPost_title(), dto.getPost_contents(), dto.getPost_like());
 	}
 
+	
 	// 카테고리 별 최신순, 인기순 정렬 후 > 리스트 출력 메서드 ------------------------------
-//	public List<BoardDTO> list_home_latest(String mem_id) throws Exception{
-//		String sql = "select p.*, " +
-//                " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
-//                " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count, " + // 전체 좋아요 수
-//                " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
-//                " FROM post p " +
-//                " order by p.post_seq desc";
-//		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
-//	};
 	public List<BoardDTO> list_home_latest(String mem_id) throws Exception{
 		String sql = "select p.*, m.mem_nickname, " +
                 " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
@@ -48,11 +40,12 @@ public class BoardDAO {
 
 	//홈(=전체) 리스트 출력(인기순)
 	public List<BoardDTO> list_home_like(String mem_id) throws Exception{
-		String sql = "select p.*, " +
+		String sql = "select p.*, m.mem_nickname, " +
                 " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count, " + // 전체 좋아요 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
                 " FROM post p " +
+                " join members m on p.mem_id = m.mem_id " +
                 " order by post_like desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
 	};
@@ -71,8 +64,19 @@ public class BoardDAO {
 
 	//생활정보 리스트 출력(최신순)
 	public List<BoardDTO> list_lifeInfo_latest(int start, int end) throws Exception{
-		String sql = "select * from (" + " select row_number() over(order by p.post_seq desc) rn, p.* "
+		String sql = "select * from (" 
+				   + " select row_number() over(order by p.post_seq desc) rn, "
+				   + " p.post_seq, "
+				   + " p.mem_id, "
+				   + " p.post_title, "
+				   + " p.post_contents, "
+				   + " p.post_date, "
+				   + " p.post_like, "
+				   + " p.post_hit, "
+				   + " p.mem_dong, "
+				   + " m.mem_nickname "
 				   + " from post p "
+				   + " join members m on p.mem_id = m.mem_id "
 				   + " where post_category = 'lifeInfo' "
 				   + ") where rn between ? and ?";
 		
@@ -81,8 +85,19 @@ public class BoardDAO {
 
 	//생활정보 리스트 출력(인기순)
 	public List<BoardDTO> list_lifeInfo_like(int start, int end) throws Exception{
-		String sql = "select * from (" + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, p.* "
+		String sql = "select * from (" 
+				   + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, "
+				   + " p.post_seq, "
+				   + " p.mem_id, "
+				   + " p.post_title, "
+				   + " p.post_contents, "
+				   + " p.post_date, "
+				   + " p.post_like, "
+				   + " p.post_hit, "
+				   + " p.mem_dong, "
+				   + " m.mem_nickname "
 				   + " from post p "
+				   + " join members m on p.mem_id = m.mem_id "
 				   + " where post_category = 'lifeInfo' "
 				   + ") where rn between ? and ?";
 		
@@ -91,8 +106,19 @@ public class BoardDAO {
 
 	//맛집/카페 리스트 출력(최신순)
 	public List<BoardDTO> list_food_latest(int start, int end) throws Exception{
-		String sql = "select * from (" + " select row_number() over(order by p.post_seq desc) rn, p.* "
+		String sql = "select * from (" 
+				   + " select row_number() over(order by p.post_seq desc) rn, "
+				   + " p.post_seq, "
+				   + " p.mem_id, "
+				   + " p.post_title, "
+				   + " p.post_contents, "
+				   + " p.post_date, "
+				   + " p.post_like, "
+				   + " p.post_hit, "
+				   + " p.mem_dong, "
+				   + " m.mem_nickname "
 				   + " from post p "
+				   + " join members m on p.mem_id = m.mem_id "
 				   + " where post_category = 'food' "
 				   + ") where rn between ? and ?";
 		
@@ -102,8 +128,19 @@ public class BoardDAO {
 
 	//맛집/카페 리스트 출력(인기순)
 	public List<BoardDTO> list_food_like(int start, int end) throws Exception{
-		String sql = "select * from (" + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, p.* "
-				   + " from post p"
+		String sql = "select * from (" 
+				   + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, "
+				   + " p.post_seq, "
+				   + " p.mem_id, "
+				   + " p.post_title, "
+				   + " p.post_contents, "
+				   + " p.post_date, "
+				   + " p.post_like, "
+				   + " p.post_hit, "
+				   + " p.mem_dong, "
+				   + " m.mem_nickname "
+				   + " from post p "
+				   + " join members m on p.mem_id = m.mem_id "
 				   + " where post_category = 'food' "
 				   + ") where rn between ? and ?";
 		
@@ -112,8 +149,18 @@ public class BoardDAO {
 	
 	//고민/이야기 리스트 출력(최신순)
 	public List<BoardDTO> list_concern_latest(int start, int end) throws Exception{
-		String sql = "select * from (" + " select row_number() over(order by p.post_seq desc) rn, p.* "
+		String sql = "select * from (" + " select row_number() over(order by p.post_seq desc) rn, "
+									   + " p.post_seq, "
+									   + " p.mem_id, "
+									   + " p.post_title, "
+									   + " p.post_contents, "
+									   + " p.post_date, "
+									   + " p.post_like, "
+									   + " p.post_hit, "
+									   + " p.mem_dong, "
+									   + " m.mem_nickname "
 									   + " from post p "
+									   + " join members m on p.mem_id = m.mem_id "
 									   + " where post_category = 'talk' "
 									   + ") where rn between ? and ?";
 		
@@ -122,8 +169,18 @@ public class BoardDAO {
 
 	//고민/이야기 리스트 출력(인기순)
 	public List<BoardDTO> list_concern_like(int start, int end) throws Exception{
-		String sql = "select * from (" + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, p.* "
-									   + " from post p"
+		String sql = "select * from (" + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, "
+									   + " p.post_seq, "
+									   + " p.mem_id, "
+									   + " p.post_title, "
+									   + " p.post_contents, "
+									   + " p.post_date, "
+									   + " p.post_like, "
+									   + " p.post_hit, "
+									   + " p.mem_dong, "
+									   + " m.mem_nickname "
+									   + " from post p "
+									   + " join members m on p.mem_id = m.mem_id "
 									   + " where post_category = 'talk' "
 									   + ") where rn between ? and ?";
 		
@@ -134,8 +191,19 @@ public class BoardDAO {
 	public List<BoardDTO> list_beauty_latest(int start, int end) throws Exception{
 //		String sql = "select * from post where post_category = 'beauty' order by post_seq desc";
 		
-		String sql = "select * from (" + " select row_number() over(order by p.post_seq desc) rn, p.* "
+		String sql = "select * from (" 
+				   + " select row_number() over(order by p.post_seq desc) rn, "
+				   + " p.post_seq, "
+				   + " p.mem_id, "
+				   + " p.post_title, "
+				   + " p.post_contents, "
+				   + " p.post_date, "
+				   + " p.post_like, "
+				   + " p.post_hit, "
+				   + " p.mem_dong, "
+				   + " m.mem_nickname "
 				   + " from post p "
+				   + " join members m on p.mem_id = m.mem_id "
 				   + " where post_category = 'beauty' "
 				   + ") where rn between ? and ?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), start, end);
@@ -145,8 +213,19 @@ public class BoardDAO {
 	public List<BoardDTO> list_beauty_like(int start, int end) throws Exception{
 //		String sql = "select * from post where post_category = 'beauty' order by post_like desc";
 		
-		String sql = "select * from (" + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, p.* "
-				   + " from post p"
+		String sql = "select * from (" 
+				   + " select row_number() over(order by p.post_like desc, p.post_seq desc) rn, "
+				   + " p.post_seq, "
+				   + " p.mem_id, "
+				   + " p.post_title, "
+				   + " p.post_contents, "
+				   + " p.post_date, "
+				   + " p.post_like, "
+				   + " p.post_hit, "
+				   + " p.mem_dong, "
+				   + " m.mem_nickname "
+				   + " from post p "
+				   + " join members m on p.mem_id = m.mem_id "
 				   + " where post_category = 'beauty' "
 				   + ") where rn between ? and ?";
 		
@@ -173,9 +252,11 @@ public class BoardDAO {
 
 	//게시글 상세 내용 출력
 	public BoardDTO selectByPost_seq(int post_seq) throws Exception{
-		String sql = "select p.*, " +
+		String sql = "select p.*, m.mem_nickname, " +
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count " +
-                " from post p where p.post_seq = ?";
+                " from post p "
+                + "join members m on p.mem_id = m.mem_id "
+                + "where p.post_seq = ?";
 		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), post_seq);
 	};
 
@@ -268,10 +349,21 @@ public class BoardDAO {
 	// 내 관심글 리스트 뽑아오기
 	public List<BoardDTO> getLikesNavi(String mem_id,int start, int end){
 		String sql = "SELECT * FROM ("
-	               + "    SELECT p.*, 1 as post_like_check, " // 하트를 눌렀는지 안눌렀는지 체크하는 코드
+	               + "    SELECT "
+	               + "    p.post_seq, "      
+	               + "    p.mem_id, "        
+	               + "    p.post_title, "    
+	               + "    p.post_contents, "
+	               + "    p.post_date, "
+	               + "    p.post_like, "
+	               + "    p.post_hit, "
+	               + "    p.mem_dong, "
+	               + "	  m.mem_nickname, "
+	               + "	  1 as post_like_check, " // 하트를 눌렀는지 안눌렀는지 체크하는 코드
 	               + "    ROW_NUMBER() OVER (ORDER BY l.like_date DESC) a " // 좋아요 누른 순서로 정렬 권장
 	               + "    FROM post p "
 	               + "    JOIN post_like l ON p.post_seq = l.post_seq "
+	               + "	  join members m on p.mem_id = m.mem_id "
 	               + "    WHERE l.mem_id = ?"
 	               + ") WHERE a BETWEEN ? AND ?";
 	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), mem_id, start, end);
