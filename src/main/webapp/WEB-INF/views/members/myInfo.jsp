@@ -196,6 +196,18 @@
 		    transform: translateY(5px);
 		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
 		}
+		.updateDiv[contenteditable="true"] {
+		    border: 1px solid #FFB300;
+		    border-radius: 5px;
+		    padding: 5px;
+		}
+		
+		.updateDiv[contenteditable="true"]:focus {
+		    outline: none;
+		    border: 1px solid #FFB300;
+		    background-color: #fbe5c0;
+		}
+
 </style>
 </head>
 <body>
@@ -387,7 +399,7 @@
 						Swal.fire({
     						icon: "info",
     						title: "Wait  !",
-    						text: "2~30글자의 닉네임만 등록 가능합니다.",
+    						text: "공백 없는 2~30글자의 닉네임만 등록 가능합니다.(한/영)",
     						iconColor: "#FFB300",
     						confirmButtonColor: "#FFB300"
     					});

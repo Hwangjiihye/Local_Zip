@@ -175,7 +175,11 @@ public class MeetingController {
 	    int pageTotalCount =
 	        (recordTotalCount + recordCountPerPage - 1) / recordCountPerPage;
 
-	    if(pageTotalCount == 0) pageTotalCount = 1;
+	    // if(pageTotalCount == 0) pageTotalCount = 1; // 최소 1페이지 유지 코드
+	    
+	    if(recordTotalCount == 0){ // 0이면 네비 생성X
+	        return new HashMap<>();
+	    }
 
 	    if(cpage < 1) cpage = 1;
 	    if(cpage > pageTotalCount) cpage = pageTotalCount;

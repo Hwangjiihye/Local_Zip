@@ -137,21 +137,42 @@ public class HomeController {
 	
 	
 	// 홈에서 게시글을 제목으로 검색했을 때,
-	@RequestMapping("/searchByTitle")
-	public String searchByTitle(String title, Model model, HttpSession session) throws Exception{
-		
-		List<BoardDTO> searchList = dao.searchByTitle(title); // 제목 일치 게시글 검색
-		
-		String loginId = (String)session.getAttribute("loginId"); // 좋아요 상태 확인
-		LikeStatus(searchList, loginId);
-		
-		model.addAttribute("list",searchList); // 제목 검색 결과 모델에 담기.
-		
-		return "home";
-	};
+//	@RequestMapping("/searchByTitle")
+//	public String searchByTitle(String title, Model model, HttpSession session) throws Exception{
+//		
+//		List<BoardDTO> searchList = dao.searchByTitle(title); // 제목 일치 게시글 검색
+//		
+//		String loginId = (String)session.getAttribute("loginId"); // 좋아요 상태 확인
+//		LikeStatus(searchList, loginId);
+//		
+//		model.addAttribute("list",searchList); // 제목 검색 결과 모델에 담기.
+//		
+//		return "home";
+//	};
 	
-	// 네비게이션 바
-
+	@RequestMapping("/searchByTitle")
+	public String searchByTitle(String title, String sort, Model model, HttpSession session) throws Exception {
+		
+	    String loginId = (String)session.getAttribute("loginId");
+		
+		// 기본 정렬
+		if(sort == null) {
+			sort = "latest";
+		}
+	    
+	    // 1. DAO 호출 (제목과 정렬 기준을 같이 보냄)
+	    List<BoardDTO> searchList = dao.searchByTitle(loginId,title, sort);
+	    
+	    // 2. 좋아요 상태 및 댓글 수 체크 (기존 로직 유지)
+	    LikeStatus(searchList, loginId);
+	    
+	    // 3. JSP로 데이터 전달
+	    model.addAttribute("list", searchList);
+	    model.addAttribute("searchKeyword", title); // 검색어 유지용
+	    model.addAttribute("sort", sort);           // 정렬 버튼 텍스트 변경용
+	    
+	    return "home"; 
+	}
 	
 	// postDetail 페이지,로그인 한 아이디를 기준으로 하트를 눌러놨는지 체크하는 메서드
 	private void LikeStatus(BoardDTO dto, String loginId) {

@@ -191,6 +191,7 @@ transition: 0.3s;
 	box-sizing: border-box;
 	border-radius: 10px;
 	border:none;
+	color: #5e361a;
 }
 
 .facility {
@@ -200,7 +201,7 @@ transition: 0.3s;
 	padding: 12px;
 	line-height: 1.9;
 	background-color: #fbe5c0;
-	color: black;
+	color: #5e361a;
 	box-sizing: border-box;
 	border-radius: 10px;
 	box-shadow: 0 2px 5px rgba(0,0,0,0.3);
@@ -255,6 +256,10 @@ transition: 0.3s;
 	background-color: rgba(133, 161, 249, 1.00);
 }
 
+.infoMent{
+	color: #286708;
+	margin-left: 5px;
+}
 
 </style>
 </head>
@@ -277,6 +282,7 @@ transition: 0.3s;
 				<button class="categoryBtnAll">
 					<i class="fa-solid fa-restroom fa-lg"></i> 공중화장실
 				</button>
+				<div class="infoMent">** 시설 정보 로딩 시간이 필요합니다. 잠시만 기다려주세요 🙏</div>
 			</div>
 
 			<div class="mapDiv" id="map">
@@ -306,7 +312,7 @@ transition: 0.3s;
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 			
 		
 		<c:choose>

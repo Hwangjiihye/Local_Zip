@@ -296,6 +296,7 @@ button, body {
 	height: 40px;
 	font-size: 20px;
 	margin-top: 5px;
+	line-height: 40px;
 }
 
 .postContents, .fileContainer {
@@ -800,20 +801,20 @@ hr {
 		
 		// 게시글 수정 완료 버튼 클릭 시
 		$(".completeBtn").on("click",function(){
-			
-			let post_title = $(".postTitle").text();
+			 
+			/* let post_title = $(".postTitle").text();
 			let post_contents = $(".postContents").html();
 		   
 		    if(postTitle.text() == "" || postContents.text() == ""){
-		    	Swal.fire({
+		    	 Swal.fire({
 					icon: "info",
 					title: "Wait  !",
 					text: "수정 완료!",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
-				});
+				}); 
 		        return;
-		    }
+		    } */
 		    
 		    let formData = new FormData();
 		    formData.append("post_seq", postSeq);
@@ -841,25 +842,64 @@ hr {
 		        contentType: false,
 				type: "post"
 			}).done(function(){
-				alert("수정 완료!");
-				location.reload();
+				Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "수정 완료!",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				}).then(() => {
+					location.reload();
+				});
 			});
 		});
 		
 		// 게시글 삭제 버튼 클릭 시
 		$(".deleteBtn").on("click",function(){
 			
-			if(!confirm("정말 삭제하시겠습니까?")) return;
-			
-		    $.ajax({
+			Swal.fire({
+		        title: "정말 삭제하시겠습니까?",
+		        text: "삭제 후에는 복구할 수 없습니다.",
+		        icon: "warning",
+		        showCancelButton: true,
+		        confirmButtonColor: "#FFB300",
+		        cancelButtonColor: "#aaa",
+		        confirmButtonText: "삭제",
+		        cancelButtonText: "취소"
+		    }).then((result) => {
+
+		        if (result.isConfirmed) {
+		        	$.ajax({
 		        url: "/board/deletePost",
 		        data: { post_seq: postSeq },
 		        type: "post"
-		    }).done(function(){
-		    	alert("삭제 완료!");
- 		        location.href = "/";
+		    }).done(function(resp){
+		    	if(resp == "fail"){
+		    		Swal.fire({
+                        icon: "error",
+                        title: "Fail !",
+                        text: "삭제할 수 없습니다.",
+                        iconColor: "#EB0000",
+                        confirmButtonColor: "#FFB300"
+                    });
+		    	}else{
+		    		Swal.fire({
+                        icon: "success",
+                        title: "Success !",
+                        text: "삭제 완료!",
+                        iconColor: "#FFB300",
+                        confirmButtonColor: "#FFB300"
+                    }).then(() => {
+                    	location.href = "/";
+                    });
+		    	 }
 		    });
-		});
+		  }
+	  });
+  });
+		    
+			
+		    
 		
 		// 게시글 수정 취소 버튼 클릭 시
 		$(".cancelBtn").on("click",function(){
@@ -886,10 +926,8 @@ hr {
 			
 			postTitle.css({"border":"none"});
 			postContents.css({"border":"none"});
-			
-			
-		    
 		});
+		
 		
 		// 파일 눌렀을때 다운로드 
 		$(".fileName").on("click",function(){
@@ -899,13 +937,14 @@ hr {
 		})
 		
 		// 댓글 목록 출력해오는 ajax -> 이름있는 함수로 만들고 밑에서 익명함수로 최초 실행
+		
 		function loadReplyList(){
 			$.ajax({
 				url:"/board/replyList",
 				dataType:"json",
 				data: { post_seq: postSeq }
 			}).done(function(resp){
-				
+				console.log(resp);
 				$(".replyUpBox, .hr").remove(); // 기존 댓글 목록 비우기,(새로 등록된 것까지 포함해서 다시 그려야 하므로)
 				
 				for(let i of resp){ // 댓글 for문 돌리면서 뽑기.
@@ -943,6 +982,11 @@ hr {
 							);
 							btnDiv.append(replyEditDiv, replyEditCompleteDiv);
 							replyInfoUp.append(btnDiv);
+						}else if(i.mem_role == 0){
+							console.log("role" , i.mem_role);
+							console.log("loginId", loginId);
+							console.log("loginId:", loginId);
+							console.log("댓글 작성자:", i.mem_id);
 						}else{
 							let reportArea = $("<div>").addClass("reportArea");
 							let reportIcon = $("<img>").addClass("reportIcon");
@@ -954,7 +998,7 @@ hr {
 							});
 							let reportSelect = $("<select>").addClass("reportSelect")
 							reportSelect.append(
-								$("<option>").html("신고 사유"),
+								$("<option disabled selected>").html("신고 사유"),
 								$("<option>").addClass("reportOption").html("부적절한 콘텐츠").val("badContents"),
 								$("<option>").addClass("reportOption").html("욕설/비방").val("badWord"),
 								$("<option>").addClass("reportOption").html("광고/스팸").val("AD")
@@ -1000,10 +1044,18 @@ hr {
 	           type : "post"
 	        }).done(function(likeCheck) {
 	           if(likeCheck == -1){
-	              alert("로그인 후 이용 가능합니다.");
-	              location.href = "/members/loginUi";
+	        	   Swal.fire({
+	                   icon: "warning",
+	                   title: "Wait !",
+	                   text: "로그인 후 이용 가능합니다.",
+	                   iconColor: "#FFB300",
+	                   confirmButtonColor: "#FFB300"
+	               }).then(() => {
+	            	   location.href = "/members/loginUi";
+	               });
 	              return;
-	           }
+	            };
+	            
 	           if (likeCheck == 1 || likeCheck == 0) { // 하트를 누를때마다 css 적용
 	               postLike.toggleClass("active"); // active 클래스를 넣었다 뺐다 함 
 	               // 서버 처리가 성공하면 화면의 하트 색깔을 변경함
@@ -1032,40 +1084,84 @@ hr {
 			
 		    let btn = $(this); // 클릭한 버튼(신고하기)
 		    let target_id = btn.attr("data-target_id"); // 작성자의 id값 가져오기
-		    let tatget_seq = btn.attr("data-target_seq"); // 댓글 번호
+		    let target_seq = btn.attr("data-target_seq"); // 댓글 번호
 		    let reports_type = 1; // 신고 종류(댓글)
 		    let report_reason = btn.siblings(".reportSelect").val(); // 선택한 신고 사유 값 저장.
-
+			
+		    
 		    if(!report_reason) {
-		        alert("신고 사유를 선택해주세요.");
+		    	Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "신고 사유를 선택해 주세요",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 		        return;
 		    }
 		
-		    if(confirm("이 댓글을 신고하시겠습니까?")) {
-		        $.ajax({
-		            url: "/report/insert", // 서버의 신고 처리 컨트롤러 주소
-		            type: "post",
-		            data: {
-		            	target_id: target_id,
-		                target_seq: tatget_seq,
-		                reports_type: reports_type,
-		                reports_reason: report_reason
-		            },
-		            success : function(resp){
-		            	console.log(resp);
+		    Swal.fire({
+		        title: "이 댓글을 신고하시겠습니까?",
+		        text: "신고가 접수됩니다.",
+		        icon: "warning",
+		        showCancelButton: true,
+		        confirmButtonColor: "#FFB300",
+		        cancelButtonColor: "#aaa",
+		        confirmButtonText: "신고",
+		        cancelButtonText: "취소"
+		    }).then((result) => {
+
+		        if(result.isConfirmed){
+		        	
+		        	$.ajax({
+			            url: "/report/insert", // 서버의 신고 처리 컨트롤러 주소
+			            type: "post",
+			            data: {
+			            	target_id: target_id,
+			                target_seq: target_seq,
+			                reports_type: reports_type,
+			                reports_reason: report_reason
+		        		}
+		        	}).done(function(resp) {
+		        		console.log(resp);
 		            	if(resp == "success"){
-		            		alert("신고가 접수되었습니다.");
-				            btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
-				            btn.siblings(".reportSelect").hide();
-		            	}else if(resp == "fail"){
-		            		alert("이미 신고한 댓글입니다.");
-		            		btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
-				            btn.siblings(".reportSelect").hide();
+		            		 Swal.fire({
+		                         icon: "success",
+		                         title: "Success !",
+		                         text: "신고가 접수되었습니다.",
+		                         iconColor: "#FFB300",
+		                         confirmButtonColor: "#FFB300"
+		                     }).then(() => {
+					            btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
+					            btn.siblings(".reportSelect").hide();
+		                     });
+		            	} else if(resp == "fail"){
+		            		 Swal.fire({
+		                         icon: "success",
+		                         title: "Success !",
+		                         text: "이미 신고한 댓글입니다.",
+		                         iconColor: "#FFB300",
+		                         confirmButtonColor: "#FFB300"
+		                     }).then(() => {
+			            		btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
+					            btn.siblings(".reportSelect").hide();
+		                     });
+		            	} else if(resp == "adminFail"){
+		            		Swal.fire({
+		                        icon: "error",
+		                        title: "Fail !",
+		                        text: "관리자의 댓글은 신고가 불가합니다.",
+		                        iconColor: "#EB0000",
+		                        confirmButtonColor: "#FFB300"
+		                    }).then(() => {
+			            		btn.hide();// 신고 후 UI 처리 (선택창 다시 숨기기)
+					            btn.siblings(".reportSelect").hide();
+		                    });
 		            	}
-		            } 
-		        })
-		    }
-		});
+		        	});
+		          } 
+		      });
+		  });
         
         $(".newReply").on("input", function(){
 		    this.style.height = "auto";              // 초기화
@@ -1079,7 +1175,13 @@ hr {
         	let reply = $(".newReply").val();
         	
         	if(reply.trim() == ""){
-        		alert("내용을 입력해주세요.");
+        		Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "내용을 입력해주세요.",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
         		return;
         	}
         	
@@ -1102,7 +1204,7 @@ hr {
         		
         	})
         	
-        	console.log(post_seq);
+        	/* console.log(post_seq); */
         });
         
         // upBtn, delBtn, OBtn, XBtn
@@ -1149,24 +1251,55 @@ hr {
         // 댓글 삭제 버튼을 눌렀을 때
         $(document).on("click",".delBtn",function(){
         	
+        	let btn = $(this);
         	let reply_seq = $(this).data("reply_seq");
         	
-        	$.ajax({
-        		url: "/reply/deleteReply",
-        		data: {reply_seq : reply_seq}
-        	}).done(function(){
-        		if(!confirm("정말로 삭제하시겠습니까?")){
-        			return;
-        		}else{
-        			alert("삭제가 완료되었습니다!")
-        		}
-        		
-        		let countElement = $(".commentCount"); // 카운트한 값이 들어있는 div
-        		let currentCount = parseInt(countElement.text()); // div에 값만 빼와서 남기.
-        		countElement.text(currentCount - 1);
-        		loadReplyList();
+        	Swal.fire({
+                title: "정말 삭제하시겠습니까?",
+                text: "신고된 댓글은 삭제가 불가합니다",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#FFB300",
+                cancelButtonColor: "#aaa",
+                confirmButtonText: "삭제",
+                cancelButtonText: "취소"
+            }).then((result) => {
+
+                if(result.isConfirmed){
+                	$.ajax({
+		        		url: "/reply/deleteReply",
+		        		data: {reply_seq : reply_seq},
+		        		type: "post"
+		        	}).done(function(resp){
+		        		
+		        		if(resp == "fail"){
+		        			Swal.fire({
+		                        icon: "error",
+		                        title: "Fail !",
+		                        text: "삭제가 불가합니다.",
+		                        iconColor: "#EB0000",
+		                        confirmButtonColor: "#FFB300"
+		                    });
+		        			return;
+		        		}else{
+		        			Swal.fire({
+		                        icon: "success",
+		                        title: "Success !",
+		                        text: "삭제가 완료되었습니다!",
+		                        iconColor: "#FFB300",
+		                        confirmButtonColor: "#FFB300"
+		                    }).then(() => {
+		                    	let countElement = $(".commentCount"); // 카운트한 값이 들어있는 div
+				        		let currentCount = parseInt(countElement.text()); // div에 값만 빼와서 남기.
+				        		countElement.text(currentCount - 1);
+				        		
+				        		loadReplyList();
+		        			});
+		        		 }
+                    });
+           		}
         	});
-        });
+       	});
         
         // 댓글 수정 완료 버튼을 눌렀을 때
         $(document).on("click",".OBtn",function(){
@@ -1175,9 +1308,16 @@ hr {
         	
         	let reply_seq = $(this).data("reply_seq");
         	let reply_contents = replyUpBox.find(".replyContents").html();
+        	let reply_text = replyUpBox.find(".replyContents").text().trim();
         	
         	if(reply_contents.trim() == ""){
-		        alert("내용을 입력해주세요.");
+        		Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "내용을 입력해주세요.",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
 		        return;
 		    }
         	
@@ -1188,24 +1328,38 @@ hr {
         			reply_contents : reply_contents
         		},
         		type: "post"
-        	}).done(function(){
-        		alert("수정이 완료되었습니다!");
-        		loadReplyList();
+        	}).done(function(resp){
+        		Swal.fire({
+					icon: "success",
+					title: "Success  !",
+					text: "수정이 완료되었습니다!",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				}).then(() => {
+					loadReplyList();
+				});
         	});
         });
         
         // 뒤로가기 버튼을 눌렀을 때
         $(document).on("click", ".backBtn", function(){
         	
+            // 현재 입력된 URL에서 'from' 파라미터가 있는지 확인.
+            let urlParams = new URLSearchParams(window.location.search);
+            let from = urlParams.get('from');
+		    let cPage = urlParams.get('cPage') || 1 // 마이페이지 작성글/관심글 전용 cpage, 페이지 번호가 없으면 기본 1
+        	
 		    let category = "${category}";
 		    let currentPage = "${currentPage}";
 		    let sort = "${sort}";
 		    
-		    console.log("현재 카테고리:", category);
-		    console.log("넘어온 페이지 번호:", currentPage); 
-		    console.log("정렬 상태:", sort); 
-		
-		    if(category === "talk"){
+			if(from == "myLikes"){
+				location.href = "/members/myLikes?cPage=" + cPage + "&from=myLikes";
+
+			}else if(from == "myPosts"){
+				location.href = "/members/myPosts?cPage=" + cPage + "&from=myPosts";
+				
+			}else if(category === "talk"){ // 카테고리 받아서 해당 목록 페이지로 이동
 		        location.href = "/board/talk?sort=" + sort + "&cPage=" + currentPage;
 		    }else if(category == "lifeInfo"){
 		        location.href = "/board/lifeInfo?sort=" + sort + "&cPage=" + currentPage;

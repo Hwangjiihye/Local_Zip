@@ -64,7 +64,7 @@ body, html {
 	height: 100px;
 	padding-left: 20px;
 	font-weight: bold;
-	font-size: 35px; /* 와이어프레임 느낌에 맞춰 소폭 조정 */
+	font-size: 50px;
 	color: #A66A3F;
 	background-color: #F2D3A2;
 	border-bottom: 2px solid #A66A3F;
@@ -198,10 +198,24 @@ body, html {
 	cursor: pointer;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 	z-index: 999;
+	transition: all 0.3s ease;/* 애니메이션 부드럽게 */
+}
+
+.writeBtn:hover{
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #d69e76;
+ 
+}
+
+.writeBtn:activr{
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* 하단바 */
 .bottomBox {
+	border: 1px solid #A66A3F;
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -209,10 +223,11 @@ body, html {
 	height: 60px;
 	display: flex;
 	align-items: center;
-	justify-content: space-around;
-	background-color: #F2D3A2;
-	border-top: 2px solid #A66A3F;
+	justify-content: center;
 	z-index: 1000;
+	border-top: 2px solid #A66A3F;
+	background-color: #F2D3A2;
+	gap: 200px;
 }
 
 .bottomBox i {
@@ -252,6 +267,18 @@ body, html {
 }
 .textContent, .answerText{
 	white-space: pre-wrap;
+}
+
+.navicon:hover {
+   transform: translateY(-3px);
+   /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.navicon:active {
+   transform: translateY(2px);
+   /* 아래로 눌림 */
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 </style>
@@ -307,11 +334,11 @@ body, html {
 			<i class="fa-solid fa-pencil"></i>
 		</button>
 		<div class="bottomBox">
-			<a href="/"><i class="fa-solid fa-house fa-2xl"></i></a>
-			<a href="/map/test"><i class="fa-solid fa-map-location-dot fa-2xl"></i></a>
-			<a href="/meeting/list"><i class="fa-solid fa-people-group fa-2xl"></i></a>
-			<a href="/feedback/feedbackHome"><i class="fa-solid fa-bullhorn fa-2xl"></i> </a>
-			<a href="/members/mypage"><i class="fa-solid fa-user fa-2xl"></i></a>
+			<a href="/"><i class="navicon fa-solid fa-house fa-2xl"></i></a>
+			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl"></i></a>
+			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl"></i></a>
+			<a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl"></i> </a>
+			<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl"></i></a>
 		</div>
 	</div>
 	<script>

@@ -8,6 +8,7 @@ public class ReplyDTO {
 	private String mem_nickname;
 	private String reply_contents;
 	private String reply_date;
+	private int mem_role;
 	
 	public ReplyDTO() {}
 	public ReplyDTO(int reply_seq, int post_seq, String mem_id, String mem_nickname, String reply_contents,
@@ -54,5 +55,11 @@ public class ReplyDTO {
 	}
 	public void setReply_date(String reply_date) {
 		this.reply_date = reply_date;
+	}
+	public int getMem_role() {
+		return mem_role;
+	}
+	public void setMem_role(int mem_role) {
+		this.mem_role = mem_role;
 	}
 }

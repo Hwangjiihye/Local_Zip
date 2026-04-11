@@ -457,7 +457,9 @@ body {
 		<div class="top-section">
 			<div class="mainTitle">
 			<span>동네 모임.zip</span>
-			<a href="/meeting/meetCreate"><button class="topBtn" type="button">+ 모임 만들기</button></a>
+				<c:if test="${admin != 1}">
+					<a href="/meeting/meetCreate"><button class="topBtn" type="button">+ 모임 만들기</button></a>
+				</c:if>
 			</div>
 			
 				
@@ -562,7 +564,7 @@ body {
 				</div>
 			</c:forEach>
 	</div>
-
+<c:if test="${not empty navi}">
 		<div class="pageBox">
 
 			<c:if test="${navi.needPrev}">
@@ -578,6 +580,7 @@ body {
 			</c:if>
 	
 		</div>
+	</c:if>
 		
 		<div class="bottomBar">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>

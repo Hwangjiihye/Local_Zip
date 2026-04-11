@@ -196,6 +196,18 @@ button, body {
 .rightImg {
 	right: 0;
 }
+
+.navicon:hover {
+   transform: translateY(-3px);
+   /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.navicon:active {
+   transform: translateY(2px);
+   /* 아래로 눌림 */
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 </style>
 
 </head>
@@ -208,7 +220,7 @@ button, body {
 		<div class="midBox">
 			<div class="imgBox">
 				<img class="leftWay" src="/resources/images/path.png"> 
-				<img class="errorImg" src="resources/images/errorImg.png">
+				<img class="errorImg" src="/resources/images/errorImg.png">
 				<img class="rightWay" src="/resources/images/pathway.png"> 
 				<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
 				<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.BoardDTO;
 import com.kedu.dto.CategoryVisitDTO;
+import com.kedu.dto.NoticeDTO;
 
 @Repository
 public class BoardDAO {
@@ -161,11 +162,6 @@ public class BoardDAO {
 	//----------------------------------------------------------------------
 
 	//게시글 상세 내용 출력
-//	public BoardDTO selectByPost_seq(int post_seq) throws Exception{
-//		String sql = "select * from post where post_seq = ?";
-//		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),post_seq);
-//	}
-	
 	public BoardDTO selectByPost_seq(int post_seq) throws Exception{
 		String sql = "select p.*, " +
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count " +
@@ -244,6 +240,38 @@ public class BoardDAO {
 		String sql = "select count(*) from post_like where mem_id = ?";
 		return jdbc.queryForObject(sql, Integer.class, mem_id);
 	}
+	
+	// 아래 작성글/관심글은 네비게이터 용도로 만듬. ---------
+	
+	// 내 작성글 리스트 뽑아오기
+	public List<BoardDTO> getPostsNavi(String mem_id,int start, int end){
+		String sql = "SELECT * FROM (SELECT post.*, ROW_NUMBER() OVER (ORDER BY post_date DESC) a FROM post where mem_id = ?) WHERE a BETWEEN ? AND ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id,start,end);
+	}
+	
+	// 내 작성글 개수 세기
+	public int getTotalPosts(String mem_id) {
+		String sql = "select count(*) from post where mem_id = ?";
+		return jdbc.queryForObject(sql, Integer.class, mem_id);
+	}
+	
+	// 내 관심글 리스트 뽑아오기
+	public List<BoardDTO> getLikesNavi(String mem_id,int start, int end){
+		String sql = "SELECT * FROM ("
+	               + "    SELECT p.*, 1 as post_like_check, " // 하트를 눌렀는지 안눌렀는지 체크하는 코드
+	               + "    ROW_NUMBER() OVER (ORDER BY l.like_date DESC) a " // 좋아요 누른 순서로 정렬 권장
+	               + "    FROM post p "
+	               + "    JOIN post_like l ON p.post_seq = l.post_seq "
+	               + "    WHERE l.mem_id = ?"
+	               + ") WHERE a BETWEEN ? AND ?";
+	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), mem_id, start, end);
+	}
+	
+	// 내 관심글 개수 세기
+	public int getTotalLikes(String mem_id) {
+		String sql = "select count(*) from post_like where mem_id = ?";
+		return jdbc.queryForObject(sql, Integer.class, mem_id);
+	}
 
 	//----------------------------------------------------
 	
@@ -271,75 +299,39 @@ public class BoardDAO {
 			return jdbc.queryForObject(sql, Integer.class);
 	}
 
-
 	// 홈에서 제목(포함)으로 검색한 게시글 목록 출력용 메서드
-	public List<BoardDTO> searchByTitle(String title){
-		String sql = "select * from post where post_title like ?";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), "%"+ title +"%");
-	};
+		public List<BoardDTO> searchByTitle(String mem_id, String title, String sort) {
+		    
+		    // 로그인을 안 했을 때를 대비한 null 처리
+		    if (mem_id == null) mem_id = "";
 
+		    // 1. 공통 쿼리 (댓글 수, 좋아요 수, 내 좋아요 여부 포함)
+		    // ? 순서: 1번(mem_id), 2번(title)
+		    String sql = "SELECT p.*, " +
+		                 " (SELECT COUNT(*) FROM reply r WHERE r.post_seq = p.post_seq) AS post_hit, " + 
+		                 " (SELECT COUNT(*) FROM post_like l WHERE l.post_seq = p.post_seq) AS post_like_count, " + 
+		                 " (SELECT COUNT(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) AS post_like_check " + 
+		                 " FROM post p " +
+		                 " WHERE p.post_title LIKE ? ";
 
+		    // 2. 정렬 조건만 뒤에 붙이기 (sql = "select..." 로 새로 쓰면 절대 안 됩니다!)
+		    if ("like".equals(sort)) {
+		        // 인기순 정렬 (이미 계산된 post_like_count 별칭 사용)
+		        sql += " ORDER BY post_like_count DESC, p.post_seq DESC";
+		    } else {
+		        // 최신순 정렬
+		        sql += " ORDER BY p.post_seq DESC";
+		    }
 
+		    // 3. 파라미터 전달 (순서: mem_id -> title)
+		    return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), mem_id, "%" + title + "%");
+		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	public int getNextval() {
-		String sql = "SELECT post_seq.NEXTVAL FROM DUAL";
-		return jdbc.queryForObject(sql, Integer.class);
-	}
+		
+		public int getNextval() {
+			String sql = "SELECT post_seq.NEXTVAL FROM DUAL";
+			return jdbc.queryForObject(sql, Integer.class);
+		}
 	
-
+	
 }

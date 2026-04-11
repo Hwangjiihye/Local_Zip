@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kedu.dao.MembersDAO;
 import com.kedu.dao.ReportDAO;
 import com.kedu.dto.ReportDTO;
 
@@ -16,7 +17,8 @@ public class ReportController {
 
 	@Autowired
 	private ReportDAO dao;
-	
+	@Autowired
+	private MembersDAO mdao;
 	
 	@ResponseBody
 	@RequestMapping("/insert")
@@ -26,6 +28,14 @@ public class ReportController {
 		if(loginId == null) {
 			return "redirect:/members/loginUi";
 		}
+		
+		// 관리자 신고 불가 로직 // 신고 당하는 사람이 관리자인지, 일반 사용자인지 체크
+		int role = mdao.getRole(dto.getTarget_id());
+		
+		if(role == 0) {
+			return "adminFail";
+		}
+		
 		dto.setMem_id(loginId);
 		
 		//중복신고 막는 로직
