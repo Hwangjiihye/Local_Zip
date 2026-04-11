@@ -650,7 +650,7 @@ hr {
 					</div>
 					<div class="postInfoBox">
 						<div class="postInfoUp">
-							<div class="profileName profileInfo" style="color: #5e361a;">${dto.mem_nickname }</div>
+							<div class="profileName profileInfo" style="color: #5e361a;">${nickname}</div>
 							<div class="profileLocal profileInfo" style="color: #5e361a;">${dto.mem_dong }</div>
 
 						</div>
@@ -944,7 +944,6 @@ hr {
 				dataType:"json",
 				data: { post_seq: postSeq }
 			}).done(function(resp){
-				console.log(resp);
 				$(".replyUpBox, .hr").remove(); // 기존 댓글 목록 비우기,(새로 등록된 것까지 포함해서 다시 그려야 하므로)
 				
 				for(let i of resp){ // 댓글 for문 돌리면서 뽑기.
@@ -961,7 +960,7 @@ hr {
 						let replyInfoUp = $("<div>").addClass("replyInfoUp");
 						let writerName = $("<div>").addClass("writerName replyInfo");
 						writerName.css({"color": "#5e361a"});
-						writerName.html(i.mem_nickname);
+						writerName.html("${nickname}");
 						let writeTime = $("<div>").addClass("writeTime replyInfo");
 						writeTime.css({"color": "#5e361a"});
 						writeTime.html(i.reply_date);
@@ -983,10 +982,7 @@ hr {
 							btnDiv.append(replyEditDiv, replyEditCompleteDiv);
 							replyInfoUp.append(btnDiv);
 						}else if(i.mem_role == 0){
-							console.log("role" , i.mem_role);
-							console.log("loginId", loginId);
-							console.log("loginId:", loginId);
-							console.log("댓글 작성자:", i.mem_id);
+							
 						}else{
 							let reportArea = $("<div>").addClass("reportArea");
 							let reportIcon = $("<img>").addClass("reportIcon");

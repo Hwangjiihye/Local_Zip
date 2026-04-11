@@ -544,13 +544,12 @@ img{
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> 
-			<a><i class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
+			<a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> 
 			<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 		</div>
 	</div>
 	
 	<script>
-	
 			let recordTotalCount = ${recordTotalCount}; // 데이터개수
 			let recordCountPerPage = ${recordCountPerPage} // 몇 개 게시글 표시?
 			let naviCountPerPage = ${naviCountPerPage} // 네비게이터 몇 개 표시?
@@ -558,11 +557,9 @@ img{
 			let currentStatus = "${status}"
 					
 			let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
-			console.log(pageTotalCount);
 			// 시작 / 끝 페이지 지정
 			let startNavi = Math.floor(((currentPage - 1) / naviCountPerPage)) * naviCountPerPage + 1;
 			let endNavi = startNavi + naviCountPerPage - 1;
-			console.log(startNavi, endNavi);
 			
 			if(endNavi > pageTotalCount){
 				endNavi = pageTotalCount;
@@ -591,7 +588,6 @@ img{
 					navi.addClass("active");
 				}
 				$(".pageNum").append(navi);
-				console.log(startNavi, endNavi);
 			}
 			
 			if(needNext){
@@ -630,8 +626,6 @@ img{
 				let group_seq = currentBox.data("group_seq");
 				
 				let box = $(".postBox[data-group_seq='" + group_seq + "']");
-				console.log("찾은 박스 개수: " + box.length);
-				console.log(group_seq);
 				
 				if(day == null){
 					alert("정지일수를 먼저 선택해 주세요.");
@@ -678,6 +672,7 @@ img{
 						alert(target_id + "님을 블랙리스트에서 해제했습니다.");
 						
 						box.find(".reportAndBlackBtn").html('<button class="offBtn blackOffCheckBtn" disabled style="background-color: #6DBE45; color: white; width: 270px; border-radius: 10px; height: 35px; border:none;">해제완료</button>');
+						box.find(".endDiv").hide();
 					}
 				});
 			});
