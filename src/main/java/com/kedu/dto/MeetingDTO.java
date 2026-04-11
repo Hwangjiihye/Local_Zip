@@ -17,7 +17,6 @@ public class MeetingDTO {
 	private int meet_status;
 	private String meet_date;
 	private int meet_allpeople;
-	private int my_status; // 미팅 참여여부
 	
 	public MeetingDTO() {}
 	
@@ -131,11 +130,5 @@ public class MeetingDTO {
 	}
 	public void setMeet_allpeople(int meet_allpeople) {
 		this.meet_allpeople = meet_allpeople;
-	}
-	public int getMy_status() {
-		return my_status;
-	}
-	public void setMy_status(int my_status) {
-		this.my_status = my_status;
 	}
 }
