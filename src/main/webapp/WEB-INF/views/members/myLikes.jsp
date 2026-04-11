@@ -503,13 +503,6 @@ hr {
 			</c:otherwise>
 		</c:choose>
 
-
-
-		<a href="/board/write"><button class="writeBtn" type="button">
-				<i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i>
-			</button></a>
-
-
 		<div class="bottomBox">
 			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
 				class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list"><i
