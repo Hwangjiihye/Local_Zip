@@ -410,9 +410,9 @@ public class AdminController {
 			System.out.println("===================================================");
 		}
 		// 블랙리스트 등록 시 reports 테이블 status 업데이트
-		dao.updateReportsStatus(reports_status, target_id);
+		dao.updateReportsStatus(reports_status, target_id, target_seq);
 		System.out.println("블랙등록: reports status 업데이트 작동함.");
-		System.out.println("블랙등록: reports 상태 업데이트값 : "+ reports_status + "target_id : " + target_id);
+		System.out.println("블랙등록: reports 상태 업데이트값 : "+ reports_status + "target_id : " + target_id + "target_seq : " + target_seq);
 		System.out.println("===================================================");
 		return "success";
 	}

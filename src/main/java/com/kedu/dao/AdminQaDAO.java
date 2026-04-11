@@ -286,9 +286,9 @@ public class AdminQaDAO {
 		return jdbc.update(sql , day, mem_id);
 	}
 	
-	public int updateReportsStatus(int reports_type, String target_id) { // 블랙리스트 등록 시 reports 테이블 status 업데이트
-		String sql = "update reports set reports_status =? where target_id = ?";
-		return jdbc.update(sql, reports_type, target_id);
+	public int updateReportsStatus(int reports_type, String target_id, int target_seq) { // 블랙리스트 등록 시 reports 테이블 status 업데이트
+		String sql = "update reports set reports_status =? where target_id = ? and target_seq = ? ";
+		return jdbc.update(sql, reports_type, target_id, target_seq);
 	}
 	
 	public int deleteMembersStatus(int mem_status, String target_id) { // 블랙리스트 해제 (membersTable status 업데이트) 로직

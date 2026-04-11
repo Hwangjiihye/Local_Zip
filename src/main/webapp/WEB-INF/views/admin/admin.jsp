@@ -298,7 +298,7 @@ img{
 				<a href="/admin/adminPage"><button class="categoryBtnAll ${menu == 'dashboard' ? 'nowBtn' : ''}" type="button">
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
-				<a href="/admin/adminBlackList?cpage=1"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}" type="button">
+				<a href="/admin/adminBlackList?cpage=1&status=all"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}" type="button">
 					<img src="/resources/images/adminSiren.png"></img> 신고관리
 				</button></a>
 				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}" type="button">
