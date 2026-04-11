@@ -80,122 +80,33 @@ public class AdminQaDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
-	public List<QaDTO> selectAllByPage(int cpage){
-		int recordCountPerPage = 10;
-
-		int start = cpage * recordCountPerPage - (recordCountPerPage - 1);
-		int end = cpage * recordCountPerPage;
-
+	public List<QaDTO> selectAllCount(int start, int end){ // 전체 cpage
 		String sql = "select * from ("
 				+ "    select row_number() over(order by qa_seq desc) rnum, q.* "
 				+ "    from qa q"
 				+ ") where rnum between ? and ?";
 
-		return jdbc.query(sql, new BeanPropertyRowMapper<>(QaDTO.class), start, end);
+		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class), start, end);
 	}
-	
-	public List<QaDTO> selectByStatusByPage(int status, int cpage){
-		int recordCountPerPage = 10;
 
-		int start = cpage * recordCountPerPage - (recordCountPerPage - 1);
-		int end = cpage * recordCountPerPage;
-
+	public List<QaDTO> selectByAdminAnswerWait(int start, int end){ // qa 답변대기 목록 출력
 		String sql = "select * from ("
-				+ "    select row_number() over(order by qa_seq desc) rnum, q.* "
-				+ "    from qa q where qa_status = ?"
+				+ "    select row_number() over(order by qa_seq) rnum, q.* "
+				+ "    from qa q where qa_status = 0"
 				+ ") where rnum between ? and ?";
 
-		return jdbc.query(sql, new BeanPropertyRowMapper<>(QaDTO.class), status, start, end);
+		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class), start, end);
 	}
 	
-	public Map<String, Object> getPageNaviAll(int cpage){
+	public List<QaDTO> selectByAdminAnswerFinish(int start, int end){ // qa 답변완료 목록 출력
+		String sql = "select * from ("
+				+ "    select row_number() over(order by qa_seq desc) rnum, q.* "
+				+ "    from qa q where qa_status = 1"
+				+ ") where rnum between ? and ?";
 
-		int recordCountPerPage = 10;
-		int naviCountPerPage = 10;
-
-		int recordTotalCount = getAllCount();
-		int pageTotalCount = 0;
-
-		if(recordTotalCount % recordCountPerPage > 0){
-			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
-		}else{
-			pageTotalCount = recordTotalCount / recordCountPerPage;
-		}
-
-		if(cpage < 1) cpage = 1;
-		if(cpage > pageTotalCount) cpage = pageTotalCount;
-
-		int startNavi = ((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
-		int endNavi = startNavi + (naviCountPerPage - 1);
-
-		if(endNavi > pageTotalCount){
-			endNavi = pageTotalCount;
-		}
-
-		boolean needPrev = true;
-		boolean needNext = true;
-
-		if(startNavi == 1){
-			needPrev = false;
-		}
-		if(endNavi == pageTotalCount){
-			needNext = false;
-		}
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("cpage", cpage);
-		map.put("startNavi", startNavi);
-		map.put("endNavi", endNavi);
-		map.put("needPrev", needPrev);
-		map.put("needNext", needNext);
-
-		return map;
+		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class),start, end);
 	}
-	
-	public Map<String, Object> getPageNaviByStatus(int status, int cpage){
 
-		int recordCountPerPage = 10;
-		int naviCountPerPage = 10;
-
-		int recordTotalCount = getCountByStatus(status);
-		int pageTotalCount = 0;
-
-		if(recordTotalCount % recordCountPerPage > 0){
-			pageTotalCount = recordTotalCount / recordCountPerPage + 1;
-		}else{
-			pageTotalCount = recordTotalCount / recordCountPerPage;
-		}
-
-		if(cpage < 1) cpage = 1;
-		if(cpage > pageTotalCount) cpage = pageTotalCount;
-
-		int startNavi = ((cpage - 1) / naviCountPerPage) * naviCountPerPage + 1;
-		int endNavi = startNavi + (naviCountPerPage - 1);
-
-		if(endNavi > pageTotalCount){
-			endNavi = pageTotalCount;
-		}
-
-		boolean needPrev = true;
-		boolean needNext = true;
-
-		if(startNavi == 1){
-			needPrev = false;
-		}
-		if(endNavi == pageTotalCount){
-			needNext = false;
-		}
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("cpage", cpage);
-		map.put("startNavi", startNavi);
-		map.put("endNavi", endNavi);
-		map.put("needPrev", needPrev);
-		map.put("needNext", needNext);
-
-		return map;
-	}
-	
 	public List<ReportDTO> selectReportAll(){ // 신고 목록 출력 메서드
 		String sql = "select * from reports";
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReportDTO>(ReportDTO.class));
@@ -218,7 +129,7 @@ public class AdminQaDAO {
 	
 	public List<ReportDTO> selectReportContentsByStatus(int status, int start, int end){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (미처리건들 출력)
 		String sql = "select * from( "
-				+ "select row_number() over(order by r.reports_date desc) as rn, "
+				+ "select row_number() over(order by r.reports_date) as rn, "
 				+ "r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq,  r.reports_status, r.reports_seq, "
 				+ "coalesce(p.post_contents, reply.reply_contents, m.meet_introcontents, '원문 삭제됨(번호:' || r.target_seq || ')') as target_content, "
 				+ "case "
@@ -234,7 +145,7 @@ public class AdminQaDAO {
 	
 	public List<ReportDTO> selectReportContentsByStatusHandle(int start, int end){ // 신고된 대상(게시글/댓글/목록) + 내용 출력 메서드 (처리완료건들 출력)
 		String sql = "select * from( "
-				+ "select row_number() over(order by r.reports_date desc) as rn, "
+				+ "select row_number() over(order by r.reports_status) as rn, "
 				+ "r.mem_id, r.target_id, r.reports_date, r.reports_type, r.reports_reason, r.target_seq,  r.reports_status, r.reports_seq, "
 				+ "coalesce(p.post_contents, reply.reply_contents, m.meet_introcontents, '원문 삭제됨(번호:' || r.target_seq || ')') as target_content, "
 				+ "case "
@@ -286,9 +197,9 @@ public class AdminQaDAO {
 		return jdbc.update(sql , day, mem_id);
 	}
 	
-	public int updateReportsStatus(int reports_type, String target_id) { // 블랙리스트 등록 시 reports 테이블 status 업데이트
-		String sql = "update reports set reports_status =? where target_id = ?";
-		return jdbc.update(sql, reports_type, target_id);
+	public int updateReportsStatus(int reports_type, String target_id, int target_seq) { // 블랙리스트 등록 시 reports 테이블 status 업데이트
+		String sql = "update reports set reports_status =? where target_id = ? and target_seq = ? ";
+		return jdbc.update(sql, reports_type, target_id, target_seq);
 	}
 	
 	public int deleteMembersStatus(int mem_status, String target_id) { // 블랙리스트 해제 (membersTable status 업데이트) 로직
