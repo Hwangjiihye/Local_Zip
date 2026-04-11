@@ -86,11 +86,19 @@ button, body {
 	position: relative;
 	right: 30px;
 	cursor: pointer;
+	transition: all 0.3s ease;/* 애니메이션 부드럽게 */
 }
 
 .backBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+}
+
+.backBtn:active{
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	background-color: #ffb300;
 }
 
 .mainTitle {
