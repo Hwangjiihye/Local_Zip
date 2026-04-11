@@ -426,10 +426,10 @@ img{
 				<a href="/admin/adminPage"><button class="categoryBtnAll ${menu == 'dashboard' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-chart-column fa-lg"></i> 대시보드
 				</button></a>
-				<a href="/admin/adminBlackList?cpage=1"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}"> 
+				<a href="/admin/adminBlackList?cpage=1&status=all"><button class="categoryBtnAll ${menu == 'report' ? 'nowBtn' : ''}"> 
 					<img src="/resources/images/adminSiren.png"></img> 신고관리
 				</button></a>
-				<a href="/admin/adminQA"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
+				<a href="/admin/adminQA?cpage=1&status=all"><button class="categoryBtnAll ${menu == 'qa' ? 'nowBtn' : ''}">
 					<i class="fa-solid fa-headset fa-lg"></i> 고객지원
 				</button></a>
 				<a href="/admin/toAdminNotice?cPage=1"><button class="categoryBtnAll ${menu == 'notice' ? 'nowBtn' : ''}">
@@ -439,12 +439,70 @@ img{
 		</div>
 		
 		<div class="answerBtnDiv">
-				<button class="navicon filterBtn" data-status="all">전체 ${qaAllCount}</button>
-				<button class="navicon filterBtn" data-status="0">답변대기 ${qaCount}</button>
-				<button class="navicon filterBtn" data-status="1">답변완료 ${qaDoneCount}</button>
+				<button class="navicon filterBtn allBtn ${status == 'all' ? 'nowBtn' : ''}" data-status="all">전체 ${qaAllCount}</button>
+				<button class="navicon filterBtn ${status == '0' ? 'nowBtn' : ''}" data-status="0">답변대기 ${qaCount}</button>
+				<button class="navicon filterBtn ${status == '1' ? 'nowBtn' : ''}" data-status="1">답변완료 ${qaDoneCount}</button>
 		</div>
 		
-		<div id="qaListWrap"></div>
+		<div id="qaListWrap">
+			<c:forEach var="i" items="${list}">
+			    <div class="postBox">
+			        <div class="postHeader">
+			        <div class="categoryAndWriter">
+				        <div>작성자: ${i.mem_id}</div>
+				        <div class="category">
+						    <c:choose>
+						        <c:when test="${i.qa_category == 0}">계정/로그인</c:when>
+						        <c:when test="${i.qa_category == 1}">이용문의</c:when>
+						        <c:otherwise>기타</c:otherwise>
+						    </c:choose>
+						</div>
+					</div>
+			            <div>${i.qa_create_date}</div>
+			        </div>
+			
+			        <div class="postBody">
+			            <div>${i.qa_title}</div>
+			            <div>${i.qa_contents}</div>
+			        </div>
+			        
+		<div class="qaReply">
+	    	<div class="qaReplyRow">
+		        <div class="adminProfileDiv">
+		            <div class="replyAdminId">관리자</div>
+		        </div>
+
+      	 	<!-- 답변 없는 경우 -->
+	        <c:if test="${i.qa_status == 0}">
+	            <form action="/admin/answer" method="post">
+	            	<input type="hidden" name="cpage" value="${currentPage}">
+					<input type="hidden" name="status" value="${status}">
+	                <input type="hidden" name="qa_seq" value="${i.qa_seq}">
+	                <div class="replyTextAndBtn">
+	                    <textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply" name="admin_answer"></textarea>
+						<button class="replyBtn" type="submit">등록</button>
+	                </div>
+	            </form>
+	        </c:if>
+	
+	        <!-- 답변 있는 경우 -->
+	        <c:if test="${i.qa_status != 0}">
+	            <div class="replyTextAndBtn">
+	                <div class="answerDiv">${i.admin_answer}</div>
+	                <div class="adminBtnArea">
+	                    <button class="adminBtn updateBtn" type="button" data-seq="${i.qa_seq}">수정</button>
+	                    <button class="adminBtn deleteBtn" type="button" data-seq="${i.qa_seq}">삭제</button>
+	                    <button class="UpdateBtn saveBtn replyBtn" type="button" data-seq="${i.qa_seq}" style="display:none">저장</button>
+	                    <button class="UpdateBtn cenBtn replyBtn" type="button" data-seq="${i.qa_seq}" style="display:none">취소</button>
+			                </div>
+			            </div>
+			        </c:if>
+		    	</div>
+			</div>
+			    </div>
+			</c:forEach>
+		</div>
+		
 		
 		<div class="pageBox"></div>
     	
@@ -458,6 +516,59 @@ img{
 	</div>
 	
 	<script>
+			
+	
+			let recordTotalCount = ${recordTotalCount}; // 데이터개수
+			let recordCountPerPage = ${recordCountPerPage} // 몇 개 게시글 표시?
+			let naviCountPerPage = ${naviCountPerPage} // 네비게이터 몇 개 표시?
+			let currentPage = ${currentPage} // 시작페이지
+			let currentStatus = "${status}"
+					
+			let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
+			console.log(pageTotalCount);
+			// 시작 / 끝 페이지 지정
+			let startNavi = Math.floor(((currentPage - 1) / naviCountPerPage)) * naviCountPerPage + 1;
+			let endNavi = startNavi + naviCountPerPage - 1;
+			console.log(startNavi, endNavi);
+			
+			if(endNavi > pageTotalCount){
+				endNavi = pageTotalCount;
+			}
+			
+			let needPrev = true;
+			let needNext = true;
+			
+			if(startNavi == 1){needPrev = false};
+			if(endNavi == pageTotalCount){needNext = false};
+			
+			
+			if(needPrev){
+				let prev = $("<a>");
+				prev.attr("href","/admin/adminQA?cpage=" + (startNavi-1) + "&status=" + currentStatus);
+				prev.html("<< ");
+				$(".pageBox").append(prev);
+			}
+			
+			for(let i = startNavi; i <= endNavi; i++){
+				let navi = $("<a>");
+				navi.attr("href","/admin/adminQA?cpage=" + i + "&status=" + currentStatus);
+				navi.html(i + " ");
+				
+				if(i == currentPage){
+					navi.addClass("active");
+				}
+				$(".pageBox").append(navi);
+				console.log(startNavi, endNavi);
+			}
+			
+			if(needNext){
+				let next = $("<a>");
+				next.attr("href", "/admin/adminQA?cpage=" + (endNavi+1) + "&status=" + currentStatus);
+				next.html(">>");
+				$(".pageBox").append(next);
+			}
+			
+			
 			$(document).on("click", ".filterBtn", function(){
 			    // 1. 모든 필터 버튼에서 활성화 클래스 제거 (기존 navicon 효과 등 포함)
 			    $(".filterBtn").removeClass("nowBtn");
@@ -466,178 +577,9 @@ img{
 			    $(this).addClass("nowBtn");
 		
 			    let status = $(this).data("status");
-			    loadQaList(status, 1);
+			    location.href = "/admin/adminQA?cpage=1&status=" + status;
 			});
-
-	// 페이지 로드 시 '전체' 버튼에 기본으로 클래스 넣어주기
-			$(function(){
-			    $(".filterBtn[data-status='all']").addClass("nowBtn");
-			    loadQaList("all", 1);
-			});
-
-			let currentStatus = "all";
-	
-			$(function(){
-			    loadQaList("all", 1);
-			});
-			
-			
-			function loadQaList(status,cpage){
-				currentStatus = status;
 				
-			    $.ajax({
-			        url : "/admin/qaList",
-			        type : "get",
-			        data : { 
-			        	status : status,
-			        	cpage : cpage
-			        },
-			        dataType : "json",
-			        success : function(resp){
-			        	console.log(resp);
-			            console.log(resp.pageNavi);
-			            drawQaList(resp.list);
-			            drawPageNavi(resp.pageNavi);
-			        }
-			    });
-			}
-			
-			$(document).on("click", ".filterBtn", function(){
-			    let status = $(this).data("status");
-			    loadQaList(status, 1);
-			});
-			
-			$(document).on("click", ".pageLink", function(){
-			    let page = $(this).data("page");
-			    loadQaList(currentStatus, page);
-			});
-			
-			function drawPageNavi(pageNavi){
-			    $(".pageBox").empty();
-			    let html = "";
-			    
-			    if(pageNavi.needPrev){
-			    	html += `
-			            <a href="javascript:void(0)" class="pageLink" data-page="\${pageNavi.startNavi - 1}">
-			                <i class="fa-solid fa-chevron-left"></i>
-			            </a>
-			        `;
-			    }
-
-			    for(let i = pageNavi.startNavi; i <= pageNavi.endNavi; i++){
-			        let activeClass = (i == pageNavi.cpage) ? "active" : "";
-
-			        html += `
-			            <a href="javascript:void(0)" class="pageLink \${activeClass}" data-page="\${i}">
-			                \${i}
-			            </a>
-			        `;
-			    }
-
-			    if(pageNavi.needNext){
-			    	html += `
-			            <a href="javascript:void(0)" class="pageLink" data-page="\${pageNavi.endNavi + 1}">
-			                <i class="fa-solid fa-chevron-right"></i>
-			            </a>
-			        `;
-			    }
-			    $(".pageBox").html(html);
-			}
-
-			function drawQaList(list){
-				$("#qaListWrap").empty();
-				
-				if(list.length == 0){
-					$("#qaListWrap").append(`
-						<div class="postBox">
-							<div class="postBody">문의글이 없습니다.</div>
-						</div>		
-					`);
-					return;
-				}
-				
-				for(let i of list){
-					
-					let categoryText = "";
-					
-					if(i.qa_category == 0){
-						categoryText = "계정/로그인";
-					}else if(i.qa_category == 1){
-						categoryText = "이용문의";
-					}else if(i.qa_category == 2){
-						categoryText = "기타";
-					}
-					
-					let replyHtml = "";
-					
-					if(i.qa_status == 0){
-						replyHtml = `
-							<div class="qaReply">
-		        				<div class="qaReplyRow">
-					        		<div class="adminProfileDiv">
-					        			<div class="replyAdminId">관리자</div>
-				        			</div>
-			        				<form action="/admin/answer" method="post">
-			        					<input type="hidden" name="qa_seq" value="\${i.qa_seq}">
-			        			
-				        				<div class="replyTextAndBtn">
-							            	<textarea placeholder="댓글을 입력하세요." maxlength="1000" class="inputQaReply" name="admin_answer"></textarea>
-											<button class="replyBtn" type="submit">등록</button>
-										</div>
-									</form>
-			        			</div>  
-			        		</div> 
-			        	`;
-					}else {
-						replyHtml = `
-							<div class="qaReply">
-	        					<div class="qaReplyRow">
-				        			<div class="adminProfileDiv">
-				        				<div class="replyAdminId">관리자</div>
-			        				</div>
-			        				<div class="replyTextAndBtn">
-				            			<div class="answerDiv">\${i.admin_answer}</div>
-					            		<div class="adminBtnArea">
-					            			<button class="adminBtn updateBtn" type="button" data-seq="\${i.qa_seq}">수정</button>
-					            			<button class="adminBtn deleteBtn" type="button" data-seq="\${i.qa_seq}">삭제</button>
-					            			<button class="UpdateBtn saveBtn replyBtn" type="button" data-seq="\${i.qa_seq}" style="display:none">저장</button>
-					            			<button class="UpdateBtn cenBtn replyBtn" type="button" data-seq="\${i.qa_seq}" style="display:none">취소</button>
-						            	</div>
-				            		</div>
-				            	</div>
-		        			</div>
-	        			`;
-					}
-					
-					let html = `
-						<div class="postBox" data-status="${i.qa_status}">
-				        	<div class="postHeader">
-				       			<div class="categoryAndWriter">
-				           			<div class="writer">작성자: \${i.mem_id}</div> 
-			           				<div class="category">\${categoryText}</div>
-				           		</div>
-				           	
-				           			<div class="writeData">\${i.qa_create_date}</div> 
-		
-				        	</div>
-				        	
-		        			<div class="postBody">
-		            			<div class="rowItem1">
-					                <span class="labelName">제목</span>
-					                <div class="titleContent">\${i.qa_title}</div>
-		            			</div>
-		           				<div class="rowItem2">
-				                	<span class="labelName">내용</span>
-					                <div class="textContent">\${i.qa_contents} </div>
-		            			</div>
-		        			</div>
-		        			\${replyHtml}
-						</div>
-					`;
-					
-					$("#qaListWrap").append(html);
-				}
-			}
 			
 			$(document).on("click", ".updateBtn", function(){
 				let parentRow = $(this).closest(".replyTextAndBtn");
@@ -767,6 +709,8 @@ img{
 			    this.style.height = "auto";
 			    this.style.height = this.scrollHeight + "px";
 			});
+			
+			
 	</script>
 </body>
 </html>
