@@ -828,7 +828,7 @@ a{
 
 										<div class="postInfoBox">
 											<div class="postInfoUp">
-												<div class="profileName profileInfo">${i.mem_nickname}</div>
+												<div class="profileName profileInfo">${nickname}</div>
 												<div class="profileLocal profileInfo">${i.mem_dong}</div>
 
 												<div class="profileCatagory profileInfo">
