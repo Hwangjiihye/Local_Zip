@@ -19,9 +19,9 @@ public class FeedBackDAO {
 	// 건의사항 게시글 db에 넣기
 	public int insert(FeedBackDTO dto) throws Exception {
 		
-		String sql = "insert into suggestion values(suggestion_seq.nextval, ?, ?, ?, ?, ?, sysdate, ?, ?)";
+		String sql = "insert into suggestion values(?, ?, ?, ?, ?, ?, sysdate, ?, ?)";
 		
-		return jdbc.update(sql, dto.getMem_id(), dto.getMem_nickname(), dto.getMem_dong(), dto.getSuggestion_title(), dto.getSuggestion_contents(),
+		return jdbc.update(sql,dto.getSuggestion_seq() ,dto.getMem_id(), dto.getMem_nickname(), dto.getMem_dong(), dto.getSuggestion_title(), dto.getSuggestion_contents(),
 				dto.getSuggestion_like(), dto.getSuggestion_unlike());
 	}
 	
@@ -35,6 +35,14 @@ public class FeedBackDAO {
 		        "order by s.suggestion_seq desc";
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class), loginId);
+	}
+	
+	//-------------------file--------------------------------
+	
+	
+	public int getNextval() {
+		String sql = "SELECT SUGGESTION_seq.NEXTVAL FROM DUAL";
+		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
 	// 좋아요 db에 넣기
