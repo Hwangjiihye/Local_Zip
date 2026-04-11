@@ -26,12 +26,22 @@ public class BoardDAO {
 	}
 
 	// 카테고리 별 최신순, 인기순 정렬 후 > 리스트 출력 메서드 ------------------------------
+//	public List<BoardDTO> list_home_latest(String mem_id) throws Exception{
+//		String sql = "select p.*, " +
+//                " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
+//                " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count, " + // 전체 좋아요 수
+//                " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
+//                " FROM post p " +
+//                " order by p.post_seq desc";
+//		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
+//	};
 	public List<BoardDTO> list_home_latest(String mem_id) throws Exception{
-		String sql = "select p.*, " +
+		String sql = "select p.*, m.mem_nickname, " +
                 " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count, " + // 전체 좋아요 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
-                " FROM post p " +
+                " FROM post p "
+                + "join members m on p.mem_id = m.mem_id " +
                 " order by p.post_seq desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
 	};

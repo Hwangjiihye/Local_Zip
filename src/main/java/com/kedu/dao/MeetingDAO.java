@@ -51,7 +51,7 @@ public class MeetingDAO {
 	public List<MeetingDTO> selectAllByPage(int start, int end) { // + 게이지바 포함
 		String sql = "select * from (select row_number() over(order by m.meet_seq desc) rn, "
 				+ "m.mem_id, m.meet_seq, m.mem_nickname, m.meet_title, m.meet_category, "
-				+ "m.meet_introcontents, m.meet_maxpeople, m.meet_currentpeople "
+				+ "m.meet_introcontents, m.meet_maxpeople, m.meet_currentpeople, m.mem_address1 "
 				+ "from meeting m where m.meet_status in (0,1)) where rn between ? and ?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), start, end);
 	}

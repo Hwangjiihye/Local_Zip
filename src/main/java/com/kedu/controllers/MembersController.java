@@ -220,10 +220,14 @@ public class MembersController {
 	
 	@RequestMapping("/update")
 	public String update(MembersDTO dto, HttpSession session) throws Exception {
-		dao.updateById(dto, dto.getMem_id());
+		
+		System.out.println(dto.getMem_id());
+		System.out.println(dto.getMem_nickname());
+		System.out.println(dto.getMem_dong());
+		
 		session.setAttribute("nickname", dto.getMem_nickname());
 		session.setAttribute("dong", dto.getMem_dong());
-		System.out.println(dto.getMem_dong());
+		dao.updateById(dto, dto.getMem_id());
 		return "redirect:/members/myInfo";
 	}
 	

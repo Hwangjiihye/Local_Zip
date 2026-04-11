@@ -76,7 +76,7 @@ public class AdminQaDAO {
 	}
 	
 	public int activityMemberCount() {
-		String sql = "select count(*) from members where mem_status = 0 and mem_role = 1";
+		String sql = "select count(*) from members where mem_role = 1";
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
@@ -213,7 +213,7 @@ public class AdminQaDAO {
 	}
 	
 	public int updateReportStatus(int reports_status, String target_id) { // 블랙리스트 처리된 건을 해제하는 로직 (해제 -> 해제완료 버튼 구현)
-		String sql = "update reports set reports_status = ? where target_id = ? and reports_status = 3 ";
+		String sql = "update reports set reports_status = ? where target_id = ?";
 		return jdbc.update(sql, reports_status, target_id);
 	}
 	
