@@ -251,6 +251,7 @@ body, html {
 	font-size: 15px;
 	color: #A66A3F;
 	font-size: 15px;
+	margin-top: 10px;
 }
 
 .orderBtn:hover {
@@ -318,12 +319,14 @@ body, html {
 
 .postUpBox {
 	width: 100%;
-    height: 95px;
+	min-height: 95px;
     display: flex;
     align-items: center;
-    padding: 0 15px;
+    padding: 10px 15px;
     border-radius: 10px 10px 0 0;
     background-color: #F2D3A2;
+    position: relative;
+
 }
 
 .postProfile {
@@ -340,10 +343,22 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 75px;
 }
 
 .postInfoUp, .postInfoDown {
 	display: flex;
+}
+
+.postInfoUp{
+	display: flex;
+	align-items: center;
+	mergin-bottom: 4px;
+}
+
+.postInfoDown{
+	display: flex;
+	align-items: center;
 }
 
 .profileInfo {
@@ -357,11 +372,20 @@ body, html {
 
 /* 신고 영역 스타일 */
 .reportArea {
-	display: flex;
+/* 	position: absolute; */
+/* 	display: flex; */
+/*     flex-direction: column; */
+/*     align-items: flex-end; */
+/*     justify-content: flex-start; */
+/*     margin-left: 10px; */
+
+	position: absolute; /* 부모(.postUpBox)의 오른쪽 상단에 고정 */
+    right: 15px;
+    top: 10px;
+    display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: center; /* 세로 중앙 */
-    margin-left: 10px;
+    gap: 5px;
 }
 
 .reportIcon {
@@ -380,6 +404,7 @@ body, html {
 	padding: 2px;
 	outline: none;
 	display: none;
+	margin-top: 5px;
 }
 
 .reportBtn {
@@ -389,9 +414,6 @@ body, html {
 	border-radius: 10px;
 	font-weight: bold;
 	display: none;
-	position: absolute;
-	top: 60px;
-	left: 20px;
 	width: 90px;
 }
 
@@ -675,6 +697,18 @@ a{
 	color: #f5deb8;
 }
 
+.navicon:hover {
+   transform: translateY(-3px);
+   /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.navicon:active {
+   transform: translateY(2px);
+   /* 아래로 눌림 */
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 </style>
 </head>
 
@@ -794,7 +828,7 @@ a{
 
 										<div class="postInfoBox">
 											<div class="postInfoUp">
-												<div class="profileName profileInfo">${i.mem_nickname}</div>
+												<div class="profileName profileInfo">${nickname}</div>
 												<div class="profileLocal profileInfo">${i.mem_dong}</div>
 
 												<div class="profileCatagory profileInfo">
@@ -821,7 +855,7 @@ a{
 										<c:if test="${loginId != null && loginId != i.mem_id}">
 											<div class="reportArea">
 												<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
-													style="width: 25px; height: 25px; margin-bottom: 5px"></img> <select class="reportSelect">
+													style="width: 25px; height: 25px;"></img> <select class="reportSelect">
 													<option class="report-menu" disabled selected>신고 사유</option>
 													<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
 													<option class="report-menu" value="badWord">욕설/비방</option>
@@ -884,10 +918,10 @@ a{
 		</div>
 
 		<div class="bottomBar">
-			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
-				class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
-				class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
-				class="fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
 
 			<c:choose>
 				<c:when test="${loginId == null}">

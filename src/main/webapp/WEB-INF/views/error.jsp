@@ -196,6 +196,18 @@ button, body {
 .rightImg {
 	right: 0;
 }
+
+.navicon:hover {
+   transform: translateY(-3px);
+   /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.navicon:active {
+   transform: translateY(2px);
+   /* 아래로 눌림 */
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 </style>
 
 </head>
