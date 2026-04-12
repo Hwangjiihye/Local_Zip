@@ -110,6 +110,10 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
+        .meetingDetail, .deleteBtn, .outBtn, .myMeetingBtn, .manageBtn, .acceptBtn, .rejectBtn {
+        	cursor: pointer;
+			transition: all 0.2s ease;
+        }
 		.manageMeeting{
 			display: flex;
 			gap: 20px;
@@ -176,6 +180,7 @@
 		    font-size: large;
 		    color: #f5f5f5;
 		    width: 80%;
+		    cursor: not-allowed;
 		}
 		.acceptedBtn{
 			background-color: #7BB8C9;

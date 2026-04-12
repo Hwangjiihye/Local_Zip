@@ -195,18 +195,24 @@ hr {
 .backBtn:hover{
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
 }
 
 .duplCheck:active,
 .authCheck:active,
 .confirmBtn:active,
 .searchBtn:active,
-.signUpBtn:hover,
-.backBtn:hover{
+.signUpBtn:active,
+.backBtn:active{
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+.duplCheck, .authCheck, .confirmBtn, .searchBtn, .signUpBtn, .backBtn{
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
 .leftImg, .rightImg{
 	position: absolute;
 	width: 400px;

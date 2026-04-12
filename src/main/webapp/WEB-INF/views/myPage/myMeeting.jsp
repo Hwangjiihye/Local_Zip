@@ -125,6 +125,10 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 		
+		.meetingDetail, .deleteBtn, .outBtn, .myMeetingBtn, .manageBtn {
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
 		.card-header {
 		    display: flex;
 		    justify-content: space-between;
