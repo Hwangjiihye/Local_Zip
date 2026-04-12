@@ -92,6 +92,7 @@ public class MembersController {
 		
 		if(mem_id == null || mem_id.trim().equals("") || mem_password == null || mem_password.trim().equals("")) {
 			rttr.addFlashAttribute("msg", "empty");
+			rttr.addFlashAttribute("mem_id", mem_id); // 로그인 실패 시, id 살리기
 			return "redirect:/members/loginUi";
 		}
 		
@@ -161,8 +162,10 @@ public class MembersController {
 			return "redirect:/admin/adminPage";
 		} else if(result == 0){
 			rttr.addFlashAttribute("msg", "pwFail");
+			rttr.addFlashAttribute("mem_id", mem_id);
 		} else {
 			rttr.addFlashAttribute("msg", "idFail");
+			rttr.addFlashAttribute("mem_id", mem_id);
 		}
 		
 		

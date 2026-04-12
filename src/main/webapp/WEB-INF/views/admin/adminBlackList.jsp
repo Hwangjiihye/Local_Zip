@@ -14,6 +14,7 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 * {box-sizing: border-box;}
 
@@ -635,7 +636,11 @@ img{
 				
 			
 			// 블랙리스트 버튼을 눌렀을 때
-			$(document).on("click", ".blackOnBtn",  function(){
+			$(document).on("click", ".blackOnBtn",  function(e){
+				
+				e.preventDefault();
+				e.stopPropagation();
+				
 				let btn = $(this)
 				let target_id = btn.data("target_id");
 				let day = btn.closest(".postBox").find(".endOption").val();
@@ -646,11 +651,16 @@ img{
 				// 같은 게시글 찾기
 				let currentBox = btn.closest(".postBox");
 				let group_seq = currentBox.data("group_seq");
-				
 				let box = $(".postBox[data-group_seq='" + group_seq + "']");
 				
-				if(day == null){
-					alert("정지일수를 먼저 선택해 주세요.");
+				if(day == null) {
+					Swal.fire({
+						icon: "info",
+						title: "Wait  !",
+						text: "정지일수를 먼저 선택해 주세요.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
 					return;
 				}
 				
@@ -667,9 +677,21 @@ img{
 					},
 					success : function(resp){
 						if(resp == "fail"){
-							alert("관리자는 블랙리스트로 등록할 수 없습니다.")
+							Swal.fire({
+								icon: "error",
+								title: "Fail  !",
+								text: "관리자는 블랙리스트로 등록할 수 없습니다.",
+								iconColor: "#EB0000",
+								confirmButtonColor: "#FFB300"
+							});
 						}else if(resp == "success"){
-							alert(target_id + "님을 블랙리스트에 등록했습니다.");
+							Swal.fire({
+								icon: "success",
+								title: "Success  !",
+								text: target_id + "님을 블랙리스트에 등록했습니다.",
+								iconColor: "#FFB300",
+								confirmButtonColor: "#FFB300"
+							});
 							box.find(".reportAndBlackBtn").html('<button class="offBtn blackOffBtn" data-target_id="' + target_id +'">해제</button>');
 							box.find(".endDiv").hide();
 						}
@@ -677,7 +699,11 @@ img{
 				});
 			});
 			
-			$(document).on("click", ".blackOffBtn",  function(){
+			$(document).on("click", ".blackOffBtn",  function(e){
+				
+				e.preventDefault();
+				e.stopPropagation();
+				
 				let btn = $(this)
 				let target_id = btn.data("target_id");
 				let box = $(".postBox[data-target_id='" + target_id + "']");
@@ -691,7 +717,13 @@ img{
 						reports_status : 5
 					},
 					success : function(resp){
-						alert(target_id + "님을 블랙리스트에서 해제했습니다.");
+						Swal.fire({
+							icon: "success",
+							title: "Success  !",
+							text: target_id + "님을 블랙리스트에서 해제했습니다.",
+							iconColor: "#FFB300",
+							confirmButtonColor: "#FFB300"
+						});
 						
 						box.find(".reportAndBlackBtn").html('<button class="offfBtn blackOffCheckBtn" disabled style="background-color: #6DBE45; color: white; width: 270px; border-radius: 10px; height: 35px; border:none;">해제완료</button>');
 						box.find(".endDiv").hide();
@@ -699,24 +731,46 @@ img{
 				});
 			});
 			
-			$(document).on("click", ".reportCheckBtn", function(){ // 반려버튼 눌렀을 때, 신고목록 삭제 / 리스트 미출력
+			$(document).on("click", ".reportCheckBtn", function(e){ // 반려버튼 눌렀을 때, 신고목록 삭제 / 리스트 미출력
+				
+				e.preventDefault();
+				e.stopPropagation();
+				
 				let btn = $(this);
 				let reports_seq = btn.data("reports_seq");
 				
-				if(confirm("정말 반려 처리하시겠습니까?")){
-					$.ajax({
+				Swal.fire({
+					icon: "warning",
+					title: "Reject  ?",
+					text: "정말 반려 처리하시겠습니까?",
+					showCancelButton: true,
+					confirmButtonColor: "#FFB300",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "반려",
+					cancelButtonText: "취소"
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.ajax({
 						url : "/admin/reportReject",
 						type : "get",
 						data : {
 							reports_seq : reports_seq
 						},
 						success : function(resp){
-							alert("반려 처리가 완료되었습니다.");
-							btn.closest(".postBox").remove(); // 반려 처리된 목록 바로 제거 ( 새로고침해도 DB는 연동되어 목록 출력되지 않음. )
+							Swal.fire({
+								icon: "success",
+								title: "Success  !",
+								text: "반려 처리가 완료되었습니다.",
+								iconColor: "#FFB300",
+								confirmButtonColor: "#FFB300"
+							}).then(() => {
+								btn.closest(".postBox").remove(); // 반려 처리된 목록 바로 제거 ( 새로고침해도 DB는 연동되어 목록 출력되지 않음. )
+							});
 						}
 					});
 				}
 			});
+		});
 	</script>
 </body>
 </html>
