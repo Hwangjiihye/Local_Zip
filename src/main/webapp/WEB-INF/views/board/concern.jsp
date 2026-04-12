@@ -12,549 +12,490 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        /* 폰트 */
-        @font-face {
-            font-family: 'GMarketSans';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
-            font-weight: 300;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'GMarketSans';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-            font-weight: 500;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'GMarketSans';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
-            font-weight: 700;
-            font-display: swap;
-        }
-
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* 폰트 지정 */
-        button,
-        body {
-            font-family: 'GMarketSans', sans-serif;
-        }
-
-        .container {
-            position: relative;
-            top: 100px;
-
-            width: 100%;
-            min-height: 100vh;
-            /* 최소 높이 지정 : 브라우저 */
-
-            border: 1px solid black;
-            background-color: #fbe5c0;
-        }
-
-
-        .headBox {
-            position: fixed;
-            top: 0;
-            left: 0;
-
-            width: 100%;
-            height: 100px;
-
-            padding-left: 20px;
-
-            font-weight: bold;
-            font-size: 50px;
-            color: #A66A3F;
-            background-color: #F2D3A2;
-            border-bottom: 2px solid #A66A3F;
-            /* 아래쪽만 줄 그음 */
-
-            line-height: 100px;
-            z-index: 1000;
-
-        }
-
-        .categoryBtnBox {
-
-            width: 100%;
-            height: 70px;
-        }
-
-        .categoryBtns {
-
-            position: relative;
-            top: 20px;
-            left: 20px;
-
-            /* 수정: 고정 800px 대신 화면의 90%만 차지하게 */
-            width: 90%;
-            max-width: 800px;
-        }
-        
-        .nowBtn{
-         	background-color: #fecc56;
-            color: #A66A3F;
-
-            transform: translateY(-3px);
-            /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            
-            
-            height: 25px;
-
-            border-radius: 10px;
-            border: 1px solid #FFB300;
-
-            align-items: center;
-            /* 수직 중앙 정렬 */
-
-            vertical-align: middle;
-            /* 버튼들끼리 줄이 안 맞을 때를 대비 */
-
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-
-        .topBtn {
-            height: 25px;
-
-            background-color: #FFB300;
-            border-radius: 10px;
-            border: 1px solid #FFB300;
-            color: #3e5e40;
-
-            align-items: center;
-            /* 수직 중앙 정렬 */
-
-            vertical-align: middle;
-            /* 버튼들끼리 줄이 안 맞을 때를 대비 */
-
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .categoryBtn {
-            margin-right: 10px;
-            height: 30px;
-
-            /* 그림자 효과 */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
-            /* 애니메이션 부드럽게 */
-            transition: all 0.2s ease;
-        }
-
-        .categoryBtn:hover {
-            background-color: #fecc56;
-            color: #A66A3F;
-
-            transform: translateY(-3px);
-            /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .categoryBtn:active {
-            transform: translateY(2px);
-            /* 아래로 눌림 */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .bodyBox {
-            width: 100%;
-            min-height: 100vh;
-            /* 최소 높이 지정 : 브라우저 */
-
-            margin-top: -40px;
-        }
-
-
-        .orderBox {
-            text-align: right;
-            font-size: 14px;
-
-            position: relative;
-            top: 30px;
-
-            width: 95%;
-            max-width: 1500px;
-
-            margin: auto;
-
-            border-radius: 10px;
-        }
-        .orderBtn {
-            border: none;
-            border-radius: 30%;
-            background-color: transparent;
-
-            font-size: 15px;
-
-            color: #A66A3F;
-        }
-
-        .orderBtn:hover {
-            background-color: #fecc56;
-        }
-
-
-        .postBox {
-            /* 수정: 고정 1500px 제거 */
-            width: 95%;
-            max-width: 1500px;
-            /* 적당히 보기 좋은 최대 너비 설정 */
-
-            min-height: 200px;
-            height: auto;
-
-            margin: auto;
-            margin-top: 30px;
-
-            border-radius: 10px;
-            
-            /* 그림자 효과 */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-
-        }
-
-        .postUpBox {
-            width: 100%;
-            height: 95px;
-            display: flex;
-            
-            border-radius: 10px 10px 0 0;
-            background-color: #F2D3A2;
-        }
-
-
-        .postProfile {
-            width: 75px;
-            height: 75px;
-            border: 4px solid #A66A3F;
-            border-radius: 50%;
-
-            position: relative;
-            top: 10px;
-            left: 10px;
-
-        }
-
-        .contentProfile {
-            margin-top: -10px;
-            margin-left: 2px;
-        }
-
-        .postInfoBox {
-            width: 300px;
-            min-height: 50px;
-
-            position: relative;
-            left: 20px;
-            top: 23px;
-
-            flex-grow: 1;
-            /* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
-        }
-
-        .postInfoUp,
-        .postInfoDown {
-            display: flex;
-        }
-
-
-        .profileInfo {
-            width: auto;
-            margin-right: 15px;
-            /* 정보 사이의 간격 일정하게 부여 */
-
-            /*수직 정렬*/
-            display: flex;
-            align-items: center;
-
-            font-size: 14px;
-            color: #333;
-        }
-
-
-        /* 신고 영역 스타일 */
-        .reportArea {
-            position: relative;
-            top: 8px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            /* 아이콘과 선택창을 세로로 배치 */
-            align-items: flex-end;
-            /* 오른쪽 정렬 */
-            gap: 5px;
-        }
-
-        .reportIcon {
-            color: #A66A3F;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .reportSelect {
-            font-family: 'GMarketSans';
-            border: 1px solid #A66A3F;
-            border-radius: 5px;
-            background-color: #F2D3A2;
-            color: #A66A3F;
-            font-size: 12px;
-            outline: none;
-            display: none;
-        }
-		.reportBtn{
-			background-color: #ffb300;
-			color: #5e361a;
-			border: 1px solid #ffb300;
-			border-radius: 10px;
-			font-weight: bold;
-			display: none;
-		}
-		.reportBtn:hover{
-			transform: translateY(-3px); /* 살짝 위로 뜸 */
-			box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-		}
-		
-		.reportBtn:active{
-			transform: translateY(2px); /* 아래로 눌림 */
-			box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-		}
-		
-        .postMidBox {
-            width: 100%;
-            height: auto;
-        }
-
-        .postTitle {
-            margin: auto;
-			margin-top: 5px;
-            width: 95%;
-            height: 40px;
-			line-height: 40px;
-            font-size: 20px;
-            color: #5e361a;
-        }
-
-        .postContent {
-            margin: auto;
-
-            width: 95%;
-            height: 1.5em;       /* 한 줄 높이만큼 고정 */
-    		line-height: 1.5em;
-
-            font-size: 15px;
-
-            background-color: #f0d8af;
-            border-radius: 5px;
-            padding: 0 10px;
-            white-space: nowrap;
-            overflow: hidden;
-    		text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
-    		display: block;
-    		color: #5e361a;
-        }
-
-
-        .postDownBox {
-            width: 95%;
-            margin: auto;
-
-            min-height: 40px;
-            display: flex;
-            color: #5e361a;
-        }
-
-        .postLikeBox,
-        .postCommentBox {
-            display: flex;
-            align-items: center;
-
-            min-width: 80px;
-            width: auto;
-
-            gap: 10px;
-
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-
-        .beforeHeart:hover,
-        .comment:hover {
-            color: #cdaa69;
-        }
-		
-		/* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
-		.beforeHeart{
-			display : inline;
-		}
-
-        .afterHeart {
-            display: none;
-            color: red;
-        }
-
-        /* active 클래스가 붙었을 때의 제어 */
-        .postLikeBox.active .beforeHeart {
-            display: none;
-        }
-
-        .postLikeBox.active .afterHeart {
-            display: inline;
-        }
-
-        .navicon:hover {
-            transform: translateY(-3px);
-            /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .navicon:active {
-            transform: translateY(2px);
-            /* 아래로 눌림 */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .bottomBox {
-            border: 1px solid #A66A3F;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            border-top: 2px solid #A66A3F;
-            background-color: #F2D3A2;
-
-            gap: 200px;
-        }
-
-        hr {
-            width: 97%;
-            margin-bottom: 40px;
-            border: 1px solid #cdaa69;
-            ;
-        }
-        
-        .pageBox{
-            width: 100%;
-    		text-align: center;   /* 가운데 정렬 */
-    		padding: 20px 0;      /* 상하 여백 */
-    		margin-bottom: 80px;  /* 중요: 하단 바에 가려지지 않도록 아래쪽 여백 확보 */
-    
-    		font-size: 18px;
-    		color: #A66A3F;
-    		font-weight: bold;
-        }
-        
-        
-        .writeBtn{
-            width: 50px;
-            height: 50px;
-            right: 30px;
-            bottom: 90px;
-            cursor: pointer;
-            margin-top: 90%;
-            border-radius: 50%;
-            background-color: #A66A3F;
-            border: #fbe5c0;
-            color: #fbe5c0;
-            font-size: 30px;
-            position: fixed; /* 버튼 따라다니게 만들기 */
-
-            align-items: center;
-            display: flex;
-            justify-content: center;
-
-            /* 그림자 효과 */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-
-            /* 애니메이션 부드럽게 */
-            transition: all 0.2s ease;
-        }
-        
-        .writeBtn:hover{
-        	transform: translateY(-3px); /* 살짝 위로 뜸 */
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-        }
-        
-        a{
-     		color: #5e361a;
-     		text-decoration: none;
-     	}
-     	.emptyBox{
- 			
-  			width: 100%;
-  			height: 600px;
-  			
-  			font-size: 25px;
-  			
-  			color: #5e361a;
-  			
-  			text-align: center;
-  		}
-  		
-  		.pageBox{
-		    text-align: center;
-		    padding: 20px;
-		    font-size: 18px;
-		    color: #A66A3F;
-		    margin-bottom: 55px;
-		}
-		
-		.pageBox a{
-		    display: inline-block;
-		    min-width:35px;
-		    padding:6px 10px;
-		    margin: 0 8px;
-		    text-decoration: none;
-		    color: #A66A3F;
-		    border-radius:6px;
-		    transition:0.2s;
-		    font-weight: normal;
-		    cursor: pointer;
-		}
-		
-		.pageBox a.active{
-			background-color:#fecc56;
-		    font-weight: bold;
-		    color: #5e361a;
-		}
-		
-		.pageBox a:hover{
-		    background-color:#F2D3A2;
-		}
-		
-		.swal2-icon.swal2-info .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
-		
-		.swal2-icon.swal2-warning .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
-    </style>
+/* 폰트 */
+@font-face {
+	font-family: 'GMarketSans';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
+		format('woff');
+	font-weight: 300;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GMarketSans';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff')
+		format('woff');
+	font-weight: 500;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GMarketSans';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff')
+		format('woff');
+	font-weight: 700;
+	font-display: swap;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body, html {
+	margin: 0;
+	padding: 0;
+}
+
+/* 폰트 지정 */
+input, button, body {
+	font-family: 'GMarketSans', sans-serif;
+}
+
+.container {
+	position: relative;
+	top: 100px;
+	width: 100%;
+	min-height: 100vh;
+	/* 최소 높이 지정 : 브라우저 */
+	border: 1px solid black;
+	background-color: #fbe5c0;
+}
+
+.headBox {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100px;
+	padding-left: 20px;
+	font-weight: bold;
+	font-size: 50px;
+	color: #A66A3F;
+	background-color: #F2D3A2;
+	border-bottom: 2px solid #A66A3F;
+	/* 아래쪽만 줄 그음 */
+	line-height: 100px;
+	z-index: 1000;
+}
+
+.categoryBtnBox {
+	width: 100%;
+	height: 70px;
+}
+
+.categoryBtns {
+	position: relative;
+	top: 20px;
+	left: 20px;
+	/* 수정: 고정 800px 대신 화면의 90%만 차지하게 */
+	width: 90%;
+	max-width: 800px;
+}
+
+.nowBtn {
+	background-color: #fecc56;
+	color: #A66A3F;
+	transform: translateY(-3px);
+	/* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	height: 25px;
+	border-radius: 10px;
+	border: 1px solid #FFB300;
+	align-items: center;
+	/* 수직 중앙 정렬 */
+	vertical-align: middle;
+	/* 버튼들끼리 줄이 안 맞을 때를 대비 */
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.topBtn {
+	height: 25px;
+	background-color: #FFB300;
+	border-radius: 10px;
+	border: 1px solid #FFB300;
+	color: #3e5e40;
+	align-items: center;
+	/* 수직 중앙 정렬 */
+	vertical-align: middle;
+	/* 버튼들끼리 줄이 안 맞을 때를 대비 */
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.categoryBtn {
+	margin-right: 10px;
+	height: 30px;
+	/* 그림자 효과 */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	/* 애니메이션 부드럽게 */
+	transition: all 0.2s ease;
+}
+
+.categoryBtn:hover {
+	background-color: #fecc56;
+	color: #A66A3F;
+	transform: translateY(-3px);
+	/* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.categoryBtn:active {
+	transform: translateY(2px);
+	/* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bodyBox {
+	width: 100%;
+	min-height: 100vh;
+	/* 최소 높이 지정 : 브라우저 */
+	margin-top: -40px;
+}
+
+.orderBox {
+	text-align: right;
+	font-size: 14px;
+	position: relative;
+	top: 30px;
+	width: 95%;
+	max-width: 1500px;
+	margin: auto;
+	border-radius: 10px;
+}
+
+.orderBtn {
+   border: none;
+   border-radius: 30%;
+   background-color: transparent;
+   font-size: 15px;
+   color: #A66A3F;
+   cursor: pointer;
+}
+
+.orderBtn:hover {
+	background-color: #fecc56;
+}
+
+.postBox {
+	/* 수정: 고정 1500px 제거 */
+	width: 95%;
+	max-width: 1500px;
+	/* 적당히 보기 좋은 최대 너비 설정 */
+	min-height: 200px;
+	height: auto;
+	margin: auto;
+	margin-top: 30px;
+	border-radius: 10px;
+	/* 그림자 효과 */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+}
+
+.postUpBox {
+	width: 100%;
+	height: 95px;
+	display: flex;
+	border-radius: 10px 10px 0 0;
+	background-color: #F2D3A2;
+}
+
+.postProfile {
+	width: 75px;
+	height: 75px;
+	border: 4px solid #A66A3F;
+	border-radius: 50%;
+	position: relative;
+	top: 10px;
+	left: 10px;
+}
+
+.contentProfile {
+	margin-top: -10px;
+	margin-left: 2px;
+}
+
+.postInfoBox {
+	width: 300px;
+	min-height: 50px;
+	position: relative;
+	left: 20px;
+	top: 23px;
+	flex-grow: 1;
+	/* 신고박스 오른쪽으로 딱 붙게 하기 위해 빈공간을 쭉 늘려주는 코드 */
+}
+
+.postInfoUp, .postInfoDown {
+	display: flex;
+}
+
+.profileInfo {
+	width: auto;
+	margin-right: 15px;
+	/* 정보 사이의 간격 일정하게 부여 */
+	/*수직 정렬*/
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	color: #333;
+}
+
+/* 신고 영역 스타일 */
+.reportArea {
+	position: relative;
+	top: 8px;
+	right: 20px;
+	display: flex;
+	flex-direction: column;
+	/* 아이콘과 선택창을 세로로 배치 */
+	align-items: flex-end;
+	/* 오른쪽 정렬 */
+	gap: 5px;
+}
+
+.reportIcon {
+	color: #A66A3F;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.reportSelect {
+	font-family: 'GMarketSans';
+	border: 1px solid #A66A3F;
+	border-radius: 5px;
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	font-size: 12px;
+	outline: none;
+	display: none;
+}
+
+.reportBtn {
+   background-color: #ffb300;
+   color: #5e361a;
+   border: 1px solid #ffb300;
+   border-radius: 10px;
+   display: none;
+   transition: all 0.2s ease;
+   cursor: pointer;
+}
+
+.reportBtn:hover {
+   transform: translateY(-3px); /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   background-color: #fecc56;
+   color: #A66A3F;
+}
+
+.reportBtn:active {
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.postMidBox {
+	width: 100%;
+	height: auto;
+}
+
+.postTitle {
+	margin: auto;
+	margin-top: 5px;
+	width: 95%;
+	height: 40px;
+	line-height: 40px;
+	font-size: 20px;
+	color: #5e361a;
+}
+
+.postContent {
+	margin: auto;
+	width: 95%;
+	height: 1.5em; /* 한 줄 높이만큼 고정 */
+	line-height: 1.5em;
+	font-size: 15px;
+	background-color: #f0d8af;
+	border-radius: 5px;
+	padding: 0 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+	display: block;
+	color: #5e361a;
+}
+
+.postDownBox {
+	width: 95%;
+	margin: auto;
+	min-height: 40px;
+	display: flex;
+	color: #5e361a;
+}
+
+.postLikeBox, .postCommentBox {
+	display: flex;
+	align-items: center;
+	min-width: 80px;
+	width: auto;
+	gap: 10px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.beforeHeart:hover, .comment:hover {
+	color: #cdaa69;
+}
+
+/* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
+.beforeHeart {
+	display: inline;
+}
+
+.afterHeart {
+	display: none;
+	color: red;
+}
+
+/* active 클래스가 붙었을 때의 제어 */
+.postLikeBox.active .beforeHeart {
+	display: none;
+}
+
+.postLikeBox.active .afterHeart {
+	display: inline;
+}
+
+.navicon:hover {
+	transform: translateY(-3px);
+	/* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.navicon:active {
+	transform: translateY(2px);
+	/* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bottomBox {
+	border: 1px solid #A66A3F;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	border-top: 2px solid #A66A3F;
+	background-color: #F2D3A2;
+	gap: 200px;
+}
+
+hr {
+	width: 97%;
+	margin-bottom: 40px;
+	border: 1px solid #cdaa69;
+	;
+}
+
+.pageBox {
+	width: 100%;
+	text-align: center; /* 가운데 정렬 */
+	padding: 20px 0; /* 상하 여백 */
+	margin-bottom: 80px; /* 중요: 하단 바에 가려지지 않도록 아래쪽 여백 확보 */
+	font-size: 18px;
+	color: #A66A3F;
+	font-weight: bold;
+}
+
+.writeBtn {
+   width: 50px;
+   height: 50px;
+   right: 30px;
+   bottom: 90px;
+   margin-top: 90%;
+   border-radius: 50%;
+   background-color: #A66A3F;
+   color: rgb(255, 179, 0);
+   border: #fbe5c0;
+   font-size: 30px;
+   position: fixed; /* 버튼 따라다니게 만들기 */
+   align-items: center;
+   display: flex;
+   justify-content: center;
+   /* 그림자 효과 */
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+   /* 애니메이션 부드럽게 */
+   transition: all 0.2s ease;
+   cursor: pointer;
+}
+
+.writeBtn:hover {
+   transform: translateY(-3px); /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   color: #fecc56;
+}
+
+a {
+	color: #5e361a;
+	text-decoration: none;
+}
+
+.emptyBox {
+	width: 100%;
+	height: 600px;
+	font-size: 25px;
+	color: #5e361a;
+	text-align: center;
+}
+
+.pageBox {
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #A66A3F;
+	margin-bottom: 55px;
+}
+
+.pageBox a {
+	display: inline-block;
+	min-width: 35px;
+	padding: 6px 10px;
+	margin: 0 8px;
+	text-decoration: none;
+	color: #A66A3F;
+	border-radius: 6px;
+	transition: 0.2s;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.pageBox a.active {
+	background-color: #fecc56;
+	font-weight: bold;
+	color: #5e361a;
+}
+
+.pageBox a:hover {
+	background-color: #F2D3A2;
+}
+
+.swal2-icon.swal2-info .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.swal2-icon.swal2-warning .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+</style>
 
 </head>
 <body>
@@ -658,7 +599,7 @@
 		        <div class="pageBox"></div>
         	</c:otherwise>
 		</c:choose>
-        <a href="/board/write"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i></button></a>
+        <a href="/board/write"><button class="writeBtn" type="button"><i class="fa-solid fa-circle-plus fa-2xl"></i></button></a>
         
 
         <div class="bottomBox">

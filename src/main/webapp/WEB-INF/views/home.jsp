@@ -82,7 +82,6 @@ body, html {
 	gap: 0px;
 }
 
-
 .joinBtn {
 	margin-left: -1px;
 }
@@ -186,16 +185,14 @@ body, html {
 	display: flex;
 	justify-content: right; /* 가로(수평) 오른쪽 정렬 */
 	align-items: center; /* 세로(수직) 중앙 정렬 */
-	
 	gap: 15px;
-
 	padding-right: 50px;
 	height: auto;
 	margin-top: 30px;
 	margin-bottom: 10px;
 }
 
-.searchBox{
+.searchBox {
 	width: 300px;
 	border-radius: 10px;
 	display: flex;
@@ -211,32 +208,29 @@ body, html {
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
 	border: none;
-	outline:none; /* 눌렀을 때 선 안보이게 */
+	outline: none; /* 눌렀을 때 선 안보이게 */
 	background-color: #FFEFD5;
 }
 
-.searchIconBox{
+.searchIconBox {
 	width: 15%;
-	
 	display: flex;
 	justify-content: center; /* 가로(수평) 오른쪽 정렬 */
 	align-items: center; /* 세로(수직) 중앙 정렬 */
-	
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
-	
 	background-color: #FFB300;
 	color: #3e5e40;
-	
-	transition: 0.2s;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
-.searchIconBox:hover{
+.searchIconBox:hover {
 	background-color: #fecc56;
 	color: #A66A3F;
 }
 
-.searchIconBox:active{
+.searchIconBox:active {
 	background-color: #FFB300;
 }
 
@@ -252,6 +246,7 @@ body, html {
 	color: #A66A3F;
 	font-size: 15px;
 	margin-top: 10px;
+	cursor: pointer;
 }
 
 .orderBtn:hover {
@@ -282,11 +277,14 @@ body, html {
 	/* display: block; */
 }
 
-.loginBtn, .logoutBtn, .joinBtn{
-	background-color: #FFB300; 
+.loginBtn, .logoutBtn, .joinBtn {
+	background-color: #FFB300;
 	color: #5e361a;
+	cursor: pointer;
 }
-.loginBtn:hover, .logoutBtn:hover, .joinBtn:hover, .categoryBtn button:hover {
+
+.loginBtn:hover, .logoutBtn:hover, .joinBtn:hover, .categoryBtn button:hover
+	{
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	background-color: #fecc56;
@@ -301,7 +299,6 @@ body, html {
 	background-color: #fecc56;
 	color: #A66A3F;
 }
-
 
 .welcome2 {
 	font-size: 12px;
@@ -323,48 +320,48 @@ body, html {
 	margin-bottom: 30px;
 	border-radius: 10px;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
 }
 
 .postUpBox {
 	width: 100%;
 	min-height: 95px;
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    border-radius: 10px 10px 0 0;
-    background-color: #F2D3A2;
-    position: relative;
-
+	display: flex;
+	align-items: center;
+	padding: 10px 15px;
+	border-radius: 10px 10px 0 0;
+	background-color: #F2D3A2;
+	position: relative;
 }
 
 .postProfile {
 	width: 75px;
-    height: 75px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	height: 75px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .postInfoBox {
-    margin-left: 15px;
-    flex-grow: 1; /* 남은 공간 다 차지 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 75px;
+	margin-left: 15px;
+	flex-grow: 1; /* 남은 공간 다 차지 */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 75px;
 }
 
 .postInfoUp, .postInfoDown {
 	display: flex;
 }
 
-.postInfoUp{
+.postInfoUp {
 	display: flex;
 	align-items: center;
 	mergin-bottom: 4px;
 }
 
-.postInfoDown{
+.postInfoDown {
 	display: flex;
 	align-items: center;
 }
@@ -380,20 +377,19 @@ body, html {
 
 /* 신고 영역 스타일 */
 .reportArea {
-/* 	position: absolute; */
-/* 	display: flex; */
-/*     flex-direction: column; */
-/*     align-items: flex-end; */
-/*     justify-content: flex-start; */
-/*     margin-left: 10px; */
-
+	/* 	position: absolute; */
+	/* 	display: flex; */
+	/*     flex-direction: column; */
+	/*     align-items: flex-end; */
+	/*     justify-content: flex-start; */
+	/*     margin-left: 10px; */
 	position: absolute; /* 부모(.postUpBox)의 오른쪽 상단에 고정 */
-    right: 15px;
-    top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
+	right: 15px;
+	top: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 5px;
 }
 
 .reportIcon {
@@ -420,14 +416,17 @@ body, html {
 	color: #5e361a;
 	border: 1px solid #ffb300;
 	border-radius: 10px;
-	font-weight: bold;
 	display: none;
 	width: 90px;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .reportBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
 }
 
 .reportBtn:active {
@@ -537,17 +536,18 @@ body, html {
 	transition: 0.3s;
 }
 
-.topBtn{
-	 background-color: #FFB300;
-	 border-radius: 10px;
-	 border: 1px solid #FFB300;
-	 color: #3e5e40;
-	 height: 30px;
-	 margin-right: 10px;
-	transition: all 0.2s ease;/* 애니메이션 부드럽게 */
+.topBtn {
+	background-color: #FFB300;
+	border-radius: 10px;
+	border: 1px solid #FFB300;
+	color: #3e5e40;
+	height: 30px;
+	margin-right: 10px;
+	transition: all 0.2s ease; /* 애니메이션 부드럽게 */
+	cursor: pointer;
 }
 
-.topBtn:hover{
+.topBtn:hover {
 	color: #A66A3F;
 	background-color: #fecc56;
 }
@@ -564,9 +564,9 @@ body, html {
 
 .contentProfile {
 	width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
+	height: 70px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 .popup-overlay {
@@ -600,6 +600,8 @@ body, html {
 	cursor: pointer;
 	font-weight: bold;
 	font-size: 20px;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .close-btn:hover {
@@ -607,14 +609,15 @@ body, html {
 }
 
 .swal2-icon.swal2-info .swal2-icon-content {
-          font-size: 50px;     /* i 크기 */
-          transform: translateY(5px);
-          line-height: 70px;   /* 세로 위치 (핵심🔥) */
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
 }
+
 .swal2-icon.swal2-warning .swal2-icon-content {
-          font-size: 50px;     /* i 크기 */
-          transform: translateY(5px);
-          line-height: 70px;   /* 세로 위치 (핵심🔥) */
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
 }
 
 .emptyBox {
@@ -626,12 +629,10 @@ body, html {
 	margin-top: 80px;
 }
 
-a{
+a {
 	/* a태그로 인해 topBtn앞에 -작대기 뜨는거 없애는 코드 */
 	text-decoration: none !important;
 }
-
-
 
 .writeBtn {
 	width: 50px;
@@ -649,19 +650,19 @@ a{
 	align-items: center;
 	display: flex;
 	justify-content: center;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);/* 그림자 효과 */	
-	transition: all 0.3s ease;/* 애니메이션 부드럽게 */
-    z-index: 1001;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+	transition: all 0.3s ease; /* 애니메이션 부드럽게 */
+	z-index: 1001;
 }
 
-.writeBtn:hover{
+.writeBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	color: #fecc56;
 }
 
-.moveTopBtn{
-/* 	color: rgb(255, 179, 0); */
+.moveTopBtn {
+	/* 	color: rgb(255, 179, 0); */
 	width: 50px;
 	height: 50px;
 	right: 35px;
@@ -679,44 +680,42 @@ a{
 	justify-content: center;
 	/* 그림자 효과 */
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1001;
-    transition: all 0.3s ease; /* 애니메이션 부드럽게 */
-    display: none; /* 초기에는 숨김 */
-    
-    /* 추가/수정할 부분 */
-    padding: 0;                /* 패딩 초기화 */
-    line-height: 0;            /* 텍스트 줄바꿈 간격 제거 */
+	z-index: 1001;
+	transition: all 0.3s ease; /* 애니메이션 부드럽게 */
+	display: none; /* 초기에는 숨김 */
+	/* 추가/수정할 부분 */
+	padding: 0; /* 패딩 초기화 */
+	line-height: 0; /* 텍스트 줄바꿈 간격 제거 */
 }
 
 .moveTopBtn i {
-    /* 아이콘 자체에 걸린 기본 여백 제거 */
-    margin: 0;
-    padding: 0;
+	/* 아이콘 자체에 걸린 기본 여백 제거 */
+	margin: 0;
+	padding: 0;
 }
 
 /* 상단 이동 버튼이 위로 올라갔을 때의 위치 */
 .moveTopBtn.up-pos {
-    bottom: 175px; 
+	bottom: 175px;
 }
 
-.moveTopBtn:hover{
+.moveTopBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	color: #f5deb8;
 }
 
 .navicon:hover {
-   transform: translateY(-3px);
-   /* 살짝 위로 뜸 */
-   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	transform: translateY(-3px);
+	/* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .navicon:active {
-   transform: translateY(2px);
-   /* 아래로 눌림 */
-   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	transform: translateY(2px);
+	/* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
 </style>
 </head>
 

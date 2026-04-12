@@ -49,8 +49,8 @@ body, html {
 }
 
 /* 폰트 지정 */
-button, body {
-	font-family: 'GMarketSans', sans-serif;
+input, button, body {
+   font-family: 'GMarketSans', sans-serif;
 }
 
 .container {
@@ -172,11 +172,12 @@ button, body {
 }
 
 .orderBtn {
-	border: none;
-	border-radius: 30%;
-	background-color: transparent;
-	font-size: 15px;
-	color: #A66A3F;
+   border: none;
+   border-radius: 30%;
+   background-color: transparent;
+   font-size: 15px;
+   color: #A66A3F;
+   cursor: pointer;
 }
 
 .orderBtn:hover {
@@ -195,6 +196,7 @@ button, body {
 	border-radius: 10px;
 	/* 그림자 효과 */
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
 }
 
 .postUpBox {
@@ -276,17 +278,20 @@ button, body {
 }
 
 .reportBtn {
-	background-color: #ffb300;
-	color: #5e361a;
-	border: 1px solid #ffb300;
-	border-radius: 10px;
-	font-weight: bold;
-	display: none;
+   background-color: #ffb300;
+   color: #5e361a;
+   border: 1px solid #ffb300;
+   border-radius: 10px;
+   display: none;
+   transition: all 0.2s ease;
+   cursor: pointer;
 }
 
 .reportBtn:hover {
-	transform: translateY(-3px); /* 살짝 위로 뜸 */
-	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   transform: translateY(-3px); /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   background-color: #fecc56;
+   color: #A66A3F;
 }
 
 .reportBtn:active {
@@ -409,30 +414,31 @@ hr {
 }
 
 .writeBtn {
-	width: 50px;
-	height: 50px;
-	right: 30px;
-	bottom: 90px;
-	cursor: pointer;
-	margin-top: 90%;
-	border-radius: 50%;
-	background-color: #A66A3F;
-	border: #fbe5c0;
-	color: #fbe5c0;
-	font-size: 30px;
-	position: fixed; /* 버튼 따라다니게 만들기 */
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	/* 그림자 효과 */
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-	/* 애니메이션 부드럽게 */
-	transition: all 0.2s ease;
+   width: 50px;
+   height: 50px;
+   right: 30px;
+   bottom: 90px;
+   margin-top: 90%;
+   border-radius: 50%;
+   background-color: #A66A3F;
+   color: rgb(255, 179, 0);
+   border: #fbe5c0;
+   font-size: 30px;
+   position: fixed; /* 버튼 따라다니게 만들기 */
+   align-items: center;
+   display: flex;
+   justify-content: center;
+   /* 그림자 효과 */
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+   /* 애니메이션 부드럽게 */
+   transition: all 0.2s ease;
+   cursor: pointer;
 }
 
 .writeBtn:hover {
-	transform: translateY(-3px); /* 살짝 위로 뜸 */
-	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   transform: translateY(-3px); /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   color: #fecc56;
 }
 
 .emptyBox {
@@ -605,7 +611,7 @@ hr {
 
 
 		<a href="/board/write"><button class="writeBtn" type="button">
-				<i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i>
+				<i class="fa-solid fa-circle-plus fa-2xl"></i>
 			</button></a>
 
 

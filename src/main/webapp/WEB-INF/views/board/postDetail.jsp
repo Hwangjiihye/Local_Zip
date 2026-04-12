@@ -105,6 +105,8 @@ button, body {
 	border-radius: 10px;
 	font-weight: bold;
 	height: 30px;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .topBtn {
@@ -368,6 +370,8 @@ button, body {
 	transform: translateY(-3px);
 	/* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	 background-color: #fecc56;
+	 color: #A66A3F;
 }
 
 .navicon:active, .applyBtn:active, .backBtn:active, .updateBtn:active,
@@ -500,6 +504,9 @@ a {
 	width: 60px;
 	height: 40px;
 	font-size: medium;
+	transition: all 0.2s ease;
+	cursor: pointer;
+	
 }
 
 .btnDiv {
@@ -517,6 +524,8 @@ a {
 	border: 1px solid #ffb300;
 	border-radius: 10px;
 	font-weight: bold;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .completeBtn, .cancelBtn, .OBtn, .XBtn, .fileDelBtn {

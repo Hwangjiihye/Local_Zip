@@ -128,6 +128,7 @@ button, body {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	background-color: #fecc56;
+	color: #A66A3F;
 }
 
 .backBtn:active{
@@ -174,6 +175,7 @@ button, body {
 	border-radius: 10px;
 	/* 그림자 효과 */
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
 }
 
 .postUpBox {
