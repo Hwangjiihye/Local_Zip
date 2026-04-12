@@ -173,6 +173,7 @@ button, body, div, input {
 	font-size: 17px;
 	font-weight: bold;
 	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .requestBtn:hover, .backBtn:hover {
