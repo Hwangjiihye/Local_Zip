@@ -113,14 +113,21 @@ body {
     gap : 5px;
 }
 
-.categoryBtnAll:hover, .navicon:hover {
+.categoryBtnAll:hover{
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
 } 
 
-.categoryBtnAll:active, .navicon:active {
+.navicon:hover{
+	cursor: pointer;
+}
+
+.categoryBtnAll:active, .navicon:active , .onBtn:active, .offBtn:active{
 	transform: translateY(2px); /*아래로 눌림*/
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+	
 }
 
 .nowBtn{
@@ -290,7 +297,16 @@ img{
 .blackOffCheckBtn{
 	width: 270px;
 	background-color: #6DBE45;
+	cursor: not-allowed;
 }
+
+.onBtn:hover, .offBtn:hover{
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	transition: all 0.2s ease;
+	cursor: pointer;
+} 
+
 
 
 .endOption{
@@ -434,6 +450,10 @@ img{
 	width: 16.67px;
 	height: 16.10px;
 }
+
+.filterBtn{
+	transition: all 0.2s ease;
+}
 </style>
 </head>
 
@@ -519,14 +539,14 @@ img{
 					        			<div class="reportAndBlackBtnDiv">
 					        				<div class="reportAndBlackBtn">
 						        				<button class="offBtn blackOffBtn" data-target_id="${i.target_id}">해제</button>
-						        				<button class="offBtn blackOffCheckBtn" style="display:none;" disabled>해제완료</button>
+						        				<button class="offfBtn blackOffCheckBtn" style="display:none;" disabled>해제완료</button>
 					        				</div>
 					        			</div>
 								</c:when>
 								<c:when test="${i.reports_status == '5'}">
 									<div class="reportAndBlackBtnDiv">
 					        				<div class="reportAndBlackBtn">
-						        				<button class="offBtn blackOffCheckBtn" disabled>해제완료</button>
+						        				<button class="offfBtn blackOffCheckBtn" disabled>해제완료</button>
 					        				</div>
 					        			</div>
 								</c:when>
@@ -671,7 +691,7 @@ img{
 					success : function(resp){
 						alert(target_id + "님을 블랙리스트에서 해제했습니다.");
 						
-						box.find(".reportAndBlackBtn").html('<button class="offBtn blackOffCheckBtn" disabled style="background-color: #6DBE45; color: white; width: 270px; border-radius: 10px; height: 35px; border:none;">해제완료</button>');
+						box.find(".reportAndBlackBtn").html('<button class="offfBtn blackOffCheckBtn" disabled style="background-color: #6DBE45; color: white; width: 270px; border-radius: 10px; height: 35px; border:none;">해제완료</button>');
 						box.find(".endDiv").hide();
 					}
 				});

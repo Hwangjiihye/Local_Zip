@@ -114,7 +114,14 @@ body {
     gap : 5px;
 }
 
-.categoryBtnAll:hover, .navicon:hover {
+.categoryBtnAll:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
+} 
+
+.navicon:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 } 
@@ -414,6 +421,24 @@ img{
 .textContent, .answerDiv, .inputQaReply, .inputUpdate{
 	white-space: pre-wrap;
 }
+
+.filterBtn{
+	transition: all 0.2s ease;
+	cursor: pointer;
+}
+
+.adminBtn, .UpdateBtn, .replyBtn{
+	transition: all 0.2s ease;
+	cursor: pointer;
+}
+
+.adminBtn:hover, .UpdateBtn:hover, .replyBtn:hover{
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
+} 
+
 </style>
 </head>
 

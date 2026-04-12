@@ -116,6 +116,8 @@ body {
 .categoryBtnAll:hover, .navicon:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
 } 
 
 .categoryBtnAll:active, .navicon:active {
@@ -418,6 +420,10 @@ img{
 
 .pageBox a:hover{
     background-color:#F2D3A2;
+}
+
+.filterBtn{
+	transition: all 0.2s ease;
 }
 </style>
 </head>
