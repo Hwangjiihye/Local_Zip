@@ -120,7 +120,8 @@
         .deleteBtn:active,
         .outBtn:active,
         .myMeetingBtn:active,
-        .manageBtn:active{
+        .manageBtn:active,
+        .backBtn:active{
             transform: translateY(2px); /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
@@ -254,6 +255,28 @@
 		.manageBtn{
 		 	background-color: #E5D3B3;
 		}
+		
+		.backBtn{
+			background-color: #ffb300;
+			color: #5e361a;
+			border: 1px solid #ffb300;
+			border-radius: 10px;
+			font-weight: bold;
+			height: 30px;
+			position: relative;
+			left: 1470px;
+			top: 10px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+		
+		.backBtn:hover{
+			transform: translateY(-3px); /* 살짝 위로 뜸 */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            background-color: #fecc56;
+   			color: #A66A3F;
+		}
+		
 		.emptyMeeting{
 			width: 100%;
   			height: 600px;
@@ -292,7 +315,9 @@
 
 	<div class="container">
 		<div class="top-section">
-			<div class="mainTitle">내 모임.zip</div>
+			<div class="mainTitle">내 모임.zip
+				<a href="/members/mypage"><input class="backBtn" type="button" value="내.zip으로 가기"></a>
+			</div>
 			<div class="manageMeeting">
 				<input class="myMeetingBtn" type="button" value="참여 중인 모임">
 				<input class="manageBtn" type="button" value="신청 관리">

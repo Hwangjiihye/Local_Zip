@@ -34,7 +34,7 @@
             font-display: swap;
         }
 
-        button, body {
+        button, body, input {
             font-family: 'GMarketSans', sans-serif;
             color: #5e361a;
         }
@@ -122,16 +122,34 @@
             transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
-        
+        .logoutBtn{
+        	background-color: #FFB300;
+			color: #5e361a;
+			border: none;
+			position: relative;
+			left: 1610px;
+			top: 10px;
+			height: 30px;
+			width: 80px;
+			border-radius: 5px;
+			line-height: 32px;
+        }
+        .logoutBtn:hover{
+        	transform: translateY(-3px); /* 살짝 위로 뜸 */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            background-color: #fecc56;
+   			color: #A66A3F;
+        }
         .myInfo,
         .myWrite,
         .myLike,
         .myClub,
         .CS,
-        .notice{
+        .notice,
+        .logoutBtn{
+        	cursor: pointer;
         	transition: all 0.2s ease;
         }
-        
 
         .navicon:active,
         .myInfo:active,
@@ -139,7 +157,8 @@
         .myLike:active,
         .myClub:active,
         .CS:active,
-        .notice:active{
+        .notice:active,
+        .logoutBtn:active{
             transform: translateY(2px); /* 아래로 눌림 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
@@ -265,7 +284,9 @@
 </style>
 </head>
 <body>
-	<div class="topBar">내.zip</div>
+	<div class="topBar">내.zip
+		<a href="/members/logout"><input class="logoutBtn" type="button" value="로그아웃"></a>
+	</div>
 	<div class="userBarDiv">
 		<div class="userBarContents">${nickname}님, 반가워요!</div>
 	    <img class="userBar" src="/resources/images/userbar.png">
