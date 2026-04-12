@@ -202,7 +202,7 @@ a {
 
 .postInfoBox {
 	width: 300px;
-	min-height: 50px;
+	/* min-height: 50px; */
 	/*  margin-bottom: 10px; */
 	position: relative;
 	left: 20px;
@@ -478,6 +478,11 @@ a {
 .okBtn:focus {
     outline: none;
 }
+
+.reportIcon{
+	cursor: pointer;
+}
+
 </style>
 
 </head>
@@ -802,6 +807,22 @@ a {
 				});
         		return;
         	} 
+        	
+        	Swal.fire({
+                title: "정말 신고하시겠습니까?",
+                text: "신고는 취소할 수 없습니다.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#FFB300",
+                cancelButtonColor: "#aaa",
+                confirmButtonText: "신고",
+                cancelButtonText: "취소"
+            }).then((result) => {
+
+                if(result.isConfirmed){
+        	
+        	
+        	
         	// 신고 사유 가져오는 코드
         	$.ajax({
         		url:"/report/insert",
@@ -848,8 +869,10 @@ a {
         					});
         	            }
                 	}
-        		})
-        	})
+        		});
+             }
+         });
+      });
         
         // 좋아요 버튼, 신고버튼 클릭 시에는 페이지 이동 X
         $(".postLikeBox, .reportArea, .reportIcon, .reportSelect, .reportBtn").on("click", function (e) {
@@ -933,10 +956,13 @@ a {
         	
         	let box = $(this).closest(".postBox");
         	let seq = $(this).data("seq");
-        	let title = box.find(".postTitle").text().trim(); //
-        	let contents = box.find(".postContent").text().trim();
+        	let title = box.find(".postTitle").html().trim(); // 엔터 살리기
+        	let contents = box.find(".postContent").html().trim(); // 엔터 살리기
         	
-        	if(title === "" && contents === ""){
+        	let titleCheck = box.find(".postTitle").text().trim(); // 빈칸 체크
+        	let contentsCheck = box.find(".postContent").text().trim(); // 빈칸 체크
+        	
+        	if(titleCheck === "" && contentsCheck === ""){
                 Swal.fire({
                     icon: "info",
                     title: "Wait !",
@@ -949,7 +975,7 @@ a {
         	
         	
         	// 빈값 검사
-            if(title === ""){
+            if(titleCheck === ""){
                 Swal.fire({
                     icon: "info",
                     title: "Wait !",
@@ -959,7 +985,7 @@ a {
                 });
                 return;
             } 
-        	if(contents === "") {
+        	if(contentsCheck === "") {
             	Swal.fire({
                     icon: "info",
                     title: "Wait !",
