@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>mypage</title>
+<title>우리동네.zip</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
@@ -122,6 +122,16 @@
             transform: translateY(-3px); /* 살짝 위로 뜸 */
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
+        
+        .myInfo,
+        .myWrite,
+        .myLike,
+        .myClub,
+        .CS,
+        .notice{
+        	transition: all 0.2s ease;
+        }
+        
 
         .navicon:active,
         .myInfo:active,
@@ -182,6 +192,7 @@
     	
     	.myInfoTitle{
     		margin-top: 20px;
+    		
     	}
     	.myWriteIcon, .myLikeIcon, .myClubIcon, .myInfoIcon{
     		width: 30%;
