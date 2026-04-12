@@ -231,168 +231,6 @@ public class MembersController {
 		return "/";
 	}
 	
-//	// 마이페이지 > 작성글(모아보기)를 눌렀을 때,
-//	@RequestMapping("/myPosts")
-//	public String myPosts(HttpSession session, Model model) throws Exception{
-//		
-//		String mem_id = (String)session.getAttribute("loginId");
-//		
-//		List<BoardDTO> list = BoardDao.getMyBoards(mem_id); // 로그인 아이디를 기준으로 전체 게시판 목록 출력
-//		model.addAttribute("listAll",list);
-//		
-//		return "members/myPosts";
-//	}
-//	
-//	// 마이페이지 > 관심 게시글을 눌렀을 때,
-//	@RequestMapping("/myLikes")
-//	public String myLikes(HttpSession session, Model model) throws Exception{
-//		
-//		String mem_id = (String)session.getAttribute("loginId");
-//		
-//		List<BoardDTO> list = BoardDao.getMyLikes(mem_id); // 로그인 아이디 기준, 하트 누른글 모아보기.(join)
-//		model.addAttribute("likeList",list);
-//		
-//		return "members/myLikes";
-//	}
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 마이페이지 > 작성글(모아보기)를 눌렀을 때,
 	@RequestMapping("/myPosts")
 	public String myPosts(HttpSession session, Model model, int cPage) throws Exception{
@@ -424,12 +262,12 @@ public class MembersController {
 		
 		int start = (cPage-1)*10+1;
 		int end = cPage*10;
-		List<BoardDTO> list = BoardDao.getLikesNavi(mem_id,start,end);
+		List<BoardDTO> navi = BoardDao.getLikesNavi(mem_id,start,end); // 네비게이터용 메서드 model로 안보냄.
 		
 		//게시글 갯수 가져오기
 		int totalCount = BoardDao.getTotalLikes(mem_id); // 내가 작성한 글 목록 보여주는
 		
-		// List<BoardDTO> list = BoardDao.getMyLikes(mem_id); // 로그인 아이디 기준, 하트 누른글 모아보기.(join)
+		 List<BoardDTO> list = BoardDao.getMyLikes(mem_id); // 로그인 아이디 기준, 하트 누른글 모아보기.(join) + myLikes.jsp 카테고리도 여기서 출력됨.
 		model.addAttribute("likeList",list);
 		model.addAttribute("cPage",cPage);
 		model.addAttribute("totalCount",totalCount);

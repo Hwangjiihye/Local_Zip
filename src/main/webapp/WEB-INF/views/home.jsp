@@ -900,7 +900,7 @@ a{
 				</div>
 
 				<div class="rightBox">
-					<img src="/resources/images/localCafe.jpg" style="border-radius: 10px;" width="100%" height="100%">
+					<img src="/resources/images/localCafe2.jpg" style="border-radius: 10px;" width="100%" height="100%">
 				</div>
 
 				<a href="/board/write">
