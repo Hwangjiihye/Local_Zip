@@ -83,9 +83,6 @@ public class MembersController {
 	    }
 	    
 	    session.setAttribute("dong", mem_dong);
-	    
-	    System.out.println(mem_dong);
-	    
 	    dao.insert(dto);
 	    return "redirect:/members/loginUi";
 	}
@@ -194,7 +191,6 @@ public class MembersController {
 		Integer role = (Integer) session.getAttribute("role");
 		
 		if(role == 0){
-			System.out.println(role);
 			return "redirect:/admin/adminPage";
 		}else {		
 			return "members/mypage";
@@ -220,10 +216,6 @@ public class MembersController {
 	
 	@RequestMapping("/update")
 	public String update(MembersDTO dto, HttpSession session) throws Exception {
-		
-		System.out.println(dto.getMem_id());
-		System.out.println(dto.getMem_nickname());
-		System.out.println(dto.getMem_dong());
 		
 		session.setAttribute("nickname", dto.getMem_nickname());
 		session.setAttribute("dong", dto.getMem_dong());

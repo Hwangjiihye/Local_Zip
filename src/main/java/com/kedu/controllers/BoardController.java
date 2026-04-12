@@ -309,7 +309,7 @@ public class BoardController {
 		
 		BoardDTO dto = dao.selectByPost_seq(post_seq);
 		String loginId = (String) session.getAttribute("loginId");
-		session.getAttribute("nickname");
+		
 		// 파일리스트 뽑아오기
 		List<AttachmentDTO> aList = aDao.getAttachment(post_seq);
 		model.addAttribute("fileList", aList);
@@ -344,7 +344,6 @@ public class BoardController {
 	public String deletePost(int post_seq) {
 		
 		int count = rdao.reportDeleteBlock(post_seq);
-		System.out.println(count);
 		if(count > 0) {
 			return "fail";
 		}

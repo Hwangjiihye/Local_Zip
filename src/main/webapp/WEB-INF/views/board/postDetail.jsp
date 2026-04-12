@@ -650,7 +650,7 @@ hr {
 					</div>
 					<div class="postInfoBox">
 						<div class="postInfoUp">
-							<div class="profileName profileInfo" style="color: #5e361a;">${nickname}</div>
+							<div class="profileName profileInfo" style="color: #5e361a;">${dto.mem_nickname}</div>
 							<div class="profileLocal profileInfo" style="color: #5e361a;">${dto.mem_dong }</div>
 
 						</div>
@@ -960,7 +960,7 @@ hr {
 						let replyInfoUp = $("<div>").addClass("replyInfoUp");
 						let writerName = $("<div>").addClass("writerName replyInfo");
 						writerName.css({"color": "#5e361a"});
-						writerName.html("${nickname}");
+						writerName.html(i.mem_nickname);
 						let writeTime = $("<div>").addClass("writeTime replyInfo");
 						writeTime.css({"color": "#5e361a"});
 						writeTime.html(i.reply_date);
