@@ -62,6 +62,11 @@ body, html {
 	left: 0;
 	width: 100%;
 	height: 100px;
+	
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+	
 	padding-left: 20px;
 	font-weight: bold;
 	font-size: 50px;
@@ -70,6 +75,27 @@ body, html {
 	border-bottom: 2px solid #A66A3F;
 	line-height: 100px;
 	z-index: 1000;
+}
+
+.backBtn{
+    background-color: #ffb300;
+    color: #5e361a;
+    border: 1px solid #ffb300;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    top:10px;
+    right: 40px;
+    height: 30px;
+}
+
+.backBtn:hover{
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+   	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+   	color: #A66A3F;
 }
 
 /* 상단 사용자 정보 섹션 */
@@ -286,8 +312,15 @@ body, html {
 <body>
 
 	<div class="container">
-		<div class="headBox">고객지원(Q&A)</div>
-
+		<div class="headBox">
+		<div class="mainTitle">고객지원(Q&A)</div>
+			<div class="backBtnDiv">
+				<a href="/members/mypage"> <input class="backBtn" type="button" value="내.zip으로 가기">
+				</a>
+			</div>
+		</div>
+		
+		
 		<div class="userInfoSection">
 			<img class="userIcon" src="/resources/images/birdprofile.png" style="width: 80px;"> <span
 				class="userName">${nickname}</span>
