@@ -441,6 +441,12 @@ a {
 	width: 95%;
 	padding: 10px 10px;
 }
+
+.newFileDiv {
+	display: none;
+	margin-top: 10px;
+	margin-left: 45px;
+}
 </style>
 
 </head>
@@ -530,6 +536,9 @@ a {
 							</c:forEach>
 						</div>
 					</c:if>
+					<div class="newFileDiv">
+						<input type="file" class="newFiles" name="newFiles" accept="image/*" multiple>
+					</div>
 				</div>
 
 				<div class="postDownBox" data-seq="${i.suggestion_seq}">
@@ -813,7 +822,23 @@ a {
         $(".postLikeBox, .reportArea, .reportIcon, .reportSelect, .reportBtn").on("click", function (e) {
 		    e.stopPropagation();
 		});
-        
+      //파일이 비어있거나 잘못된 파일형식을 올렸을때 alert
+		$(".newFiles").on("change", function() {
+	    let file = this.files[0];	
+
+	    // 1. MIME 타입 체크 (가장 권장)
+	    if (!file.type.match("image.*")) {
+	        Swal.fire({
+				icon: "info",
+				title: "Wait  !",
+				text: "이미지 파일만 업로드 가능합니다!",
+				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300"
+			});
+	        $(this).val(""); // 선택된 파일 초기화
+	        return;
+	    }
+		});
      // 파일 삭제 버튼을 눌렀을때
 		$(document).on("click", ".fileDelBtn", function() {
 		    $(this).closest(".file-item").addClass("delete-target").hide();
@@ -823,8 +848,8 @@ a {
         $(".editBtn").on("click", function(){
         	
         	let box = $(this).closest(".postBox");
-        	
-        	$(".fileDownload").show();
+        	box.find(".newFileDiv").show();
+        	box.find(".fileDownload").show();
         	box.find(".editBtn, .delBtn").hide();
         	box.find(".cancleBtn, .okBtn").show();
         })
@@ -834,7 +859,8 @@ a {
         	
         	let box = $(this).closest(".postBox");
         	
-        	$(".fileDownload").hide();
+        	box.find(".newFileDiv").hide();
+        	box.find(".fileDownload").hide();
         	box.find(".okBtn, .cancleBtn").hide();
         	box.find(".delBtn, .editBtn").show();
         })
@@ -844,8 +870,8 @@ a {
         	
         	let box = $(this).closest(".postBox");
         	
-        	
-        	$(".fileDownload").hide();
+        	box.find(".newFileDiv").hide();
+        	box.find(".fileDownload").hide();
         	box.find(".okBtn, .cancleBtn").hide();
         	box.find(".delBtn, .editBtn").show();
         })
@@ -892,10 +918,12 @@ a {
 		        deleteFiles.push($(this).find(".fileName").data("sys"));
 		    });
 		    if(deleteFiles.length > 0) {
-		        formData.append("deleteFiles", deleteFiles);
+		    	for(let i=0; i<deleteFiles.length; i++){
+		            formData.append("deleteFiles", deleteFiles[i]);
+		        }
 		    }
 
-		    let newFiles = $(".newFiles")[0].files;
+		    let newFiles = box.find(".newFiles")[0].files;
 		    for (let i = 0; i < newFiles.length; i++) {
 		        formData.append("attachments", newFiles[i]);
 		    }

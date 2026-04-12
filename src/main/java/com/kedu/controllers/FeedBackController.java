@@ -265,7 +265,7 @@ public class FeedBackController {
 		String loginId = (String) session.getAttribute("loginId");
 
 		FeedBackDTO updateDto = dao.selectBySeq(dto.getSuggestion_seq());
-
+		System.out.println("넘어온 파일 개수: " + (attachments != null ? attachments.length : 0));
 		if (!loginId.equals(updateDto.getMem_id())) {
 			return "fail";
 		}
@@ -277,7 +277,6 @@ public class FeedBackController {
         if (!savePathFile.exists()) {
             savePathFile.mkdir();
         }
-        
 		//파일 삭제
 		if (deleteFiles != null && !deleteFiles.isEmpty()) {
 	        for (String sysName : deleteFiles) {
@@ -288,18 +287,24 @@ public class FeedBackController {
 	            }
 	        }
 	    }
-		
 		//새 파일 업로드
 		if (attachments != null) {
 	        for (MultipartFile file : attachments) {
 	            if (file.isEmpty()) {
 	            	continue;
 	            }
-	            
-	            String oriName = file.getOriginalFilename();
-				String sysName = UUID.randomUUID() + "_" + oriName;
-				file.transferTo(new File(savePath + "/" + sysName));
-				aDao.insert(new AttachmentDTO(0,"feedback", dto.getSuggestion_seq(), oriName, sysName));
+	            String contentType = file.getContentType();
+				String fileName = file.getOriginalFilename().toLowerCase();
+
+				boolean isImage = (contentType != null && contentType.startsWith("image/"))
+						|| (fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".gif")
+								|| fileName.endsWith(".webp"));
+				if (isImage) {
+					String oriName = file.getOriginalFilename();
+					String sysName = UUID.randomUUID() + "_" + oriName;
+					file.transferTo(new File(savePath + "/" + sysName));
+					aDao.insert(new AttachmentDTO(0, "feedback", dto.getSuggestion_seq(), oriName, sysName));
+				}
 	        }
 	    }
 		
