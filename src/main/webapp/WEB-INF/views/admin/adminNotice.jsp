@@ -116,6 +116,8 @@ body {
 .categoryBtnAll:hover, .navicon:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
 } 
 
 .categoryBtnAll:active, .navicon:active {
@@ -279,7 +281,7 @@ body {
         margin-bottom: 5px;
     }
 
-.titleContent { font-weight: bold; font-size: 18px; color: #5e361a; }
+.titleContent { font-weight: bold; font-size: 18px; color: #5e361a;}
 .textContent { font-size: 15px; color: #444; min-height: 60px; color: #5e361a;}
 
     /* 답변 영역 (와이어프레임의 하단 칸) */
@@ -418,6 +420,10 @@ img{
 
 .pageBox a:hover{
     background-color:#F2D3A2;
+}
+
+.filterBtn{
+	transition: all 0.2s ease;
 }
 </style>
 </head>
