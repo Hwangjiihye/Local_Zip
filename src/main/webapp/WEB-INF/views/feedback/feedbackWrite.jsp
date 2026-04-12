@@ -183,6 +183,8 @@
 	}
 	
 	.requestBtn, .backBtn {
+		cursor: pointer;
+		transition: all 0.2s ease;
 		width: 350px;
 		height: 40px;
 		background-color: #FFB300;
@@ -194,6 +196,8 @@
 	}
 	
 	.requestBtn:hover, .backBtn:hover {
+	   background-color: #fecc56;
+   		color: #A66A3F;
 		transform: translateY(-3px);
 		box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	}

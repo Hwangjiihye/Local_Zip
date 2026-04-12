@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>feedbackHome</title>
+<title>우리동네.zip</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -100,6 +100,9 @@ button, body {
 }
 
 .writeBtn {
+	cursor: pointer;
+	transition: all 0.2s ease;
+	
 	width: 1730px;
 	height: 100px;
 	margin-left: 80px;
@@ -124,11 +127,16 @@ button, body {
 .writeBtn:hover, .editBtn:hover, .delBtn:hover,
  .cancleBtn:hover, .okBtn:hover, .fileDelBtn:hover
 	{
+    background-color: #fecc56;
+    color: #A66A3F;
+   
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.navicon:hover {
+.navicon:hover, .reportBtn:hover {
+	background-color: #fecc56;
+    color: #A66A3F;
 	transform: translateY(-3px);
 	/* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
@@ -232,6 +240,9 @@ a {
 }
 
 .reportBtn {
+	cursor: pointer;
+	transition: all 0.2s ease; 
+
 	background-color: #ffb300;
 	color: #5e361a;
 	border: 1px solid #ffb300;
@@ -355,6 +366,7 @@ a {
 }
 
 .cancleBtn, .okBtn {
+	cursor: pointer;
 	display: none;
 	cursor: pointer;
 	border: #fbe5c0;
@@ -462,6 +474,9 @@ a {
 .postContent[contenteditable="true"]:focus{
 	outline: none;
 	border: 1px solid #FFB300;
+}
+.okBtn:focus {
+    outline: none;
 }
 </style>
 
@@ -884,7 +899,7 @@ a {
         })
         
         // 완료 버튼 -> 수정/삭제 버튼으로 변경
-        $(".okBtn").on("click", function(){
+        /* $(".okBtn").on("click", function(){
         	
         	let box = $(this).closest(".postBox");
         	
@@ -892,7 +907,7 @@ a {
         	box.find(".fileDownload").hide();
         	box.find(".okBtn, .cancleBtn").hide();
         	box.find(".delBtn, .editBtn").show();
-        })
+        }) */
         
         $(".cancleBtn").on("click", function(){
         	
@@ -918,8 +933,42 @@ a {
         	
         	let box = $(this).closest(".postBox");
         	let seq = $(this).data("seq");
-        	let title = box.find(".postTitle").html(); //
-        	let contents = box.find(".postContent").html();
+        	let title = box.find(".postTitle").text().trim(); //
+        	let contents = box.find(".postContent").text().trim();
+        	
+        	if(title === "" && contents === ""){
+                Swal.fire({
+                    icon: "info",
+                    title: "Wait !",
+                    text: "제목과 내용을 입력해주세요.",
+                    iconColor: "#FFB300",
+                    confirmButtonColor: "#FFB300"
+                });
+                return;
+            }
+        	
+        	
+        	// 빈값 검사
+            if(title === ""){
+                Swal.fire({
+                    icon: "info",
+                    title: "Wait !",
+                    text: "제목을 입력해주세요.",
+                    iconColor: "#FFB300",
+                    confirmButtonColor: "#FFB300"
+                });
+                return;
+            } 
+        	if(contents === "") {
+            	Swal.fire({
+                    icon: "info",
+                    title: "Wait !",
+                    text: "내용을 입력해주세요.",
+                    iconColor: "#FFB300",
+                    confirmButtonColor: "#FFB300"
+                });
+                return;
+            }
         	
             box.find(".postTitle").attr("contenteditable", "false");
             box.find(".postContent").attr("contenteditable", "false");
