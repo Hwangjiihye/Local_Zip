@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>postDetail</title>
+<title>Notice Detail</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -358,9 +358,8 @@ hr {
 
 	<script>
 	
-	
 	let currentTitle = "${dto.notice_title}";
-    let currentContent = "${dto.notice_content}";
+    let currentContent = `${dto.notice_content}`;
     
 		$(".updateBtn").on("click",function(){
 			$(".completeBtn").show();
@@ -372,6 +371,8 @@ hr {
 			$(".postContents").attr("contenteditable","true");
 			
 		})
+		
+		
 		
 		$(".cancelBtn").on("click",function(){
 			$(".completeBtn").hide();
@@ -387,13 +388,25 @@ hr {
 		})
 		$(".completeBtn").on("click",function(){
 			
-			let newTitle = $(".postTitle").html();
+			let newTitle = $(".postTitle").text().trim();
 	        let newContent = $(".postContents").html();
-			
+	        let newContentText = $(".postContents").text().trim();
+	        
+	        if(newTitle == "" || newContentText == ""){
+	        	Swal.fire({
+					icon: "info",
+					title: "Info  !",
+					text: "제목과 내용을 모두 입력해 주세요.",
+					iconColor: "#EB0000",
+					confirmButtonColor: "#FFB300"
+				});
+	        	return;
+	        }
+	        
 	        $.ajax({
 				url:"/admin/updateNotice",
 				data:{
-					seq : ${dto.notice_seq},
+					seq : "${dto.notice_seq}",
 					notice_title : newTitle,
 					notice_content : newContent},
 				type:"post"
@@ -471,6 +484,15 @@ hr {
 					         }
 		   			 	});
 					});
+		
+		$(document).on("keydown", ".postContents[contenteditable='true']", function(e){
+		    if(e.key === "Enter"){
+		        e.preventDefault(); // 기본 동작 막기
+
+		        document.execCommand("insertLineBreak"); // 줄바꿈 삽입
+			    }
+			});
+			
 		
 	</script>
 </body>

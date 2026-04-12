@@ -474,7 +474,7 @@ img{
 
       	 	<!-- 답변 없는 경우 -->
 	        <c:if test="${i.qa_status == 0}">
-	            <form action="/admin/answer" method="post">
+	            <form action="/admin/answer" method="post" id="frm">
 	            	<input type="hidden" name="cpage" value="${currentPage}">
 					<input type="hidden" name="status" value="${status}">
 	                <input type="hidden" name="qa_seq" value="${i.qa_seq}">
@@ -579,6 +579,24 @@ img{
 			    let status = $(this).data("status");
 			    location.href = "/admin/adminQA?cpage=1&status=" + status;
 			});
+				
+			$(document).on("submit", "#frm", function(e){
+				let textarea = $(this).find(".inputQaReply");
+				let value = textarea.val().trim();
+				
+				if(value == ""){
+					e.preventDefault();
+					Swal.fire({
+						icon: "info",
+						title: "Info  !",
+						text: "내용을 입력해 주세요.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					});
+					return fales;
+					}
+				})
+			
 				
 			
 			$(document).on("click", ".updateBtn", function(){

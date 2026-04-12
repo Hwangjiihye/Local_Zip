@@ -168,10 +168,8 @@ public class AdminController {
 	@PostMapping("/insertNotice")
 	public String insertNotice(HttpSession session,@RequestParam("post_title")String title,
 								@RequestParam("post_contents")String contents) {
-		System.out.println(session.getAttribute("role"));
 		String id =(String)session.getAttribute("loginId");
 		int role = (Integer)session.getAttribute("role");
-		System.out.println(role);
 		nDao.insertNotice(new NoticeDTO(0,id,role,title,contents,"0"));
 		
 		return "redirect:/admin/toAdminNotice?cPage=1";
@@ -183,10 +181,9 @@ public class AdminController {
 	public String updateNotice(@RequestParam("notice_title")String title, 
 			@RequestParam("notice_content")String content, @RequestParam("seq")int seq) {
 		
-		System.out.println(seq + title + content);
 		int result = nDao.updateNotice(seq,title,content);
 		if(result>0) {
-			return "success";	
+			return "success";
 		}
 		return "fail";
 	}
