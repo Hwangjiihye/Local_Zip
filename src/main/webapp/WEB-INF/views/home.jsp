@@ -78,8 +78,12 @@ body, html {
 	justify-content: flex-end;
 	align-items: flex-end;
 	height: 0px;
-	padding-right: 30px;
-	gap: 0px;
+/* 	padding-right: 30px; */
+	gap: 10px;
+	
+	position: relative;
+	right: 30px;
+	top: 15px;
 }
 
 .joinBtn {
@@ -246,6 +250,7 @@ body, html {
 	color: #A66A3F;
 	font-size: 15px;
 	margin-top: 10px;
+	transition: all 0.2s ease;
 	cursor: pointer;
 }
 
@@ -280,7 +285,13 @@ body, html {
 .loginBtn, .logoutBtn, .joinBtn {
 	background-color: #FFB300;
 	color: #5e361a;
-	cursor: pointer;
+	border: none;
+	
+	height: 30px;
+	width: 80px;
+	border-radius: 5px;
+	
+	line-height: 32px;
 }
 
 .loginBtn:hover, .logoutBtn:hover, .joinBtn:hover, .categoryBtn button:hover
@@ -606,6 +617,7 @@ body, html {
 
 .close-btn:hover {
 	background-color: #fecc56;
+	color: #A66A3F;
 }
 
 .swal2-icon.swal2-info .swal2-icon-content {
@@ -729,17 +741,18 @@ a {
 				<c:when test="${loginId == null}">
 					<div class="loginBox">
 						<a href="/members/loginUi">
-							<input type="button" value="로그인" class="loginBtn" style="border: 0px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;">
+							<input type="button" value="로그인" class="loginBtn">
 						</a>
 						<a href="/members/join">
-							<input type="button" value="회원가입" class="joinBtn" style="border: 0px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;">
+							<input type="button" value="회원가입" class="joinBtn">
 						</a>
 					</div>
 				</c:when>
 				<c:otherwise>
-					<span class="logoutArea" style="display: inline;"> <a href="/members/logout"><input type="button"
-							value="로그아웃" class="logoutBtn"
-							style="border: 0px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;"></a>
+					<span class="logoutArea" style="display: inline;">
+					<a href="/members/logout">
+						<input type="button" value="로그아웃" class="logoutBtn">
+					</a>
 					</span>
 				</c:otherwise>
 			</c:choose>

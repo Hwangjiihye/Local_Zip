@@ -163,7 +163,7 @@ button, body {
 }
 
 .replyUpBox:first-child {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 .postProfile, .replyProfileBox {
@@ -242,7 +242,6 @@ button, body {
 	font-size: 14px;
 	color: #333;
 }
-
 
 /* 신고 영역 스타일 */
 .reportArea {
@@ -370,8 +369,8 @@ button, body {
 	transform: translateY(-3px);
 	/* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-	 background-color: #fecc56;
-	 color: #A66A3F;
+	background-color: #fecc56;
+	color: #A66A3F;
 }
 
 .navicon:active, .applyBtn:active, .backBtn:active, .updateBtn:active,
@@ -431,6 +430,7 @@ a {
 	margin-top: 20px;
 	margin-left: 210px;
 }
+
 .reportBtn {
 	background-color: #ffb300;
 	color: #5e361a;
@@ -442,11 +442,15 @@ a {
 	top: 53px;
 	left: 15px;
 	width: 90px;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .reportBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
 }
 
 .reportBtn:active {
@@ -506,7 +510,6 @@ a {
 	font-size: medium;
 	transition: all 0.2s ease;
 	cursor: pointer;
-	
 }
 
 .btnDiv {

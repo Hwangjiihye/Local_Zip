@@ -84,7 +84,8 @@ button, body {
 	font-weight: bold;
 	height: 30px;
 	position: relative;
-	right: 30px;
+	top: 15px;
+	right: 15px;
 	cursor: pointer;
 	transition: all 0.3s ease; /* 애니메이션 부드럽게 */
 }
