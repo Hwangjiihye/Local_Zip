@@ -141,6 +141,10 @@ button, body {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.writeBtn:hover{
+	background-color: #fecc56;
+	color: #A66A3F;
+}
 .suggestionBox {
 	width: 1600px;
 	height: 300px;
@@ -447,6 +451,18 @@ a {
 	margin-top: 10px;
 	margin-left: 45px;
 }
+/*  입력창 테두리 속성 */
+ .postTitle[contenteditable="true"],
+ .postContent[contenteditable="true"] {
+	border: 1px solid #FFB300;
+	border-radius: 5px;
+	padding: 5px;
+}
+.postTitle[contenteditable="true"]:focus,
+.postContent[contenteditable="true"]:focus{
+	outline: none;
+	border: 1px solid #FFB300;
+}
 </style>
 
 </head>
@@ -456,8 +472,7 @@ a {
 		<div class="headBox">동네 건의.zip</div>
 		<a href="/feedback/feedbackWrite"><button class="writeBtn"
 				type="button">
-				<i class="navicon3 fa-solid fa-bullhorn fa-xl"
-					style="color: #A66A3F"></i> 새 건의 작성하기
+				<i class="navicon3 fa-solid fa-bullhorn fa-xl"></i> 새 건의 작성하기
 			</button></a>
 
 		<c:forEach var="i" items="${list}">
@@ -746,8 +761,11 @@ a {
         	});
     		
         // 신고버튼을 눌렀을 때, 내가 누른 게시글 신고버튼만 눌림
-        $(".reportIcon").on("click", function () {
-        	$(this).siblings(".reportSelect, .reportBtn").css({"display" : "inline"});
+        $(".reportIcon").on("click", function (e) {
+//         	$(this).siblings(".reportSelect, .reportBtn").css({"display" : "inline"});
+			e.stopPropagation();
+			let reportArea = $(this).closest(".reportArea");
+			reportArea.find(".reportSelect, .reportBtn").toggle();
         })
         
         // 신고 시, 유형별로 db에 넣기
@@ -935,8 +953,15 @@ a {
 		        contentType: false,
 				type: "post"
 			}).done(function(){
-				alert("수정 완료!");
-				location.reload();
+				Swal.fire({
+					icon: "success",
+					title: "Success  !",
+					text: "수정 완료!",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				}).then(() => {
+					location.reload();
+				});
 			});
         	
         }) 
@@ -1018,19 +1043,6 @@ a {
                 document.execCommand("insertLineBreak"); // 줄바꿈 삽입
             }
         });
-        
-        // 입력창 테두리 속성
-        /* .postMidBox[contenteditable="true"] {
-		    border: 1px solid #FFB300;
-		    border-radius: 5px;
-		    padding: 5px;
-		} */
-/* 
-		.postTitle[contenteditable="true"]:focus {
-		    outline: none;
-		    border: 1px solid #FFB300;
-		    background-color: #fbe5c0;
-		} */
         
         // 하단 네비게이션 바 구현
         $("document").ready(function(){

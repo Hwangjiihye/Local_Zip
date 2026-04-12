@@ -127,7 +127,7 @@ button, body {
 	/* 최소 높이 지정 : 브라우저 */
 	margin-top: 30px;
 	color: #5e361a;
-	padding-bottom: 50px;
+	padding-bottom: 200px;
 }
 
 .postBox {
@@ -154,10 +154,14 @@ button, body {
 
 .replyUpBox {
 	width: 100%;
-	min-height: 95px;
-	height: auto;
+	min-height: auto;
 	display: flex;
 	background-color: #fbe5c0;
+	padding: 10px 0 20px 0;
+}
+
+.replyUpBox:first-child {
+    margin-top: 0;
 }
 
 .postProfile, .replyProfileBox {
@@ -237,6 +241,7 @@ button, body {
 	color: #333;
 }
 
+
 /* 신고 영역 스타일 */
 .reportArea {
 	display: flex;
@@ -247,6 +252,7 @@ button, body {
 	position: absolute;
 	top: 5px; /* 위에서 살짝 띄움 */
 	right: 20px; /* 오른쪽에서 살짝 띄움 */
+	z-index: 10;
 }
 
 .reportIcon {
@@ -264,25 +270,6 @@ button, body {
 	font-size: 12px;
 	outline: none;
 	display: none;
-}
-
-.reportBtn {
-	background-color: #ffb300;
-	color: #5e361a;
-	border: 1px solid #ffb300;
-	border-radius: 10px;
-	font-weight: bold;
-	display: none;
-}
-
-.reportBtn:hover {
-	transform: translateY(-3px); /* 살짝 위로 뜸 */
-	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-}
-
-.reportBtn:active {
-	transform: translateY(2px); /* 아래로 눌림 */
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .postMidBox {
@@ -409,18 +396,13 @@ button, body {
 
 hr {
 	width: 97%;
-	margin-bottom: 40px;
+	margin: 10px 0;
 	border: 1px solid #cdaa69;
-	;
 }
 
 a {
 	color: #5e361a;
 	text-decoration: none;
-}
-
-.replyContainer {width
-	
 }
 
 .replyBox {
@@ -445,38 +427,6 @@ a {
 	margin-top: 20px;
 	margin-left: 210px;
 }
-
-/* 신고 영역 스타일 */
-.reportArea {
-	position: relative;
-	top: 10px;
-	right: 12px;
-	display: flex;
-	flex-direction: column;
-	/* 아이콘과 선택창을 세로로 배치 */
-	align-items: flex-end;
-	/* 오른쪽 정렬 */
-	gap: 5px;
-}
-
-.reportIcon {
-	color: #A66A3F;
-	font-size: 20px;
-	cursor: pointer;
-}
-
-.reportSelect {
-	font-family: 'GMarketSans';
-	border: 1px solid #A66A3F;
-	border-radius: 5px;
-	background-color: #F2D3A2;
-	color: #A66A3F;
-	font-size: 12px;
-	padding: 2px;
-	outline: none;
-	display: none;
-}
-
 .reportBtn {
 	background-color: #ffb300;
 	color: #5e361a;
@@ -802,19 +752,30 @@ hr {
 		// 게시글 수정 완료 버튼 클릭 시
 		$(".completeBtn").on("click",function(){
 			 
-			/* let post_title = $(".postTitle").text();
+			let post_title = $(".postTitle").text();
 			let post_contents = $(".postContents").html();
-		   
-		    if(postTitle.text() == "" || postContents.text() == ""){
-		    	 Swal.fire({
+		    let post_text = $(".postContents").text().trim();
+		    
+		    if(post_title == ""){
+		    	Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "수정 완료!",
+					text: "제목을 입력해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
-				}); 
+				});
 		        return;
-		    } */
+		    }
+		    if(post_text == ""){
+		    	Swal.fire({
+					icon: "info",
+					title: "Wait  !",
+					text: "내용을 입력해주세요.",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				});
+		        return;
+		    }
 		    
 		    let formData = new FormData();
 		    formData.append("post_seq", postSeq);
@@ -843,8 +804,8 @@ hr {
 				type: "post"
 			}).done(function(){
 				Swal.fire({
-					icon: "info",
-					title: "Wait  !",
+					icon: "success",
+					title: "Success  !",
 					text: "수정 완료!",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
@@ -1070,9 +1031,11 @@ hr {
         });
                
         // 신고 아이콘을 눌렀을 때, 신고 사유가 튀어나오게
-        $(document).on("click", ".reportIcon", function () {
-		    $(this).siblings(".reportSelect").css("display", "inline");
-		    $(this).siblings(".reportBtn").css("display", "inline");
+        $(document).on("click", ".reportIcon", function (e) {
+          e.stopPropagation();
+          let reportArea = $(this).closest(".reportArea");
+          
+          reportArea.find(".reportSelect, .reportBtn").toggle();
 		});
 
 		// [댓글 신고하기] 버튼 클릭 시 (동적 요소이므로 document 위임 방식 사용)
@@ -1306,7 +1269,7 @@ hr {
         	let reply_contents = replyUpBox.find(".replyContents").html();
         	let reply_text = replyUpBox.find(".replyContents").text().trim();
         	
-        	if(reply_contents.trim() == ""){
+        	if(reply_text == ""){
         		Swal.fire({
 					icon: "info",
 					title: "Wait  !",
@@ -1370,12 +1333,12 @@ hr {
 		    }
 		}); 
         
-        $(function() {
-            let contents = $(".postContents").html();
-            if(contents){
-                $(".postContents").html(contents.trim());
-            }
-        });
+//         $(function() {
+//             let contents = $(".postContents").html();
+//             if(contents){
+//                 $(".postContents").html(contents.trim());
+//             }
+//         });
     </script>
 </body>
 </html>
