@@ -281,7 +281,7 @@ body {
         margin-bottom: 5px;
     }
 
-.titleContent { font-weight: bold; font-size: 18px; color: #5e361a; }
+.titleContent { font-weight: bold; font-size: 18px; color: #5e361a;}
 .textContent { font-size: 15px; color: #444; min-height: 60px; color: #5e361a;}
 
     /* 답변 영역 (와이어프레임의 하단 칸) */
