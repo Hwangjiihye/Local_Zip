@@ -209,6 +209,7 @@ button, body {
 	border: 1px solid #ffb300;
 	border-radius: 10px;
 	font-weight: bold;
+	cursor: pointer;
 }
 .completeBtn ,.cancelBtn{
 	display : none;
