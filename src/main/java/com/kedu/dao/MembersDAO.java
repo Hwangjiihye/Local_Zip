@@ -74,7 +74,7 @@ public class MembersDAO {
 	public List<ReplyDTO> memRole(int post_seq) {
 		String sql = "select r.*, m.mem_role, m.mem_nickname "
 				+ "from reply r join members m on r.mem_id = m.mem_id "
-				+ "where post_seq = ?";
+				+ "where post_seq = ? order by r.reply_date";
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReplyDTO>(ReplyDTO.class), post_seq);
 	}
 	
