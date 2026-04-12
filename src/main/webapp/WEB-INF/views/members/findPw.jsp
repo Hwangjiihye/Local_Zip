@@ -177,6 +177,8 @@ hr {
 .requestBtn:hover, .certifyBtn:hover, .backBtn:hover, .okBtn:hover {
 	transform: translateY(-3px);
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
 }
 
 .requestBtn:active, .certifyBtn:active, .backBtn:active, .okBtn:active 
@@ -185,6 +187,10 @@ hr {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.requestBtn, .certifyBtn, .backBtn, .okBtn {
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
 .correct, .incorrect {
 	display: none;
 	font-size: small;
