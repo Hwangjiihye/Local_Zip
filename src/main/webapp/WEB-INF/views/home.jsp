@@ -282,16 +282,24 @@ body, html {
 	/* display: block; */
 }
 
+.loginBtn, .logoutBtn, .joinBtn{
+	background-color: #FFB300; 
+	color: #5e361a;
+}
 .loginBtn:hover, .logoutBtn:hover, .joinBtn:hover, .categoryBtn button:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	background-color: #fecc56;
+	transition: all 0.2s ease;
+	color: #A66A3F;
 }
 
 .writeBtn:active, .loginBtn:active, .logoutBtn:active, .joinBtn:active,
 	.navicon:active, .categoryBtn button:active {
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	background-color: #fecc56;
+	color: #A66A3F;
 }
 
 
@@ -722,17 +730,17 @@ a{
 				<c:when test="${loginId == null}">
 					<div class="loginBox">
 						<a href="/members/loginUi">
-							<input type="button" value="로그인" class="loginBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;">
+							<input type="button" value="로그인" class="loginBtn" style="border: 0px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;">
 						</a>
 						<a href="/members/join">
-							<input type="button" value="회원가입" class="joinBtn" style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;">
+							<input type="button" value="회원가입" class="joinBtn" style="border: 0px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;">
 						</a>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<span class="logoutArea" style="display: inline;"> <a href="/members/logout"><input type="button"
 							value="로그아웃" class="logoutBtn"
-							style="border: 0px; font-weight: bold; background-color: #FFB300; color: #A66A3F; color: #A66A3F; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;"></a>
+							style="border: 0px; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: all 0.2s ease;"></a>
 					</span>
 				</c:otherwise>
 			</c:choose>
