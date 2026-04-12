@@ -54,6 +54,7 @@ body {
 }
 
 .mainTitle {
+	padding-left: 20px;
 	font-weight: bold;
 	font-size: 50px;
 	color: #A66A3F;

@@ -21,7 +21,10 @@ public class ReplyDAO {
 	};
 	
 	public List<ReplyDTO> selectByPostSeq(int post_seq) {
-		String sql = "select * from reply where post_seq = ? order by reply_seq desc";
+		String sql = "select r.*, m.mem_nickname "
+				+ " from reply r "
+				+ "join members m on r.mem_id = m.mem_id "
+				+ "where post_seq = ? order by reply_seq desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReplyDTO>(ReplyDTO.class), post_seq);
 	}
 	
