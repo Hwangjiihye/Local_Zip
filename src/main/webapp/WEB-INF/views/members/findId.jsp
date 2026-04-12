@@ -8,7 +8,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>login Page</title>
+<title>우리동네.zip</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
