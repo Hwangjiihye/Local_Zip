@@ -114,6 +114,8 @@ body {
 .categoryBtnAll:hover, .navicon:hover, .topBtn:hover, .join-btn:hover, .reportBtn:active{
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    background-color: #fecc56;
+    color: #A66A3F;
 }
 
 .categoryBtnAll:active, .navicon:active, .topBtn:active, .join-btn:active, .reportBtn:active{
@@ -253,7 +255,6 @@ body {
     top: 30px;
     left: 0;
     width: 150px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     z-index: 10;
     font-family: 'GMarketSans';
     border: 1px solid #A66A3F;
@@ -262,6 +263,7 @@ body {
     color: #A66A3F;
     font-size: 12px;
     outline: none;
+	padding: 2px;
 }
 
 .report-menu{
@@ -312,10 +314,6 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
-
-.categoryBtnAll:active{
-    transform: translateY(2px);
-}
         
 .reportBtn{
 	background-color: #ffb300;
@@ -325,9 +323,14 @@ body {
 	font-weight: bold;
 	display: none;
 	position: absolute;
-	top: 60px;
+	top: 55px;
 	left: 0;
 	width: 90px;
+}
+
+.reportBtn:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .pageBox{
@@ -501,7 +504,7 @@ body {
 						<div class="title">${i.meet_title}</div>
 						<c:if test="${i.mem_id != loginId}">
 							<div class="reportDiv">
-								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px; margin-bottom:5px" ></img>
+								<img src="/resources/images/free-icon-siren1.png" class="reportIcon" style="width: 25px; height: 25px;" ></img>
 								<select class="report">
 									<option class="report-menu" disabled selected>신고 사유</option>
 									<option class="report-menu" value="badContents">부적절한 컨텐츠</option>
@@ -611,8 +614,9 @@ body {
 			
 			$(".reportIcon").on("click", function (e) {
 			    e.stopPropagation();
-			    $(this).siblings(".report").css("display", "block");
-			    $(this).siblings(".reportBtn").css("display","inline")
+		        let reportDiv = $(this).closest(".reportDiv");
+		        
+		        reportDiv.find(".report, .reportBtn").toggle(); 
 			});
 			
 			$(".report").on("click", function (e) {

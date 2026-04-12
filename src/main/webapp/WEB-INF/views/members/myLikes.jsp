@@ -465,7 +465,15 @@ hr {
 										<div class="profileName profileInfo" style="color: #5e361a;">${i.mem_nickname}</div>
 										<div class="profileLocal profileInfo" style="color: #5e361a;">${i.mem_dong}</div>
 										<div class="profileCatagory profileInfo">
-											<button class="topBtn" type="button">생활정보</button>
+											<button class="topBtn" type="button">
+												<c:choose>
+													<c:when test="${i.post_category == 'lifeInfo'}">생활정보</c:when>
+													<c:when test="${i.post_category == 'food'}">맛집/카페</c:when>
+													<c:when test="${i.post_category == 'talk'}">고민/이야기</c:when>
+													<c:when test="${i.post_category == 'beauty'}">미용/패션</c:when>
+													<c:otherwise>${i.post_category}</c:otherwise>
+												</c:choose>
+											</button>
 										</div>
 									</div>
 
