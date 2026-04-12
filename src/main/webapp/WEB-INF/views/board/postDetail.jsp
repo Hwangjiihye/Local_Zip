@@ -435,8 +435,8 @@ a {
 	font-weight: bold;
 	display: none;
 	position: absolute;
-	top: 60px;
-	left: 20px;
+	top: 53px;
+	left: 15px;
 	width: 90px;
 }
 
