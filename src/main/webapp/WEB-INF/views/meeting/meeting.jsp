@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Meeting</title>
+<title>우리동네.zip</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -137,6 +137,7 @@ body {
      width: 100px;
 	 height: 40px;
 	 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+	 transition: all 0.2s ease;
 }
 
 .bottomBar {
@@ -246,8 +247,8 @@ body {
     border-radius: 10px;
     color: #5e361a;
     margin-top: auto;
+    transition: all 0.2s ease;
 }
-
 
 .report{
 	display:none;
