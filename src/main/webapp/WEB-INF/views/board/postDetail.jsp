@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>postDetail</title>
+<title>우리 동네.zip</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -435,8 +435,8 @@ a {
 	font-weight: bold;
 	display: none;
 	position: absolute;
-	top: 60px;
-	left: 20px;
+	top: 53px;
+	left: 15px;
 	width: 90px;
 }
 
