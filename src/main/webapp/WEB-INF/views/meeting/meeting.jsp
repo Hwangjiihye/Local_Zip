@@ -112,7 +112,7 @@ body {
 }
 
 .categoryBtnAll:hover, .navicon:hover, .topBtn:hover, .join-btn:hover,
-	.reportBtn:active {
+	.reportBtn:active, .adminMeeting-btn:hover{
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	background-color: #fecc56;
@@ -434,7 +434,7 @@ body {
 	box-shadow: none;
 }
 
-.adminMeetin-btn {
+.adminMeeting-btn {
 	width: 100%;
 	height: 40px;
 	background-color: #FFB300;
@@ -442,6 +442,8 @@ body {
 	border-radius: 10px;
 	color: #5e361a;
 	margin-top: auto;
+	cursor: pointer;
+	transition: all 0.2s ease;
 }
 
 .swal2-icon.swal2-info .swal2-icon-content {
@@ -569,7 +571,7 @@ body {
 								<button class="join-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">참여신청</button>
 							</c:when>
 							<c:otherwise>
-								<button class="adminMeetin-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">자세히보기</button>
+								<button class="adminMeeting-btn" data-seq="${i.meet_seq}" data-nickName="${i.mem_nickname}">자세히보기</button>
 							</c:otherwise>
     					</c:choose>
 					</div>

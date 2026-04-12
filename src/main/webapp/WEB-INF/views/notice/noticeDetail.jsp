@@ -103,6 +103,7 @@ button, body {
 	border-radius: 10px;
 	font-weight: bold;
 	height: 30px;
+	cursor: pointer;
 }
 
 .topBtn {

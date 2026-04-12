@@ -172,12 +172,15 @@ input, button, body {
 }
 
 .orderBtn {
-   border: none;
-   border-radius: 30%;
-   background-color: transparent;
-   font-size: 15px;
-   color: #A66A3F;
-   cursor: pointer;
+   	border: none;
+    background-color: transparent;
+    border-radius: 30%;
+    font-size: 15px;
+    color: #A66A3F;
+    font-size: 15px;
+    margin: 10px 0 10px 0 ;
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .orderBtn:hover {

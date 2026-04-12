@@ -424,6 +424,7 @@ img{
 
 .filterBtn{
 	transition: all 0.2s ease;
+	cursor: pointer;
 }
 </style>
 </head>
