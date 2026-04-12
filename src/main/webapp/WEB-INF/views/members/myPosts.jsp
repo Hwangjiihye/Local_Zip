@@ -86,16 +86,17 @@ button, body {
 	position: relative;
 	right: 30px;
 	cursor: pointer;
-	transition: all 0.3s ease;/* 애니메이션 부드럽게 */
+	transition: all 0.3s ease; /* 애니메이션 부드럽게 */
 }
 
 .backBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	background-color: #fecc56;
+	color: #A66A3F;
 }
 
-.backBtn:active{
+.backBtn:active {
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	background-color: #ffb300;
@@ -325,30 +326,28 @@ button, body {
 	text-align: center;
 }
 
-.page a{
-   margin: 10px;
-   color: #A66A3F;
-   display: inline-block;
-   text-decoration: none;
-   min-width:35px;
-    padding:6px 0px 6px 0px;
-   border-radius:6px;
-    transition:0.2s;
-    font-weight: normal;
-    cursor: pointer;
+.page a {
+	margin: 10px;
+	color: #A66A3F;
+	display: inline-block;
+	text-decoration: none;
+	min-width: 35px;
+	padding: 6px 0px 6px 0px;
+	border-radius: 6px;
+	transition: 0.2s;
+	font-weight: normal;
+	cursor: pointer;
 }
 
-.pageBox a.active{
-   background-color:#fecc56;
-    font-weight: bold;
-    color: #5e361a;
+.pageBox a.active {
+	background-color: #fecc56;
+	font-weight: bold;
+	color: #5e361a;
 }
 
-.pageBox a:hover{
-    background-color:#F2D3A2;
+.pageBox a:hover {
+	background-color: #F2D3A2;
 }
-
-
 </style>
 
 </head>

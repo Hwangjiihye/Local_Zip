@@ -49,7 +49,7 @@ body, html {
 }
 
 /* 폰트 지정 */
-button, body {
+input, button, body {
 	font-family: 'GMarketSans', sans-serif;
 }
 
@@ -172,11 +172,12 @@ button, body {
 }
 
 .orderBtn {
-	border: none;
-	border-radius: 30%;
-	background-color: transparent;
-	font-size: 15px;
-	color: #A66A3F;
+   border: none;
+   border-radius: 30%;
+   background-color: transparent;
+   font-size: 15px;
+   color: #A66A3F;
+   cursor: pointer;
 }
 
 .orderBtn:hover {
@@ -195,6 +196,7 @@ button, body {
 	border-radius: 10px;
 	/* 그림자 효과 */
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
 }
 
 .postUpBox {
@@ -280,13 +282,16 @@ button, body {
 	color: #5e361a;
 	border: 1px solid #ffb300;
 	border-radius: 10px;
-	font-weight: bold;
 	display: none;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .reportBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
 }
 
 .reportBtn:active {
@@ -345,8 +350,8 @@ button, body {
 }
 
 /* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
-.beforeHeart{
-	display : inline;
+.beforeHeart {
+	display: inline;
 }
 
 .afterHeart {
@@ -413,12 +418,11 @@ hr {
 	height: 50px;
 	right: 30px;
 	bottom: 90px;
-	cursor: pointer;
 	margin-top: 90%;
 	border-radius: 50%;
 	background-color: #A66A3F;
+	color: rgb(255, 179, 0);
 	border: #fbe5c0;
-	color: #fbe5c0;
 	font-size: 30px;
 	position: fixed; /* 버튼 따라다니게 만들기 */
 	align-items: center;
@@ -428,11 +432,13 @@ hr {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	/* 애니메이션 부드럽게 */
 	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .writeBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	color: #fecc56;
 }
 
 .emptyBox {
@@ -443,48 +449,48 @@ hr {
 	text-align: center;
 }
 
-.pageBox{
-		    text-align: center;
-		    padding: 20px;
-		    font-size: 18px;
-		    color: #A66A3F;
-		    margin-bottom: 55px;
-		}
-		
-		.pageBox a{
-		    display: inline-block;
-		    min-width:35px;
-		    padding:6px 10px;
-		    margin: 0 8px;
-		    text-decoration: none;
-		    color: #A66A3F;
-		    border-radius:6px;
-		    transition:0.2s;
-		    font-weight: normal;
-		    cursor: pointer;
-		}
-		
-		.pageBox a.active{
-			background-color:#fecc56;
-		    font-weight: bold;
-		    color: #5e361a;
-		}
-		
-		.pageBox a:hover{
-		    background-color:#F2D3A2;
-		}
-		
-		.swal2-icon.swal2-info .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
-		
-		.swal2-icon.swal2-warning .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
+.pageBox {
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #A66A3F;
+	margin-bottom: 55px;
+}
+
+.pageBox a {
+	display: inline-block;
+	min-width: 35px;
+	padding: 6px 10px;
+	margin: 0 8px;
+	text-decoration: none;
+	color: #A66A3F;
+	border-radius: 6px;
+	transition: 0.2s;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.pageBox a.active {
+	background-color: #fecc56;
+	font-weight: bold;
+	color: #5e361a;
+}
+
+.pageBox a:hover {
+	background-color: #F2D3A2;
+}
+
+.swal2-icon.swal2-info .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.swal2-icon.swal2-warning .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
 </style>
 </head>
 <body>
@@ -606,7 +612,7 @@ hr {
 
 
 		<a href="/board/write"><button class="writeBtn" type="button">
-				<i class="fa-solid fa-circle-plus fa-2xl" style="color: rgb(255, 179, 0);"></i>
+				<i class="fa-solid fa-circle-plus fa-2xl"></i>
 			</button></a>
 
 
