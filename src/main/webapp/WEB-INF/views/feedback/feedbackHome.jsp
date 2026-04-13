@@ -279,7 +279,7 @@ a {
 .postTitle {
 	margin: auto;
 	width: 95%;
-	height: 40px;
+	height: auto;
 	font-size: 20px;
 	margin-top: 5px;
 	color: #5e361a;
@@ -941,7 +941,7 @@ a {
         	
         	let title = box.find(".postTitle").html();
         	let contents = box.find(".postContent").html();
-        	
+        
         	box.data("original-title", title);
             box.data("original-contents", contents);
         	
@@ -1003,12 +1003,21 @@ a {
         	
         	let box = $(this).closest(".postBox");
         	let seq = $(this).data("seq");
-        	let title = box.find(".postTitle").html().trim(); // 엔터 살리기
-        	let contents = box.find(".postContent").html().trim(); // 엔터 살리기
         	
         	let titleCheck = box.find(".postTitle").text().trim(); // 빈칸 체크
-        	let contentsCheck = box.find(".postContent").text().trim(); // 빈칸 체크
-        	
+			let contentsCheck = box.find(".postContent").text().trim(); // 빈칸 체크
+
+        	// 1. 데이터 추출
+            let title = box.find(".postTitle").html().trim(); // DB 저장용 (엔터 포함)
+            let contents = box.find(".postContent").html().trim(); // DB 저장용 (엔터 포함)
+            
+            // 글자수 체크용 (순수 텍스트만 추출)
+            let titleText = box.find(".postTitle")[0].innerText.trim();
+            let contentsText = box.find(".postContent")[0].innerText; 
+
+            let titleLimit = 100; // 제목 제한
+            let limit = 1000;     // 내용 제한
+            
         	if(titleCheck === "" && contentsCheck === ""){
                 Swal.fire({
                     icon: "info",
@@ -1019,7 +1028,6 @@ a {
                 });
                 return;
             }
-        	
         	
         	// 빈값 검사
             if(titleCheck === ""){
@@ -1043,7 +1051,42 @@ a {
                 return;
             }
         	
-        	
+        	// 4. 제목 글자수 초과 체크
+            if (titleText.length > titleLimit) {
+                let currentTitleLen = titleText.length;
+                let overTitle = titleText.substring(titleLimit, titleLimit + 50);
+                
+                Swal.fire({
+                    icon: "warning",
+                    title: "제목 글자수 초과!",
+                    html: "현재 제목이 <b>" + currentTitleLen + "자</b>입니다. (제한: 100자)<br><br>" +
+                          "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:13px; border:1px solid #ffcccc; word-break: break-all;'>" +
+                          "<b>제목 뒷부분을 삭제해주세요:</b><br><br>" +
+                          "<span style='color:#555;'>... " + overTitle + "</span></div>",
+                    iconColor: "#EB0000",
+                    confirmButtonColor: "#FFB300"
+                });
+                return;
+            }
+
+            // 5. 내용 글자수 초과 체크
+            if (contentsText.length > limit) {
+                let currentLen = contentsText.length;
+                let overText = contentsText.substring(limit, limit + 100); 
+
+                Swal.fire({
+                    icon: "warning",
+                    title: "내용 글자수 초과!",
+                    html: "현재 내용이 <b>" + currentLen + "자</b>입니다. (제한: 1000자)<br><br>" +
+                          "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+                          "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+                          "<span style='color:#555;'>... " + overText + "</span></div>",
+                    iconColor: "#EB0000",
+                    confirmButtonColor: "#FFB300"
+                });
+                return;
+            }
+            
             box.find(".postTitle").attr("contenteditable", "false");
             box.find(".postContent").attr("contenteditable", "false");
             box.find(".postTitle").css("border", "none"); //1px solid rgb(242, 211, 162)
@@ -1058,6 +1101,7 @@ a {
 		    box.find(".delete-target").each(function() {
 		        deleteFiles.push($(this).find(".fileName").data("sys"));
 		    });
+		    
 		    if(deleteFiles.length > 0) {
 		    	for(let i=0; i<deleteFiles.length; i++){
 		            formData.append("deleteFiles", deleteFiles[i]);
@@ -1086,8 +1130,7 @@ a {
 					location.reload();
 				});
 			});
-        	
-        }) 
+        });
         
         // 게시글 삭제 버튼
         $(".delBtn").on("click", function(){
