@@ -58,6 +58,4 @@ public class NoticeDTO {
 	public void setNotice_date(String notice_date) {
 		this.notice_date = notice_date;
 	}
-	
-	
 }

@@ -113,7 +113,4 @@ public class BoardDTO {
 	public void setPost_date(String post_date) {
 		this.post_date = post_date;
 	}
-	
-	
-
 }

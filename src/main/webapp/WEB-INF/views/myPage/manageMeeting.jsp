@@ -358,7 +358,6 @@
 		    }).then((result) => {
 
 		        if(result.isConfirmed){
-					console.log("seq : ", seq, "meetSeq : ", meetSeq);
 			    	
 					$.ajax({
 				        url:"/meetingMember/updateStatus",

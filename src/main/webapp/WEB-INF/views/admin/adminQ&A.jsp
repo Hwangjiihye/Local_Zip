@@ -550,11 +550,9 @@ img{
 			let currentStatus = "${status}"
 					
 			let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
-			console.log(pageTotalCount);
 			// 시작 / 끝 페이지 지정
 			let startNavi = Math.floor(((currentPage - 1) / naviCountPerPage)) * naviCountPerPage + 1;
 			let endNavi = startNavi + naviCountPerPage - 1;
-			console.log(startNavi, endNavi);
 			
 			if(endNavi > pageTotalCount){
 				endNavi = pageTotalCount;
@@ -583,7 +581,6 @@ img{
 					navi.addClass("active");
 				}
 				$(".pageBox").append(navi);
-				console.log(startNavi, endNavi);
 			}
 			
 			if(needNext){

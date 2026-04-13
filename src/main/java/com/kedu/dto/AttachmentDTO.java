@@ -50,6 +50,4 @@ public class AttachmentDTO {
 	public void setAttach_sysname(String attach_sysname) {
 		this.attach_sysname = attach_sysname;
 	}
-	
-	
 }

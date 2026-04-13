@@ -346,7 +346,6 @@ input{
     						iconColor: "#FFB300",
     						confirmButtonColor: "#FFB300"
     					});
-						console.log(resp.MyId)
 						// 입력창 영역을 숨기고 결과 영역을 보여줌
 						$(".inputArea").hide();
 						$(".backBtn").hide();

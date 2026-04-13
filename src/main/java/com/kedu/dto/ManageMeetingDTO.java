@@ -50,9 +50,4 @@ public class ManageMeetingDTO {
 	public void setMeetmem_status(int meetmem_status) {
 		this.meetmem_status = meetmem_status;
 	}
-	
-	
-	
-	
-    
 }

@@ -44,9 +44,6 @@ public class FeedBackController {
 	public FeedBackDAO feedbackdao;
 
 	@Autowired
-	private BoardDAO bDao;
-
-	@Autowired
 	private AttachmentDAO aDao;
 
 	@Autowired
@@ -76,9 +73,8 @@ public class FeedBackController {
 		        imageMap.put(dto.getSuggestion_seq(), files);
 		    }
 		}
-		System.out.println(imageMap);
+		
 		model.addAttribute("imageMap",imageMap);
-		/* List<FeedBackDTO> list = dao.list(); */
 		model.addAttribute("list", list);
 		int recordTotalCount = dao.getRecordTotalCount();
 
@@ -110,8 +106,6 @@ public class FeedBackController {
 		}
 			
 		int nextval = dao.getNextval();
-		System.out.println(nextval);
-		System.out.println(dto.getSuggestion_seq());
 		dto.setSuggestion_seq(nextval);
 
 		String savePath = "c:/files";
@@ -173,8 +167,6 @@ public class FeedBackController {
 
 		// 좋아요 누름 -> 취소
 		else if ("LIKE".equals(reaction)) {
-//			reactiondao.delete(loginId, suggestion_seq);
-//			feedbackdao.minusLike(suggestion_seq);
 			return "alreadyLiked";
 		}
 
@@ -209,8 +201,6 @@ public class FeedBackController {
 
 		// 싫어요 누름 -> 취소
 		else if ("UNLIKE".equals(reaction)) {
-//			reactiondao.delete(loginId, suggestion_seq);
-//			feedbackdao.minusUnlike(suggestion_seq);
 			return "alreadyLiked";
 		}
 
@@ -265,7 +255,6 @@ public class FeedBackController {
 		String loginId = (String) session.getAttribute("loginId");
 
 		FeedBackDTO updateDto = dao.selectBySeq(dto.getSuggestion_seq());
-		System.out.println("넘어온 파일 개수: " + (attachments != null ? attachments.length : 0));
 		if (!loginId.equals(updateDto.getMem_id())) {
 			return "fail";
 		}
