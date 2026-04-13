@@ -551,7 +551,7 @@ a {
 						</c:if>
 					</div>
 
-					<c:if test="${loginId != i.mem_id}">
+					<c:if test="${loginId != i.mem_id && i.mem_role != 0}">
 						<div class="reportArea">
 							<img src="/resources/images/free-icon-siren1.png"
 								class="reportIcon"

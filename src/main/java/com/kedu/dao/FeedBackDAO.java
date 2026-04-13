@@ -102,7 +102,7 @@ public class FeedBackDAO {
 		String sql = "select * from ("
 	            + " select row_number() over(order by s.suggestion_seq desc) rn, "
 	            + "s.suggestion_seq, s.mem_id, "
-				+ "m.mem_nickname, m.mem_dong, "
+				+ "m.mem_nickname, m.mem_dong, m.mem_role, "
 				+ "s.suggestion_title, s.suggestion_contents, s.suggestion_writedate, "
 				+ "s.suggestion_like, s.suggestion_unlike, r.reaction_type "
 				+ "from suggestion s "
