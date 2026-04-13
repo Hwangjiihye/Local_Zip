@@ -482,7 +482,8 @@ a {
 
 .newFileDiv {
 	display: none;
-	margin-left: 5px;
+	margin-top: 5px;
+	margin-left: 40px;
 }
 /*  입력창 테두리 속성 */
  .postTitle[contenteditable="true"],
@@ -586,22 +587,23 @@ a {
 					<div class="postContent">${i.suggestion_contents}</div>
 					<c:if test="${not empty imageMap[i.suggestion_seq]}">
 						<div class="fileDownload">
-							<div class="fileHeader">
-								<span>첨부 파일</span>
-								<div class="newFileDiv">
-									<input type="file" class="newFiles" name="newFiles" accept="image/*" multiple>
-								</div>
-							</div>
-							<c:forEach var="file" items="${imageMap[i.suggestion_seq]}" varStatus="status">
+							첨부 파일
+							<c:forEach var="file" items="${imageMap[i.suggestion_seq]}"
+								varStatus="status">
 								<div class="file-item">
-									<label class="fileName" data-ori="${file.attach_oriname}" data-sys="${file.attach_sysname}">
+									<label class="fileName" data-ori="${file.attach_oriname}"
+										data-sys="${file.attach_sysname}">
 										${file.attach_oriname} </label>
-									<button type="button" class="fileDelBtn" data-sys="${file.attach_sysname}">X</button>
+									<button type="button" class="fileDelBtn"
+										data-sys="${file.attach_sysname}">X</button>
 								</div>
 							</c:forEach>
 						</div>
 					</c:if>
-
+					<div class="newFileDiv">
+						<input type="file" class="newFiles" name="newFiles"
+							accept="image/*" multiple>
+					</div>
 				</div>
 
 				<div class="postDownBox" data-seq="${i.suggestion_seq}">
@@ -677,7 +679,7 @@ a {
         				Swal.fire({
     				        icon: "warning",
     				        title: "Wait !",
-    				        text: "로그인 후 이용해주세요",
+    				        text: "로그인 후 이용 가능합니다.",
     				        iconColor: "#FFB300",
     				        confirmButtonColor: "#FFB300"
     				    }).then((result) => {
@@ -721,7 +723,7 @@ a {
                	},
             error: function() {
             	Swal.fire({
-					icon: "info",
+					icon: "error",
 					title: "Error  !",
 					text: "에러 발생",
 					iconColor: "#EB0000",
@@ -753,7 +755,7 @@ a {
         					Swal.fire({
         				        icon: "warning",
         				        title: "Wait !",
-        				        text: "로그인 후 이용해주세요",
+        				        text: "로그인 후 이용 가능합니다.",
         				        iconColor: "#FFB300",
         				        confirmButtonColor: "#FFB300"
         				    }).then((result) => {
@@ -799,7 +801,7 @@ a {
         			},
         			error: function(){
         				 Swal.fire({
-     						icon: "info",
+     						icon: "error",
      						title: "Error  !",
      						text: "에러 발생",
      						iconColor: "#EB0000",
@@ -830,7 +832,7 @@ a {
         		Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "신고 사유를 선택해 주세요",
+					text: "신고 사유를 선택해 주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -838,12 +840,13 @@ a {
         	} 
         	
         	Swal.fire({
-                title: "정말 신고하시겠습니까?",
-                text: "신고는 취소할 수 없습니다.",
-                icon: "warning",
+        		title: "Wait  !",
+		        text: "정말 신고하시겠습니까?",
+		        icon: "question",
                 showCancelButton: true,
+                iconColor: "#FFB300",
                 confirmButtonColor: "#FFB300",
-                cancelButtonColor: "#aaa",
+                cancelButtonColor: "#d9d9d9",
                 confirmButtonText: "신고",
                 cancelButtonText: "취소"
             }).then((result) => {
@@ -873,7 +876,7 @@ a {
         					});
         	            } else if(resp === "fail") {
         	            	Swal.fire({
-        						icon: "info",
+        						icon: "warning",
         						title: "Already  !",
         						text: "이미 신고한 글 입니다",
         						iconColor: "#FFB300",
@@ -883,7 +886,7 @@ a {
         	            	Swal.fire({
          						icon: "warning",
          						title: "Wait  !",
-         						text: "로그인 후 이용해주세요",
+         						text: "로그인 후 이용 가능합니다.",
          						iconColor: "#EB0000",
          						confirmButtonColor: "#FFB300"
          					});
@@ -891,8 +894,8 @@ a {
         	            } else {
         	            	Swal.fire({
         						icon: "error",
-        						title: "Error  !",
-        						text: "신고 실패",
+        						title: "Fail !",
+        						text: "관리자의 댓글은 신고가 불가합니다.",
         						iconColor: "#EB0000",
         						confirmButtonColor: "#FFB300"
         					});
@@ -1040,6 +1043,7 @@ a {
                 return;
             }
         	
+        	
             box.find(".postTitle").attr("contenteditable", "false");
             box.find(".postContent").attr("contenteditable", "false");
             box.find(".postTitle").css("border", "none"); //1px solid rgb(242, 211, 162)
@@ -1075,7 +1079,7 @@ a {
 				Swal.fire({
 					icon: "success",
 					title: "Success  !",
-					text: "수정 완료!",
+					text: "수정되었습니다.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				}).then(() => {
@@ -1091,9 +1095,9 @@ a {
         	let seq = $(this).data("seq");
         	
         	Swal.fire({
-				icon: "question",
-				title: "Wait  !",
-				text: "정말 삭제하시겠습니까?",
+        		title: "정말 삭제하시겠습니까?",
+		        text: "삭제 후에는 복구할 수 없습니다.",
+		        icon: "question",
 				iconColor: "#FFB300",
 				confirmButtonColor: "#FFB300",
 					showCancelButton: true,
@@ -1116,7 +1120,7 @@ a {
         					Swal.fire({
 								icon: "success",
 								title: "Success  !",
-								text: "삭제 되었습니다",
+								text: "삭제되었습니다.",
 								iconColor: "#FFB300",
 								confirmButtonColor: "#FFB300"
         					}).then(() => {
@@ -1128,7 +1132,7 @@ a {
         					Swal.fire({
 								icon: "error",
 								title: "Error  !",
-								text: "삭제 실패",
+								text: "문제가 발생해 삭제할 수 없습니다.",
 								iconColor: "#EB0000",
 								confirmButtonColor: "#FFB300"
         					});
@@ -1136,22 +1140,15 @@ a {
         			},
         			error: function() {
         				Swal.fire({
-							icon: "error",
-							title: "서버 오류 발생 !",
+        					icon: "error",
+        					title: "Error  !",
+        					text: "에러 발생",
 							iconColor: "#EB0000",
 							confirmButtonColor: "#FFB300"
         				});
         			}
         		});
-        	} else if(result.dismiss === Swal.DismissReason.cancel) {
-        		Swal.fire({
-					icon: "info",
-					title: "Success  !",
-					text: "취소 되었습니다",
-					iconColor: "#FFB300",
-					confirmButtonColor: "#FFB300"
-        		});
-        	}
+        	} 
         });
 	});
 			

@@ -377,7 +377,6 @@ button, body, div, input {
 				confirmButtonColor: "#FFB300"
 			}).then(() => {
 		        $(".frm")[0].submit();
-			/* return true; */
 			});
 		});
 		

@@ -318,8 +318,8 @@
 	    }
 		});
 		// 제목, 내용 빈칸 일시, alert 띄움
-		$(".frm").on("submit", function(){
-			
+		$(".frm").on("submit", function(e){
+			e.preventDefault(); // 기본 제출 막기
 			
 			if($(".inputBox").val() == "") {
 				Swal.fire({
@@ -343,7 +343,17 @@
 				$(".TextDetail").focus();
 				return false;
 			}
-			return true;
+			Swal.fire({
+				icon: "success",
+				title: "Success  !",
+				text: "글이 등록되었습니다.",
+				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300"
+			}).then(() => {
+				//this.submit();
+				$(".frm")[0].submit();
+			});
+// 			return true;
 		});
 	</script>
 

@@ -578,7 +578,7 @@ hr {
 					Swal.fire({
 				        icon: "warning",
 				        title: "Wait !",
-				        text: "로그인 후 이용 가능합니다",
+				        text: "로그인 후 이용 가능합니다.",
 				        iconColor: "#FFB300",
 				        confirmButtonColor: "#FFB300"
 				    }).then((result) => {

@@ -376,7 +376,7 @@
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "모임명을 입력해주세요",
+					text: "모임명을 입력해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -385,7 +385,7 @@
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "카테고리를 선택해주세요",
+					text: "카테고리를 선택해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -394,7 +394,7 @@
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "정원수를 선택해주세요",
+					text: "정원수를 선택해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -403,7 +403,7 @@
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "한 줄 소개를 작성해주세요",
+					text: "한 줄 소개를 작성해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -412,7 +412,7 @@
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "모임 소개를 작성해주세요",
+					text: "모임 소개를 작성해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -421,7 +421,7 @@
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "활동 지역을 작성해주세요",
+					text: "활동 지역을 작성해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -430,7 +430,7 @@
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "오픈채팅 링크를 넣어주세요",
+					text: "오픈채팅 링크를 넣어주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -439,7 +439,7 @@
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "오픈채팅 비밀번호를 넣어주세요",
+					text: "오픈채팅 비밀번호를 넣어주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});

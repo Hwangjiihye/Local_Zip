@@ -738,8 +738,12 @@ a {
     padding: 20px;          /* 안쪽 여백을 줘야 그림자가 예쁘게 잡혀요 */
     border-radius: 15px;    /* 모서리를 둥글게 */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* 은은한 그림자 */
-
 }
+.swal2-icon.swal2-question .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 </style>
 </head>
 
@@ -794,7 +798,7 @@ a {
 			<div class="categoryBtn">
 				<a href="/">
 					<button type="button" class="nowBtn" style="background-color: #fecc56; border-radius: 10px; height: 30px; margin-right: 10px;">
-						<i class="navicon fa-solid fa-house fa-lg"></i> 전체
+						<i class="fa-solid fa-house fa-lg"></i> 전체
 					</button>
 				</a>
 				<a href="/board/lifeInfo">
@@ -1126,7 +1130,7 @@ a {
 		        	Swal.fire({
 		                icon: "info",
 		                title: "Wait  !",
-		                text: "신고 사유를 선택해 주세요",
+		                text: "신고 사유를 선택해 주세요.",
 		                iconColor: "#FFB300",
 		                confirmButtonColor: "#FFB300"
 		             });
@@ -1168,7 +1172,7 @@ a {
 		            	Swal.fire({
 		                      icon: "info",
 		                      title: "Already  !",
-		                      text: "이미 신고한 글 입니다",
+		                      text: "이미 신고한 글 입니다.",
 		                      iconColor: "#FFB300",
 		                      confirmButtonColor: "#FFB300"
 		                   });
@@ -1178,20 +1182,12 @@ a {
 		        	Swal.fire({
 		                  icon: "error",
 		                  title: "Error  !",
-		                  text: "서버와 통신 중 오류가 발생했습니다",
+		                  text: "에러 발생",
 		                  iconColor: "#EB0000",
 		                  confirmButtonColor: "#FFB300"
 		               });
 		        });
-		  } else {
-			  Swal.fire({
-                  icon: "info",
-                  title: "Cancel  !",
-                  text: "취소 되었습니다",
-                  iconColor: "#FFB300",
-                  confirmButtonColor: "#FFB300"
-			  });
-		    }
+		  	}
 		 });
 	  });
 		        	
@@ -1292,7 +1288,9 @@ a {
                 if (keyword === "") {
                     Swal.fire({
                         icon: "warning",
-                        text: "검색어를 입력해주세요!"
+                        title: "Wait !",
+                        text: "검색어를 입력해주세요!",
+                        confirmButtonColor: "#FFB300"
                     });
                     return;
                 }

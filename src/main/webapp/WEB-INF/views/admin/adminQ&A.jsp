@@ -16,7 +16,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-* {box-sizing: border-box;}
+* {
+	box-sizing: border-box;
+}
 
 @font-face {
 	font-family: 'GMarketSans';
@@ -110,8 +112,8 @@ body {
 	transition: all 0.2s ease;
 	line-height: 30px;
 	display: flex;
-    align-items: center;
-    gap : 5px;
+	align-items: center;
+	gap: 5px;
 }
 
 .categoryBtnAll:hover {
@@ -119,19 +121,19 @@ body {
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	background-color: #fecc56;
 	color: #A66A3F;
-} 
+}
 
 .navicon:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-} 
+}
 
 .categoryBtnAll:active, .navicon:active {
 	transform: translateY(2px); /*아래로 눌림*/
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.nowBtn{
+.nowBtn {
 	background-color: #fecc56;
 	color: #A66A3F;
 	transform: translateY(-3px);
@@ -144,8 +146,8 @@ body {
 	transition: 0.3s;
 }
 
-.categoryBtnAll:active{
-    transform: translateY(2px);
+.categoryBtnAll:active {
+	transform: translateY(2px);
 }
 
 .bottomBar {
@@ -164,281 +166,307 @@ body {
 	gap: 200px;
 }
 
-.categoryAndWriterDiv{
- 	width: 100%; 
- 	background-color:#F2D3A2;
- 	display:flex;
- 	justify-content: space-between;
- 	align-items: center;
- 	font-size: 14px;
- 	border:none;
- 	padding: 10px 15px;
- 	margin:0;
+.categoryAndWriterDiv {
+	width: 100%;
+	background-color: #F2D3A2;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 14px;
+	border: none;
+	padding: 10px 15px;
+	margin: 0;
 }
 
-.replyAdminId{
+.replyAdminId {
 	padding-bottom: 10px;
 	font-size: 14px;
 	color: #5e361a;
 	font-weight: bold;
 }
 
-.categoryAndWriter{
- 	display:flex;
- 	gap:20px;
- 	align-items: center;
+.categoryAndWriter {
+	display: flex;
+	gap: 20px;
+	align-items: center;
 }
 
-.inputQaReply{
- 	background-color: #F2D3A2;
- 	color: #A66A3F;
- 	border-radius: 10px;
- 	border:none;
- 	font-size:15px;
- 	width:100%;
- 	resize: none;
- 	outline: none;
- 	font-family: 'GMarketSans';
+.inputQaReply {
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	border-radius: 10px;
+	border: none;
+	font-size: 15px;
+	width: 100%;
+	resize: none;
+	outline: none;
+	font-family: 'GMarketSans';
 }
 
-.answerDiv{
-	padding:5px;
- 	background-color: #F2D3A2;
- 	color: #A66A3F;
- 	border-radius: 10px;
- 	border:none;
- 	margin: 0 0 5px 0;
- 	font-size: 15px;
-/*  	height: 40px; */
- 	flex:1;
- 	width:auto;
- 	min-width:0;
- 	min-height: 40px;
- 	font-family: 'GMarketSans';
+.answerDiv {
+	padding: 5px;
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	border-radius: 10px;
+	border: none;
+	margin: 0 0 5px 0;
+	font-size: 15px;
+	/*  	height: 40px; */
+	flex: 1;
+	width: auto;
+	min-width: 0;
+	min-height: 40px;
+	font-family: 'GMarketSans';
 }
 
-.replyBtn{
- 	 margin: 0 0 7px 15px;
- 	 background-color: #ffb300;
-     color: #5e361a;
-     border: 1px solid #ffb300;
-     border-radius: 10px;
-     width: 100px;
- 	 height: 40px;
- 	 box-shadow: 0 4px 10px rgba(0,0,0,0.3);
- 	 font-size:15px;
+.replyBtn {
+	margin: 0 0 7px 15px;
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	font-size: 15px;
 }
 
-.replyTextAndBtn{
- 	display:flex;
-/*  	align-items: stretch; /* textarea랑 버튼 영역 높이 맞추기 */ 
- 	gap:10px;
+.replyTextAndBtn {
+	display: flex;
+	/*  	align-items: stretch; /* textarea랑 버튼 영역 높이 맞추기 */
+	gap: 10px;
 }
 
-.qaReply{
+.qaReply {
 	padding: 10px 15px;
 	border-radius: 10px;
 }
 
 .replyRow {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 
-.adminProfileDiv{
- 	margin-left: 0;
+.adminProfileDiv {
+	margin-left: 0;
 }
 
-.category{
- 	font-size:14px;
-    height: 25px;
- 	background-color: #FFB300;
+.category {
+	font-size: 14px;
+	height: 25px;
+	background-color: #FFB300;
 	border-radius: 10px;
- 	border: 1px solid #FFB300;
- 	color: #3e5e40;
- 	align-items: center;
- 	vertical-align: middle;
- 	line-height: 18px;
- 	padding:5px;
+	border: 1px solid #FFB300;
+	color: #3e5e40;
+	align-items: center;
+	vertical-align: middle;
+	line-height: 18px;
+	padding: 5px;
 }
 
 .postBox {
-        width: 95%;
-        max-width: 1000px;
-        margin: 20px auto 0 auto;
-        background-color: #fbe5c0;
-        border-radius: 5px;
-        overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
+	width: 95%;
+	max-width: 1000px;
+	margin: 20px auto 0 auto;
+	background-color: #fbe5c0;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
 
 .postHeader {
-        background-color: #F2D3A2;
-        padding: 10px 15px;
-        font-size: 14px;
-        border-bottom: 1px solid #A66A3F;
-        color: #A66A3F;
-        display: flex;
-        justify-content: space-between;
-    }
+	background-color: #F2D3A2;
+	padding: 10px 15px;
+	font-size: 14px;
+	border-bottom: 1px solid #A66A3F;
+	color: #A66A3F;
+	display: flex;
+	justify-content: space-between;
+}
 
 .postBody {
-        padding: 15px 15px 5px 15px;
-    }
+	padding: 15px 15px 5px 15px;
+}
 
 .rowItem1 {
-        border: 0px solid #ccc;
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 5px;
-        background-color: #F2D3A2;
-    }
+	border: 0px solid #ccc;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #F2D3A2;
+}
 
 .rowItem2 {
-        border: 0px solid #ccc;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        padding: 10px;
-        border-radius: 5px;
-    }
-    
+	border: 0px solid #ccc;
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	border-radius: 5px;
+}
+
 .labelName {
-        font-size: 12px;
-        color: #5e361a;;
-        display: block;
-        margin-bottom: 5px;
-    }
+	font-size: 12px;
+	color: #5e361a;;
+	display: block;
+	margin-bottom: 5px;
+}
 
-.titleContent { font-weight: bold; font-size: 18px; color: #5e361a; }
-.textContent { font-size: 15px; color: #444; min-height: 60px; color: #5e361a;}
+.titleContent {
+	font-weight: bold;
+	font-size: 18px;
+	color: #5e361a;
+}
 
-    /* 답변 영역 (와이어프레임의 하단 칸) */
+.textContent {
+	font-size: 15px;
+	color: #444;
+	min-height: 60px;
+	color: #5e361a;
+}
+
+/* 답변 영역 (와이어프레임의 하단 칸) */
 .answerBox {
-        background-color: #F2D3A2;
-        border-top: 1px solid #A66A3F;
-        padding: 15px;
-        color : #5e361a;
-    }
-.answerLabel {
-        font-weight: bold;
-        color: #5e361a;
-        margin-bottom: 5px;
-        display: block;
-    }
+	background-color: #F2D3A2;
+	border-top: 1px solid #A66A3F;
+	padding: 15px;
+	color: #5e361a;
+}
 
+.answerLabel {
+	font-weight: bold;
+	color: #5e361a;
+	margin-bottom: 5px;
+	display: block;
+}
 
 .pageBox {
-        text-align: center;
-        padding: 20px;
-        font-size: 18px;
-        color: #A66A3F;
-        transform: translateX(-20px);
-    }
-.pageBox span { margin: 0 10px; cursor: pointer; }
- 
-.answerBtnDiv{
- 	margin: 30px auto 0 auto;
- 	display: flex;
- 	justify-content: center;
- 	align-items: center;
- 	gap: 100px;
- }
- 
-.answerBtnDiv>button{
- 	 background-color: #fbe5c0;
-     color: #5e361a;
-     font-weight: bold;
-     border:none;
-     width: 100px;
- 	 height: 40px;
- 	 font-size:15px;
- } 
- 
-.adminBtnArea{
- 	display:flex;
-	gap:10px;
-	flex-shrink:0;
-/* 	align-self: flex-start; /*버튼 영역 위로 붙이기*/ */
- }
-.adminBtn, .replyBtn{
- 	margin: 0 0 7px 15px;
- 	background-color: #ffb300;
-    color: #5e361a;
-    border: 1px solid #ffb300;
-    border-radius: 10px;
-    width: 100px;
- 	height: 40px;
- 	box-shadow: 0 4px 10px rgba(0,0,0,0.3);
- 	font-size:15px;
- }
- 
-.pageBox{
-    text-align: center;
-    padding: 20px;
-    font-size: 18px;
-    color: #A66A3F;
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #A66A3F;
+	transform: translateX(-20px);
 }
 
-.pageBox a{
-    display: inline-block;
-    min-width:35px;
-    padding:6px 10px;
-    margin: 0 8px;
-    text-decoration: none;
-    color: #A66A3F;
-    border-radius:6px;
-    transition:0.2s;
-    font-weight: normal;
-    cursor: pointer;
+.pageBox span {
+	margin: 0 10px;
+	cursor: pointer;
 }
 
-.pageBox a.active{
-	background-color:#fecc56;
-    font-weight: bold;
-    color: #5e361a;
+.answerBtnDiv {
+	margin: 30px auto 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 100px;
 }
 
-.pageBox a:hover{
-    background-color:#F2D3A2;
+.answerBtnDiv>button {
+	background-color: #fbe5c0;
+	color: #5e361a;
+	font-weight: bold;
+	border: none;
+	width: 100px;
+	height: 40px;
+	font-size: 15px;
+}
+
+.adminBtnArea {
+	display: flex;
+	gap: 10px;
+	flex-shrink: 0;
+	/* 	align-self: flex-start; /*버튼 영역 위로 붙이기*/
+	*/
+}
+
+.adminBtn, .replyBtn {
+	margin: 0 0 7px 15px;
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	font-size: 15px;
+}
+
+.pageBox {
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #A66A3F;
+}
+
+.pageBox a {
+	display: inline-block;
+	min-width: 35px;
+	padding: 6px 10px;
+	margin: 0 8px;
+	text-decoration: none;
+	color: #A66A3F;
+	border-radius: 6px;
+	transition: 0.2s;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.pageBox a.active {
+	background-color: #fecc56;
+	font-weight: bold;
+	color: #5e361a;
+}
+
+.pageBox a:hover {
+	background-color: #F2D3A2;
 }
 
 .answerDiv.editing {
-    background-color: transparent !important;
-    padding: 0 !important;
-    border: none !important;
+	background-color: transparent !important;
+	padding: 0 !important;
+	border: none !important;
 }
 
-
-a{
+a {
 	text-decoration: none;
 }
 
-img{
+img {
 	width: 16.67px;
 	height: 16.10px;
 }
 
-.textContent, .answerDiv, .inputQaReply, .inputUpdate{
+.textContent, .answerDiv, .inputQaReply, .inputUpdate {
 	white-space: pre-wrap;
 }
 
-.filterBtn{
+.filterBtn {
 	transition: all 0.2s ease;
 	cursor: pointer;
 }
 
-.adminBtn, .UpdateBtn, .replyBtn{
+.adminBtn, .UpdateBtn, .replyBtn {
 	transition: all 0.2s ease;
 	cursor: pointer;
 }
 
-.adminBtn:hover, .UpdateBtn:hover, .replyBtn:hover{
+.adminBtn:hover, .UpdateBtn:hover, .replyBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	background-color: #fecc56;
 	color: #A66A3F;
-} 
+}
 
+.swal2-icon.swal2-question .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.swal2-icon.swal2-info .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
 </style>
 </head>
 
@@ -610,7 +638,7 @@ img{
 					e.preventDefault();
 					Swal.fire({
 						icon: "info",
-						title: "Info  !",
+						title: "Wait  !",
 						text: "내용을 입력해 주세요.",
 						iconColor: "#FFB300",
 						confirmButtonColor: "#FFB300"
@@ -660,7 +688,7 @@ img{
 					if(updateContents.trim() == ""){
 						Swal.fire({
     						icon: "info",
-    						title: "Info  !",
+    						title: "Wait  !",
     						text: "내용을 입력해 주세요.",
     						iconColor: "#FFB300",
     						confirmButtonColor: "#FFB300"
@@ -713,8 +741,8 @@ img{
 				
 				Swal.fire({
 			        icon: "question",
-			        title: "Wait  !",
-			        text: "정말 삭제하시겠습니까?",
+			        title: "정말 삭제하시겠습니까?",
+			        text: "삭제 후에는 복구할 수 없습니다.",
 			        iconColor: "#FFB300",
 			        confirmButtonColor: "#FFB300",
 			        showCancelButton: true,
