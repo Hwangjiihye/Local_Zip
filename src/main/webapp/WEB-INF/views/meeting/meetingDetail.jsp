@@ -325,7 +325,6 @@ p {
 		<script>
 			$(".requestBtn").on("click", function(){
 				let meet_seq = $(this).data("meet-seq");
-				console.log("클락한 버튼의 seq : " , meet_seq);
 				// 팝업창 크기
 				let width = 800;
 				let height = 400;

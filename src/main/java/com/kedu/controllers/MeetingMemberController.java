@@ -39,7 +39,6 @@ public class MeetingMemberController {
 		
 		String loginId = (String)session.getAttribute("loginId");
 		Integer meet_seq = (Integer)session.getAttribute("meet_seq");
-		System.out.println("meet_seq : " + meet_seq);
 		
 		
 		dto.setMem_id(loginId);

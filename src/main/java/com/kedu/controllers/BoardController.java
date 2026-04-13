@@ -37,8 +37,6 @@ public class BoardController {
 	@Autowired
 	private BoardDAO dao;
 	@Autowired
-	private ReplyDAO ReplyDao;
-	@Autowired
 	private VisitLogDAO vdao;
 	@Autowired
 	private PostLikeDAO likeDao;
@@ -132,7 +130,6 @@ public class BoardController {
 		model.addAttribute("recordCountPerPage", recordCountPerPage);
 		model.addAttribute("naviCountPerPage", naviCountPerPage);
 		session.setAttribute("currentPage", cPage);
-//		model.addAttribute("currentPage", cPage);
 
 		List<BoardDTO> list;
 
@@ -343,7 +340,7 @@ public class BoardController {
 	@RequestMapping("/deletePost")
 	public String deletePost(int post_seq) {
 		
-		int count = rdao.reportDeleteBlock(post_seq);
+		int count = rdao.reportDeleteBlock(post_seq); // 신고된 게시글 삭제 불가 로직
 		if(count > 0) {
 			return "fail";
 		}
@@ -358,6 +355,13 @@ public class BoardController {
 	public String updatePost(BoardDTO dto,
 			@RequestParam(value="deleteFiles", required=false)List<String> deleteFiles,
 			MultipartFile[] attachments) throws Exception{
+		
+		// 신고된 게시글 수정 불가 로직
+		int count = rdao.reportUpdateBlock(dto.getPost_seq());
+		if(count > 0) {
+			return "fail";
+		}
+		
 		//글수정
 		dao.updatePost(dto.getPost_seq(), dto.getPost_title(), dto.getPost_contents());
 		
@@ -384,7 +388,6 @@ public class BoardController {
 	            if (file.isEmpty()) {
 	            	continue;
 	            }
-	            System.out.println(dto.getPost_category()+":"+dto.getPost_seq());
 	            String oriName = file.getOriginalFilename();
 				String sysName = UUID.randomUUID() + "_" + oriName;
 				file.transferTo(new File(savePath + "/" + sysName));
@@ -399,7 +402,6 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping("/replyList")
 	public String replyList(int post_seq, Model model) {
-//		List<ReplyDTO> list = ReplyDao.selectByPostSeq(post_seq);
 		
 		// 관리자 댓글에 신고 버튼 안 뜨게 하는 로직 ( 관리자 여부 확인 )
 		List<ReplyDTO> list = mdao.memRole(post_seq);

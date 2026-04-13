@@ -48,8 +48,4 @@ public class AuthDTO {
 	public void setAuth_create_date(String auth_create_date) {
 		this.auth_create_date = auth_create_date;
 	}
-	
-	
-	
-	
 }

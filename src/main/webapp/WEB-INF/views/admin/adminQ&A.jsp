@@ -231,7 +231,7 @@ body {
 
 .replyTextAndBtn{
  	display:flex;
-/*  	align-items: stretch; /* textarea랑 버튼 영역 높이 맞추기 */ */
+/*  	align-items: stretch; /* textarea랑 버튼 영역 높이 맞추기 */ 
  	gap:10px;
 }
 
@@ -550,11 +550,9 @@ img{
 			let currentStatus = "${status}"
 					
 			let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage);
-			console.log(pageTotalCount);
 			// 시작 / 끝 페이지 지정
 			let startNavi = Math.floor(((currentPage - 1) / naviCountPerPage)) * naviCountPerPage + 1;
 			let endNavi = startNavi + naviCountPerPage - 1;
-			console.log(startNavi, endNavi);
 			
 			if(endNavi > pageTotalCount){
 				endNavi = pageTotalCount;
@@ -583,7 +581,6 @@ img{
 					navi.addClass("active");
 				}
 				$(".pageBox").append(navi);
-				console.log(startNavi, endNavi);
 			}
 			
 			if(needNext){
@@ -638,7 +635,7 @@ img{
 				let textarea = $("#inputUpdate_" + seq)[0];
 				textarea.style.height = "auto";
 				textarea.style.height = textarea.scrollHeight + "px";
-			    
+			   
 					parentRow.find(".adminBtn").hide();
 					parentRow.find(".UpdateBtn").show();
 				});

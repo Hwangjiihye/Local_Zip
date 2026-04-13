@@ -293,9 +293,19 @@ button, body {
 	width: 95%;
 	font-size: 15px;
 	background-color: #f0d8af;
-	border-radius: 5px;
 	padding: 0px 4px;
 	margin: auto;
+}
+
+.fileContainer{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.postContents{
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	padding:10px 0 5px 13px;
 }
 
 #summernote {
@@ -321,6 +331,17 @@ button, body {
 	margin: auto;
 	width: 95%;
 	padding: 10px 10px;
+}
+
+.fileHeader{
+	display: flex;
+	align-items: center;
+	gap: 10px;           /* '첨부 파일' 글자와 파일 선택 버튼 사이 간격 */
+}
+
+.newFileDiv{
+	display: none;
+	margin: 0;
 }
 
 .postDownBox {
@@ -561,7 +582,6 @@ hr {
 .replyContents[contenteditable="true"]:focus {
 	outline: none;
 	border: 1px solid #FFB300;
-	background-color: #fbe5c0;
 }
 
 .postTitle[contenteditable="true"]:focus, .postContents[contenteditable="true"]:focus
@@ -575,10 +595,17 @@ hr {
 	font-size: 13px;
 }
 
+.file-item{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 3px;
+	line-height: 1; /* 엑스버튼 위치 조정 */ 
+}
+
 .newFileDiv {
 	display: none;
-	margin-top: 10px;
-	margin-left: 45px;
+	margin-left: 5px;
 }
 
 .replyContents, .postContents {
@@ -587,7 +614,6 @@ hr {
 
 .postContents {
 	white-space: pre-line;
-	/* 	text-align: left; */
 }
 </style>
 
@@ -660,7 +686,12 @@ hr {
 
 					<c:if test="${not empty fileList}">
 						<div class="fileDownload">
-							첨부 파일
+							<div class="fileHeader">
+								<span>첨부 파일</span>
+								<div class="newFileDiv">
+									<input type="file" class="newFiles" name="newFiles" multiple>
+								</div>
+							</div>
 							<c:forEach var="i" items="${fileList}" varStatus="status">
 								<div class="file-item">
 									<label class="fileName" data-ori="${i.attach_oriname}"
@@ -671,9 +702,7 @@ hr {
 							</c:forEach>
 						</div>
 					</c:if>
-					<div class="newFileDiv">
-						<input type="file" class="newFiles" name="newFiles" multiple>
-					</div>
+
 				</div>
 
 				<div class="postDownBox">
@@ -752,8 +781,18 @@ hr {
 			$(".postTitle").attr("contenteditable","true");
 			$(".postContents").attr("contenteditable","true");
 			
-			$(".postTitle").css({"border":"1px solid #F2D3A2"});
-			$(".postContents").css({"border":"1px solid #F2D3A2"});
+			$(".postTitle").css({
+				"border":"1px solid #FFB300",
+				"padding-top":"0px",
+				"margin-top":"0px"
+				
+			});
+			$(".postContents").css({
+			    "border": "1px solid #FFB300",
+			    "border-top-left-radius": "0px",
+			    "border-top-right-radius": "0px",
+			    "padding": "10px 0 5px 12px"
+			});
 		});
 		
 		// 파일 삭제 버튼을 눌렀을때
@@ -814,16 +853,49 @@ hr {
 				processData: false,
 		        contentType: false,
 				type: "post"
-			}).done(function(){
-				Swal.fire({
-					icon: "success",
-					title: "Success  !",
-					text: "수정 완료!",
-					iconColor: "#FFB300",
-					confirmButtonColor: "#FFB300"
-				}).then(() => {
-					location.reload();
-				});
+			}).done(function(resp){
+				if(resp == "fail"){
+					Swal.fire({
+                        icon: "error",
+                        title: "Fail !",
+                        text: "신고된 게시물은 수정할 수 없습니다.",
+                        iconColor: "#EB0000",
+                        confirmButtonColor: "#FFB300"
+                    }).then(() => {
+                    	let originTitle = postTitle.data("originTitle");
+            			let originContents = postContents.data("originContents");
+
+            		    postTitle.text(originTitle);
+            		    postContents.html(originContents);
+            		    
+            		    $(".file-item").removeClass("delete-target").show();
+            		    $(".newFiles").val("");
+            		    
+            		    $(".fileDelBtn").hide();
+            			$(".newFileDiv").hide();
+            			
+            		    $(".completeBtn").css({"display":"none"});
+            			$(".cancelBtn").css({"display":"none"});
+            			$(".updateBtn").css({"display":"inline"});
+            			$(".deleteBtn").css({"display":"inline"});
+            			
+            			postTitle.removeAttr("contenteditable");
+            			postContents.removeAttr("contenteditable");
+            			
+            			postTitle.css({"border":"none"});
+            			postContents.css({"border":"none"});
+                    });
+				}else if(resp == "success"){
+					Swal.fire({
+						icon: "success",
+						title: "Success  !",
+						text: "수정 완료!",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					}).then(() => {
+						location.reload();
+					});
+				}
 			});
 		});
 		
@@ -867,7 +939,6 @@ hr {
                         iconColor: "#FFB300",
                         confirmButtonColor: "#FFB300"
                     }).then(() => {
-                    	//location.href = "/";
                     	location.href = "/board/lifeInfo?sort=" + sort + "&cPage=" + currentPage;
                     });
 		    	 }else if(category == "talk"){
@@ -878,7 +949,6 @@ hr {
 	                        iconColor: "#FFB300",
 	                        confirmButtonColor: "#FFB300"
 	                    }).then(() => {
-	                    	//location.href = "/";
 	                    	location.href = "/board/talk?sort=" + sort + "&cPage=" + currentPage;
 	                    }); 
 		    	 }else if(category == "food"){
@@ -889,7 +959,6 @@ hr {
 	                        iconColor: "#FFB300",
 	                        confirmButtonColor: "#FFB300"
 	                    }).then(() => {
-	                    	//location.href = "/";
 	                    	location.href = "/board/food?sort=" + sort + "&cPage=" + currentPage;
 	                    }); 
 		    	 }else if(category == "beauty"){
@@ -900,7 +969,6 @@ hr {
 	                        iconColor: "#FFB300",
 	                        confirmButtonColor: "#FFB300"
 	                    }).then(() => {
-	                    	//location.href = "/";
 	                    	location.href = "/board/beauty?sort=" + sort + "&cPage=" + currentPage;
 	                    }); 
 		    	 }else if(category == "all" || category == ""){
@@ -911,7 +979,6 @@ hr {
 	                        iconColor: "#FFB300",
 	                        confirmButtonColor: "#FFB300"
 	                    }).then(() => {
-	                    	//location.href = "/";
 	                    	location.href = "/?sort=" + sort;
 	                    }); 
 		    	 }else {
@@ -1089,7 +1156,6 @@ hr {
 	                  postLike.find(".likeCount").text(count);
 	               });
 	            }
-	           console.log("${dto.post_like_check}");
 	         });
         });
                
@@ -1145,7 +1211,6 @@ hr {
 			                reports_reason: report_reason
 		        		}
 		        	}).done(function(resp) {
-		        		console.log(resp);
 		            	if(resp == "success"){
 		            		 Swal.fire({
 		                         icon: "success",
@@ -1226,7 +1291,6 @@ hr {
         		
         	})
         	
-        	/* console.log(post_seq); */
         });
         
         // upBtn, delBtn, OBtn, XBtn
@@ -1351,15 +1415,38 @@ hr {
         		},
         		type: "post"
         	}).done(function(resp){
-        		Swal.fire({
-					icon: "success",
-					title: "Success  !",
-					text: "수정이 완료되었습니다!",
-					iconColor: "#FFB300",
-					confirmButtonColor: "#FFB300"
-				}).then(() => {
-					loadReplyList();
-				});
+        		if(resp == "fail"){
+        			Swal.fire({
+                        icon: "error",
+                        title: "Fail !",
+                        text: "신고된 댓글은 수정이 불가합니다.",
+                        iconColor: "#EB0000",
+                        confirmButtonColor: "#FFB300"
+                    }).then(() => {
+            			
+                    	let replyContents = replyUpBox.find(".replyContents");
+                    	let origin = replyContents.data("origin");
+                    	
+                    	replyContents.html(origin);
+                    	
+                    	let upBtn = replyUpBox.find(".upBtn").css({"display":"inline"});
+                    	let delBtn = replyUpBox.find(".delBtn").css({"display":"inline"});
+                    	let OBtn = replyUpBox.find(".OBtn").css({"display":"none"});
+                    	let XBtn = replyUpBox.find(".XBtn").css({"display":"none"});
+
+                    	replyContents.removeAttr("contenteditable");
+                    });
+        		}else if(resp == "success"){
+        			Swal.fire({
+    					icon: "success",
+    					title: "Success  !",
+    					text: "수정이 완료되었습니다!",
+    					iconColor: "#FFB300",
+    					confirmButtonColor: "#FFB300"
+    				}).then(() => {
+    					loadReplyList();
+    				});
+        		}
         	});
         });
         

@@ -40,7 +40,4 @@ public class PostLikeDTO {
 	public void setLike_date(String like_date) {
 		this.like_date = like_date;
 	}
-	
-	
-	
 }

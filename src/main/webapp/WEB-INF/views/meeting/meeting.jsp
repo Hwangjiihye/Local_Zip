@@ -641,9 +641,7 @@ body {
 			
 			$(document).on("click", ".meeting-card", function(){
 			    let seq = $(this).data("seq");
-// 			    let mem_id = $(this).data("mem_id");
 			    location.href = "/meeting/meetingDetail?seq=" + seq;
-// 			    		+ "&mem_id=" + mem_id;
 			});
 			
 			$(document).on("click", ".join-btn, .reportBtn, .reportIcon, .joinTwo-btn", function (e) {

@@ -794,7 +794,6 @@ hr {
 				data : {post_seq : post_seq},
 				type : "post"
 			}).done(function(likeCheck) {
-				console.log("서버 응답:" + likeCheck);
 				
 				if(likeCheck == -1){
 					Swal.fire({

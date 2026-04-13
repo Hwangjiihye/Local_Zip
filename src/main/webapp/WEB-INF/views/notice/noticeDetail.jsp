@@ -213,8 +213,11 @@ button, body {
 }
 .completeBtn ,.cancelBtn{
 	display : none;
+	margin-left: 5px;
 }
-
+.updateBtn, .deleteBtn{
+	margin-left: 5px;
+}
 .postContents[contenteditable="true"] {
     border: 1px solid #FFB300;
     border-radius: 5px;
@@ -224,7 +227,6 @@ button, body {
 .postContents[contenteditable="true"]:focus {
     outline: none;
     border: 1px solid #FFB300;
-    background-color: #fbe5c0;
 }
 
 .postTitle[contenteditable="true"] {
@@ -236,7 +238,6 @@ button, body {
 .postTitle[contenteditable="true"]:focus {
     outline: none;
     border: 1px solid #FFB300;
-    background-color: #fbe5c0;
 }
 
 .bottomBox {

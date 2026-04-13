@@ -118,7 +118,7 @@ body, html {
 
 .centerBox {
 	width: 100%;
-	margin-top: 100px;
+	margin-top: 20px;
 	position: relative;
 	top: 10px;
 }
@@ -126,12 +126,12 @@ body, html {
 .userBar {
 	width: 1865px;
 	height: 100px;
-	margin-top: 20px;
+	margin-top: 112px;
 	margin-left: 20px;
 	border-radius: 10px;
 	font-size: 30px;
 	color: #A66A3F;
-	border: 1px solid #A66A3F;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 	background-color: #F2D3A2;
 	display: flex;
 }
@@ -156,8 +156,9 @@ body, html {
 .categoryBtn {
 	gap: 10px;
 	height: 40px;
-	margin-top: 10px;
+	margin-top: 20px;
 	margin-left: 20px;
+	margin-bottom: 10px;
 }
 
 .leftBox {
@@ -176,8 +177,10 @@ body, html {
 .rightBox {
 	width: 300px;
 	height: 498px;
+	margin-botton: 30px;
 	border-radius: 10px;
 	margin-left: 40px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .subBox {
@@ -266,6 +269,7 @@ body, html {
 	border-radius: 10px;
 	margin-top: 0px;
 	margin-left: 0px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .slideBanner {
@@ -728,6 +732,14 @@ a {
 	/* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+.weather-wrapper {
+	margin-top: 50px; 
+    padding: 20px;          /* 안쪽 여백을 줘야 그림자가 예쁘게 잡혀요 */
+    border-radius: 15px;    /* 모서리를 둥글게 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* 은은한 그림자 */
+
+}
 </style>
 </head>
 
@@ -812,9 +824,9 @@ a {
 				<div class="leftBox">
 					<div class="localBanner">
 						<div class="notice">
-							<img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;"
-								height="100%;"><img class="slideBanner" src="/resources/images/fleaMarket.jpg"
-								style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
+							<img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;" height="100%;">
+							<img class="slideBanner" src="/resources/images/fleaMarket.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
+							<img class="slideBanner" src="/resources/images/movie.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
 						</div>
 					</div>
 
@@ -921,6 +933,12 @@ a {
 
 				<div class="rightBox">
 					<img src="/resources/images/localCafe2.jpg" style="border-radius: 10px;" width="100%" height="100%">
+					<div class="weather-wrapper">
+					<a class="weatherwidget-io" href="https://forecast7.com/en/35d91127d77/south-korea/" data-label_1="SOUTH KOREA" data-label_2="WEATHER" data-font="Open Sans" data-icons="Climacons Animated" data-theme="pure" data-basecolor="#fbe5c0" data-shadow="rgba(1, 1, 1, 0.02)" data-accent="" data-textcolor="#5e361a" data-highcolor="#5e361a" data-lowcolor="#5e361a" data-suncolor="#FFB300" data-mooncolor="#ffffff" data-cloudcolor="#7BB8C9" data-cloudfill="#7BB8C9" data-raincolor="#7BB8C9" data-snowcolor="#ffffff" >SOUTH KOREA WEATHER</a>
+<script> // 날씨 배너
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+</script>
+</div>				
 				</div>
 
 				<a href="/board/write">
@@ -987,7 +1005,6 @@ a {
 	
 		    $(window).on("scroll", function() {
 		        let scrollTop = $(this).scrollTop();
-		        console.log(this);
 	
 		        // 1. 최상단일 때는 상단 이동 버튼 숨기기 (선택 사항)
 		        if (scrollTop <= 100) {
@@ -1185,7 +1202,6 @@ a {
 				let postLike = $(this);
 				let post_seq = postLike.closest(".postBox").data("seq");	
 				
-				console.log("클릭된 게시글 번호: " + post_seq);
 				
 				// 하트 채워지고 비워지는 토글용 ajax
 				$.ajax({
@@ -1193,7 +1209,6 @@ a {
 					data : {post_seq : post_seq},
 					type : "post"
 				}).done(function(likeCheck) {
-					console.log("서버 응답:" + likeCheck);
 					
 					if(likeCheck == -1){
 						Swal.fire({

@@ -289,19 +289,15 @@ a {
 .postContent{
 	margin: auto;
 	width: 95%;
-	/* height: 1.5em;       /* 한 줄 높이만큼 고정 */ */
 	line-height: 1.5em;
 	font-size: 18px;
 	background-color: #f0d8af;
 	border-radius: 0 0 5px 5px;
 	color: #5e361a;
-	padding: 0 10px;
 	white-space: pre-wrap;
 	word-break: break-all;
-	/* overflow: hidden;
-    		text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
 	display: block;
-	*/
+	padding:10px 0 5px 13px;
 }
 
 
@@ -345,7 +341,7 @@ a {
 	color: #5e361a;
 }
 
-.editBtn, .delBtn, .fileDelBtn {
+.editBtn, .delBtn {
 	cursor: pointer;
 	border: #fbe5c0;
 	color: #5e361a;
@@ -359,6 +355,16 @@ a {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	/* 애니메이션 부드럽게 */
 	transition: all 0.2s ease;
+}
+
+.fileDelBtn {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .btnBox {
@@ -447,7 +453,7 @@ a {
 	margin: 0;
 }
 .imageContainer {
-overflow: hidden;
+	overflow: hidden;
 	margin: auto;
 	width: 95%;
 	font-size: 15px;
@@ -468,17 +474,27 @@ overflow: hidden;
 	padding: 10px 10px;
 }
 
+.fileHeader{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
 .newFileDiv {
 	display: none;
-	margin-top: 10px;
-	margin-left: 45px;
+	margin-left: 5px;
 }
 /*  입력창 테두리 속성 */
  .postTitle[contenteditable="true"],
  .postContent[contenteditable="true"] {
 	border: 1px solid #FFB300;
-	border-radius: 5px;
+/* 	border-radius: 5px; */
 	padding: 5px;
+}
+
+.postTitle{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 .postTitle[contenteditable="true"]:focus,
 .postContent[contenteditable="true"]:focus{
@@ -570,20 +586,22 @@ overflow: hidden;
 					<div class="postContent">${i.suggestion_contents}</div>
 					<c:if test="${not empty imageMap[i.suggestion_seq]}">
 						<div class="fileDownload">
-							첨부 파일
+							<div class="fileHeader">
+								<span>첨부 파일</span>
+								<div class="newFileDiv">
+									<input type="file" class="newFiles" name="newFiles" accept="image/*" multiple>
+								</div>
+							</div>
 							<c:forEach var="file" items="${imageMap[i.suggestion_seq]}" varStatus="status">
 								<div class="file-item">
-									<label class="fileName" data-ori="${file.attach_oriname}"
-										data-sys="${file.attach_sysname}"> ${file.attach_oriname} </label>
-									<button type="button" class="fileDelBtn"
-										data-sys="${file.attach_sysname}">X</button>
+									<label class="fileName" data-ori="${file.attach_oriname}" data-sys="${file.attach_sysname}">
+										${file.attach_oriname} </label>
+									<button type="button" class="fileDelBtn" data-sys="${file.attach_sysname}">X</button>
 								</div>
 							</c:forEach>
 						</div>
 					</c:if>
-					<div class="newFileDiv">
-						<input type="file" class="newFiles" name="newFiles" accept="image/*" multiple>
-					</div>
+
 				</div>
 
 				<div class="postDownBox" data-seq="${i.suggestion_seq}">
@@ -641,7 +659,6 @@ overflow: hidden;
 			
 			// suggestion_seq : 지금 클릭한 게시글 번호 들어감
 			let suggestion_seq = postDownBox.attr("data-seq");
-			console.log(suggestion_seq);
             let likeCountSpan = btn.find(".agreeCount");
             let unlikeBtn = postDownBox.find(".postCommentBox");
             let unlikeCountSpan = unlikeBtn.find(".noCount");
@@ -927,6 +944,18 @@ overflow: hidden;
         	
         	box.find(".postTitle").attr("contenteditable", "true");
             box.find(".postContent").attr("contenteditable", "true");
+            
+			$(".postTitle").css({
+				"border":"1px solid #FFB300",
+				"padding-top":"0px",
+				"margin-top":"0px"
+			});
+			$(".postContent").css({
+			    "border": "1px solid #FFB300",
+			    "border-top-left-radius": "0px",
+			    "border-top-right-radius": "0px",
+			    "padding": "10px 0 5px 12px"
+			});
         	
         	box.find(".newFileDiv").show();
         	box.find(".fileDownload").show();
@@ -947,22 +976,24 @@ overflow: hidden;
         	box.find(".postTitle").attr("contenteditable", "false");
             box.find(".postContent").attr("contenteditable", "false");
             
+			$(".postTitle").css({
+				"border":"none",
+				"padding-top":"0px",
+				"margin-top":"0px"
+			});
+			$(".postContent").css({
+				"border":"none",
+			    "border-top-left-radius": "0px",
+			    "border-top-right-radius": "0px",
+			    "padding": "10px 0 5px 12px"
+			});
+            
         	box.find(".newFileDiv").hide();
         	box.find(".fileDownload").hide();
         	box.find(".okBtn, .cancleBtn").hide();
         	box.find(".delBtn, .editBtn").show();
         })
         
-        // 완료 버튼 -> 수정/삭제 버튼으로 변경
-        /* $(".okBtn").on("click", function(){
-        	
-        	let box = $(this).closest(".postBox");
-        	
-        	box.find(".newFileDiv").hide();
-        	box.find(".fileDownload").hide();
-        	box.find(".okBtn, .cancleBtn").hide();
-        	box.find(".delBtn, .editBtn").show();
-        }) */
         
         // 게시글 수정 버튼
         $(".okBtn").on("click", function(){
