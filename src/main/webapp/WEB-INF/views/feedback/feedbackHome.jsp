@@ -341,7 +341,7 @@ a {
 	color: #5e361a;
 }
 
-.editBtn, .delBtn, .fileDelBtn {
+.editBtn, .delBtn {
 	cursor: pointer;
 	border: #fbe5c0;
 	color: #5e361a;
@@ -355,6 +355,16 @@ a {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	/* 애니메이션 부드럽게 */
 	transition: all 0.2s ease;
+}
+
+.fileDelBtn {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .btnBox {
@@ -464,10 +474,15 @@ a {
 	padding: 10px 10px;
 }
 
+.fileHeader{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
 .newFileDiv {
 	display: none;
-	margin-top: 10px;
-	margin-left: 45px;
+	margin-left: 5px;
 }
 /*  입력창 테두리 속성 */
  .postTitle[contenteditable="true"],
@@ -571,20 +586,22 @@ a {
 					<div class="postContent">${i.suggestion_contents}</div>
 					<c:if test="${not empty imageMap[i.suggestion_seq]}">
 						<div class="fileDownload">
-							첨부 파일
+							<div class="fileHeader">
+								<span>첨부 파일</span>
+								<div class="newFileDiv">
+									<input type="file" class="newFiles" name="newFiles" accept="image/*" multiple>
+								</div>
+							</div>
 							<c:forEach var="file" items="${imageMap[i.suggestion_seq]}" varStatus="status">
 								<div class="file-item">
-									<label class="fileName" data-ori="${file.attach_oriname}"
-										data-sys="${file.attach_sysname}"> ${file.attach_oriname} </label>
-									<button type="button" class="fileDelBtn"
-										data-sys="${file.attach_sysname}">X</button>
+									<label class="fileName" data-ori="${file.attach_oriname}" data-sys="${file.attach_sysname}">
+										${file.attach_oriname} </label>
+									<button type="button" class="fileDelBtn" data-sys="${file.attach_sysname}">X</button>
 								</div>
 							</c:forEach>
 						</div>
 					</c:if>
-					<div class="newFileDiv">
-						<input type="file" class="newFiles" name="newFiles" accept="image/*" multiple>
-					</div>
+
 				</div>
 
 				<div class="postDownBox" data-seq="${i.suggestion_seq}">
@@ -927,6 +944,18 @@ a {
         	
         	box.find(".postTitle").attr("contenteditable", "true");
             box.find(".postContent").attr("contenteditable", "true");
+            
+			$(".postTitle").css({
+				"border":"1px solid #FFB300",
+				"padding-top":"0px",
+				"margin-top":"0px"
+			});
+			$(".postContent").css({
+			    "border": "1px solid #FFB300",
+			    "border-top-left-radius": "0px",
+			    "border-top-right-radius": "0px",
+			    "padding": "10px 0 5px 12px"
+			});
         	
         	box.find(".newFileDiv").show();
         	box.find(".fileDownload").show();
@@ -946,6 +975,18 @@ a {
         	 
         	box.find(".postTitle").attr("contenteditable", "false");
             box.find(".postContent").attr("contenteditable", "false");
+            
+			$(".postTitle").css({
+				"border":"none",
+				"padding-top":"0px",
+				"margin-top":"0px"
+			});
+			$(".postContent").css({
+				"border":"none",
+			    "border-top-left-radius": "0px",
+			    "border-top-right-radius": "0px",
+			    "padding": "10px 0 5px 12px"
+			});
             
         	box.find(".newFileDiv").hide();
         	box.find(".fileDownload").hide();
