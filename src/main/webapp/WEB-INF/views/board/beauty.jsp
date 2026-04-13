@@ -314,6 +314,10 @@ input, button, body {
 	font-size: 20px;
 	margin-top: 5px;
 	line-height: 40px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+    display: block;
 }
 
 .postContent {
@@ -560,7 +564,7 @@ hr {
 									</div>
 								</div>
 
-								<c:if test="${loginId != null && loginId != i.mem_id}">
+								<c:if test="${loginId != null && loginId != i.mem_id && i.mem_role != 0}">
 									<div class="reportArea">
 										<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
 											style="width: 25px; height: 25px; margin-bottom: 5px"></img> 

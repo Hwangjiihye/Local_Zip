@@ -166,10 +166,6 @@ public class MembersController {
 			rttr.addFlashAttribute("mem_id", mem_id);
 		}
 		
-		
-		
-		
-		
 		return "redirect:/members/loginUi";
 		}
 	
