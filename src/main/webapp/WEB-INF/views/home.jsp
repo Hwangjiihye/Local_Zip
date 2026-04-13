@@ -118,7 +118,7 @@ body, html {
 
 .centerBox {
 	width: 100%;
-	margin-top: 100px;
+	margin-top: 20px;
 	position: relative;
 	top: 10px;
 }
@@ -126,7 +126,7 @@ body, html {
 .userBar {
 	width: 1865px;
 	height: 100px;
-	margin-top: 20px;
+	margin-top: 112px;
 	margin-left: 20px;
 	border-radius: 10px;
 	font-size: 30px;
@@ -824,9 +824,9 @@ a {
 				<div class="leftBox">
 					<div class="localBanner">
 						<div class="notice">
-							<img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;"
-								height="100%;"><img class="slideBanner" src="/resources/images/fleaMarket.jpg"
-								style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
+							<img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;" height="100%;">
+							<img class="slideBanner" src="/resources/images/fleaMarket.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
+							<img class="slideBanner" src="/resources/images/movie.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
 						</div>
 					</div>
 
