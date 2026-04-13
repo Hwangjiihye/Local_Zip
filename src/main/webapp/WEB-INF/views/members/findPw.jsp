@@ -400,7 +400,19 @@ input{
 				});
 			}
 		});
-
+		
+		$(".checkPw").on("input",function(){
+			$(".correct").hide();
+			$(".incorrect").show();
+			if ($(".pw").val() != $(".checkPw").val()) {
+				$(".correct").hide();
+				$(".incorrect").show();
+			}else {
+				$(".correct").show();
+				$(".incorrect").hide();
+			}
+		});
+		
 		//이메일 인증 확인 
 
 		$(".certifyBtn").on("click", function() {
