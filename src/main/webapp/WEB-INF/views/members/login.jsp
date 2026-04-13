@@ -256,7 +256,7 @@ input{
 	
 	<script>
 		let pwMsg = "${pwMsg}";
-	    if (pwMsg && pwMsg !== "") {
+	    if (pwMsg && pwMsg !== "") { // 비밀번호 변경 msg
 	    	Swal.fire({
 	            icon: "success",
 	            title: "Success !",
@@ -264,7 +264,6 @@ input{
 	            iconColor: "#FFB300",
 	            confirmButtonColor: "#FFB300"
 	        });
-	        /* alert(pwMsg); */
 	    }
 	
 		let msg = "${msg}";
@@ -274,8 +273,16 @@ input{
 			Swal.fire({
 				icon: "info",
 				title: "Wait  !",
-				text: "아이디와 비밀번호를 입력해주세요",
+				text: "아이디와 비밀번호를 입력해주세요.",
 				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300"
+			});
+		}else if(msg == "fail"){
+			Swal.fire({
+				icon: "error",
+				title: "Fail  !",
+				text: "탈퇴한 계정입니다. 새로운 계정을 생성해 주세요.",
+				iconColor: "#EB0000",
 				confirmButtonColor: "#FFB300"
 			});
 		}else if(msg == "idFail") {
@@ -288,10 +295,10 @@ input{
 			});
 		}else if(msg == "pwFail") {
 			Swal.fire({
-				icon: "info",
-				title: "Wait  !",
+				icon: "error",
+				title: "Fail  !",
 				text: "비밀번호가 틀립니다.",
-				iconColor: "#FFB300",
+				iconColor: "#EB0000",
 				confirmButtonColor: "#FFB300"
 			});
 		}else if(msg == "banned"){
@@ -321,6 +328,9 @@ input{
 				confirmButtonColor: "#FFB300"
 			});
 		}
+		
+		
+		
 	</script>
 	
 </body>

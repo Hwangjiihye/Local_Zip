@@ -43,7 +43,7 @@ public class MembersDAO {
 		String id = "select count(*) from members where mem_id = ?";
 		Integer idCount = jdbc.queryForObject(id, Integer.class, mem_id); // Integer(객체)로 써야 null 값도 확인 가능
 		
-		if(idCount == 0 ) {
+		if(idCount == 0){
 			return -1; // id가 db에 있는지 확인(없으면 -1 반환)
 		}
 		
@@ -55,15 +55,23 @@ public class MembersDAO {
 		String admin = "select count(*) from members where mem_id = ? and mem_password = ? and mem_role = 0";
 		Integer adminCount = jdbc.queryForObject(admin, Integer.class, mem_id, EncryptionUtils.getSha512(mem_password));
 		
+		// 탈퇴 회원 검사 로직
+		String deleteMem = "select count(*) from members where mem_id =? and mem_status = 1";
+		Integer deleteMemCount = jdbc.queryForObject(deleteMem, Integer.class, mem_id);
+		
 		if(adminCount > 0) {
 			return 2;
 		}
 			
-		if(pwCount > 0) {
-			return 1; // id, pw 있음(로그인 성공)
+		if(deleteMemCount > 0) { // 탈퇴회원 검사 로직 status 1인 계정
+			return 3;
+		}else if(pwCount > 0) {
+			return 1; // id, pw , status 0인 계정 있음(로그인 성공)
 		}else {
 			return 0; // id는 있고, pw 없음
 		}
+		
+		
 	}
 	
 	public int getRole(String id) {
@@ -95,8 +103,8 @@ public class MembersDAO {
 		return jdbc.update(sql, dto.getMem_nickname(), dto.getMem_phone(), dto.getMem_zip_code(), dto.getMem_address1(), dto.getMem_address2(), dto.getMem_dong(), mem_id);
 	}
 	
-	public int deleteById(String mem_id) {
-		String sql = "delete from members where mem_id=?";
+	public int deleteById(String mem_id) { // 회원탈퇴 
+		String sql = "update members set mem_status = 1 where mem_id=?";
 		return jdbc.update(sql, mem_id);
 	}
 	
