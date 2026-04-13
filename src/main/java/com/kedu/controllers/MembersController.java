@@ -155,13 +155,18 @@ public class MembersController {
 			session.setAttribute("role", role);
 			
 			return "redirect:/admin/adminPage";
-		} else if(result == 0){
+		}else if(result == 3) {
+			rttr.addFlashAttribute("msg", "fail");
+			rttr.addFlashAttribute("mem_id", mem_id);
+		}else if(result == 0){
 			rttr.addFlashAttribute("msg", "pwFail");
 			rttr.addFlashAttribute("mem_id", mem_id);
-		} else {
+		}else {
 			rttr.addFlashAttribute("msg", "idFail");
 			rttr.addFlashAttribute("mem_id", mem_id);
 		}
+		
+		
 		
 		
 		
@@ -224,9 +229,9 @@ public class MembersController {
 	@RequestMapping("/delete")
 	public String delete(HttpSession session) {
 		String id = (String)session.getAttribute("loginId");
-		dao.deleteById(id);
+		dao.deleteById(id); // 회원탈퇴 mem_status => 1로 업데이트.
 		session.invalidate();
-		return "/";
+		return "redirect:/";
 	}
 	
 	// 마이페이지 > 작성글(모아보기)를 눌렀을 때,
