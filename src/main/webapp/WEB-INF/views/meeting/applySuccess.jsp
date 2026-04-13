@@ -46,7 +46,7 @@
 		Swal.fire({
 			icon: "success",
 			title: "Success  !",
-			text: "신청이 완료되었습니다.",
+			text: "신청되었습니다.",
 			iconColor: "#FFB300",
 			confirmButtonColor: "#FFB300",
 			customClass: {

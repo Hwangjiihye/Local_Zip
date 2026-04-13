@@ -272,7 +272,7 @@ input{
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "이메일을 입력해주세요",
+					text: "이메일을 입력해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -291,7 +291,7 @@ input{
 						Swal.fire({
     						icon: "success",
     						title: "Success  !",
-    						text: "이메일로 인증번호를 발송했습니다",
+    						text: "이메일로 인증번호를 발송했습니다.",
     						iconColor: "#FFB300",
     						confirmButtonColor: "#FFB300"
     					});
@@ -299,7 +299,7 @@ input{
 						Swal.fire({
 							icon: "error",
 							title: "Empty  !",
-							text: "가입된 정보가 없습니다",
+							text: "가입된 정보가 없습니다.",
 							iconColor: "#EB0000",
 							confirmButtonColor: "#FFB300"
 						});
@@ -323,7 +323,7 @@ input{
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "인증코드를 입력해주세요",
+					text: "인증코드를 입력해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});

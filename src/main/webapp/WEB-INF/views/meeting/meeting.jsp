@@ -660,7 +660,7 @@ body {
 					Swal.fire({
 						icon: "info",
 						title: "Wait  !",
-						text: "신고 사유를 선택해 주세요",
+						text: "신고 사유를 선택해 주세요.",
 						iconColor: "#FFB300",
 						confirmButtonColor: "#FFB300"
 					});
@@ -669,7 +669,7 @@ body {
 					Swal.fire({
 				        icon: "question",
 				        title: "Wait !",
-				        text: "정말 이 모임을 신고하시겠습니까?",
+				        text: "정말 신고하시겠습니까?",
 				        iconColor: "#FFB300",
 				        confirmButtonColor: "#FFB300",
 				        showCancelButton: true,
@@ -694,7 +694,7 @@ body {
 										Swal.fire({
 				    						icon: "success",
 				    						title: "Success  !",
-				    						text: "신고가 접수되었습니다",
+				    						text: "신고가 접수되었습니다.",
 				    						iconColor: "#FFB300",
 				    						confirmButtonColor: "#FFB300"
 				    					});
@@ -702,9 +702,9 @@ body {
 										card.find(".reportBtn").hide();
 									}else if(resp == "fail"){
 										Swal.fire({
-				    						icon: "info",
+				    						icon: "warning",
 				    						title: "Already  !",
-				    						text: "이미 신고한 모임 입니다",
+				    						text: "이미 신고한 모임 입니다.",
 				    						iconColor: "#FFB300",
 				    						confirmButtonColor: "#FFB300"
 				    					});

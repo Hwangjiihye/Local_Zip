@@ -348,7 +348,7 @@ input{
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "이메일을 입력해주세요",
+					text: "이메일을 입력해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -420,7 +420,7 @@ input{
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "인증코드를 입력해주세요",
+					text: "인증코드를 입력해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -459,7 +459,7 @@ input{
 					} else if (resp.status === "wrong_code") {
 						Swal.fire({
 							icon: "error",
-							title: "InCorrect  !",
+							title: "Error  !",
 							text: "인증번호가 일치하지 않습니다.",
 							iconColor: "#EB0000",
 							confirmButtonColor: "#FFB300"

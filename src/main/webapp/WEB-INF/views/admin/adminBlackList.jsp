@@ -16,7 +16,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-* {box-sizing: border-box;}
+* {
+	box-sizing: border-box;
+}
 
 @font-face {
 	font-family: 'GMarketSans';
@@ -110,28 +112,27 @@ body {
 	transition: all 0.2s ease;
 	line-height: 30px;
 	display: flex;
-    align-items: center;
-    gap : 5px;
+	align-items: center;
+	gap: 5px;
 }
 
-.categoryBtnAll:hover{
+.categoryBtnAll:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	background-color: #fecc56;
 	color: #A66A3F;
-} 
+}
 
-.navicon:hover{
+.navicon:hover {
 	cursor: pointer;
 }
 
-.categoryBtnAll:active, .navicon:active , .onBtn:active, .offBtn:active{
+.categoryBtnAll:active, .navicon:active, .onBtn:active, .offBtn:active {
 	transform: translateY(2px); /*아래로 눌림*/
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
-	
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.nowBtn{
+.nowBtn {
 	background-color: #fecc56;
 	color: #A66A3F;
 	transform: translateY(-3px);
@@ -144,8 +145,8 @@ body {
 	transition: 0.3s;
 }
 
-.categoryBtnAll:active{
-    transform: translateY(2px);
+.categoryBtnAll:active {
+	transform: translateY(2px);
 }
 
 .bottomBar {
@@ -165,216 +166,221 @@ body {
 }
 
 .postBox {
-        width: 95%;
-        max-width: 1000px;
-        margin: 20px auto 0 auto;
-        background-color: #fbe5c0;
-        border-radius: 5px;
-        overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+	width: 95%;
+	max-width: 1000px;
+	margin: 20px auto 0 auto;
+	background-color: #fbe5c0;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .postHeader {
-        background-color: #F2D3A2;
-        padding: 10px 15px;
-        font-size: 14px;
-        border-bottom: 1px solid #A66A3F;
-        color: #A66A3F;
-        display: flex;
-        justify-content: space-between;
+	background-color: #F2D3A2;
+	padding: 10px 15px;
+	font-size: 14px;
+	border-bottom: 1px solid #A66A3F;
+	color: #A66A3F;
+	display: flex;
+	justify-content: space-between;
 }
 
 .reportWriter {
-    margin-left: 10px;
+	margin-left: 10px;
 }
 
 .postBody {
-        padding: 15px 15px 5px 15px;
+	padding: 15px 15px 5px 15px;
 }
 
 .rowItem2 {
-        border: 0px solid #ccc;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        padding: 10px;
-        border-radius: 5px;
+	border: 0px solid #ccc;
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	border-radius: 5px;
 }
-    
 
 /* .reportReason { font-weight: bold; font-size: 18px; color: #5e361a; } */
-.reportReason { font-size: 18px; color: #444; min-height: 60px; color: #5e361a;}
-
-.pageBox {
-        text-align: center;
-        padding: 20px;
-        font-size: 18px;
-        color: #A66A3F;
-        transform: translateX(-20px);
-    }
-.pageBox span { margin: 0 10px; cursor: pointer; }
- 
-.reportBtnDiv{
- 	margin: 30px auto 0 auto;
- 	display: flex;
- 	justify-content: center;
- 	align-items: center;
- 	gap: 100px;
- }
- 
-.reportBtnDiv>button{
- 	 background-color: #fbe5c0;
-     color: #5e361a;
-     font-weight: bold;
-     border:none;
-     width: 100px;
- 	 height: 40px;
- 	 font-size:15px;
- } 
- 
-.adminBtnArea{
- 	display:flex;
-	gap:10px;
-	flex-shrink:0;
- }
-.adminBtn, .replyBtn{
- 	margin: 0 0 7px 15px;
- 	background-color: #ffb300;
-    color: #5e361a;
-    border: 1px solid #ffb300;
-    border-radius: 10px;
-    width: 100px;
- 	height: 40px;
- 	box-shadow: 0 4px 10px rgba(0,0,0,0.3);
- 	font-size:15px;
- }
- 
-
-.answerDiv.editing {
-    background-color: transparent !important;
-    padding: 0 !important;
-    border: none !important;
+.reportReason {
+	font-size: 18px;
+	color: #444;
+	min-height: 60px;
+	color: #5e361a;
 }
 
+.pageBox {
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #A66A3F;
+	transform: translateX(-20px);
+}
 
-a{
+.pageBox span {
+	margin: 0 10px;
+	cursor: pointer;
+}
+
+.reportBtnDiv {
+	margin: 30px auto 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 100px;
+}
+
+.reportBtnDiv>button {
+	background-color: #fbe5c0;
+	color: #5e361a;
+	font-weight: bold;
+	border: none;
+	width: 100px;
+	height: 40px;
+	font-size: 15px;
+}
+
+.adminBtnArea {
+	display: flex;
+	gap: 10px;
+	flex-shrink: 0;
+}
+
+.adminBtn, .replyBtn {
+	margin: 0 0 7px 15px;
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	width: 100px;
+	height: 40px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	font-size: 15px;
+}
+
+.answerDiv.editing {
+	background-color: transparent !important;
+	padding: 0 !important;
+	border: none !important;
+}
+
+a {
 	text-decoration: none;
 }
 
-img{
+img {
 	width: 16.67px;
 	height: 16.10px;
 }
 
-.reportAndBlackBtnDiv{
-	display:flex;
+.reportAndBlackBtnDiv {
+	display: flex;
 	justify-content: center;
- 	align-items: center;
- 	padding-left:20px;
+	align-items: center;
+	padding-left: 20px;
 }
 
-.reportCheckBtn, .blackOnBtn, .blackOffBtn, .blackOffCheckBtn{
+.reportCheckBtn, .blackOnBtn, .blackOffBtn, .blackOffCheckBtn {
 	width: 250px;
 	color: #5e361a;
-    height: 35px;
-    border:none;
-    border-radius: 10px;
-    font-size: small;
-    color: #f5f5f5;
-    margin:20px 20px 20px 20px;
+	height: 35px;
+	border: none;
+	border-radius: 10px;
+	font-size: small;
+	color: #f5f5f5;
+	margin: 20px 20px 20px 20px;
 }
 
-.reportCheckBtn{
-    background-color: #7BB8C9;
+.reportCheckBtn {
+	background-color: #7BB8C9;
 }
 
-.blackOnBtn{
-    background-color: #FF000080;
+.blackOnBtn {
+	background-color: #FF000080;
 }
 
-.blackOffBtn{
+.blackOffBtn {
 	width: 270px;
 	background-color: #6DBE45;
 }
 
-.blackOffCheckBtn{
+.blackOffCheckBtn {
 	width: 270px;
 	background-color: #6DBE45;
 	cursor: not-allowed;
 }
 
-.onBtn:hover, .offBtn:hover{
+.onBtn:hover, .offBtn:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	transition: all 0.2s ease;
 	cursor: pointer;
-} 
-
-
-
-.endOption{
-    width: 100px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    z-index: 10;
-    font-family: 'GMarketSans';
-    border: 1px solid #A66A3F;
-    border-radius: 5px;
-    background-color: #F2D3A2;
-    color: #A66A3F;
-    font-size: 12px;
-    outline: none;
 }
 
-.end_date{
-	 font-family: 'GMarketSans';
-     border: 1px solid #A66A3F;
-     border-radius: 5px;
-     background-color: #F2D3A2;
-     color: #A66A3F;
-     font-size: 12px;
-     padding: 2px;
-     outline: none;
+.endOption {
+	width: 100px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+	font-family: 'GMarketSans';
+	border: 1px solid #A66A3F;
+	border-radius: 5px;
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	font-size: 12px;
+	outline: none;
 }
 
-.pageNum{
-    text-align: center;
-    padding: 20px;
-    font-size: 18px;
-    color: #A66A3F;
+.end_date {
+	font-family: 'GMarketSans';
+	border: 1px solid #A66A3F;
+	border-radius: 5px;
+	background-color: #F2D3A2;
+	color: #A66A3F;
+	font-size: 12px;
+	padding: 2px;
+	outline: none;
 }
 
-.pageNum a{
-    display: inline-block;
-    min-width:35px;
-    padding:6px 10px;
-    margin: 0 8px;
-    text-decoration: none;
-    color: #A66A3F;
-    border-radius:6px;
-    transition:0.2s;
-    font-weight: normal;
-    cursor: pointer;
+.pageNum {
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #A66A3F;
 }
 
-.pageNum a.active{
-	background-color:#fecc56;
-    font-weight: bold;
-    color: #5e361a;
+.pageNum a {
+	display: inline-block;
+	min-width: 35px;
+	padding: 6px 10px;
+	margin: 0 8px;
+	text-decoration: none;
+	color: #A66A3F;
+	border-radius: 6px;
+	transition: 0.2s;
+	font-weight: normal;
+	cursor: pointer;
 }
 
-.pageNum a:hover{
-    background-color:#F2D3A2;
+.pageNum a.active {
+	background-color: #fecc56;
+	font-weight: bold;
+	color: #5e361a;
+}
+
+.pageNum a:hover {
+	background-color: #F2D3A2;
 }
 
 .navicon:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-} 
+}
 
 .navicon:active {
 	transform: translateY(2px); /*아래로 눌림*/
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.nowBtn{
+.nowBtn {
 	background-color: #fecc56;
 	color: #A66A3F;
 	transform: translateY(-3px);
@@ -387,76 +393,88 @@ img{
 	transition: 0.3s;
 }
 
-.reportBtnDiv{
- 	margin: 30px auto 0 auto;
- 	display: flex;
- 	justify-content: center;
- 	align-items: center;
- 	gap: 100px;
- }
- 
-.reportBtnDiv button{
- 	 background-color: #fbe5c0;
-     color: #5e361a;
-     font-weight: bold;
-     border:none;
-     width: 110px;
- 	 height: 40px;
- 	 font-size:15px;
- } 
- 
- .writer{
- 	display:flex;
- 	gap:20px;
- }
- 
- .reports{
- 	font-size:15px;
- 	background-color: #F2D3A2;
- 	padding-left: 10px;
- }
- 
- .reportsId{
- 	border-top-left-radius: 10px;
- 	border-top-right-radius: 10px;
- 	padding-top: 10px;
- }
- .reportsReason{
- 	border-bottom-left-radius: 10px;
- 	border-bottom-right-radius: 10px;
- 	padding-bottom: 10px;
- }
- 
- .reportTitle{
- 	font-weight:bold;
- 	font-size: 18px;
- 	padding-top:5px;
- 	padding-left: 10px;
- }
- .reportContents{
- 	font-size:15px;
- 	padding: 13px 0 10px 10px;
- 	white-space: pre-wrap;
- }
- 
- hr{
- 	margin-top:20px;
- 	width: 98%;
- 	border: none;
- 	height:1px;
- 	background: #5e361a;
- }
- 
- .sirenImg{
+.reportBtnDiv {
+	margin: 30px auto 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 100px;
+}
+
+.reportBtnDiv button {
+	background-color: #fbe5c0;
+	color: #5e361a;
+	font-weight: bold;
+	border: none;
+	width: 110px;
+	height: 40px;
+	font-size: 15px;
+}
+
+.writer {
+	display: flex;
+	gap: 20px;
+}
+
+.reports {
+	font-size: 15px;
+	background-color: #F2D3A2;
+	padding-left: 10px;
+}
+
+.reportsId {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	padding-top: 10px;
+}
+
+.reportsReason {
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	padding-bottom: 10px;
+}
+
+.reportTitle {
+	font-weight: bold;
+	font-size: 18px;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+.reportContents {
+	font-size: 15px;
+	padding: 13px 0 10px 10px;
+	white-space: pre-wrap;
+}
+
+hr {
+	margin-top: 20px;
+	width: 98%;
+	border: none;
+	height: 1px;
+	background: #5e361a;
+}
+
+.sirenImg {
 	width: 16.67px;
 	height: 16.10px;
 }
 
-.filterBtn{
+.filterBtn {
 	transition: all 0.2s ease;
 }
 
+.swal2-icon.swal2-info .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
 
+.swal2-icon.swal2-question .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
 </style>
 </head>
 
@@ -740,12 +758,13 @@ img{
 				let reports_seq = btn.data("reports_seq");
 				
 				Swal.fire({
-					icon: "warning",
-					title: "Reject  ?",
-					text: "정말 반려 처리하시겠습니까?",
+					icon: "question",
+					title: "Wait  !",
+					text: "정말 반려하시겠습니까?",
 					showCancelButton: true,
 					confirmButtonColor: "#FFB300",
-					cancelButtonColor: "#d33",
+					cancelButtonColor: "#d9d9d9",
+					iconColor: "#FFB300",
 					confirmButtonText: "반려",
 					cancelButtonText: "취소"
 				}).then((result) => {

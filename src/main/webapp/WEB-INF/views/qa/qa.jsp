@@ -364,6 +364,15 @@ body, html {
 	border-radius: 5px;
 	padding: 5px;
 }
+
+.titleContent[contenteditable="true"]:focus,
+ .textContent[contenteditable="true"]:focus {
+ 	outline: none;
+	border: 1px solid #FFB300;
+	border-radius: 5px;
+	padding: 5px;
+	
+}
 </style>
 </head>
 <body>
@@ -532,7 +541,7 @@ body, html {
 					Swal.fire({
 					icon: "success",
 					title: "Success  !",
-					text: "수정 완료!",
+					text: "수정되었습니다.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				}).then(() => {
@@ -549,8 +558,8 @@ body, html {
         	
         	Swal.fire({
 				icon: "question",
-				title: "Wait  !",
-				text: "정말 삭제하시겠습니까?",
+				title: "정말 삭제하시겠습니까?",
+				text: "삭제 후에는 복구할 수 없습니다.",
 				iconColor: "#FFB300",
 				confirmButtonColor: "#FFB300",
 					showCancelButton: true,
@@ -573,7 +582,7 @@ body, html {
         					Swal.fire({
 								icon: "success",
 								title: "Success  !",
-								text: "삭제 되었습니다",
+								text: "삭제되었습니다.",
 								iconColor: "#FFB300",
 								confirmButtonColor: "#FFB300"
         					}).then(() => {
@@ -585,7 +594,7 @@ body, html {
         					Swal.fire({
 								icon: "error",
 								title: "Error  !",
-								text: "삭제 실패",
+								text: "문제가 발생해 삭제할 수 없습니다.",
 								iconColor: "#EB0000",
 								confirmButtonColor: "#FFB300"
         					});
@@ -594,21 +603,14 @@ body, html {
         			error: function() {
         				Swal.fire({
 							icon: "error",
-							title: "서버 오류 발생 !",
+							title: "Error  !",
+							text: "에러 발생",
 							iconColor: "#EB0000",
 							confirmButtonColor: "#FFB300"
         				});
         			}
         		});
-        	} else if(result.dismiss === Swal.DismissReason.cancel) {
-        		Swal.fire({
-					icon: "info",
-					title: "Success  !",
-					text: "취소 되었습니다",
-					iconColor: "#FFB300",
-					confirmButtonColor: "#FFB300"
-        		});
-        	}
+        	} 
         });
 	});
 	

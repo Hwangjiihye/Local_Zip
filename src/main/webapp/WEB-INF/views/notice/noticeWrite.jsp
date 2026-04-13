@@ -289,7 +289,7 @@ button, body, div, input {
 			Swal.fire({
 				icon: "success",
 				title: "Success  !",
-				text: "글이 등록되었습니다!",
+				text: "글이 등록되었습니다.",
 				iconColor: "#FFB300",
 				confirmButtonColor: "#FFB300"
 			}).then(() => {
