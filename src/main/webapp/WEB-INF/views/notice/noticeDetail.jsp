@@ -401,9 +401,9 @@ hr {
 	        if(newTitle == "" || newContentText == ""){
 	        	Swal.fire({
 					icon: "info",
-					title: "Info  !",
+					title: "Wait  !",
 					text: "제목과 내용을 모두 입력해 주세요.",
-					iconColor: "#EB0000",
+					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
 	        	return;
@@ -421,7 +421,7 @@ hr {
 					Swal.fire({
 						icon: "success",
 						title: "Success  !",
-						text: "공지사항 수정이 완료 되었습니다.",
+						text: "수정되었습니다.",
 						iconColor: "#FFB300",
 						confirmButtonColor: "#FFB300"
 					});
@@ -431,7 +431,7 @@ hr {
 					Swal.fire({
 						icon: "error",
 						title: "Info  !",
-						text: "공지사항 수정에 실패 했습니다.",
+						text: "공지사항 수정에 실패했습니다.",
 						iconColor: "#EB0000",
 						confirmButtonColor: "#FFB300"
 					});
@@ -450,8 +450,8 @@ hr {
 			
 			Swal.fire({
 		        icon: "question",
-		        title: "Question !",
-		        text: "정말 삭제하시겠습니까?",
+		        title: "정말 삭제하시겠습니까?",
+		        text: "삭제 후에는 복구할 수 없습니다.",
 		        iconColor: "#FFB300",
 		        confirmButtonColor: "#FFB300",
 		        showCancelButton: true,
@@ -471,7 +471,7 @@ hr {
 			            	Swal.fire({
 								icon: "success",
 								title: "Success  !",
-								text: "성공적으로 삭제되었습니다.",
+								text: "삭제되었습니다.",
 								iconColor: "#FFB300",
 								confirmButtonColor: "#FFB300"
 							}).then(() => {
@@ -480,8 +480,8 @@ hr {
 			            } else {
 			            	Swal.fire({
 								icon: "error",
-								title: "Info  !",
-								text: "삭제 처리에 실패했습니다.",
+								title: "Error  !",
+								text: "문제가 발생해 삭제할 수 없습니다.",
 								iconColor: "#EB0000",
 								confirmButtonColor: "#FFB300"
 							});

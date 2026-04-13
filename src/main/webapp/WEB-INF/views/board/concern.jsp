@@ -654,7 +654,7 @@ a {
 		        	Swal.fire({
 				        icon: "warning",
 				        title: "Wait !",
-				        text: "로그인 후 이용해주세요",
+				        text: "로그인 후 이용해주세요.",
 				        iconColor: "#FFB300",
 				        confirmButtonColor: "#FFB300"
 				    }).then((result) => {
@@ -695,7 +695,7 @@ a {
 	        	Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "신고 사유를 선택해 주세요",
+					text: "신고 사유를 선택해 주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
@@ -716,7 +716,7 @@ a {
 	            	Swal.fire({
 						icon: "success",
 						title: "Success  !",
-						text: "신고가 접수되었습니다",
+						text: "신고가 접수되었습니다.",
 						iconColor: "#FFB300",
 						confirmButtonColor: "#FFB300"
 					});
@@ -725,7 +725,7 @@ a {
 	            	Swal.fire({
 						icon: "info",
 						title: "Already  !",
-						text: "이미 신고한 글 입니다",
+						text: "이미 신고한 글 입니다.",
 						iconColor: "#FFB300",
 						confirmButtonColor: "#FFB300"
 					});
@@ -735,7 +735,7 @@ a {
 	        	Swal.fire({
 					icon: "error",
 					title: "Error  !",
-					text: "서버와 통신 중 오류가 발생했습니다",
+					text: "서버와 통신 중 오류가 발생했습니다.",
 					iconColor: "#EB0000",
 					confirmButtonColor: "#FFB300"
 				});
@@ -758,7 +758,7 @@ a {
 					Swal.fire({
 				        icon: "warning",
 				        title: "Wait !",
-				        text: "로그인 후 이용 가능합니다",
+				        text: "로그인 후 이용 가능합니다.",
 				        iconColor: "#FFB300",
 				        confirmButtonColor: "#FFB300"
 				    }).then((result) => {
@@ -815,7 +815,7 @@ a {
         	endNavi = pageTotalCount;
         }
         
-        for(let i = startNavi; i <= endNavi; i++) {
+        for(let i = startNavi; i < endNavi; i++) {
         	let navi = $("<a>");
         	let sort = "${sort}";
         	navi.attr("href", "/board/talk?sort=" + sort + "&cPage=" + i);

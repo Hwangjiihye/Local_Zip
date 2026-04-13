@@ -401,9 +401,9 @@
 				let seq = $(this).closest(".meeting-card").data("seq");
 				
 				Swal.fire({
-			        icon: "warning",
-			        title: "삭제 확인",
-			        text: "정말로 삭제하시겠습니까?",
+			        icon: "question",
+			        title: "정말 삭제하시겠습니까?",
+			        text: "삭제 후에는 복구할 수 없습니다.",
 			        iconColor: "#FFB300",
 			        confirmButtonColor: "#FFB300",
 			        showCancelButton: true,
@@ -422,8 +422,8 @@
 						}).done(function(resp){
 							if(Number(resp) == -1){
 								Swal.fire({
-							        icon: "warning",
-							        title: "삭제 불가",
+									 icon: "error",
+				                     title: "Fail !",
 							        text: "신고된 모임은 삭제할 수 없습니다.",
 							        confirmButtonColor: "#FFB300"
 						        });
@@ -432,8 +432,10 @@
 							
 							if(Number(resp) == 1){
 								Swal.fire({
-							        icon: "warning",
-							        title: "삭제 완료",
+							        icon: "success",
+							        title: "Success !",
+							        text: "삭제되었습니다.",
+							        iconColor: "#FFB300",
 							        confirmButtonColor: "#FFB300"
 						        }).then(() => {
 									location.reload();
@@ -449,9 +451,9 @@
 				let seq = $(this).closest(".meeting-card").data("seq");
 				
 				 Swal.fire({
-				        icon: "warning",
-				        title: "탈퇴 확인",
-				        text: "정말로 탈퇴하시겠습니까?",
+				        icon: "question",
+				        title: "Wait  !",
+				        text: "정말 탈퇴하시겠습니까? 탈퇴 시 되돌릴 수 없습니다.",
 				        iconColor: "#FFB300",
 				        confirmButtonColor: "#FFB300",
 				        showCancelButton: true,
@@ -468,8 +470,10 @@
 								
 								Swal.fire({
 				                    icon: "success",
-				                    title: "탈퇴 완료",
+				                    title: "Success  !",
+				                    text: "탈퇴되었습니다.",
 				                    timer: 1200,
+				                    iconColor: "#FFB300",
 				                    showConfirmButton: false
 				                }).then(() => location.reload());
 							});

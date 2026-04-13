@@ -347,7 +347,7 @@
 			
 			Swal.fire({
 		        icon: "question",
-		        title: "Question !",
+		        title: "Wait !",
 		        text: "신청을 승인하시겠습니까?",
 		        iconColor: "#FFB300",
 		        confirmButtonColor: "#FFB300",
@@ -382,7 +382,7 @@
 			
 			Swal.fire({
 		        icon: "question",
-		        title: "Question !",
+		        title: "Wait !",
 		        text: "신청을 거절하시겠습니까?",
 		        iconColor: "#FFB300",
 		        confirmButtonColor: "#FFB300",
