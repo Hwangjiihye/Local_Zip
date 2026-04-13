@@ -28,7 +28,7 @@ public class BoardDAO {
 	
 	// 카테고리 별 최신순, 인기순 정렬 후 > 리스트 출력 메서드 ------------------------------
 	public List<BoardDTO> list_home_latest(String mem_id) throws Exception{
-		String sql = "select p.*, m.mem_nickname, m.mem_dong, " +
+		String sql = "select p.*, m.mem_nickname, m.mem_dong, m.mem_role, " +
                 " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count, " + // 전체 좋아요 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
@@ -40,7 +40,7 @@ public class BoardDAO {
 
 	//홈(=전체) 리스트 출력(인기순)
 	public List<BoardDTO> list_home_like(String mem_id) throws Exception{
-		String sql = "select p.*, m.mem_nickname, m.mem_dong, " +
+		String sql = "select p.*, m.mem_nickname, m.mem_dong, m.mem_role, " +
                 " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count, " + // 전체 좋아요 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
@@ -62,6 +62,7 @@ public class BoardDAO {
 				   + " p.post_like, "
 				   + " p.post_hit, "
 				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -83,6 +84,7 @@ public class BoardDAO {
 				   + " p.post_like, "
 				   + " p.post_hit, "
 				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -104,6 +106,7 @@ public class BoardDAO {
 				   + " p.post_like, "
 				   + " p.post_hit, "
 				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -126,6 +129,7 @@ public class BoardDAO {
 				   + " p.post_like, "
 				   + " p.post_hit, "
 				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -146,6 +150,7 @@ public class BoardDAO {
 									   + " p.post_like, "
 									   + " p.post_hit, "
 									   + " m.mem_dong, "
+									   + " m.mem_role, "
 									   + " m.mem_nickname "
 									   + " from post p "
 									   + " join members m on p.mem_id = m.mem_id "
@@ -166,6 +171,7 @@ public class BoardDAO {
 									   + " p.post_like, "
 									   + " p.post_hit, "
 									   + " m.mem_dong, "
+									   + " m.mem_role, "
 									   + " m.mem_nickname "
 									   + " from post p "
 									   + " join members m on p.mem_id = m.mem_id "
@@ -189,6 +195,7 @@ public class BoardDAO {
 				   + " p.post_like, "
 				   + " p.post_hit, "
 				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -211,6 +218,7 @@ public class BoardDAO {
 				   + " p.post_like, "
 				   + " p.post_hit, "
 				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "

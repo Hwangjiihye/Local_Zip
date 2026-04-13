@@ -562,8 +562,7 @@ hr {
 										<div class="profileTime profileInfo" style="color: #5e361a;">${i.post_date}</div>
 									</div>
 								</div>
-								${role}
-								<c:if test="${loginId != null && loginId != i.mem_id}">
+								<c:if test="${loginId != null && loginId != i.mem_id && i.mem_role != 0}">
 									<div class="reportArea">
 										<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
 											style="width: 25px; height: 25px; margin-bottom: 5px"></img> 
