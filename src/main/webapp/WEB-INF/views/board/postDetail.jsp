@@ -293,9 +293,19 @@ button, body {
 	width: 95%;
 	font-size: 15px;
 	background-color: #f0d8af;
-	border-radius: 5px;
 	padding: 0px 4px;
 	margin: auto;
+}
+
+.fileContainer{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.postContents{
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	padding:10px 0 5px 13px;
 }
 
 #summernote {
@@ -814,16 +824,49 @@ hr {
 				processData: false,
 		        contentType: false,
 				type: "post"
-			}).done(function(){
-				Swal.fire({
-					icon: "success",
-					title: "Success  !",
-					text: "수정 완료!",
-					iconColor: "#FFB300",
-					confirmButtonColor: "#FFB300"
-				}).then(() => {
-					location.reload();
-				});
+			}).done(function(resp){
+				if(resp == "fail"){
+					Swal.fire({
+                        icon: "error",
+                        title: "Fail !",
+                        text: "신고된 게시물은 수정할 수 없습니다.",
+                        iconColor: "#EB0000",
+                        confirmButtonColor: "#FFB300"
+                    }).then(() => {
+                    	let originTitle = postTitle.data("originTitle");
+            			let originContents = postContents.data("originContents");
+
+            		    postTitle.text(originTitle);
+            		    postContents.html(originContents);
+            		    
+            		    $(".file-item").removeClass("delete-target").show();
+            		    $(".newFiles").val("");
+            		    
+            		    $(".fileDelBtn").hide();
+            			$(".newFileDiv").hide();
+            			
+            		    $(".completeBtn").css({"display":"none"});
+            			$(".cancelBtn").css({"display":"none"});
+            			$(".updateBtn").css({"display":"inline"});
+            			$(".deleteBtn").css({"display":"inline"});
+            			
+            			postTitle.removeAttr("contenteditable");
+            			postContents.removeAttr("contenteditable");
+            			
+            			postTitle.css({"border":"none"});
+            			postContents.css({"border":"none"});
+                    });
+				}else if(resp == "success"){
+					Swal.fire({
+						icon: "success",
+						title: "Success  !",
+						text: "수정 완료!",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					}).then(() => {
+						location.reload();
+					});
+				}
 			});
 		});
 		
@@ -867,7 +910,6 @@ hr {
                         iconColor: "#FFB300",
                         confirmButtonColor: "#FFB300"
                     }).then(() => {
-                    	//location.href = "/";
                     	location.href = "/board/lifeInfo?sort=" + sort + "&cPage=" + currentPage;
                     });
 		    	 }else if(category == "talk"){
@@ -878,7 +920,6 @@ hr {
 	                        iconColor: "#FFB300",
 	                        confirmButtonColor: "#FFB300"
 	                    }).then(() => {
-	                    	//location.href = "/";
 	                    	location.href = "/board/talk?sort=" + sort + "&cPage=" + currentPage;
 	                    }); 
 		    	 }else if(category == "food"){
@@ -889,7 +930,6 @@ hr {
 	                        iconColor: "#FFB300",
 	                        confirmButtonColor: "#FFB300"
 	                    }).then(() => {
-	                    	//location.href = "/";
 	                    	location.href = "/board/food?sort=" + sort + "&cPage=" + currentPage;
 	                    }); 
 		    	 }else if(category == "beauty"){
@@ -900,7 +940,6 @@ hr {
 	                        iconColor: "#FFB300",
 	                        confirmButtonColor: "#FFB300"
 	                    }).then(() => {
-	                    	//location.href = "/";
 	                    	location.href = "/board/beauty?sort=" + sort + "&cPage=" + currentPage;
 	                    }); 
 		    	 }else if(category == "all" || category == ""){
@@ -911,7 +950,6 @@ hr {
 	                        iconColor: "#FFB300",
 	                        confirmButtonColor: "#FFB300"
 	                    }).then(() => {
-	                    	//location.href = "/";
 	                    	location.href = "/?sort=" + sort;
 	                    }); 
 		    	 }else {
@@ -1351,15 +1389,38 @@ hr {
         		},
         		type: "post"
         	}).done(function(resp){
-        		Swal.fire({
-					icon: "success",
-					title: "Success  !",
-					text: "수정이 완료되었습니다!",
-					iconColor: "#FFB300",
-					confirmButtonColor: "#FFB300"
-				}).then(() => {
-					loadReplyList();
-				});
+        		if(resp == "fail"){
+        			Swal.fire({
+                        icon: "error",
+                        title: "Fail !",
+                        text: "신고된 댓글은 수정이 불가합니다.",
+                        iconColor: "#EB0000",
+                        confirmButtonColor: "#FFB300"
+                    }).then(() => {
+            			
+                    	let replyContents = replyUpBox.find(".replyContents");
+                    	let origin = replyContents.data("origin");
+                    	
+                    	replyContents.html(origin);
+                    	
+                    	let upBtn = replyUpBox.find(".upBtn").css({"display":"inline"});
+                    	let delBtn = replyUpBox.find(".delBtn").css({"display":"inline"});
+                    	let OBtn = replyUpBox.find(".OBtn").css({"display":"none"});
+                    	let XBtn = replyUpBox.find(".XBtn").css({"display":"none"});
+
+                    	replyContents.removeAttr("contenteditable");
+                    });
+        		}else if(resp == "success"){
+        			Swal.fire({
+    					icon: "success",
+    					title: "Success  !",
+    					text: "수정이 완료되었습니다!",
+    					iconColor: "#FFB300",
+    					confirmButtonColor: "#FFB300"
+    				}).then(() => {
+    					loadReplyList();
+    				});
+        		}
         	});
         });
         
