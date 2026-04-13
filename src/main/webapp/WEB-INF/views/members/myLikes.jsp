@@ -239,6 +239,11 @@ button, body {
 	font-size: 20px;
 	margin-top: 5px;
 	line-height: 40px;
+	color: #5e361a;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+    display: block;
 }
 
 .postContent {
