@@ -498,7 +498,11 @@ hr {
 		        document.execCommand("insertLineBreak"); // 줄바꿈 삽입
 			    }
 			});
-			
+		 $(document).on("keydown", ".postTitle[contenteditable='true']", function(e){
+	            if(e.key === "Enter"){
+	                e.preventDefault(); // 기본 동작 막기
+	            }
+	        });	
 		
 	</script>
 </body>

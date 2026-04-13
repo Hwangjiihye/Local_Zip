@@ -1188,7 +1188,11 @@ a {
         	$(".pageBox").append(navi);
         }
     });
-        
+        $(document).on("keydown", ".postTitle[contenteditable='true']", function(e){
+            if(e.key === "Enter"){
+                e.preventDefault(); // 기본 동작 막기
+            }
+        });
         
     </script>
 </body>
