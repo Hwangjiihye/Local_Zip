@@ -289,19 +289,15 @@ a {
 .postContent{
 	margin: auto;
 	width: 95%;
-	/* height: 1.5em;       /* 한 줄 높이만큼 고정 */ */
 	line-height: 1.5em;
 	font-size: 18px;
 	background-color: #f0d8af;
 	border-radius: 0 0 5px 5px;
 	color: #5e361a;
-	padding: 0 10px;
 	white-space: pre-wrap;
 	word-break: break-all;
-	/* overflow: hidden;
-    		text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
 	display: block;
-	*/
+	padding:10px 0 5px 13px;
 }
 
 
@@ -447,7 +443,7 @@ a {
 	margin: 0;
 }
 .imageContainer {
-overflow: hidden;
+	overflow: hidden;
 	margin: auto;
 	width: 95%;
 	font-size: 15px;
@@ -477,8 +473,13 @@ overflow: hidden;
  .postTitle[contenteditable="true"],
  .postContent[contenteditable="true"] {
 	border: 1px solid #FFB300;
-	border-radius: 5px;
+/* 	border-radius: 5px; */
 	padding: 5px;
+}
+
+.postTitle{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 .postTitle[contenteditable="true"]:focus,
 .postContent[contenteditable="true"]:focus{
@@ -641,7 +642,6 @@ overflow: hidden;
 			
 			// suggestion_seq : 지금 클릭한 게시글 번호 들어감
 			let suggestion_seq = postDownBox.attr("data-seq");
-			console.log(suggestion_seq);
             let likeCountSpan = btn.find(".agreeCount");
             let unlikeBtn = postDownBox.find(".postCommentBox");
             let unlikeCountSpan = unlikeBtn.find(".noCount");
@@ -953,16 +953,6 @@ overflow: hidden;
         	box.find(".delBtn, .editBtn").show();
         })
         
-        // 완료 버튼 -> 수정/삭제 버튼으로 변경
-        /* $(".okBtn").on("click", function(){
-        	
-        	let box = $(this).closest(".postBox");
-        	
-        	box.find(".newFileDiv").hide();
-        	box.find(".fileDownload").hide();
-        	box.find(".okBtn, .cancleBtn").hide();
-        	box.find(".delBtn, .editBtn").show();
-        }) */
         
         // 게시글 수정 버튼
         $(".okBtn").on("click", function(){
