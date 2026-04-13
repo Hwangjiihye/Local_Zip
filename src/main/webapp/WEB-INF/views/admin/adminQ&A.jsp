@@ -231,7 +231,7 @@ body {
 
 .replyTextAndBtn{
  	display:flex;
-/*  	align-items: stretch; /* textarea랑 버튼 영역 높이 맞추기 */ */
+/*  	align-items: stretch; /* textarea랑 버튼 영역 높이 맞추기 */ 
  	gap:10px;
 }
 
@@ -635,7 +635,7 @@ img{
 				let textarea = $("#inputUpdate_" + seq)[0];
 				textarea.style.height = "auto";
 				textarea.style.height = textarea.scrollHeight + "px";
-			    
+			   
 					parentRow.find(".adminBtn").hide();
 					parentRow.find(".UpdateBtn").show();
 				});
