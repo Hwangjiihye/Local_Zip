@@ -61,7 +61,7 @@ public class BoardDAO {
 				   + " p.post_date, "
 				   + " p.post_like, "
 				   + " p.post_hit, "
-				   + " p.mem_dong, "
+				   + " m.mem_dong, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "

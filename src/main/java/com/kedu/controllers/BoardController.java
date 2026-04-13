@@ -181,6 +181,8 @@ public class BoardController {
 		model.addAttribute("naviCountPerPage", naviCountPerPage);
 		session.setAttribute("currentPage", cPage);
 		
+		
+		
 		List<BoardDTO> list;
 
 		// 출력을 어떤 종류를 기준으로 할 지 검사
@@ -192,9 +194,10 @@ public class BoardController {
 
 		// 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.
 		String loginId = (String) session.getAttribute("loginId");
-
+		int role = mdao.getRole(loginId);
+		
 		LikeStatus(list, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
-
+		
 		model.addAttribute("lifeInfo", list);
 		model.addAttribute("sort", sort);
 
