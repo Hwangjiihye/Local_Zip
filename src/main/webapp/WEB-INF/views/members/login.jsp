@@ -180,6 +180,7 @@ hr {
 	font-size: 14px;
 	font-weight: 500;
 	margin-left: 10px;
+	color: #5e361a;
 }
 a:link{color:black;text-decoration:none;}
 a:visited{color:black;text-decoration:none;}
@@ -206,6 +207,9 @@ input{
 		    transform: translateY(5px);
 		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
 		}
+.linkDiv a {
+	color: #5e361a;
+}
 
 </style>
 </head>
