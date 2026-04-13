@@ -201,6 +201,11 @@ input{
 .rightImg{
 	right: 0;
 }
+.swal2-icon.swal2-info .swal2-icon-content {
+		    font-size: 50px;     /* i 크기 */
+		    transform: translateY(5px);
+		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
+		}
 
 </style>
 </head>
@@ -211,7 +216,7 @@ input{
 			<div class="divTotal">
 				<div class="inputArea">
 					<div class="form-row">
-						<label>· ID : </label><input name="mem_id" class="id" type="text" placeholder="아이디를 입력해주세요.">
+						<label>· ID : </label><input name="mem_id" value="${mem_id}" class="id" type="text" placeholder="아이디를 입력해주세요.">
 					</div>
 	
 					<div class="form-row">
