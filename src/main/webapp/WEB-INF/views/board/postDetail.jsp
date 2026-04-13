@@ -281,7 +281,7 @@ button, body {
 .postTitle {
 	margin: auto;
 	width: 95%;
-	height: 40px;
+	height: auto;
 	font-size: 20px;
 	margin-top: 5px;
 	line-height: 40px;
@@ -795,10 +795,19 @@ hr {
       // 게시글 수정 완료 버튼 클릭 시
       $(".completeBtn").on("click",function(){
           
-         let post_title = $(".postTitle").text();
-         let post_contents = $(".postContents").html();
-          let post_text = $(".postContents").text().trim();
-          
+	   		// 1. 데이터 추출
+	   	    let post_title = $(".postTitle").text().trim();
+	   	    let post_contents = $(".postContents").html();
+	   	    
+	   	    // 엔터(\n)를 포함한 실제 텍스트 추출 (innerText 사용)
+	   	    let post_titleText = document.querySelector(".postTitle").innerText; 
+	   	    let post_text = document.querySelector(".postContents").innerText; 
+	
+	   	    let titleLimit = 100; // 제목 제한
+	   	    let limit = 1000;     // 내용 제한
+
+         
+         
           if(post_title == ""){
              Swal.fire({
                icon: "info",
@@ -838,7 +847,43 @@ hr {
           for (let i = 0; i < newFiles.length; i++) {
               formData.append("attachments", newFiles[i]);
           }
-         
+         	
+       		// 3. 제목 글자수 초과 체크
+          if (post_titleText.length > titleLimit) {
+              let currentTitleLen = post_titleText.length;
+              let overTitle = post_titleText.substring(titleLimit, titleLimit + 50); // 제목은 짧으니 50자만
+              
+              Swal.fire({
+                  icon: "warning",
+                  title: "제목 글자수 초과!",
+                  html: "현재 제목이 <b>" + currentTitleLen + "자</b>입니다. (제한: 100자)<br><br>" +
+                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:13px; border:1px solid #ffcccc; word-break: break-all;'>" +
+                        "<b>제목 뒷부분을 삭제해주세요:</b><br><br>" +
+                        "<span style='color:#555;'>... " + overTitle + "</span></div>",
+                  iconColor: "#EB0000",
+                  confirmButtonColor: "#FFB300"
+              });
+              return;
+          }
+
+          // 4. 내용 글자수 초과 체크
+          if (post_text.length > limit) {
+              let currentLen = post_text.length;
+              let overText = post_text.substring(limit, limit + 100); 
+
+              Swal.fire({
+                  icon: "warning",
+                  title: "내용 글자수 초과!",
+                  html: "현재 내용이 <b>" + currentLen + "자</b>입니다. (제한: 1000자)<br><br>" +
+                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+                        "<span style='color:#555;'>... " + overText + "</span></div>",
+                  iconColor: "#EB0000",
+                  confirmButtonColor: "#FFB300"
+              });
+              return;
+          }
+          
          $.ajax({
             url:"/board/updatePost",
             data:formData,
@@ -913,7 +958,10 @@ hr {
               if (result.isConfirmed) {
                  $.ajax({
               url: "/board/deletePost",
-              data: { post_seq: postSeq },
+              data: { 
+            	  post_seq: postSeq, 
+            	  mem_id : loginId
+              },
               type: "post"
           }).done(function(resp){
              if(resp == "fail"){ // 신고된 게시글 일때는 boardController에서 fail을 보내서 삭제X
@@ -1253,7 +1301,13 @@ hr {
         // 댓글 등록 버튼을 눌렀을 때, ajax
         $(".applyBtn").on("click",function(){
            
-           let reply = $(".newReply").val();
+        	let textarea = $(".newReply").val(""); // 입력창 비우고,
+            
+            // 완전 초기화
+            textarea.css("height", "auto");
+
+            // input 이벤트 강제로 발생시켜서 다시 기본 높이 계산하게 만들기
+            textarea.trigger("input");
            
            if(reply.trim() == ""){
               Swal.fire({

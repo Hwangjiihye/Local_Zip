@@ -28,7 +28,7 @@ public class BoardDAO {
 	
 	// 카테고리 별 최신순, 인기순 정렬 후 > 리스트 출력 메서드 ------------------------------
 	public List<BoardDTO> list_home_latest(String mem_id) throws Exception{
-		String sql = "select p.*, m.mem_nickname, " +
+		String sql = "select p.*, m.mem_nickname, m.mem_dong, m.mem_role, " +
                 " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count, " + // 전체 좋아요 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
@@ -40,7 +40,7 @@ public class BoardDAO {
 
 	//홈(=전체) 리스트 출력(인기순)
 	public List<BoardDTO> list_home_like(String mem_id) throws Exception{
-		String sql = "select p.*, m.mem_nickname, " +
+		String sql = "select p.*, m.mem_nickname, m.mem_dong, m.mem_role, " +
                 " (select count(*) FROM reply r WHERE r.post_seq = p.post_seq) as post_hit, " + // 댓글 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count, " + // 전체 좋아요 수
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq AND l.mem_id = ?) as post_like_check " + // 내가 눌렀는지 여부
@@ -61,7 +61,8 @@ public class BoardDAO {
 				   + " p.post_date, "
 				   + " p.post_like, "
 				   + " p.post_hit, "
-				   + " p.mem_dong, "
+				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -82,7 +83,8 @@ public class BoardDAO {
 				   + " p.post_date, "
 				   + " p.post_like, "
 				   + " p.post_hit, "
-				   + " p.mem_dong, "
+				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -103,7 +105,8 @@ public class BoardDAO {
 				   + " p.post_date, "
 				   + " p.post_like, "
 				   + " p.post_hit, "
-				   + " p.mem_dong, "
+				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -125,7 +128,8 @@ public class BoardDAO {
 				   + " p.post_date, "
 				   + " p.post_like, "
 				   + " p.post_hit, "
-				   + " p.mem_dong, "
+				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -145,7 +149,8 @@ public class BoardDAO {
 									   + " p.post_date, "
 									   + " p.post_like, "
 									   + " p.post_hit, "
-									   + " p.mem_dong, "
+									   + " m.mem_dong, "
+									   + " m.mem_role, "
 									   + " m.mem_nickname "
 									   + " from post p "
 									   + " join members m on p.mem_id = m.mem_id "
@@ -165,7 +170,8 @@ public class BoardDAO {
 									   + " p.post_date, "
 									   + " p.post_like, "
 									   + " p.post_hit, "
-									   + " p.mem_dong, "
+									   + " m.mem_dong, "
+									   + " m.mem_role, "
 									   + " m.mem_nickname "
 									   + " from post p "
 									   + " join members m on p.mem_id = m.mem_id "
@@ -188,7 +194,8 @@ public class BoardDAO {
 				   + " p.post_date, "
 				   + " p.post_like, "
 				   + " p.post_hit, "
-				   + " p.mem_dong, "
+				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -210,7 +217,8 @@ public class BoardDAO {
 				   + " p.post_date, "
 				   + " p.post_like, "
 				   + " p.post_hit, "
-				   + " p.mem_dong, "
+				   + " m.mem_dong, "
+				   + " m.mem_role, "
 				   + " m.mem_nickname "
 				   + " from post p "
 				   + " join members m on p.mem_id = m.mem_id "
@@ -240,7 +248,7 @@ public class BoardDAO {
 
 	//게시글 상세 내용 출력
 	public BoardDTO selectByPost_seq(int post_seq) throws Exception{
-		String sql = "select p.*, m.mem_nickname, " +
+		String sql = "select p.*, m.mem_nickname, m.mem_dong, " +
                 " (select count(*) FROM post_like l WHERE l.post_seq = p.post_seq) as post_like_count " +
                 " from post p "
                 + "join members m on p.mem_id = m.mem_id "
@@ -303,12 +311,13 @@ public class BoardDAO {
 	
 	// 마이페이지 > 내가 좋아요 누른 글 목록 출력
 	public List<BoardDTO> getMyLikes(String mem_id){
-		String sql = "select p.post_seq, p.post_category, p.mem_id, p.mem_nickname, "
-					+ " p.mem_dong, p.post_hit, p.post_title, p.post_contents,"
+		String sql = "select p.post_seq, p.post_category, p.mem_id, m.mem_nickname, "
+					+ " m.mem_dong, p.post_hit, p.post_title, p.post_contents, "
 					+ " p.post_like, p.post_date, "
 					+ " 1 as post_like_check " // 내가 좋아요를 눌렀다는 뜻. => 무조건 1
 					+ " from post_like l "
 					+ " JOIN post p ON l.post_seq = p.post_seq "
+					+ " join members m on p.mem_id = m.mem_id "
 					+ " where l.mem_id = ? "
 					+ " order by l.like_date desc";
 		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
@@ -335,25 +344,25 @@ public class BoardDAO {
 	}
 	
 	// 내 관심글 리스트 뽑아오기
-	public List<BoardDTO> getLikesNavi(String mem_id,int start, int end){
-		String sql = "SELECT * FROM ("
-	               + "    SELECT "
-	               + "    p.post_seq, "      
-	               + "    p.mem_id, "        
-	               + "    p.post_title, "    
-	               + "    p.post_contents, "
-	               + "    p.post_date, "
-	               + "    p.post_like, "
-	               + "    p.post_hit, "
-	               + "    p.mem_dong, "
-	               + "	  m.mem_nickname, "
-	               + "	  1 as post_like_check, " // 하트를 눌렀는지 안눌렀는지 체크하는 코드
-	               + "    ROW_NUMBER() OVER (ORDER BY l.like_date DESC) a " // 좋아요 누른 순서로 정렬 권장
-	               + "    FROM post p "
-	               + "    JOIN post_like l ON p.post_seq = l.post_seq "
-	               + "	  join members m on p.mem_id = m.mem_id "
-	               + "    WHERE l.mem_id = ?"
-	               + ") WHERE a BETWEEN ? AND ?";
+	public List<BoardDTO> getLikesNavi(String mem_id, int start, int end){
+		String sql = "SELECT * FROM ( "
+	               + " SELECT "
+	               + " p.post_seq, "      
+	               + " p.mem_id, "        
+	               + " p.post_title, "    
+	               + " p.post_contents, "
+	               + " p.post_date, "
+	               + " p.post_like, "
+	               + " p.post_hit, "
+	               + " m.mem_dong, "
+	               + " m.mem_nickname, "
+	               + " 1 as post_like_check, " // 하트를 눌렀는지 안눌렀는지 체크하는 코드
+	               + " ROW_NUMBER() OVER (ORDER BY l.like_date DESC) a " // 좋아요 누른 순서로 정렬 권장
+	               + " FROM post p "
+	               + " JOIN post_like l ON p.post_seq = l.post_seq "
+	               + " join members m on p.mem_id = m.mem_id "
+	               + " WHERE l.mem_id = ? "
+	               + " ) WHERE a BETWEEN ? AND ?";
 	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class), mem_id, start, end);
 	}
 	

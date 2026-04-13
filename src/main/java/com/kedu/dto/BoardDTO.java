@@ -12,6 +12,7 @@ public class BoardDTO {
 	private String post_contents;
 	private int post_like;
 	private String post_date;
+	private int mem_role;
 	
 	// 하트가 채워져있는지 아닌지를 기록할 용도로 만든 변수, db컬럼,생성자에는 없는게 맞음.
 	private int post_like_check;
@@ -112,5 +113,11 @@ public class BoardDTO {
 	}
 	public void setPost_date(String post_date) {
 		this.post_date = post_date;
+	}
+	public int getMem_role() {
+		return mem_role;
+	}
+	public void setMem_role(int mem_role) {
+		this.mem_role = mem_role;
 	}
 }

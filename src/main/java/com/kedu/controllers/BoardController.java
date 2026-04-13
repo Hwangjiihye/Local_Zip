@@ -86,7 +86,7 @@ public class BoardController {
 		String mem_nickname = (String) session.getAttribute("nickname");
 		String mem_dong = (String) session.getAttribute("dong");
 		dao.insert(dto, mem_id, mem_nickname, mem_dong);
-
+		System.out.println(mem_dong);
 		if ("lifeInfo".equals(post_category)) {
 			return "redirect:/board/lifeInfo";
 		} else if ("talk".equals(post_category)) {
@@ -181,6 +181,8 @@ public class BoardController {
 		model.addAttribute("naviCountPerPage", naviCountPerPage);
 		session.setAttribute("currentPage", cPage);
 		
+		
+		
 		List<BoardDTO> list;
 
 		// 출력을 어떤 종류를 기준으로 할 지 검사
@@ -192,9 +194,9 @@ public class BoardController {
 
 		// 하트 수 확인 시 loginId를 기준으로 체크해야되서 아이디 값 가져옴.
 		String loginId = (String) session.getAttribute("loginId");
-
+		
 		LikeStatus(list, loginId); // 하트 수 체크하는 메서드 실행 -> 여기서 set으로 상태(0, 1 ) 담아줌.
-
+		
 		model.addAttribute("lifeInfo", list);
 		model.addAttribute("sort", sort);
 
@@ -338,7 +340,7 @@ public class BoardController {
 	// 게시글 삭제
 	@ResponseBody
 	@RequestMapping("/deletePost")
-	public String deletePost(int post_seq) {
+	public String deletePost(int post_seq, String mem_id) {
 		
 		int count = rdao.reportDeleteBlock(post_seq); // 신고된 게시글 삭제 불가 로직
 		if(count > 0) {
@@ -346,6 +348,7 @@ public class BoardController {
 		}
 		
 		dao.deletePost(post_seq);
+		likeDao.likeDelete(post_seq, mem_id);
 		return "success";
 	}
 
