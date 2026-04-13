@@ -11,6 +11,7 @@ public class FeedBackDTO {
 	private String suggestion_writedate;
 	private int suggestion_like;
 	private int suggestion_unlike;
+	private Integer mem_role;
 	
 	public FeedBackDTO () {}
 	public FeedBackDTO(int suggestion_seq, String mem_id, String mem_nickname, String mem_dong, String suggestion_title,
@@ -80,5 +81,11 @@ public class FeedBackDTO {
 	}
 	public void setSuggestion_unlike(int suggestion_unlike) {
 		this.suggestion_unlike = suggestion_unlike;
+	}
+	public Integer getMem_role() {
+		return mem_role;
+	}
+	public void setMem_role(Integer mem_role) {
+		this.mem_role = mem_role;
 	}
 }
