@@ -1005,7 +1005,6 @@ a {
 	
 		    $(window).on("scroll", function() {
 		        let scrollTop = $(this).scrollTop();
-		        console.log(this);
 	
 		        // 1. 최상단일 때는 상단 이동 버튼 숨기기 (선택 사항)
 		        if (scrollTop <= 100) {
@@ -1203,7 +1202,6 @@ a {
 				let postLike = $(this);
 				let post_seq = postLike.closest(".postBox").data("seq");	
 				
-				console.log("클릭된 게시글 번호: " + post_seq);
 				
 				// 하트 채워지고 비워지는 토글용 ajax
 				$.ajax({
@@ -1211,7 +1209,6 @@ a {
 					data : {post_seq : post_seq},
 					type : "post"
 				}).done(function(likeCheck) {
-					console.log("서버 응답:" + likeCheck);
 					
 					if(likeCheck == -1){
 						Swal.fire({

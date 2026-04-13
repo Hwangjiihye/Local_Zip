@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 import com.kedu.dao.AdminQaDAO;
 import com.kedu.dao.BoardDAO;
 import com.kedu.dao.MembersDAO;
-import com.kedu.dao.PostLikeDAO;
 import com.kedu.dao.VisitLogDAO;
 import com.kedu.dto.BlackListDTO;
 import com.kedu.dto.BoardDTO;
@@ -36,9 +35,6 @@ public class MembersController {
 	private VisitLogDAO vdao;	
 	@Autowired
 	private BoardDAO BoardDao;
-	@Autowired
-	private PostLikeDAO likeDao;
-	
 	@Autowired
 	private AdminQaDAO adao;
 	
@@ -132,7 +128,6 @@ public class MembersController {
 						}
 					}catch(Exception e) {
 						e.printStackTrace();
-						System.out.println("블랙리스트 체크 로직 오류");
 					}
 				}
 			}
