@@ -271,9 +271,8 @@
 				<div class="titleDiv">
 					<div class="title">제목</div>
 					<div class="titleContent">
-						<input name="suggestion_title" class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
-					</div>
-					
+						<input name="suggestion_title" class="inputBox" maxlength="100" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
+					</div>	
 				</div>
 	
 				<div class="fileDiv">

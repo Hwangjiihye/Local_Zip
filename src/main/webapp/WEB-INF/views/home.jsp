@@ -54,7 +54,7 @@ body, html {
 
 .container {
 	width: 100%;
-	min-height: 95vh;
+	min-height: 140vh;
 	padding-bottom: 60px;
 }
 
@@ -177,7 +177,7 @@ body, html {
 .rightBox {
 	width: 300px;
 	height: 498px;
-	margin-botton: 30px;
+	margin-bottom: 30px;
 	border-radius: 10px;
 	margin-left: 40px;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -373,7 +373,6 @@ body, html {
 .postInfoUp {
 	display: flex;
 	align-items: center;
-	mergin-bottom: 4px;
 }
 
 .postInfoDown {
@@ -392,12 +391,6 @@ body, html {
 
 /* 신고 영역 스타일 */
 .reportArea {
-	/* 	position: absolute; */
-	/* 	display: flex; */
-	/*     flex-direction: column; */
-	/*     align-items: flex-end; */
-	/*     justify-content: flex-start; */
-	/*     margin-left: 10px; */
 	position: absolute; /* 부모(.postUpBox)의 오른쪽 상단에 고정 */
 	right: 15px;
 	top: 10px;
@@ -640,13 +633,29 @@ body, html {
 	line-height: 70px; /* 세로 위치 (핵심🔥) */
 }
 
+/* .emptyBox { */
+/* 	width: 100%; */
+/* 	height: 600px; */
+/* 	font-size: 25px; */
+/* 	color: #5e361a; */
+/* 	text-align: center; */
+/* 	margin-top: 80px; */
+/* } */
+
+/* padding: 100px 0;" */
+
 .emptyBox {
-	width: 100%;
-	height: 600px;
-	font-size: 25px;
-	color: #5e361a;
-	text-align: center;
-	margin-top: 80px;
+    width: 100%;
+    /* height: 600px;  <-- 이 고정 높이가 레이아웃을 깨뜨릴 수 있습니다. */
+    min-height: 400px; /* 적당한 최소 높이만 유지 */
+    font-size: 25px;
+    color: #5e361a;
+    text-align: center;
+    display: flex; /* 중앙 정렬을 위해 추가 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
 a {
@@ -838,24 +847,34 @@ a {
 						</div>
 					</div>
 
+					<div class="orderBy">
+						<div class="searchBox">
+							<input name="" class="inputSearch" placeholder="검색할 게시글의 제목을 입력해주세요.">
+							<div class="searchIconBox">
+								<i class="searchIcon fa-solid fa-magnifying-glass"></i>
+							</div>
+						</div>
+
+						<!-- 버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
+						<button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
+					</div>
+
 					<c:choose>
 						<c:when test="${empty list}">
-							<div class="emptyBox">등록된 게시글이 없습니다.</div>
-						</c:when>
-						<c:otherwise>
-
-							<div class="orderBy">
-								<div class="searchBox">
-									<input name="" class="inputSearch" placeholder="검색할 게시글의 제목을 입력해주세요.">
-									<div class="searchIconBox">
-										<i class="searchIcon fa-solid fa-magnifying-glass"></i>
-									</div>
-								</div>
-
-								<!-- 버튼 하나만 쓰고 현재 상태를 클릭하면 반대로 이동 -->
-								<button class="sortBtn orderBtn" type="button">${sort == 'latest' ? '최신순' : '인기순'}</button>
+							<div class="emptyBox">
+								<c:choose>
+									<c:when test="${not empty searchKeyword}">
+										<i class="fa-solid fa-circle-exclamation fa-3x" style="color: #A66A3F; margin-bottom: 20px;"></i>
+										<p>'${searchKeyword}'에 대한 검색 결과가 없습니다.</p>
+									</c:when>
+									<c:otherwise>
+                                   등록된 게시글이 없습니다.
+                               </c:otherwise>
+								</c:choose>
 							</div>
-
+						</c:when>
+						
+						<c:otherwise>
 							<!-- 게시글영역 -->
 							<c:forEach var="i" items="${list}">
 								<div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
@@ -1054,17 +1073,13 @@ a {
 			
 			// 페이지 로드 시 팝업 열기
 		    window.onload = function() {
-		        $(".mainPopup").css("display", "flex");
+		    	// sessionStorage에서 'popupViewed'라는 키값을 확인합니다.
+		        if (!sessionStorage.getItem("popupViewed")) {
+		            $(".mainPopup").css("display", "flex");
+		            // 팝업을 보여준 후, '이미 봤음' 상태를 저장합니다.
+		            sessionStorage.setItem("popupViewed", "true");
+		        }
 		    };
-	
-			
-		 	// 배경(어두운 부분) 클릭 시 팝업 닫기
-// 		    $(".popup-overlay").on("click", function(e) {
-// 		        // 클릭한 지점이 팝업 박스 내부(.popup-content)가 아닐 때만 닫기
-// 		        if (!$(e.target).closest(".popup-content").length) {
-// 		            $(this).hide();
-// 		        }
-// 		    });
 		
 			$(".loginBtn").on("click", function() {
 				$(".loginBtn").css({"display" : "none"});
@@ -1295,8 +1310,12 @@ a {
                         title: "Wait !",
                         text: "검색어를 입력해주세요!",
                         confirmButtonColor: "#FFB300"
-                    });
-                    return;
+                    }).then(() => {
+                        
+                        $(".inputSearch").focus();
+                        location.href = "/";
+                    });;
+                    return false;
                 }
                 
                 // 검색 요청 보내기
