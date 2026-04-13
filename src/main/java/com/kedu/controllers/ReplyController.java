@@ -51,8 +51,14 @@ public class ReplyController {
 	@ResponseBody
 	@RequestMapping("/updateReply")
 	public String updateReply(int reply_seq, String reply_contents) {
-		dao.updateReply(reply_seq, reply_contents);
 		
+		// 신고된 댓글 수정 불가 로직
+		int count = rdao.reportUpdateBlock(reply_seq);
+		if(count > 0) {
+			return "fail";
+		}
+		
+		dao.updateReply(reply_seq, reply_contents);
 		return "success";
 	}
 }
