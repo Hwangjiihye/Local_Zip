@@ -10,6 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 /* 기존 폰트 및 기본 스타일 유지 */
 @font-face {
@@ -307,6 +308,62 @@ body, html {
    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.editBtn:hover, .delBtn:hover,
+ .cancleBtn:hover, .okBtn:hover
+	{
+    background-color: #fecc56;
+    color: #A66A3F;
+   
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.editBtn:active, .delBtn:active,
+ .cancleBtn:active, .okBtn:active {
+	transform: translateY(2px);
+	/* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.editBtn, .delBtn {
+	cursor: pointer;
+	border: #fbe5c0;
+	color: #5e361a;
+	font-size: 13px;
+	font-weight: bold;
+	background-color: #FFB300;
+	width: 50px;
+	height: 20px;
+	border-radius: 5px;
+	/* 그림자 효과 */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	/* 애니메이션 부드럽게 */
+	transition: all 0.2s ease;
+}
+
+.cancleBtn, .okBtn {
+	display: none;
+	cursor: pointer;
+	border: #fbe5c0;
+	color: #5e361a;
+	font-size: 13px;
+	font-weight: bold;
+	background-color: #FFB300;
+	width: 50px;
+	height: 20px;
+	border-radius: 5px;
+	/* 그림자 효과 */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	/* 애니메이션 부드럽게 */
+	transition: all 0.2s ease;
+}
+
+ .titleContent[contenteditable="true"],
+ .textContent[contenteditable="true"] {
+	border: 1px solid #FFB300;
+	border-radius: 5px;
+	padding: 5px;
+}
 </style>
 </head>
 <body>
@@ -330,7 +387,15 @@ body, html {
 			<c:when test="${not empty list}">
 				<c:forEach var="i" items="${list}">
 				<div class="postBox">
-					<div class="postHeader">작성일자 : ${i.qa_create_date}</div>
+					<div class="postHeader">작성일자 : ${i.qa_create_date}
+					<c:if test="${i.qa_status == 0}">
+					<input class="editBtn" type="button" value="수정" data-seq="${i.qa_seq}">
+					<input class="delBtn" type="button" value="삭제" data-seq="${i.qa_seq}">
+					<input class="okBtn" type="button" value="완료" data-seq="${i.qa_seq}">
+					<input class="cancleBtn" type="button" value="취소" data-seq="${i.qa_seq}">
+					</c:if>
+					</div>
+					
 					<div class="postBody">
 						<div class="rowItem1">
 							<span class="labelName">제목</span>
@@ -375,6 +440,178 @@ body, html {
 		</div>
 	</div>
 	<script>
+		//수정버튼
+	$(".editBtn").on("click",function(){
+		let box = $(this).closest(".postBox");
+    	
+    	let title = box.find(".titleContent").html();
+    	let contents = box.find(".textContent").html();
+    	
+    	box.data("original-title", title);
+        box.data("original-contents", contents);
+    	
+    	box.find(".titleContent").attr("contenteditable", "true");
+        box.find(".textContent").attr("contenteditable", "true");
+    	
+    	box.find(".editBtn, .delBtn").hide();
+    	box.find(".cancleBtn, .okBtn").show();
+	})
+		//수정취소
+	 $(".cancleBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	
+        	box.find(".titleContent").html(box.data("original-title"));
+        	box.find(".textContent").html(box.data("original-contents"));
+        	        	 
+        	box.find(".titleContent").attr("contenteditable", "false");
+            box.find(".textContent").attr("contenteditable", "false");
+            
+        	box.find(".okBtn, .cancleBtn").hide();
+        	box.find(".delBtn, .editBtn").show();
+        })
+    
+        //수정완료
+    $(".okBtn").on("click", function(){
+        	
+        	let box = $(this).closest(".postBox");
+        	let seq = $(this).data("seq");
+        	let title = box.find(".titleContent").html().trim(); // 엔터 살리기
+        	let contents = box.find(".textContent").html().trim(); // 엔터 살리기
+        	
+        	let titleCheck = box.find(".titleContent").text().trim(); // 빈칸 체크
+        	let contentsCheck = box.find(".textContent").text().trim(); // 빈칸 체크
+        	
+        	if(titleCheck === "" && contentsCheck === ""){
+                Swal.fire({
+                    icon: "info",
+                    title: "Wait !",
+                    text: "제목과 내용을 입력해주세요.",
+                    iconColor: "#FFB300",
+                    confirmButtonColor: "#FFB300"
+                });
+                return;
+            }
+        	
+        	
+        	// 빈값 검사
+            if(titleCheck === ""){
+                Swal.fire({
+                    icon: "info",
+                    title: "Wait !",
+                    text: "제목을 입력해주세요.",
+                    iconColor: "#FFB300",
+                    confirmButtonColor: "#FFB300"
+                });
+                return;
+            } 
+        	if(contentsCheck === "") {
+            	Swal.fire({
+                    icon: "info",
+                    title: "Wait !",
+                    text: "내용을 입력해주세요.",
+                    iconColor: "#FFB300",
+                    confirmButtonColor: "#FFB300"
+                });
+                return;
+            }
+        	
+            box.find(".titleContent").attr("contenteditable", "false");
+            box.find(".textContent").attr("contenteditable", "false");
+//             box.find(".postTitle").css("border", "none"); //1px solid rgb(242, 211, 162)
+//             box.find(".postContent").css("border", "1px solid #F2D3A2"); // 1px solid #F2D3A2
+        	
+			
+			$.ajax({
+				url:"/qa/update",
+				data:{qa_seq:seq,
+					qa_title:title,
+					qa_contents:contents},
+				type: "post"
+			}).done(function(){
+					Swal.fire({
+					icon: "success",
+					title: "Success  !",
+					text: "수정 완료!",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+				}).then(() => {
+					location.reload();
+				});
+			});
+        	
+        }) 
+        
+   	// 삭제버튼
+   	$(".delBtn").on("click", function(){
+        	
+        	let seq = $(this).data("seq");
+        	
+        	Swal.fire({
+				icon: "question",
+				title: "Wait  !",
+				text: "정말 삭제하시겠습니까?",
+				iconColor: "#FFB300",
+				confirmButtonColor: "#FFB300",
+					showCancelButton: true,
+					confirmButtonText: "삭제",
+					cancelButtonText: "취소",
+					cancelButtonColor: "#d9d9d9"
+			}).then((result) => {
+				
+				if(result.isConfirmed) {
+        		
+        		$.ajax ({
+        			url: "/qa/delete",
+        			type: "post",
+        			data: { qa_seq: seq },
+        			
+        			success: function(resp) {
+        				if(resp === "successDel") {
+        					
+        					// 삭제 성공 알림
+        					Swal.fire({
+								icon: "success",
+								title: "Success  !",
+								text: "삭제 되었습니다",
+								iconColor: "#FFB300",
+								confirmButtonColor: "#FFB300"
+        					}).then(() => {
+        						location.reload(); // 새로고침
+        					});
+        					
+        				}
+        				else {
+        					Swal.fire({
+								icon: "error",
+								title: "Error  !",
+								text: "삭제 실패",
+								iconColor: "#EB0000",
+								confirmButtonColor: "#FFB300"
+        					});
+        				}
+        			},
+        			error: function() {
+        				Swal.fire({
+							icon: "error",
+							title: "서버 오류 발생 !",
+							iconColor: "#EB0000",
+							confirmButtonColor: "#FFB300"
+        				});
+        			}
+        		});
+        	} else if(result.dismiss === Swal.DismissReason.cancel) {
+        		Swal.fire({
+					icon: "info",
+					title: "Success  !",
+					text: "취소 되었습니다",
+					iconColor: "#FFB300",
+					confirmButtonColor: "#FFB300"
+        		});
+        	}
+        });
+	});
+	
 	let recordTotalCount = ${totalCount};
 	let recordCountPerPage = 5;
 	let naviCountPerPage = 5;
