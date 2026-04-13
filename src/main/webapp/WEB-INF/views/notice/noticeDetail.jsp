@@ -392,59 +392,98 @@ hr {
 			$(".postContents").html(currentContent);
 			
 		})
-		$(".completeBtn").on("click",function(){
-			
-			let newTitle = $(".postTitle").text().trim();
-	        let newContent = $(".postContents").html();
-	        let newContentText = $(".postContents").text().trim();
-	        
-	        if(newTitle == "" || newContentText == ""){
-	        	Swal.fire({
-					icon: "info",
-					title: "Wait  !",
-					text: "제목과 내용을 모두 입력해 주세요.",
-					iconColor: "#FFB300",
-					confirmButtonColor: "#FFB300"
-				});
-	        	return;
-	        }
-	        
-	        $.ajax({
-				url:"/admin/updateNotice",
-				data:{
-					seq : "${dto.notice_seq}",
-					notice_title : newTitle,
-					notice_content : newContent},
-				type:"post"
-			}).done(function(resp){
-				if(resp=="success"){
-					Swal.fire({
-						icon: "success",
-						title: "Success  !",
-						text: "수정되었습니다.",
-						iconColor: "#FFB300",
-						confirmButtonColor: "#FFB300"
-					});
-					currentTitle = newTitle;
-					currentContent = newContent;
-				}else{
-					Swal.fire({
-						icon: "error",
-						title: "Info  !",
-						text: "공지사항 수정에 실패했습니다.",
-						iconColor: "#EB0000",
-						confirmButtonColor: "#FFB300"
-					});
-				}
-			});
-			
-			$(".completeBtn").hide();
-			$(".cancelBtn").hide();
-			$(".updateBtn").show();
-			$(".deleteBtn").show();
-			
-			$(".postTitle, .postContents").attr("contenteditable","false");
-		})
+$(".completeBtn").on("click", function() {
+    // 1. 데이터 추출 (innerText를 사용하여 태그를 제외한 실제 글자수 계산)
+    let newTitle = $(".postTitle").text().trim();
+    let newContent = $(".postContents").html();
+    let newContentText = $(".postContents").text().trim();
+    
+    // 글자수 제한 설정
+    let titleLimit = 100; // 제목 제한
+    let contentLimit = 1000; // 내용 제한
+
+    // 2. 미입력 체크
+    if (newTitle == "" || newContentText == "") {
+        Swal.fire({
+            icon: "info",
+            title: "입력 확인",
+            text: "제목과 내용을 모두 입력해 주세요.",
+            iconColor: "#FFB300",
+            confirmButtonColor: "#FFB300"
+        });
+        return;
+    }
+
+    // 3. 제목 글자수 초과 체크 (추가된 부분)
+    if (newTitle.length > titleLimit) {
+        let overTitle = newTitle.substring(titleLimit, titleLimit + 30);
+        Swal.fire({
+            icon: "warning",
+            title: "제목 글자수 초과!",
+            html: "현재 제목이 <b>" + newTitle.length + "자</b>입니다. (제한: 100자)<br><br>" +
+                  "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:13px; border:1px solid #ffcccc; word-break: break-all;'>" +
+                  "<b>제목 뒷부분을 삭제해주세요:</b><br><br>" +
+                  "<span style='color:#555;'>... " + overTitle + "</span></div>",
+            iconColor: "#EB0000",
+            confirmButtonColor: "#FFB300"
+        });
+        return;
+    }
+
+    // 4. 내용 글자수 초과 체크 (추가된 부분)
+    if (newContentText.length > contentLimit) {
+        let overText = newContentText.substring(contentLimit, contentLimit + 50);
+        Swal.fire({
+            icon: "warning",
+            title: "내용 글자수 초과!",
+            html: "현재 내용이 <b>" + newContentText.length + "자</b>입니다. (제한: 1000자)<br><br>" +
+                  "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+                  "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+                  "<span style='color:#555;'>... " + overText + "</span></div>",
+            iconColor: "#EB0000",
+            confirmButtonColor: "#FFB300"
+        });
+        return;
+    }
+
+    // 5. 서버 전송 (AJAX)
+    $.ajax({
+        url: "/admin/updateNotice",
+        data: {
+            seq: "${dto.notice_seq}",
+            notice_title: newTitle,
+            notice_content: newContent
+        },
+        type: "post"
+    }).done(function(resp) {
+        if (resp == "success") {
+            Swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: "수정되었습니다.",
+                iconColor: "#FFB300",
+                confirmButtonColor: "#FFB300"
+            });
+            currentTitle = newTitle;
+            currentContent = newContent;
+            
+            // 전송 성공 시에만 버튼 상태 되돌리기
+            $(".completeBtn").hide();
+            $(".cancelBtn").hide();
+            $(".updateBtn").show();
+            $(".deleteBtn").show();
+            $(".postTitle, .postContents").attr("contenteditable", "false");
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "공지사항 수정에 실패했습니다.",
+                iconColor: "#EB0000",
+                confirmButtonColor: "#FFB300"
+            });
+        }
+    });
+});
 		
 		$(".deleteBtn").on("click",function(){
 			
