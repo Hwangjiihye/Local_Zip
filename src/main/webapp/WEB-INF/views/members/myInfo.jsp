@@ -504,7 +504,15 @@
 			    cancelButtonColor: "#d9d9d9"
 			}).then((result) => {
 		        if (result.isConfirmed) {
-		            location.href = "/members/delete"; // 확인 누르면 이동
+		        	Swal.fire({
+		                icon: "success",
+		                title: "Success  !",
+		                text: "탈퇴되었습니다.",
+		                iconColor: "#FFB300",
+		                confirmButtonColor: "#FFB300"
+		             }).then(()  => {
+		            	 location.href = "/members/delete"; // 확인 누르면 이동
+		             });
 		        }
 			})
 		})

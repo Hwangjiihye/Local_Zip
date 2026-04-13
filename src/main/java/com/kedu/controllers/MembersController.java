@@ -226,7 +226,7 @@ public class MembersController {
 		String id = (String)session.getAttribute("loginId");
 		dao.deleteById(id);
 		session.invalidate();
-		return "/";
+		return "redirect:/";
 	}
 	
 	// 마이페이지 > 작성글(모아보기)를 눌렀을 때,
