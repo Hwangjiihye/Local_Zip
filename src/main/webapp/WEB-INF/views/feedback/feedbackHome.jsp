@@ -286,14 +286,14 @@ a {
 	line-height: 40px;
 }
 
-.postContent, .imageContainer {
+.postContent{
 	margin: auto;
 	width: 95%;
 	/* height: 1.5em;       /* 한 줄 높이만큼 고정 */ */
 	line-height: 1.5em;
 	font-size: 18px;
 	background-color: #f0d8af;
-	border-radius: 5px;
+	border-radius: 0 0 5px 5px;
 	color: #5e361a;
 	padding: 0 10px;
 	white-space: pre-wrap;
@@ -303,6 +303,7 @@ a {
 	display: block;
 	*/
 }
+
 
 .postDownBox {
 	width: 95%;
@@ -441,10 +442,19 @@ a {
 	max-width: 100%;
 	max-height: 500px; /* 부모 너비를 넘지 않게 함 */
 	display: block;
-	border-radius: 8px;
 	width: 500px;
 	padding: 10px 0 0 10px;
 	margin: 0;
+}
+.imageContainer {
+overflow: hidden;
+	margin: auto;
+	width: 95%;
+	font-size: 15px;
+	background-color: #f0d8af;
+	border-radius: 5px 5px 0 0;
+	padding: 0px 4px;
+	margin: auto;
 }
 
 .file-item .fileName {
@@ -561,12 +571,12 @@ a {
 					<c:if test="${not empty imageMap[i.suggestion_seq]}">
 						<div class="fileDownload">
 							첨부 파일
-							<c:forEach var="i" items="${imageMap[i.suggestion_seq]}" varStatus="status">
+							<c:forEach var="file" items="${imageMap[i.suggestion_seq]}" varStatus="status">
 								<div class="file-item">
-									<label class="fileName" data-ori="${i.attach_oriname}"
-										data-sys="${i.attach_sysname}"> ${i.attach_oriname} </label>
+									<label class="fileName" data-ori="${file.attach_oriname}"
+										data-sys="${file.attach_sysname}"> ${file.attach_oriname} </label>
 									<button type="button" class="fileDelBtn"
-										data-sys="${i.attach_sysname}">X</button>
+										data-sys="${file.attach_sysname}">X</button>
 								</div>
 							</c:forEach>
 						</div>
@@ -617,6 +627,8 @@ a {
 	</div>
 
 	<script>
+	
+
         // 좋아요 버튼
         // container가 감시하고 있다가 postLikeBox가 눌리면 함수를 실행
         $(".postLikeBox").on("click", function () {
@@ -628,8 +640,8 @@ a {
         	let postDownBox = $(this).closest(".postDownBox");
 			
 			// suggestion_seq : 지금 클릭한 게시글 번호 들어감
-			let suggestion_seq = postDownBox.data("seq");
-			
+			let suggestion_seq = postDownBox.attr("data-seq");
+			console.log(suggestion_seq);
             let likeCountSpan = btn.find(".agreeCount");
             let unlikeBtn = postDownBox.find(".postCommentBox");
             let unlikeCountSpan = unlikeBtn.find(".noCount");
@@ -706,7 +718,7 @@ a {
         	$(".postCommentBox").on("click", function(){
         		let btn = $(this);
         		let postDownBox = $(this).closest(".postDownBox");
-        		let suggestion_seq = postDownBox.data("seq");
+        		let suggestion_seq = postDownBox.attr("data-seq");
         		
         		let unlikeCountSpan = btn.find(".noCount");
         		let likeBtn = postDownBox.find(".postLikeBox");
@@ -879,9 +891,11 @@ a {
 		    e.stopPropagation();
 		});
       //파일이 비어있거나 잘못된 파일형식을 올렸을때 alert
-		$(".newFiles").on("change", function() {
+		$(document).on("change",".newFiles", function() {
 	    let file = this.files[0];	
-
+	
+	    if (!file) return;
+	    
 	    // 1. MIME 타입 체크 (가장 권장)
 	    if (!file.type.match("image.*")) {
 	        Swal.fire({
@@ -904,6 +918,16 @@ a {
         $(".editBtn").on("click", function(){
         	
         	let box = $(this).closest(".postBox");
+        	
+        	let title = box.find(".postTitle").html();
+        	let contents = box.find(".postContent").html();
+        	
+        	box.data("original-title", title);
+            box.data("original-contents", contents);
+        	
+        	box.find(".postTitle").attr("contenteditable", "true");
+            box.find(".postContent").attr("contenteditable", "true");
+        	
         	box.find(".newFileDiv").show();
         	box.find(".fileDownload").show();
         	box.find(".editBtn, .delBtn").hide();
@@ -915,6 +939,14 @@ a {
         	
         	let box = $(this).closest(".postBox");
         	
+        	box.find(".postTitle").html(box.data("original-title"));
+        	box.find(".postContent").html(box.data("original-contents"));
+        	
+        	$(".file-item").removeClass("delete-target").show();
+        	 
+        	box.find(".postTitle").attr("contenteditable", "false");
+            box.find(".postContent").attr("contenteditable", "false");
+            
         	box.find(".newFileDiv").hide();
         	box.find(".fileDownload").hide();
         	box.find(".okBtn, .cancleBtn").hide();
@@ -931,25 +963,6 @@ a {
         	box.find(".okBtn, .cancleBtn").hide();
         	box.find(".delBtn, .editBtn").show();
         }) */
-        
-        $(".cancleBtn").on("click", function(){
-        	
-        	let box = $(this).closest(".postBox");
-        	
-        	 $(".file-item").removeClass("delete-target").show();
-        	box.find(".postTitle").attr("contenteditable", "false");
-            box.find(".postContent").attr("contenteditable", "false");
-            
-            location.reload(); // 수정 전으로 새로고침
-        })
-        
-        $(".editBtn").on("click", function(){
-
-        	let box = $(this).closest(".postBox");
-        	
-        	box.find(".postTitle").attr("contenteditable", "true");
-            box.find(".postContent").attr("contenteditable", "true");
-        })
         
         // 게시글 수정 버튼
         $(".okBtn").on("click", function(){
@@ -1007,7 +1020,7 @@ a {
 		    formData.append("suggestion_contents", contents);
 		    
 		    let deleteFiles = [];
-		    $(".delete-target").each(function() {
+		    box.find(".delete-target").each(function() {
 		        deleteFiles.push($(this).find(".fileName").data("sys"));
 		    });
 		    if(deleteFiles.length > 0) {

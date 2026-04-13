@@ -1,5 +1,5 @@
-package com.kedu.controllers;
 
+package com.kedu.controllers;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -154,12 +154,12 @@ public class FeedBackController {
 
 	@ResponseBody
 	@RequestMapping("/like") // 좋아요
-	public String like(int suggestion_seq, HttpSession session) throws Exception {
+	public String like(@RequestParam("suggestion_seq") Integer suggestion_seq, HttpSession session) throws Exception {
 
 		String loginId = (String) session.getAttribute("loginId");
 
 		if (loginId == null) {
-			return "/members/login";
+			return "login";
 		}
 
 		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
@@ -172,14 +172,14 @@ public class FeedBackController {
 		}
 
 		// 좋아요 누름 -> 취소
-		else if (reaction.equals("Like")) {
+		else if ("LIKE".equals(reaction)) {
 //			reactiondao.delete(loginId, suggestion_seq);
 //			feedbackdao.minusLike(suggestion_seq);
 			return "alreadyLiked";
 		}
 
 		// 싫어요 -> 좋아요 변경
-		else if (reaction.equals("UNLIKE")) {
+		else if ("UNLIKE".equals(reaction)) {
 			reactiondao.update(loginId, suggestion_seq, "LIKE");
 			feedbackdao.minusUnlike(suggestion_seq);
 			feedbackdao.plusLike(suggestion_seq);
@@ -190,12 +190,12 @@ public class FeedBackController {
 
 	@ResponseBody
 	@RequestMapping("/unlike")
-	public String unlike(int suggestion_seq, HttpSession session) throws Exception {
+	public String unlike(@RequestParam("suggestion_seq") Integer suggestion_seq, HttpSession session) throws Exception {
 
 		String loginId = (String) session.getAttribute("loginId");
 
 		if (loginId == null) {
-			return "/members/login";
+			return "login";
 		}
 
 		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
@@ -208,14 +208,14 @@ public class FeedBackController {
 		}
 
 		// 싫어요 누름 -> 취소
-		else if (reaction.equals("UNLIKE")) {
+		else if ("UNLIKE".equals(reaction)) {
 //			reactiondao.delete(loginId, suggestion_seq);
 //			feedbackdao.minusUnlike(suggestion_seq);
 			return "alreadyLiked";
 		}
 
 		// 좋아요 -> 싫어요 변경
-		else if (reaction.equals("LIKE")) {
+		else if ("LIKE".equals(reaction)) {
 			reactiondao.update(loginId, suggestion_seq, "UNLIKE");
 			feedbackdao.minusLike(suggestion_seq);
 			feedbackdao.plusUnLike(suggestion_seq);
