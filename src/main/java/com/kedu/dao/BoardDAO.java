@@ -303,7 +303,7 @@ public class BoardDAO {
 	
 	// 마이페이지 > 내가 좋아요 누른 글 목록 출력
 	public List<BoardDTO> getMyLikes(String mem_id){
-		String sql = "select p.post_seq, p.post_category, p.mem_id, p.mem_nickname, "
+		String sql = "select p.post_seq, p.post_category, p.mem_id, m.mem_nickname, "
 					+ " m.mem_dong, p.post_hit, p.post_title, p.post_contents,"
 					+ " p.post_like, p.post_date, "
 					+ " 1 as post_like_check " // 내가 좋아요를 눌렀다는 뜻. => 무조건 1

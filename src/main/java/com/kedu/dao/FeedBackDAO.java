@@ -25,19 +25,6 @@ public class FeedBackDAO {
 				dto.getSuggestion_like(), dto.getSuggestion_unlike());
 	}
 	
-	// 건의사항 게시글 출력.........
-	public List<FeedBackDTO> list(String loginId) throws Exception {
-		
-		String sql = "select s.*, r.reaction_type, m.mem_dong " +
-		        "from suggestion s " +
-		        "left join suggestion_reaction r " +
-		        "on s.suggestion_seq = r.suggestion_seq and r.mem_id = ? " +
-		        "left join members m on s.mem_id = m.mem_id " +
-		        "order by s.suggestion_seq desc";
-		
-		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class), loginId);
-	}
-	
 	//-------------------file--------------------------------
 	
 	
@@ -113,10 +100,15 @@ public class FeedBackDAO {
 	public List<FeedBackDTO> list(String loginId, int start, int end) throws Exception {
 		
 		String sql = "select * from ("
-	            + "    select row_number() over(order by s.suggestion_seq desc) rn, s.*, r.reaction_type "
-	            + "    from suggestion s "
-	            + "    left join suggestion_reaction r "
-	            + "    on s.suggestion_seq = r.suggestion_seq and r.mem_id = ? "
+	            + " select row_number() over(order by s.suggestion_seq desc) rn, "
+	            + "s.suggestion_seq, s.mem_id, "
+				+ "m.mem_nickname, m.mem_dong, "
+				+ "s.suggestion_title, s.suggestion_contents, s.suggestion_writedate, "
+				+ "s.suggestion_like, s.suggestion_unlike, r.reaction_type "
+				+ "from suggestion s "
+				+ "left join members m on s.mem_id = m.mem_id "
+				+ "left join suggestion_reaction r "
+				+ "on s.suggestion_seq = r.suggestion_seq and r.mem_id = ? "
 	            + ") where rn between ? and ?";
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class), loginId, start, end);
