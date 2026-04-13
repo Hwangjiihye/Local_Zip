@@ -435,7 +435,7 @@ img {
 	height: 16.10px;
 }
 
-.textContent, .answerDiv, .inputQaReply, .inputUpdate {
+.textContent, .answerDiv, .inputQaReply{
 	white-space: pre-wrap;
 }
 
@@ -466,6 +466,11 @@ img {
 	font-size: 50px; /* i 크기 */
 	transform: translateY(5px);
 	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.answerDiv{
+	word-break: keep-all;
+	overflow-wrap: break-word;
 }
 </style>
 </head>
@@ -643,7 +648,7 @@ img {
 						iconColor: "#FFB300",
 						confirmButtonColor: "#FFB300"
 					});
-					return fales;
+					return false;
 					}
 				})
 			
@@ -658,7 +663,7 @@ img {
 				answerDiv.data("origin", originText);
 				
 				answerDiv.addClass("editing");
-				answerDiv.html(`<textarea class="inputQaReply inputUpdate" id="inputUpdate_\${seq}" data-origin="\${originText}">\${originText}</textarea>`);
+				answerDiv.html(`<textarea class="inputQaReply inputUpdate" id="inputUpdate_\${seq}" data-origin="\${originText}" maxlength="1000">\${originText}</textarea>`);
 				
 				let textarea = $("#inputUpdate_" + seq)[0];
 				textarea.style.height = "auto";
@@ -684,7 +689,12 @@ img {
 					let btn = $(this);
 					let seq = btn.data("seq");
 					let updateContents = $("#inputUpdate_" + seq).val();
-					
+		             
+		             // 엔터(\n)를 포함한 실제 텍스트 추출 (innerText 사용)
+		             let update_text = document.querySelector("#inputUpdate_" + seq).innerText;
+		             
+		             let limit = 1000;     // 내용 글자수 제한
+		             
 					if(updateContents.trim() == ""){
 						Swal.fire({
     						icon: "info",
@@ -695,7 +705,24 @@ img {
     					});
 						return;
 					}
-					
+
+			          // 글자수 초과 체크
+			          if (update_text.length > limit) {
+			              let currentLen = update_text.length;
+			              let overText = update_text.substring(limit, limit + 100); 
+
+			              Swal.fire({
+			                  icon: "warning",
+			                  title: "답변 글자수 초과!",
+			                  html: "현재 답변이 <b>" + currentLen + "자</b>입니다. (제한: 1000자)<br><br>" +
+			                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+			                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+			                        "<span style='color:#555;'>... " + overText + "</span></div>",
+			                  iconColor: "#EB0000",
+			                  confirmButtonColor: "#FFB300"
+			              });
+			              return;
+			          }
 					$.ajax({
 						url : "/admin/answerUpdate",
 						type : "post",
