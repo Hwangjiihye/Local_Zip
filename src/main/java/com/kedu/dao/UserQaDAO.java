@@ -35,4 +35,15 @@ public class UserQaDAO {
 		String sql = "select count(*) from qa";
 		return jdbc.queryForObject(sql,Integer.class);
 	}
+	
+	// qa 수정
+	public void updateBySeq(int seq, String title, String contents) {
+		String sql = "UPDATE QA SET QA_TITLE=?,QA_CONTENTS=? WHERE QA_SEQ=?";
+		jdbc.update(sql,title,contents,seq);
+	}
+	// qa 삭제
+	public int deleteBySeq(int seq) {
+		String sql = "DELETE FROM QA WHERE QA_SEQ=?";
+		return jdbc.update(sql,seq);
+	}
 }

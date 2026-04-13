@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kedu.dao.UserQaDAO;
 import com.kedu.dto.QaDTO;
@@ -56,5 +57,21 @@ public class UserQaController {
 		return "redirect:/qa/toQa?cPage=1";
 	}
 	
+	@PostMapping("update")
+	@ResponseBody
+	public String update(@RequestParam("qa_seq")int seq,@RequestParam("qa_title")String title
+						,@RequestParam("qa_contents")String contents) {
+		uDAO.updateBySeq(seq,title,contents);
+			return "success";
+	}
 	
+	@PostMapping("delete")
+	@ResponseBody
+	public String delete(@RequestParam("qa_seq")int seq) {
+		int result =uDAO.deleteBySeq(seq);
+		if(result>0) {
+			return "successDel";	
+		}
+		return "fail";
+	}
 }
