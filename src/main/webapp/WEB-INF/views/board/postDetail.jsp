@@ -333,6 +333,17 @@ button, body {
 	padding: 10px 10px;
 }
 
+.fileHeader{
+	display: flex;
+	align-items: center;
+	gap: 10px;           /* '첨부 파일' 글자와 파일 선택 버튼 사이 간격 */
+}
+
+.newFileDiv{
+	display: none;
+	margin: 0;
+}
+
 .postDownBox {
 	width: 95%;
 	margin: auto;
@@ -571,7 +582,6 @@ hr {
 .replyContents[contenteditable="true"]:focus {
 	outline: none;
 	border: 1px solid #FFB300;
-	background-color: #fbe5c0;
 }
 
 .postTitle[contenteditable="true"]:focus, .postContents[contenteditable="true"]:focus
@@ -585,10 +595,17 @@ hr {
 	font-size: 13px;
 }
 
+.file-item{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 3px;
+	line-height: 1; /* 엑스버튼 위치 조정 */ 
+}
+
 .newFileDiv {
 	display: none;
-	margin-top: 10px;
-	margin-left: 45px;
+	margin-left: 5px;
 }
 
 .replyContents, .postContents {
@@ -597,7 +614,6 @@ hr {
 
 .postContents {
 	white-space: pre-line;
-	/* 	text-align: left; */
 }
 </style>
 
@@ -670,7 +686,12 @@ hr {
 
 					<c:if test="${not empty fileList}">
 						<div class="fileDownload">
-							첨부 파일
+							<div class="fileHeader">
+								<span>첨부 파일</span>
+								<div class="newFileDiv">
+									<input type="file" class="newFiles" name="newFiles" multiple>
+								</div>
+							</div>
 							<c:forEach var="i" items="${fileList}" varStatus="status">
 								<div class="file-item">
 									<label class="fileName" data-ori="${i.attach_oriname}"
@@ -681,9 +702,7 @@ hr {
 							</c:forEach>
 						</div>
 					</c:if>
-					<div class="newFileDiv">
-						<input type="file" class="newFiles" name="newFiles" multiple>
-					</div>
+
 				</div>
 
 				<div class="postDownBox">
@@ -762,8 +781,18 @@ hr {
 			$(".postTitle").attr("contenteditable","true");
 			$(".postContents").attr("contenteditable","true");
 			
-			$(".postTitle").css({"border":"1px solid #F2D3A2"});
-			$(".postContents").css({"border":"1px solid #F2D3A2"});
+			$(".postTitle").css({
+				"border":"1px solid #FFB300",
+				"padding-top":"0px",
+				"margin-top":"0px"
+				
+			});
+			$(".postContents").css({
+			    "border": "1px solid #FFB300",
+			    "border-top-left-radius": "0px",
+			    "border-top-right-radius": "0px",
+			    "padding": "10px 0 5px 12px"
+			});
 		});
 		
 		// 파일 삭제 버튼을 눌렀을때
@@ -1127,7 +1156,6 @@ hr {
 	                  postLike.find(".likeCount").text(count);
 	               });
 	            }
-	           console.log("${dto.post_like_check}");
 	         });
         });
                
@@ -1183,7 +1211,6 @@ hr {
 			                reports_reason: report_reason
 		        		}
 		        	}).done(function(resp) {
-		        		console.log(resp);
 		            	if(resp == "success"){
 		            		 Swal.fire({
 		                         icon: "success",
@@ -1264,7 +1291,6 @@ hr {
         		
         	})
         	
-        	/* console.log(post_seq); */
         });
         
         // upBtn, delBtn, OBtn, XBtn
