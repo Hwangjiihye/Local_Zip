@@ -28,10 +28,11 @@ public class FeedBackDAO {
 	// 건의사항 게시글 출력.........
 	public List<FeedBackDTO> list(String loginId) throws Exception {
 		
-		String sql = "select s.*, r.reaction_type " +
+		String sql = "select s.*, r.reaction_type, m.mem_dong " +
 		        "from suggestion s " +
 		        "left join suggestion_reaction r " +
 		        "on s.suggestion_seq = r.suggestion_seq and r.mem_id = ? " +
+		        "left join members m on s.mem_id = m.mem_id " +
 		        "order by s.suggestion_seq desc";
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class), loginId);
