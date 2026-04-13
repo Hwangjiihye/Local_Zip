@@ -283,7 +283,7 @@ button, body, div, input {
 				<div class="titleDiv">
 					<div class="title">제목</div>
 					<div class="titleContent">
-						<input name="post_title" class="inputBox" maxlength="50" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
+						<input name="post_title" class="inputBox" maxlength="100" type="text" style="border: #fbe5c0" placeholder="제목을 입력해주세요">
 					</div>
 					
 				</div>

@@ -373,6 +373,11 @@ body, html {
 	padding: 5px;
 	
 }
+
+.titleContent, .textContent, .answerText {
+	word-break: keep-all;
+	overflow-wrap: break-word;
+}
 </style>
 </head>
 <body>
@@ -490,7 +495,14 @@ body, html {
         	
         	let titleCheck = box.find(".titleContent").text().trim(); // 빈칸 체크
         	let contentsCheck = box.find(".textContent").text().trim(); // 빈칸 체크
-        	
+            
+            // 엔터(\n)를 포함한 실제 텍스트 추출 (innerText 사용)
+            let titleContent = document.querySelector(".titleContent").innerText; 
+            let textContent = document.querySelector(".textContent").innerText; 
+  
+            let titleLimit = 50; // 제목 제한
+            let limit = 1000;     // 내용 제한
+
         	if(titleCheck === "" && contentsCheck === ""){
                 Swal.fire({
                     icon: "info",
@@ -525,12 +537,44 @@ body, html {
                 return;
             }
         	
-            box.find(".titleContent").attr("contenteditable", "false");
-            box.find(".textContent").attr("contenteditable", "false");
-//             box.find(".postTitle").css("border", "none"); //1px solid rgb(242, 211, 162)
-//             box.find(".postContent").css("border", "1px solid #F2D3A2"); // 1px solid #F2D3A2
-        	
-			
+			// 3. 제목 글자수 초과 체크
+          if (titleContent.length > titleLimit) {
+              let currentTitleLen = titleContent.length;
+              let overTitle = titleContent.substring(titleLimit, titleLimit + 50); // 제목은 짧으니 50자만
+              
+              Swal.fire({
+                  icon: "warning",
+                  title: "제목 글자수 초과!",
+                  html: "현재 제목이 <b>" + currentTitleLen + "자</b>입니다. (제한: 50자)<br><br>" +
+                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:13px; border:1px solid #ffcccc; word-break: break-all;'>" +
+                        "<b>제목 뒷부분을 삭제해주세요:</b><br><br>" +
+                        "<span style='color:#555;'>... " + overTitle + "</span></div>",
+                  iconColor: "#EB0000",
+                  confirmButtonColor: "#FFB300"
+              });
+              return;
+          }
+
+          // 4. 내용 글자수 초과 체크
+          if (textContent.length > limit) {
+              let currentLen = textContent.length;
+              let overText = textContent.substring(limit, limit + 100); 
+
+              Swal.fire({
+                  icon: "warning",
+                  title: "내용 글자수 초과!",
+                  html: "현재 내용이 <b>" + currentLen + "자</b>입니다. (제한: 1000자)<br><br>" +
+                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+                        "<span style='color:#555;'>... " + overText + "</span></div>",
+                  iconColor: "#EB0000",
+                  confirmButtonColor: "#FFB300"
+              });
+              return;
+          }
+          box.find(".titleContent").attr("contenteditable", "false");
+          box.find(".textContent").attr("contenteditable", "false");
+          
 			$.ajax({
 				url:"/qa/update",
 				data:{qa_seq:seq,
@@ -664,6 +708,8 @@ body, html {
              e.preventDefault(); // 기본 동작 막기
          }
      });
+	 
+	 
 	</script>
 	
 </body>
