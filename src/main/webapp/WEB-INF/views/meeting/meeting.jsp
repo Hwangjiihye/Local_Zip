@@ -262,7 +262,8 @@ body {
 	display: none;
 	position: absolute;
 	top: 30px;
-	left: 0;
+/* 	left: 0; */
+	right: 0px;
 	width: 150px;
 	z-index: 10;
 	font-family: 'GMarketSans';
@@ -331,7 +332,7 @@ body {
 	display: none;
 	position: absolute;
 	top: 55px;
-	left: 0;
+	right: 0;
 	width: 90px;
 	transition: all 0.2s ease;
 	cursor: pointer;
