@@ -9,12 +9,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 
 <style>
 * {
 	box-sizing: border-box;
 }
-
 @font-face {
 	font-family: 'GMarketSans';
 	src:
@@ -177,10 +177,16 @@ body, html {
 .rightBox {
 	width: 300px;
 	height: 498px;
+	min-width: 300px;
 	margin-bottom: 30px;
 	border-radius: 10px;
 	margin-left: 40px;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.rightBox img{
+	width: 100%;
+    height: 100%;
+    object-fit: cover; 
 }
 
 .subBox {
@@ -750,20 +756,25 @@ a {
 	margin-top: 50px; 
     padding: 20px;          /* 안쪽 여백을 줘야 그림자가 예쁘게 잡혀요 */
     border-radius: 15px;    /* 모서리를 둥글게 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* 은은한 그림자 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* 은은한 그림자 */    
 }
 .swal2-icon.swal2-question .swal2-icon-content {
 		    font-size: 50px;     /* i 크기 */
 		    transform: translateY(5px);
 		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
 		}
+		
+.logo a {
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit;        /* 부모 요소의 글자색 상속 (파란색 제거) */
+}
 </style>
 </head>
 
 <body>
 	<div class="container">
 		<div class="topBar">
-			<div class="logo" style="font-size: 50px; background-color: #F2D3A2; color: #A66A3F">우리 동네.zip</div>
+			<div class="logo" style="font-size: 50px; background-color: #F2D3A2; color: #A66A3F"><a href="/">우리 동네.zip</a></div>
 			<!-- 상단바 -->
 
 			<c:choose>
