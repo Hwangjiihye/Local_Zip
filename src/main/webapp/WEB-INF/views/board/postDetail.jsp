@@ -941,13 +941,14 @@ hr {
          
             // 현재 입력된 URL에서 'from' 파라미터가 있는지 확인.
             let urlParams = new URLSearchParams(window.location.search);
-             let from = urlParams.get('from');
-         let cPage = urlParams.get('cPage') || 1 // 마이페이지 작성글/관심글 전용 cpage, 페이지 번호가 없으면 기본 1
-         
+            let from = urlParams.get('from');
+         	let cPage = urlParams.get('cPage') || 1 // 마이페이지 작성글/관심글 전용 cpage, 페이지 번호가 없으면 기본 1
+         	
              let category = "${category}";
              let currentPage = "${currentPage}";
              let sort = "${sort}";
          
+             
          Swal.fire({
               title: "정말 삭제하시겠습니까?",
               text: "삭제 후에는 복구할 수 없습니다.",
@@ -963,7 +964,7 @@ hr {
               if (result.isConfirmed) {
                  $.ajax({
               url: "/board/deletePost",
-              data: { post_seq: postSeq },
+              data: {post_seq: postSeq},
               type: "post"
           }).done(function(resp){
              if(resp == "fail"){ // 신고된 게시글 일때는 boardController에서 fail을 보내서 삭제X

@@ -309,19 +309,19 @@ public class BoardDAO {
 		return jdbc.queryForObject(sql, Integer.class, mem_id);
 	}
 	
-	// 마이페이지 > 내가 좋아요 누른 글 목록 출력
-	public List<BoardDTO> getMyLikes(String mem_id){
-		String sql = "select p.post_seq, p.post_category, p.mem_id, m.mem_nickname, "
-					+ " m.mem_dong, p.post_hit, p.post_title, p.post_contents, "
-					+ " p.post_like, p.post_date, "
-					+ " 1 as post_like_check " // 내가 좋아요를 눌렀다는 뜻. => 무조건 1
-					+ " from post_like l "
-					+ " JOIN post p ON l.post_seq = p.post_seq "
-					+ " join members m on p.mem_id = m.mem_id "
-					+ " where l.mem_id = ? "
-					+ " order by l.like_date desc";
-		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
-	}
+//	// 마이페이지 > 내가 좋아요 누른 글 목록 출력
+//	public List<BoardDTO> getMyLikes(String mem_id){
+//		String sql = "select p.post_seq, p.post_category, p.mem_id, m.mem_nickname, "
+//					+ " m.mem_dong, p.post_hit, p.post_title, p.post_contents, "
+//					+ " p.post_like, p.post_date, "
+//					+ " 1 as post_like_check " // 내가 좋아요를 눌렀다는 뜻. => 무조건 1
+//					+ " from post_like l "
+//					+ " JOIN post p ON l.post_seq = p.post_seq "
+//					+ " join members m on p.mem_id = m.mem_id "
+//					+ " where l.mem_id = ? "
+//					+ " order by l.like_date desc";
+//		return jdbc.query(sql, new BeanPropertyRowMapper<BoardDTO>(BoardDTO.class),mem_id);
+//	}
 	
 	// 마이페이지 > 내 관심 게시글 수 세기
 	public int MyLikeCount(String mem_id) {
