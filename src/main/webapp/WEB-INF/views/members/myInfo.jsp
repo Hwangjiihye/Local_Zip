@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -9,305 +8,318 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script
-	src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
-	@font-face {
-    font-family: 'GMarketSans';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
-    font-weight: 300;
-    font-display: swap;
-	}
-	
-	@font-face {
-	    font-family: 'GMarketSans';
-	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-	    font-weight: 500;
-	    font-display: swap;
-	}
-	
-	@font-face {
-	    font-family: 'GMarketSans';
-	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
-	    font-weight: 700;
-	    font-display: swap;
-	}
-	
-	button, body {
-	    font-family: 'GMarketSans', sans-serif;
-        color: #5e361a;
-	}
-    body{
-        margin: 0;
-        background-color: #F2D3A2;
-    }
-    .container{
-        width: 100%;
-        min-height: 100vh;
-        background-color: #fbe5c0;
-    }
-    .topBar{
-        font-weight: bold;
-        font-size: 50px;
-        color: #A66A3F;
-        border-bottom: 2px solid #A66A3F;
-        height: 100px;
-        line-height: 100px;
-        background-color: #F2D3A2;
-        padding-left: 20px;
-        display: flex;
-    }
-    .backBtnDiv{
-    	margin-left: 1500px;
-    	margin-top: 10px;
-    }
-    .divTotal{
-        padding-top: 60px;
-        margin: auto;
-        margin-top: 100px;
-        width: 1000px;
-        height: 570px;
-        text-align: center;
-        border-radius: 60px;
-        background-color: #F2D3A2;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-		position: relative;
-	    z-index: 1;
-    }
-    
-    .labelBox {
-	    display: flex;
-	    align-items: center;
-	    gap: 8px;
-	    width: 220px;
-	    font-weight: bold;
-	}
-	
-	.form-row {
-	    display: flex;
-	    align-items: center;
-	    margin-bottom: 30px;
-	    margin-left: 300px;
-	}
-	.valueBox {
-	    display: flex;
-	    align-items: center;
-	    gap: 10px;
-	}
-	.form-row > div:not(.labelBox) {
-	    margin-left: 10px;
-	}
-	.emptyIcon {
-	    width: 20px;
-	    display: inline-block;
-	}
-	.icon {
-	    width: 20px;
-	    text-align: center;
-	}
-    .btnDiv{
-    	margin-top: 30px;
-    }
-    .searchBtn{
-    	margin-left: 5px;
-    	margin-top: -3px;
-    }
-    .searchBtn, .backBtn{
-        background-color: #ffb300;
-        color: #5e361a;
-        border: 1px solid #ffb300;
-        border-radius: 10px;
-        font-weight: bold;
-    }
-    .updateBtn, .deleteBtn, .completeBtn, .cancelBtn{
-    	background-color: #ffb300;
-        color: #5e361a;
-        border: 1px solid #ffb300;
-        border-radius: 10px;
-        font-weight: bold;
-        font-size: medium;
-        width: 80px;
-        height: 40px;
-    }
-     .completeBtn, .cancelBtn, .searchBtn{
-     	display: none;
-     }
-    .updateBtn, .completeBtn{
-    	margin-right: 30px;
-    }
-    .backBtn{
-    	height: 30px;
-    	font-weight: bold;
-    }
-    .searchBtn:hover,
-    .updateBtn:hover,
-    .deleteBtn:hover,
-    .completeBtn:hover,
-    .cancelBtn:hover,
-    .backBtn:hover{
-	    transform: translateY(-3px); /* 살짝 위로 뜸 */
-	    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-	    background-color: #fecc56;
-		color: #A66A3F;
-		transition: all 0.2s ease;
-    }
+@font-face {
+	font-family: 'GMarketSans';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
+		format('woff');
+	font-weight: 300;
+	font-display: swap;
+}
 
-    .searchBtn:active,
-    .updateBtn:active,
-    .deleteBtn:active,
-    .completeBtn:active,
-    .cancelBtn:active,
-    .backBtn:active{
-    	transform: translateY(2px); /* 아래로 눌림 */
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    
-    hr{
-        margin-top: 30px;
-        width: 700px;
-        border-color: #A66A3F;
-    }
-    
-    .leftImg, .rightImg{
-		position: absolute;
-		width: 400px;
-		height: 155px;
-		z-index: 10;
-		bottom: 0;
-	}
-	.leftImg{
-	    left: 0;
-	}
-	.rightImg{
-		right: 0;
-	}
-	
-	.swal2-icon.swal2-info .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
-		
-		.swal2-icon.swal2-question .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
-		
-		.swal2-icon.swal2-warning .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
-		.updateDiv[contenteditable="true"] {
-		    border: 1px solid #FFB300;
-		    border-radius: 5px;
-		    padding: 5px;
-		}
-		
-		.updateDiv[contenteditable="true"]:focus {
-		    outline: none;
-		    border: 1px solid #FFB300;
-		    background-color: #fbe5c0;
-		}
+@font-face {
+	font-family: 'GMarketSans';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff')
+		format('woff');
+	font-weight: 500;
+	font-display: swap;
+}
 
+@font-face {
+	font-family: 'GMarketSans';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff')
+		format('woff');
+	font-weight: 700;
+	font-display: swap;
+}
+
+button, body {
+	font-family: 'GMarketSans', sans-serif;
+	color: #5e361a;
+}
+
+body {
+	margin: 0;
+	background-color: #F2D3A2;
+}
+
+.container {
+	width: 100%;
+	min-height: 100vh;
+	background-color: #fbe5c0;
+}
+
+.topBar {
+	font-weight: bold;
+	font-size: 50px;
+	color: #A66A3F;
+	border-bottom: 2px solid #A66A3F;
+	height: 100px;
+	line-height: 100px;
+	background-color: #F2D3A2;
+	padding-left: 20px;
+	display: flex;
+}
+
+.backBtnDiv {
+	margin-left: 1500px;
+	margin-top: 10px;
+}
+
+.divTotal {
+	padding-top: 60px;
+	margin: auto;
+	margin-top: 100px;
+	width: 1000px;
+	height: 570px;
+	text-align: center;
+	border-radius: 60px;
+	background-color: #F2D3A2;
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	position: relative;
+	z-index: 1;
+}
+
+.labelBox {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 220px;
+	font-weight: bold;
+}
+
+.form-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 30px;
+	margin-left: 300px;
+}
+
+.valueBox {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.form-row>div:not(.labelBox) {
+	margin-left: 10px;
+}
+
+.emptyIcon {
+	width: 20px;
+	display: inline-block;
+}
+
+.icon {
+	width: 20px;
+	text-align: center;
+}
+
+.btnDiv {
+	margin-top: 30px;
+}
+
+.searchBtn {
+	margin-left: 5px;
+	margin-top: -3px;
+}
+
+.searchBtn, .backBtn {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+}
+
+.updateBtn, .deleteBtn, .completeBtn, .cancelBtn {
+	background-color: #ffb300;
+	color: #5e361a;
+	border: 1px solid #ffb300;
+	border-radius: 10px;
+	font-weight: bold;
+	font-size: medium;
+	width: 80px;
+	height: 40px;
+}
+
+.completeBtn, .cancelBtn, .searchBtn {
+	display: none;
+}
+
+.updateBtn, .completeBtn {
+	margin-right: 30px;
+}
+
+.backBtn {
+	height: 30px;
+	font-weight: bold;
+}
+
+.searchBtn:hover, .updateBtn:hover, .deleteBtn:hover, .completeBtn:hover,
+	.cancelBtn:hover, .backBtn:hover {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	background-color: #fecc56;
+	color: #A66A3F;
+	transition: all 0.2s ease;
+}
+
+.searchBtn:active, .updateBtn:active, .deleteBtn:active, .completeBtn:active,
+	.cancelBtn:active, .backBtn:active {
+	transform: translateY(2px); /* 아래로 눌림 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+hr {
+	margin-top: 30px;
+	width: 700px;
+	border-color: #A66A3F;
+}
+
+.leftImg, .rightImg {
+	position: absolute;
+	width: 400px;
+	height: 155px;
+	z-index: 10;
+	bottom: 0;
+}
+
+.leftImg {
+	left: 0;
+}
+
+.rightImg {
+	right: 0;
+}
+
+.swal2-icon.swal2-info .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.swal2-icon.swal2-question .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.swal2-icon.swal2-warning .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.updateDiv{
+	width: 250px;           /* 원하는 고정 너비 */
+    display: inline-block;
+    white-space: nowrap;    /* 줄바꿈 절대 안 함 (한 줄 유지) */
+    overflow: hidden;       /* 너비를 넘어가면 일단 숨김 */
+    vertical-align: middle;
+    text-align: left;
+}
+
+.updateDiv[contenteditable="true"] {
+	border: 1px solid #FFB300;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.updateDiv[contenteditable="true"]:focus {
+	outline: none;
+	border: 1px solid #FFB300;
+	background-color: #fbe5c0;
+}
 </style>
 </head>
 <body>
 	<div class="container">
-	    <div class="topBar">
-	    	<div class="mainTitle">내 정보.zip</div>
-	    	<div class="backBtnDiv">
-	    		<a href="/members/mypage">
-	    			<input class="backBtn" type="button" value="내.zip으로 가기">
-	    		</a>
-	    	</div>
-	    </div>
-	    <form action="/members/update" method="post" class="frm">
-	        <div class="divTotal">
-	            <div class="form-row">
-	            	<div class="labelBox">
-	            		<i class="fa-solid fa-user fa-lg icon"></i>
-	            		<span class="lavel"> NAME : </span>
-	            	</div>
-	                <div class="name">${list.mem_name}</div>
-	            </div>
-	            <div class="form-row">
-	            	<div class="labelBox">
-	            		<i class="fa-solid fa-address-card fa-lg icon"></i>
-	                	<span class="lavel"> ID : </span>
-	                </div>
-	                <div class="id">${loginId }</div>
-	            </div>
-	            <div class="form-row">
-	            	<div class="labelBox">
-	                	<i class="fa-solid fa-envelope fa-lg icon"></i>
-	                	<span class="lavel"> EMAIL : </span>
-	                </div>
-	                <div class="email">${list.mem_email}</div>
-	            </div>
-	            <div class="form-row">
-	            	<div class="labelBox">
-	            		<i class="fa-solid fa-user-pen fa-lg icon"></i> 
-	            		<span class="lavel"> NICKNAME : </span>
-	            	</div>
-	            	<div class="nickname updateDiv">${list.mem_nickname}</div>
-	            </div>
-	            <div class="form-row">
-	            	<div class="labelBox">
-	                	<i class="fa-solid fa-phone fa-lg icon"></i>
-	                	<span class="lavel"> PHONE : </span>
-	                </div>
-	                <div class="phone updateDiv">${list.mem_phone}</div>
-	            </div>
-	            <div class="form-row">
-	            	<div class="labelBox">
-	                	<i class="fa-solid fa-house-chimney fa-lg icon"></i>
-	                	<span class="lavel"> ZONECODE :</span>
-	                </div>
-	                <div class="valueBox">
-	                	<div class="zonecode updateDiv">${list.mem_zip_code}</div>
-	                	<input class="searchBtn save_cancelBtn" type="button" value="찾기">
-	                </div>
-	            </div>
-	            <div class="form-row">
-	            	<div class="labelBox">
-	            		<span class="emptyIcon"></span>
-	                	<span class="lavel"> ADDRESS : </span>
-	                </div>
-	                <div class="address1 updateDiv">${list.mem_address1}</div>
-	            </div>
-	            <div class="form-row">
-	            	<div class="labelBox">
-	            		<span class="emptyIcon"></span>
-	                	<span class="lavel"> DETAIL : </span>
-	                </div>
-	                <div class="address2 updateDiv">${list.mem_address2}</div>
-	            </div>
-	            <hr>
-	            
-	            <input type="hidden" id="input_nickname" name="mem_nickname">
-	            <input type="hidden" id="input_phone" name="mem_phone">
-	            <input type="hidden" id="input_zip_code" name="mem_zip_code">
-	            <input type="hidden" id="input_address1" name="mem_address1">
-	            <input type="hidden" id="input_address2" name="mem_address2">
-	            <input type="hidden" id="input_dong" name="mem_dong" value="${mem_dong}">
-	            <input type="hidden" id="origin_dong" value="${list.mem_dong}">
-	            <input type="hidden" id="mem_id" name="mem_id" value="${loginId}">
-	            
-	            <div class="btnDiv">
-	            	<input class="updateBtn update_deleteBtn" type="button" value="정보 수정">
-	            	<input class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴">
-	            	<input class="completeBtn save_cancelBtn" type="submit" value="수정 완료">
-	            	<input class="cancelBtn save_cancelBtn" type="button" value="수정 취소">
-	            </div>
-	        </div>
-    	</form>
-    	<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
-    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
-    </div>
-    
-    <script>
+		<div class="topBar">
+			<div class="mainTitle">내 정보.zip</div>
+			<div class="backBtnDiv">
+				<a href="/members/mypage"> <input class="backBtn" type="button" value="내.zip으로 가기">
+				</a>
+			</div>
+		</div>
+		<form action="/members/update" method="post" class="frm">
+			<div class="divTotal">
+				<div class="form-row">
+					<div class="labelBox">
+						<i class="fa-solid fa-user fa-lg icon"></i> <span class="lavel"> NAME : </span>
+					</div>
+					<div class="name">${list.mem_name}</div>
+				</div>
+				<div class="form-row">
+					<div class="labelBox">
+						<i class="fa-solid fa-address-card fa-lg icon"></i> <span class="lavel"> ID : </span>
+					</div>
+					<div class="id">${loginId }</div>
+				</div>
+				<div class="form-row">
+					<div class="labelBox">
+						<i class="fa-solid fa-envelope fa-lg icon"></i> <span class="lavel"> EMAIL : </span>
+					</div>
+					<div class="email">${list.mem_email}</div>
+				</div>
+				<div class="form-row">
+					<div class="labelBox">
+						<i class="fa-solid fa-user-pen fa-lg icon"></i> <span class="lavel"> NICKNAME : </span>
+					</div>
+					<div class="nickname updateDiv">${list.mem_nickname}</div>
+				</div>
+				<div class="form-row">
+					<div class="labelBox">
+						<i class="fa-solid fa-phone fa-lg icon"></i> <span class="lavel"> PHONE : </span>
+					</div>
+					<div class="phone updateDiv">${list.mem_phone}</div>
+				</div>
+				<div class="form-row">
+					<div class="labelBox">
+						<i class="fa-solid fa-house-chimney fa-lg icon"></i> <span class="lavel"> ZONECODE :</span>
+					</div>
+					<div class="valueBox">
+						<div class="zonecode updateDiv">${list.mem_zip_code}</div>
+						<input class="searchBtn save_cancelBtn" type="button" value="찾기">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="labelBox">
+						<span class="emptyIcon"></span> <span class="lavel"> ADDRESS : </span>
+					</div>
+					<div class="address1 updateDiv">${list.mem_address1}</div>
+				</div>
+				<div class="form-row">
+					<div class="labelBox">
+						<span class="emptyIcon"></span> <span class="lavel"> DETAIL : </span>
+					</div>
+					<div class="address2 updateDiv">${list.mem_address2}</div>
+				</div>
+				<hr>
+
+				<input type="hidden" id="input_nickname" name="mem_nickname"> <input type="hidden" id="input_phone"
+					name="mem_phone"> <input type="hidden" id="input_zip_code" name="mem_zip_code"> <input
+					type="hidden" id="input_address1" name="mem_address1"> <input type="hidden" id="input_address2"
+					name="mem_address2"> <input type="hidden" id="input_dong" name="mem_dong" value="${mem_dong}"> <input
+					type="hidden" id="origin_dong" value="${list.mem_dong}"> <input type="hidden" id="mem_id" name="mem_id"
+					value="${loginId}">
+
+				<div class="btnDiv">
+					<input class="updateBtn update_deleteBtn" type="button" value="정보 수정"> <input
+						class="deleteBtn update_deleteBtn" type="button" value="회원 탈퇴"> <input class="completeBtn save_cancelBtn"
+						type="submit" value="수정 완료"> <input class="cancelBtn save_cancelBtn" type="button" value="수정 취소">
+				</div>
+			</div>
+		</form>
+		<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png"> <img class="rightImg"
+			src="/resources/images/오른쪽 모서리 풀.png">
+	</div>
+
+	<script>
     	let origin_dong = "${list.mem_dong}";
     	let nickname = $(".nickname").html();
     	let phone = $(".phone").html();
@@ -398,13 +410,13 @@
 					$(".nickname").focus();
 					return false;
 				} else {
-					let regex = /^[가-힣]{2,30}$|^[a-z]{2,30}$/;
+					let regex = /^[가-힣]{2,10}$|^[a-z]{2,10}$/;
 					nicknameResult = regex.test(nickname);
 					if (!nicknameResult) {
 						Swal.fire({
     						icon: "info",
     						title: "Wait  !",
-    						text: "공백 없는 2~30글자의 닉네임만 등록 가능합니다.(한/영)",
+    						text: "공백 없는 2~10글자의 닉네임만 등록 가능합니다.(한/영)",
     						iconColor: "#FFB300",
     						confirmButtonColor: "#FFB300"
     					});
@@ -522,6 +534,32 @@
 			        e.preventDefault(); // 기본 동작 막기
 			}
 		});
+    	
+    	
+    	// updateDiv에 글자 입력 시 실시간 체크
+    	$(document).on("input", ".updateDiv[contenteditable='true']", function() {
+    	    let limit = 0;
+    	    
+    	    // 필드별 글자수 제한 (한 줄에 들어갈 적당한 길이로 조절하세요)
+    	    if ($(this).hasClass("nickname")) limit = 10;
+    	    else if ($(this).hasClass("phone")) limit = 11;
+    	    else if ($(this).hasClass("address2")) limit = 15;
+    	    else limit = 20; // 나머지 기본값
+    	    
+    	    let content = $(this).text();
+    	    
+    	    // 제한된 글자수보다 길어지면 강제로 자르기
+    	    if (content.length > limit) {
+    	        $(this).text(content.substring(0, limit));
+    	        
+    	        let range = document.createRange(); // 글자가 잘린 후 커서가 맨 앞으로 가는 현상 방지 (커서를 맨 뒤로 보냄)
+    	        let sel = window.getSelection();
+    	        range.selectNodeContents(this);
+    	        range.collapse(false);
+    	        sel.removeAllRanges();
+    	        sel.addRange(range);
+    	    }
+    	});
 		
     </script>
 </body>

@@ -34,6 +34,12 @@ public class PostLikeDAO {
 		return jdbc.update(sql, post_seq, mem_id);
 	}
 	
+	// 게시글 삭제 시 좋아요 카운트 차감 진행
+	public int deleteLikeByPostSeq(int post_seq) {
+		String sql = "delete from post_like where post_seq = ? ";
+		return jdbc.update(sql, post_seq);
+	}
+	
 	// 게시글에 대한 전체 좋아요 수 출력 메서드
 	public int likeCount(int post_seq) {
 		String sql = "select count(*) from post_like where post_seq = ?";

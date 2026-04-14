@@ -86,7 +86,6 @@ public class BoardController {
 		String mem_nickname = (String) session.getAttribute("nickname");
 		String mem_dong = (String) session.getAttribute("dong");
 		dao.insert(dto, mem_id, mem_nickname, mem_dong);
-		System.out.println(mem_dong);
 		if ("lifeInfo".equals(post_category)) {
 			return "redirect:/board/lifeInfo";
 		} else if ("talk".equals(post_category)) {
@@ -340,15 +339,17 @@ public class BoardController {
 	// 게시글 삭제
 	@ResponseBody
 	@RequestMapping("/deletePost")
-	public String deletePost(int post_seq, String mem_id) {
+	public String deletePost(int post_seq) {
 		
 		int count = rdao.reportDeleteBlock(post_seq); // 신고된 게시글 삭제 불가 로직
 		if(count > 0) {
 			return "fail";
 		}
 		
-		dao.deletePost(post_seq);
-		likeDao.likeDelete(post_seq, mem_id);
+		likeDao.deleteLikeByPostSeq(post_seq); // 게시글 삭제 시 관심게시글 카운트 차감
+		dao.deletePost(post_seq); 
+		
+		
 		return "success";
 	}
 

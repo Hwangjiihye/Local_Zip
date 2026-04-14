@@ -9,12 +9,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 
 <style>
 * {
 	box-sizing: border-box;
 }
-
 @font-face {
 	font-family: 'GMarketSans';
 	src:
@@ -54,7 +54,7 @@ body, html {
 
 .container {
 	width: 100%;
-	min-height: 140vh;
+	min-height: 150vh;
 	padding-bottom: 60px;
 }
 
@@ -177,10 +177,16 @@ body, html {
 .rightBox {
 	width: 300px;
 	height: 498px;
+	min-width: 300px;
 	margin-bottom: 30px;
 	border-radius: 10px;
 	margin-left: 40px;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.rightBox img{
+	width: 100%;
+    height: 100%;
+    object-fit: cover; 
 }
 
 .subBox {
@@ -278,12 +284,12 @@ body, html {
 	height: 100%;
 	opacity: 0;
 	transition: 0.5s;
-	/* display: none; */
+	pointer-events: none;
 }
 
 .slideBanner.active {
 	opacity: 1;
-	/* display: block; */
+	pointer-events: auto; 
 }
 
 .loginBtn, .logoutBtn, .joinBtn {
@@ -750,20 +756,25 @@ a {
 	margin-top: 50px; 
     padding: 20px;          /* 안쪽 여백을 줘야 그림자가 예쁘게 잡혀요 */
     border-radius: 15px;    /* 모서리를 둥글게 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* 은은한 그림자 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* 은은한 그림자 */    
 }
 .swal2-icon.swal2-question .swal2-icon-content {
 		    font-size: 50px;     /* i 크기 */
 		    transform: translateY(5px);
 		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
 		}
+		
+.logo a {
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit;        /* 부모 요소의 글자색 상속 (파란색 제거) */
+}
 </style>
 </head>
 
 <body>
 	<div class="container">
 		<div class="topBar">
-			<div class="logo" style="font-size: 50px; background-color: #F2D3A2; color: #A66A3F">우리 동네.zip</div>
+			<div class="logo" style="font-size: 50px; background-color: #F2D3A2; color: #A66A3F"><a href="/">우리 동네.zip</a></div>
 			<!-- 상단바 -->
 
 			<c:choose>
@@ -841,9 +852,9 @@ a {
 				<div class="leftBox">
 					<div class="localBanner">
 						<div class="notice">
-							<img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;" height="100%;">
-							<img class="slideBanner" src="/resources/images/fleaMarket.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
-							<img class="slideBanner" src="/resources/images/movie.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
+							<a href="/notice/toNoticeDetail?notice_seq=110&cPage=1"><img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;" height="100%;"></a>
+							<a href="/notice/toNoticeDetail?notice_seq=113&cPage=1"><img class="slideBanner" src="/resources/images/fleaMarket.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy"></a>
+							<a href="/notice/toNoticeDetail?notice_seq=115&cPage=1"><img class="slideBanner" src="/resources/images/movie.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy"></a>
 						</div>
 					</div>
 
@@ -959,7 +970,7 @@ a {
 				</div>
 
 				<div class="rightBox">
-					<img src="/resources/images/localCafe2.jpg" style="border-radius: 10px;" width="100%" height="100%">
+					<a href="/notice/toNoticeDetail?notice_seq=116&cPage=1"><img src="/resources/images/localCafe2.jpg" style="border-radius: 10px;" width="100%" height="100%"></a>
 					<div class="weather-wrapper">
 					<a class="weatherwidget-io" href="https://forecast7.com/en/35d91127d77/south-korea/" data-label_1="SOUTH KOREA" data-label_2="WEATHER" data-font="Open Sans" data-icons="Climacons Animated" data-theme="pure" data-basecolor="#fbe5c0" data-shadow="rgba(1, 1, 1, 0.02)" data-accent="" data-textcolor="#5e361a" data-highcolor="#5e361a" data-lowcolor="#5e361a" data-suncolor="#FFB300" data-mooncolor="#ffffff" data-cloudcolor="#7BB8C9" data-cloudfill="#7BB8C9" data-raincolor="#7BB8C9" data-snowcolor="#ffffff" >SOUTH KOREA WEATHER</a>
 <script> // 날씨 배너

@@ -233,9 +233,14 @@ public class FeedBackController {
 	public String delete(int suggestion_seq, HttpSession session) {
 
 		String loginId = (String) session.getAttribute("loginId");
-
+		
 		FeedBackDTO dto = dao.selectBySeq(suggestion_seq);
-
+		// 신고된 게시글 삭제 불가 로직
+		int count = reportdao.reportDeleteBlock(suggestion_seq);
+		if(count > 0) {
+			return "adminFail";
+		}
+		
 		if (dto != null && loginId.equals(dto.getMem_id())) {
 
 			dao.delete(suggestion_seq);
@@ -253,7 +258,13 @@ public class FeedBackController {
 			MultipartFile[] attachments)throws Exception {
 
 		String loginId = (String) session.getAttribute("loginId");
-
+		
+		// 신고된 게시글 수정 불가 로직
+		int count = reportdao.reportUpdateBlock(dto.getSuggestion_seq());
+		if(count > 0) {
+			return "adminFail";
+		}
+		
 		FeedBackDTO updateDto = dao.selectBySeq(dto.getSuggestion_seq());
 		if (!loginId.equals(updateDto.getMem_id())) {
 			return "fail";
