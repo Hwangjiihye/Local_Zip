@@ -92,7 +92,8 @@
 	
 	.writeDetail {
 		margin: auto;
-		width: 60%;
+		min-width: 900px;
+		width: 900px;
 		height: auto;
 		border-radius: 10px;
 		background-color: #fbe5c0;
@@ -112,7 +113,7 @@
 		min-height: 300px;
 		border: 1px solid #A66A3F;
 		background-color: #fbe5c0;
-		width: 970px;
+		width: 100%;
 		height: auto;
 		top: 30px;
 		left: 0;
@@ -228,7 +229,7 @@
 	.inputBox {
 		border: 1px solid #A66A3F;
 		background-color: #fbe5c0;
-		width: 970px;
+		width: 100%;
 		height: 35px;
 		top: 30px;
 		left: 0;
