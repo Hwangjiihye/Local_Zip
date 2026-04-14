@@ -26,7 +26,6 @@ public class ReplyController {
 	public String insert(HttpSession session,String reply_contents,int post_seq) {
 		String mem_nickname = (String)session.getAttribute("nickname");
 		String mem_id = (String)session.getAttribute("loginId");
-		
 		dao.insertReply(post_seq,mem_id, mem_nickname,reply_contents);
 		return "success";
 	}

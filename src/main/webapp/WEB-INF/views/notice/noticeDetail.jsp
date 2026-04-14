@@ -68,7 +68,7 @@ button, body {
 .headBoxDiv {
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: -10px;
 	width: 100%;
 	height: 100px;
 	padding: 0 30px;
@@ -84,7 +84,6 @@ button, body {
 	font-weight: bold;
 	font-size: 50px;
 	color: #A66A3F;
-	padding-top: 11px;
 	line-height: normal;
 }
 

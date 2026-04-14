@@ -939,10 +939,16 @@ hr {
       // 게시글 삭제 버튼 클릭 시
       $(".deleteBtn").on("click",function(){
          
+            // 현재 입력된 URL에서 'from' 파라미터가 있는지 확인.
+            let urlParams = new URLSearchParams(window.location.search);
+            let from = urlParams.get('from');
+         	let cPage = urlParams.get('cPage') || 1 // 마이페이지 작성글/관심글 전용 cpage, 페이지 번호가 없으면 기본 1
+         	
              let category = "${category}";
              let currentPage = "${currentPage}";
              let sort = "${sort}";
          
+             
          Swal.fire({
               title: "정말 삭제하시겠습니까?",
               text: "삭제 후에는 복구할 수 없습니다.",
@@ -958,10 +964,7 @@ hr {
               if (result.isConfirmed) {
                  $.ajax({
               url: "/board/deletePost",
-              data: { 
-            	  post_seq: postSeq, 
-            	  mem_id : loginId
-              },
+              data: {post_seq: postSeq},
               type: "post"
           }).done(function(resp){
              if(resp == "fail"){ // 신고된 게시글 일때는 boardController에서 fail을 보내서 삭제X
@@ -972,17 +975,37 @@ hr {
                         iconColor: "#EB0000",
                         confirmButtonColor: "#FFB300"
                     });
-             }else if(category == "lifeInfo"){ // category 받아서 다시 카테고리 목록으로 이동
-                Swal.fire({
-                        icon: "success",
-                        title: "Success !",
-                        text: "삭제되었습니다.",
-                        iconColor: "#FFB300",
-                        confirmButtonColor: "#FFB300"
-                    }).then(() => {
-                       location.href = "/board/lifeInfo?sort=" + sort + "&cPage=" + currentPage;
-                    });
-              }else if(category == "talk"){
+             }else if(from == "myPosts"){ // category 받아서 다시 카테고리 목록으로 이동
+                 Swal.fire({
+                     icon: "success",
+                     title: "Success !",
+                     text: "삭제되었습니다.",
+                     iconColor: "#FFB300",
+                     confirmButtonColor: "#FFB300"
+                 }).then(() => {
+                   location.href = "/members/myPosts?cPage=" + cPage + "&from=myPosts";
+                 });
+              }else if(from == "myLikes"){ // category 받아서 다시 카테고리 목록으로 이동
+                  Swal.fire({
+                      icon: "success",
+                      title: "Success !",
+                      text: "삭제되었습니다.",
+                      iconColor: "#FFB300",
+                      confirmButtonColor: "#FFB300"
+                  }).then(() => {
+                    location.href = "/members/myLikes?cPage=" + cPage + "&from=myLikes";
+                  });
+               }else if(category == "lifeInfo"){ // category 받아서 다시 카테고리 목록으로 이동
+                   Swal.fire({
+                           icon: "success",
+                           title: "Success !",
+                           text: "삭제되었습니다.",
+                           iconColor: "#FFB300",
+                           confirmButtonColor: "#FFB300"
+                       }).then(() => {
+                          location.href = "/board/lifeInfo?sort=" + sort + "&cPage=" + currentPage;
+                       });
+                 }else if(category == "talk"){
                    Swal.fire({
                            icon: "success",
                            title: "Success !",
@@ -992,7 +1015,7 @@ hr {
                        }).then(() => {
                           location.href = "/board/talk?sort=" + sort + "&cPage=" + currentPage;
                        }); 
-              }else if(category == "food"){
+                 }else if(category == "food"){
                    Swal.fire({
                            icon: "success",
                            title: "Success !",
@@ -1002,7 +1025,7 @@ hr {
                        }).then(() => {
                           location.href = "/board/food?sort=" + sort + "&cPage=" + currentPage;
                        }); 
-              }else if(category == "beauty"){
+                 }else if(category == "beauty"){
                    Swal.fire({
                            icon: "success",
                            title: "Success !",
@@ -1012,7 +1035,7 @@ hr {
                        }).then(() => {
                           location.href = "/board/beauty?sort=" + sort + "&cPage=" + currentPage;
                        }); 
-              }else if(category == "all" || category == ""){
+                 }else if(category == "all" || category == ""){
                    Swal.fire({
                            icon: "success",
                            title: "Success !",
@@ -1022,15 +1045,13 @@ hr {
                        }).then(() => {
                           location.href = "/?sort=" + sort;
                        }); 
-              }else {
+                 }else {
                 location.href = "/";
-              }
+                 }
           });
         }
      });
   });
-          
-         
           
       
       // 게시글 수정 취소 버튼 클릭 시
@@ -1300,11 +1321,11 @@ hr {
         
         // 댓글 등록 버튼을 눌렀을 때, ajax
         $(".applyBtn").on("click",function(){
-           
+        	let reply = $(".newReply").val();
         	let textarea = $(".newReply").val(""); // 입력창 비우고,
             
             // 완전 초기화
-            textarea.css("height", "auto");
+             textarea.css("height", "auto");
 
             // input 이벤트 강제로 발생시켜서 다시 기본 높이 계산하게 만들기
             textarea.trigger("input");
@@ -1439,22 +1460,45 @@ hr {
         // 댓글 수정 완료 버튼을 눌렀을 때
         $(document).on("click",".OBtn",function(){
            
-         let replyUpBox = $(this).closest(".replyUpBox");
+         	let replyUpBox = $(this).closest(".replyUpBox");
+           	let reply_seq = $(this).data("reply_seq");
            
-           let reply_seq = $(this).data("reply_seq");
-           let reply_contents = replyUpBox.find(".replyContents").html();
-           let reply_text = replyUpBox.find(".replyContents").text().trim();
+	        // 1. 데이터 추출
+	        let replyContents = replyUpBox.find(".replyContents");
            
-           if(reply_text == ""){
-              Swal.fire({
-               icon: "info",
-               title: "Wait  !",
-               text: "내용을 입력해주세요.",
-               iconColor: "#FFB300",
-               confirmButtonColor: "#FFB300"
-            });
+	        // 엔터(\n)를 포함한 실제 텍스트 추출
+	        let reply_contents = replyContents.html();
+	        let reply_text = replyContents.text().trim();
+	        
+	        // 댓글 내용 글자수 제한
+           	let limit = 300; 
+
+	           if(reply_text == ""){
+	              Swal.fire({
+	               icon: "info",
+	               title: "Wait  !",
+	               text: "내용을 입력해주세요.",
+	               iconColor: "#FFB300",
+	               confirmButtonColor: "#FFB300"
+	            });
               return;
-          }
+        	  }
+           if (reply_text.length > limit) {
+               let currentTitleLen = reply_text.length;
+               let overTitle = reply_text.substring(limit, limit + 50); // 제목은 짧으니 50자만
+               
+               Swal.fire({
+                   icon: "warning",
+                   title: "댓글 글자수 초과!",
+                   html: "현재 댓글이 <b>" + currentTitleLen + "자</b>입니다. (제한: 300자)<br><br>" +
+                         "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:13px; border:1px solid #ffcccc; word-break: break-all;'>" +
+                         "<b>내용 뒷부분을 삭제해주세요:</b><br><br>" +
+                         "<span style='color:#555;'>... " + overTitle + "</span></div>",
+                   iconColor: "#EB0000",
+                   confirmButtonColor: "#FFB300"
+               });
+               return;
+           }
            
            $.ajax({
               url: "/reply/updateReply",
