@@ -86,7 +86,6 @@ public class BoardController {
 		String mem_nickname = (String) session.getAttribute("nickname");
 		String mem_dong = (String) session.getAttribute("dong");
 		dao.insert(dto, mem_id, mem_nickname, mem_dong);
-		System.out.println(mem_dong);
 		if ("lifeInfo".equals(post_category)) {
 			return "redirect:/board/lifeInfo";
 		} else if ("talk".equals(post_category)) {
