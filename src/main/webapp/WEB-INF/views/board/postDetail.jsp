@@ -64,7 +64,6 @@ button, body {
 	width: 100%;
 	min-height: 100vh;
 	/* 최소 높이 지정 : 브라우저 */
-	border: 1px solid black;
 	background-color: #fbe5c0;
 	overflow-x: hidden;
 	overflow-y: hidden;
@@ -82,6 +81,8 @@ button, body {
 	line-height: 100px;
 	z-index: 1000;
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .headBox {
@@ -92,10 +93,9 @@ button, body {
 }
 
 .backBtnDiv {
-	width: 90px;
-	height: 50px;
-	margin-left: 1350px;
-	margin-top: 5px;
+	 margin-right: 40px;
+	 margin-top : 30px;
+    position: static; 
 }
 
 .backBtn {
@@ -134,7 +134,7 @@ button, body {
 
 .postBox {
 	/* 수정: 고정 1500px 제거 */
-	width: 95%;
+	width: 1500px;
 	max-width: 1500px;
 	/* 적당히 보기 좋은 최대 너비 설정 */
 	min-height: 200px;
@@ -409,7 +409,7 @@ button, body {
 
 hr {
 	width: 97%;
-	margin: 10px 0;
+	margin: 10px 0 0 20px;
 	border: 1px solid #cdaa69;
 }
 
@@ -419,28 +419,27 @@ a {
 }
 
 .replyBox {
-	width: 95%;
+	width: 1500px;
 	max-width: 1500px;
 	/* 적당히 보기 좋은 최대 너비 설정 */
 	min-height: 200px;
 	height: auto;
 	margin: auto;
-	margin-top: 30px;
+	
 	/* 그림자 효과 */
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 	border-radius: 10px;
 }
 
 .replyTitle {
-	width: 100%;
-	height: 15px;
-	font-size: x-large;
-	font-weight: bold;
-	color: #A66A3F;
-	margin-top: 20px;
-	margin-left: 210px;
-}
+margin: 20px auto 0 auto;
+width : 1500px;
+height: 50px;
+font-weight: bold;
+font-size: x-large;
+color: #A66A3F;
 
+}
 .reportBtn {
 	background-color: #ffb300;
 	color: #5e361a;

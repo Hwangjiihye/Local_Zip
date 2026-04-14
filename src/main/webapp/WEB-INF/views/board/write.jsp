@@ -92,7 +92,7 @@ button, body, div, input {
 
 .writeDetail {
 	margin: auto;
-	width: 60%;
+	width: 1000px;
 	height: auto;
 	border-radius: 10px;
 	background-color: #fbe5c0;
@@ -112,7 +112,7 @@ button, body, div, input {
 	min-height: 300px;
 	border: 1px solid #A66A3F;
 	background-color: #fbe5c0;
-	width: 970px;
+	width: 100%;
 	height: auto;
 	top: 30px;
 	left: 0;
@@ -228,7 +228,7 @@ button, body, div, input {
 .inputBox {
 	border: 1px solid #A66A3F;
 	background-color: #fbe5c0;
-	width: 970px;
+	width: 100%;
 	height: 35px;
 	top: 30px;
 	left: 0;
@@ -241,18 +241,19 @@ button, body, div, input {
 	padding: 2px;
 	outline: none;
 }
-
-.leftImg, .rightImg{
-	position: absolute;
+.leftImg, .rightImg {
+	position: fixed;
 	width: 450px;
 	height: 170px;
-	z-index: 10;
+	z-index: -1;
 	bottom: 0;
 }
-.leftImg{
-    left: 0;
+
+.leftImg {
+	left: 0;
 }
-.rightImg{
+
+.rightImg {
 	right: 0;
 }
 .swal2-icon.swal2-info .swal2-icon-content {
