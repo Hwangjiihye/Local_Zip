@@ -46,6 +46,11 @@
 	body, html {
 		margin: 0;
 		padding: 0;
+		min-width: 1000px; 
+	}
+	body{
+		margin: 0 auto;
+		overflow-x: auto;
 	}
 	
 	/* 폰트 지정 */
@@ -56,6 +61,7 @@
 	.container {
 		width: 100%;
 		min-height: 100vh;
+		min-width: 1000px; 
 		/* 최소 높이 지정 : 브라우저 */
 		background-color: #fbe5c0;
 	}
@@ -91,8 +97,9 @@
 	}
 	
 	.writeDetail {
-		margin: auto;
-		width: 60%;
+		margin: 50px auto;
+		min-width: 900px;
+		width: 900px;
 		height: auto;
 		border-radius: 10px;
 		background-color: #fbe5c0;
@@ -112,7 +119,7 @@
 		min-height: 300px;
 		border: 1px solid #A66A3F;
 		background-color: #fbe5c0;
-		width: 970px;
+		width: 100%;
 		height: auto;
 		top: 30px;
 		left: 0;
@@ -228,7 +235,7 @@
 	.inputBox {
 		border: 1px solid #A66A3F;
 		background-color: #fbe5c0;
-		width: 970px;
+		width: 100%;
 		height: 35px;
 		top: 30px;
 		left: 0;

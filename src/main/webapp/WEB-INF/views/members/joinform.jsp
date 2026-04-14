@@ -55,6 +55,7 @@ body {
 }
 
 .topBar {
+display: flex;
 	padding-left: 20px;
 	font-weight: bold;
 	color: #A66A3F;
@@ -62,13 +63,19 @@ body {
 	height: 100px;
 	line-height: 100px;
 	background-color: #F2D3A2;
-	display: flex;
+	justify-content: space-between; 
+    align-items: center;
+    padding: 0 20px;
+	
 }
 .mainTitle{
+	min-width:500px;
 	font-size: 50px;
 }
 .backBtnDiv{
-	margin-left: 1300px;
+position: relative;
+    top: 20px; /* 아래로 이동 */
+    right : 20px;
 }
 .divTotal {
 	padding-top: 30px;

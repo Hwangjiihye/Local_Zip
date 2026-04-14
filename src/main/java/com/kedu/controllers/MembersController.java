@@ -267,8 +267,7 @@ public class MembersController {
 		//게시글 갯수 가져오기
 		int totalCount = BoardDao.getTotalLikes(mem_id); // 내가 작성한 글 목록 보여주는
 		
-		List<BoardDTO> list = BoardDao.getMyLikes(mem_id); // 로그인 아이디 기준, 하트 누른글 모아보기.(join) + myLikes.jsp 카테고리도 여기서 출력됨.
-		model.addAttribute("likeList", list);
+		model.addAttribute("likeList", navi);
 		model.addAttribute("cPage",cPage);
 		model.addAttribute("totalCount",totalCount);
 		
