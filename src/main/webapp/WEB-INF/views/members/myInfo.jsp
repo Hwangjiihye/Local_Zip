@@ -216,7 +216,12 @@ hr {
 }
 
 .updateDiv{
-	max-width: 300px;
+	width: 250px;           /* 원하는 고정 너비 */
+    display: inline-block;
+    white-space: nowrap;    /* 줄바꿈 절대 안 함 (한 줄 유지) */
+    overflow: hidden;       /* 너비를 넘어가면 일단 숨김 */
+    vertical-align: middle;
+    text-align: left;
 }
 
 .updateDiv[contenteditable="true"] {
@@ -330,7 +335,9 @@ hr {
     		$(".updateDiv").css({
     			"background-color": "#fbe5c0",
     			"border":"none",
-    			"border-radius": "10px"
+    			"border-radius": "10px",
+    			"word-break": "break-all",
+    			"width":"fit-content"
     		})
     		
     		$(".labelBox").css({
@@ -527,6 +534,33 @@ hr {
 			        e.preventDefault(); // 기본 동작 막기
 			}
 		});
+    	
+    	
+    	// updateDiv에 글자 입력 시 실시간 체크
+    	$(document).on("input", ".updateDiv[contenteditable='true']", function() {
+    	    let limit = 0;
+    	    
+    	    // 필드별 글자수 제한 (한 줄에 들어갈 적당한 길이로 조절하세요)
+    	    if ($(this).hasClass("nickname")) limit = 15;
+    	    else if ($(this).hasClass("phone")) limit = 11;
+    	    else if ($(this).hasClass("address2")) limit = 30;
+    	    else limit = 20; // 나머지 기본값
+    	    
+    	    let content = $(this).text();
+    	    
+    	    // 제한된 글자수보다 길어지면 강제로 자르기
+    	    if (content.length > limit) {
+    	        $(this).text(content.substring(0, limit));
+    	        
+    	        // 글자가 잘린 후 커서가 맨 앞으로 가는 현상 방지 (커서를 맨 뒤로 보냄)
+    	        let range = document.createRange();
+    	        let sel = window.getSelection();
+    	        range.selectNodeContents(this);
+    	        range.collapse(false);
+    	        sel.removeAllRanges();
+    	        sel.addRange(range);
+    	    }
+    	});
 		
     </script>
 </body>
