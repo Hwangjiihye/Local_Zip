@@ -324,6 +324,11 @@ body {
 	color: #5e361a;
 }
 
+.titleContent, .textContent{
+	word-break: keep-all;
+	overflow-wrap: break-word;
+}
+
 /* 답변 영역 (와이어프레임의 하단 칸) */
 .answerBox {
 	background-color: #F2D3A2;
@@ -520,10 +525,15 @@ img {
 			        </div>
 			
 			        <div class="postBody">
-			            <div>${i.qa_title}</div>
-			            <div>${i.qa_contents}</div>
+				        <div class="rowItem1">
+				        	<span class="labelName">제목</span>
+				        	<div class="titleContent">${i.qa_title}</div>
+			        	</div>
+				        <div class="rowItem2">   	
+				            <span class="labelName">내용</span>
+				            <div class="textContent">${i.qa_contents}</div>
+		            	</div>
 			        </div>
-			        
 		<div class="qaReply">
 	    	<div class="qaReplyRow">
 		        <div class="adminProfileDiv">
