@@ -238,6 +238,15 @@ public class MeetingController {
 		return "myPage/myMeetingDetail";
 	}
 	
+	// 참여중인 모임 탭 > 자세히 보기 > 수정 완료 버튼 클릭 시
+	@RequestMapping("/update")
+	public String update(int seq, String meet_detailcontents, String meet_kakaolink, String meet_kakaopw) throws Exception{
+		
+		dao.updateMeeting(seq, meet_detailcontents, meet_kakaolink, meet_kakaopw);
+		
+		return "redirect:/meeting/myMeetingDetail?seq=" + seq + "&msg=success";
+	}
+	
 	// 참여중인 모임 탭 > 모임 삭제 버튼 클릭 시
 	@ResponseBody
 	@RequestMapping("/deleteMeeting")

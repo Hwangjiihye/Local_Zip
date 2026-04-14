@@ -124,6 +124,14 @@ public class MeetingDAO {
 	    return jdbc.query(sql,new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class),loginId, loginId);
 	}
 	
+	// 참여중인 모임 탭에서 자세히보기 > 정보 수정완료 버튼 클릭 시
+	public int updateMeeting(int seq, String meet_detailcontents, String meet_kakaolink, String meet_kakaopw) {
+		
+		String sql = "update meeting set meet_detailcontents = ?, meet_kakaolink = ?, meet_kakaopw = ? where meet_seq = ?";
+		
+		return jdbc.update(sql, meet_detailcontents, meet_kakaolink, meet_kakaopw, seq);
+	}
+	
 	// 참여중인 모임 탭에서 모임 삭제 버튼 클릭 시
 	public int deleteMeeting(int meet_seq, int status) {
 

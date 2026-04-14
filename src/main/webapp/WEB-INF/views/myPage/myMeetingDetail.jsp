@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>우리동네.zip</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
 	@font-face {
@@ -156,10 +157,11 @@
 	.bottomBtn {
 	    margin-top: 20px;
 	    margin-bottom: 10px;
+	    margin-left: 600px;
 	    align-items: center;
 	}
 	
-	.backBtn{
+	.backBtn, .updateBtn, .completeBtn, .cancelBtn{
 		width: 350px;
 	    height: 40px;
 	    background-color: #FFB300;
@@ -168,25 +170,28 @@
 	    color: #5e361a;
 	    font-size: 17px;
 	    font-weight: bold;
-	    margin-left: 750px;
+	    cursor: pointer;
+		transition: all 0.2s ease;
 	}
 	
-	.backBtn:hover {
+	.backBtn:hover, .updateBtn:hover,
+	.completeBtn:hover, .cancelBtn:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 		background-color: #fecc56;
 		color: #A66A3F;
 	}
 	
-	.backBtn:active{
+	.backBtn:active, .updateBtn:active,
+	.completeBtn:active, .cancelBtn:active{
 		transform: translateY(2px);
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
 	
-	.backBtn {
-		cursor: pointer;
-		transition: all 0.2s ease;
+	.completeBtn, .cancelBtn{
+		display: none;
 	}
+	
 	.leftImg, .rightImg{
 		position: absolute;
 		width: 450px;
@@ -203,63 +208,250 @@
 	.descTextDetail{
 		white-space: pre-wrap;
 	}
+	.updateDiv[contenteditable="true"]{
+		border: 1px solid #FFB300;
+		border-radius: 5px;
+		padding: 5px;
+	}
+	.updateDiv[contenteditable="true"]:focus {
+		outline: none;
+		border: 1px solid #FFB300;
+	}
 </style>
 </head>
 <body>
-
-	<div class="container">
-		<div class="top-section">
-			<div class="mainTitle">
-				<span>모임 상세</span>
+	<form action="/meeting/update" method="post" class="frm">
+		<div class="container">
+			<div class="top-section">
+				<div class="mainTitle">
+					<span>모임 상세</span>
+				</div>
+				
+				
 			</div>
-			
-			
-		</div>
-			<c:forEach var="i" items="${list}">
-				<div class="meetingDetail">
-					<div class="titleDiv">
-						<div class="title">모임명</div>
-						<div class="titleDetail">${i.meet_title}</div>
-					</div>
-					
-					<div class="categoryDiv">
-						<div class="category">카테고리</div>
-						<div class="categoryDetail">${i.meet_category}</div>
-					</div>
-					
-					<div class="descDiv">
-						<div class="desc">간단한 한 줄 소개</div>
-						<div class="descDetail">${i.meet_introcontents}</div>
-					</div>
-					
-					<div class="descTextDiv">
-						<div class="descText">자세한 소개글</div>
-						<div class="descTextDetail">${i.meet_detailcontents}</div>
-					</div>
-					
-					<div class="locationDiv">	
-						<div class="location">활동지역</div>	
-						<div class="locationDetail">${i.mem_address1}</div>
-					</div>
-					
-					<div class="openChatWrapper">
-						<div class="openChatLinkDiv">	
-							<div class="openChatLink">카톡 오픈채팅 링크</div>	
-							<div class="inputLink">${i.meet_kakaolink}</div>
+				<c:forEach var="i" items="${list}">
+					<div class="meetingDetail" data-seq="${i.meet_seq}">
+						<div class="titleDiv">
+							<div class="title">모임명</div>
+							<div class="titleDetail">${i.meet_title}</div>
 						</div>
 						
-						<div class="openChatPwDiv">
-							<div class="openChatPw">카톡 오픈채팅 패스워드</div>
-							<div class="inputPw">${i.meet_kakaopw}</div>
+						<div class="categoryDiv">
+							<div class="category">카테고리</div>
+							<div class="categoryDetail">${i.meet_category}</div>
+						</div>
+						
+						<div class="descDiv">
+							<div class="desc">간단한 한 줄 소개</div>
+							<div class="descDetail">${i.meet_introcontents}</div>
+						</div>
+						
+						<div class="descTextDiv">
+							<div class="descText">자세한 소개글</div>
+							<div class="descTextDetail updateDiv">${i.meet_detailcontents}</div>
+						</div>
+						
+						<div class="locationDiv">	
+							<div class="location">활동지역</div>	
+							<div class="locationDetail">${i.mem_address1}</div>
+						</div>
+						
+						<div class="openChatWrapper">
+							<div class="openChatLinkDiv">	
+								<div class="openChatLink">카톡 오픈채팅 링크</div>	
+								<div class="inputLink updateDiv">${i.meet_kakaolink}</div>
+							</div>
+							
+							<div class="openChatPwDiv">
+								<div class="openChatPw">카톡 오픈채팅 패스워드</div>
+								<div class="inputPw updateDiv">${i.meet_kakaopw}</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
-			<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
-    		<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
-	</div>
-	<div class="bottomBtn">
-			<a href="/meeting/myMeeting"><button class="backBtn" type="button">뒤로가기</button></a>
-	</div>
+				</c:forEach>
+				<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+	    		<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
+		</div>
+		<input type="hidden" class="seqInput" name="seq">
+		<input type="hidden" class="update_contents" name="meet_detailcontents">
+		<input type="hidden" class="update_kakaolink" name="meet_kakaolink">
+		<input type="hidden" class="update_kakaopw" name="meet_kakaopw">
+		<div class="bottomBtn">
+				<button class="updateBtn" type="button">수정하기</button>
+				<button class="backBtn" type="button">뒤로가기</button>
+				<button class="completeBtn">수정완료</button>
+				<button class="cancelBtn" type="button">수정취소</button>
+		</div>
+	</form>
+	<script>
+		let meet_detailcontents = $(".descTextDetail");
+		let meet_kakaolink = $(".inputLink");
+		let meet_kakaopw = $(".inputPw");
+		
+		$(".updateBtn").on("click",function(){
+			
+			meet_detailcontents.data("originContents", meet_detailcontents.html());
+			meet_kakaolink.data("originLink", meet_kakaolink.html());
+			meet_kakaopw.data("originPw", meet_kakaopw.html());
+			
+			$(".updateBtn").css({"display":"none"});
+			$(".backBtn").css({"display":"none"});
+			$(".completeBtn").css({"display":"inline"});
+			$(".cancelBtn").css({"display":"inline"});
+			
+			$(".updateDiv").attr("contenteditable","true");
+		});
+		
+		$(".cancelBtn").on("click",function(){
+			
+			let originContents = meet_detailcontents.data("originContents");
+			let originLink = meet_kakaolink.data("originLink");
+			let originPw = meet_kakaopw.data("originPw");
+			
+			meet_detailcontents.html(originContents);
+			meet_kakaolink.html(originLink);
+			meet_kakaopw.html(originPw);
+			
+			$(".updateBtn").css({"display":"inline"});
+			$(".backBtn").css({"display":"inline"});
+			$(".completeBtn").css({"display":"none"});
+			$(".cancelBtn").css({"display":"none"});
+			
+			$(".updateDiv").removeAttr("contenteditable");
+		});
+		
+		$(".frm").on("submit",function(e){
+			e.preventDefault();
+			
+			$(".update_contents").val($(".descTextDetail").html());
+			$(".update_kakaolink").val($(".inputLink").html());
+			$(".update_kakaopw").val($(".inputPw").html());
+			
+			// 1. 데이터 추출
+	   	    let contents = $(".descTextDetail").html();
+	   	    let kakaolink = $(".inputLink").html();
+	   	 	let kakaopw = $(".inputPw").html();
+	   	    
+	   	    // 엔터(\n)를 포함한 실제 텍스트 추출
+	   	    let contentText = document.querySelector(".descTextDetail").innerText; 
+	   	    let linkText = document.querySelector(".inputLink").innerText; 
+	   	 	let pwText = document.querySelector(".inputPw").innerText;
+	   	 	
+	   	    let contentLimit = 500;
+	   	    let linkLimit = 100;
+			let pwLimit = 30;
+         
+          if(contents == ""){
+             Swal.fire({
+               icon: "info",
+               title: "Wait  !",
+               text: "내용을 입력해주세요.",
+               iconColor: "#FFB300",
+               confirmButtonColor: "#FFB300"
+            });
+              return;
+          }
+          if(kakaolink == ""){
+              Swal.fire({
+                icon: "info",
+                title: "Wait  !",
+                text: "카카오톡 링크를 입력해주세요.",
+                iconColor: "#FFB300",
+                confirmButtonColor: "#FFB300"
+             });
+               return;
+           }
+          if(kakaopw == ""){
+              Swal.fire({
+                icon: "info",
+                title: "Wait  !",
+                text: "패스워드를 입력해주세요.",
+                iconColor: "#FFB300",
+                confirmButtonColor: "#FFB300"
+             });
+               return;
+           }
+          
+          if (contentText.length > contentLimit) {
+              let currentContentLen = contentText.length;
+              let overContent = contentText.substring(contentLimit, contentLimit + 100);
+              
+              Swal.fire({
+                  icon: "warning",
+                  title: "내용 글자수 초과!",
+                  html: "현재 내용은 <b>" + currentContentLen + "자</b>입니다. (제한: 500자)<br><br>" +
+                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:13px; border:1px solid #ffcccc; word-break: break-all;'>" +
+                        "<b>내용 뒷부분을 삭제해주세요:</b><br><br>" +
+                        "<span style='color:#555;'>... " + overContent + "</span></div>",
+                  iconColor: "#EB0000",
+                  confirmButtonColor: "#FFB300"
+              });
+              return;
+          }
+          if (linkText.length > linkLimit) {
+              let currentLinkLen = linkText.length;
+              let overLink = linkText.substring(linkLimit, linkLimit + 50); 
+
+              Swal.fire({
+                  icon: "warning",
+                  title: "링크 글자수 초과!",
+                  html: "현재 링크가 <b>" + currentLinkLen + "자</b>입니다. (제한: 100자)<br><br>" +
+                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+                        "<span style='color:#555;'>... " + overLink + "</span></div>",
+                  iconColor: "#EB0000",
+                  confirmButtonColor: "#FFB300"
+              });
+              return;
+          }
+          if (pwText.length > pwLimit) {
+              let currentPwLen = pwText.length;
+              let overPw = pwText.substring(pwLimit, pwLimit + 30); 
+
+              Swal.fire({
+                  icon: "warning",
+                  title: "패스워드 글자수 초과!",
+                  html: "현재 패스워드가 <b>" + currentPwLen + "자</b>입니다. (제한: 30자)<br><br>" +
+                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+                        "<span style='color:#555;'>... " + overPw + "</span></div>",
+                  iconColor: "#EB0000",
+                  confirmButtonColor: "#FFB300"
+              });
+              return;
+          }
+          
+          let seq = $(".meetingDetail").data("seq");
+          $(".seqInput").val(seq);
+          
+          this.submit();
+		});
+		
+		$(document).on("keydown", ".descTextDetail[contenteditable='true']", function(e){
+		    if(e.key === "Enter"){
+		        e.preventDefault(); // 기본 동작 막기
+		
+		        document.execCommand("insertLineBreak"); // 줄바꿈 삽입
+		    }
+		});
+		
+		$(document).ready(function(){
+		    let msg = new URLSearchParams(window.location.search).get("msg");
+
+		    if(msg == "success"){
+		        Swal.fire({
+		            icon: "success",
+		            title: "Success  !",
+	                text: "수정되었습니다.",
+	                iconColor: "#FFB300",
+		            confirmButtonColor: "#FFB300"
+		        });
+		    }
+		});
+		
+		$(".backBtn").on("click",function(){
+			location.replace("/meeting/myMeeting");
+		});
+	</script>
 </body>
 </html>
