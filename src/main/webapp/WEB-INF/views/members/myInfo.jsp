@@ -410,13 +410,13 @@ hr {
 					$(".nickname").focus();
 					return false;
 				} else {
-					let regex = /^[가-힣]{2,30}$|^[a-z]{2,30}$/;
+					let regex = /^[가-힣]{2,10}$|^[a-z]{2,10}$/;
 					nicknameResult = regex.test(nickname);
 					if (!nicknameResult) {
 						Swal.fire({
     						icon: "info",
     						title: "Wait  !",
-    						text: "공백 없는 2~30글자의 닉네임만 등록 가능합니다.(한/영)",
+    						text: "공백 없는 2~10글자의 닉네임만 등록 가능합니다.(한/영)",
     						iconColor: "#FFB300",
     						confirmButtonColor: "#FFB300"
     					});
@@ -541,9 +541,9 @@ hr {
     	    let limit = 0;
     	    
     	    // 필드별 글자수 제한 (한 줄에 들어갈 적당한 길이로 조절하세요)
-    	    if ($(this).hasClass("nickname")) limit = 15;
+    	    if ($(this).hasClass("nickname")) limit = 10;
     	    else if ($(this).hasClass("phone")) limit = 11;
-    	    else if ($(this).hasClass("address2")) limit = 30;
+    	    else if ($(this).hasClass("address2")) limit = 15;
     	    else limit = 20; // 나머지 기본값
     	    
     	    let content = $(this).text();
@@ -552,8 +552,7 @@ hr {
     	    if (content.length > limit) {
     	        $(this).text(content.substring(0, limit));
     	        
-    	        // 글자가 잘린 후 커서가 맨 앞으로 가는 현상 방지 (커서를 맨 뒤로 보냄)
-    	        let range = document.createRange();
+    	        let range = document.createRange(); // 글자가 잘린 후 커서가 맨 앞으로 가는 현상 방지 (커서를 맨 뒤로 보냄)
     	        let sel = window.getSelection();
     	        range.selectNodeContents(this);
     	        range.collapse(false);
