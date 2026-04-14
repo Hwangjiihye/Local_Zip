@@ -227,7 +227,7 @@ button, body {
 
 			</div>
 
-			<div class="errorCode">404 - 길을 잃으신 것 같아요!</div>
+			<div class="errorCode">길을 잃으신 것 같아요!</div>
 
 			<div class="errorMsgBox">
 				<div class="errorMsg">

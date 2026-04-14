@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -7,8 +6,7 @@
 <meta charset="UTF-8">
 <title>우리동네.zip</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 	integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script type="text/javascript"
@@ -86,7 +84,7 @@ body {
 	margin-top: 13px;
 	display: flex;
 	align-items: center;
-	gap: 10px;    
+	gap: 10px;
 	border: none;
 }
 
@@ -103,6 +101,12 @@ body {
 	transition: all 0.2s ease;
 }
 
+.nowNavicon {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	color: #e6a83e;
+}
+
 .categoryBtnAll:hover, .navicon:hover {
 	transform: translateY(-3px); /* 살짝 위로 뜸 */
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
@@ -110,7 +114,7 @@ body {
 	color: #A66A3F;
 }
 
-.categoryBtnAll:active, .navicon:active{
+.categoryBtnAll:active, .navicon:active {
 	transform: translateY(2px); /* 아래로 눌림 */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -119,31 +123,25 @@ body {
 	margin-left: 25px;
 }
 
-.nowBtn{
-background-color: #fecc56;
-color: #A66A3F;
-
-transform: translateY(-3px);
-/* 살짝 위로 뜸 */ 
-box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-
-height: 30px;
-
-border-radius: 10px;
-/border: 1px solid #FFB300;
-
- align-items: center;
-/* 수직 중앙 정렬 */ 
-
-vertical-align: middle;
-/* 버튼들끼리 줄이 안 맞을 때를 대비 */
-
-cursor: pointer;
-transition: 0.3s;
+.nowBtn {
+	background-color: #fecc56;
+	color: #A66A3F;
+	transform: translateY(-3px);
+	/* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	height: 30px;
+	border-radius: 10px; /
+	border: 1px solid #FFB300;
+	align-items: center;
+	/* 수직 중앙 정렬 */
+	vertical-align: middle;
+	/* 버튼들끼리 줄이 안 맞을 때를 대비 */
+	cursor: pointer;
+	transition: 0.3s;
 }
 
-.categoryBtnAll:active{
-    transform: translateY(2px);
+.categoryBtnAll:active {
+	transform: translateY(2px);
 }
 
 .mapDiv {
@@ -192,7 +190,7 @@ transition: 0.3s;
 	background-color: #F2D3A2;
 	box-sizing: border-box;
 	border-radius: 10px;
-	border:none;
+	border: none;
 	color: #5e361a;
 }
 
@@ -206,7 +204,7 @@ transition: 0.3s;
 	color: #5e361a;
 	box-sizing: border-box;
 	border-radius: 10px;
-	box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .bottomBar {
@@ -243,7 +241,7 @@ transition: 0.3s;
 	border-radius: 50%;
 	display: inline-block;
 	border: 2px solid white;
-	box-shadow: 0 0 4px rgba(0,0,0,0.25);
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }
 
 .legendToliet {
@@ -258,11 +256,10 @@ transition: 0.3s;
 	background-color: rgba(133, 161, 249, 1.00);
 }
 
-.infoMent{
+.infoMent {
 	color: #286708;
 	margin-left: 5px;
 }
-
 </style>
 </head>
 
@@ -289,16 +286,16 @@ transition: 0.3s;
 
 			<div class="mapDiv" id="map">
 				<div class="legendBox">
-			<div class="legendItem">
-				<span class="legendDot legendToliet"></span> 화장실
-			</div>
-			<div class="legendItem">
-				<span class="legendDot legendShelter"></span> 대피소
-			</div>
-			<div class="legendItem">
-				<span class="legendDot legendPolice"></span> 치안
-		</div>
-	</div>
+					<div class="legendItem">
+						<span class="legendDot legendToliet"></span> 화장실
+					</div>
+					<div class="legendItem">
+						<span class="legendDot legendShelter"></span> 대피소
+					</div>
+					<div class="legendItem">
+						<span class="legendDot legendPolice"></span> 치안
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -311,24 +308,24 @@ transition: 0.3s;
 
 
 		<div class="bottomBar">
-			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
-			<a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
-			
-		
-		<c:choose>
-	        <c:when test="${loginId == null}">
-	        	<a href="/members/loginUi"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-			</c:when>
-			<c:when test="${role == 1}">
-	        	<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-			</c:when>
-			<c:otherwise>
-				<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
-			</c:otherwise>
-		</c:choose>
-		
+			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
+				class="nowNavicon fa-solid fa-map-location-dot fa-2xl"></i></a> <a href="/meeting/list?category=all"><i
+				class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
+				class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+
+
+			<c:choose>
+				<c:when test="${loginId == null}">
+					<a href="/members/loginUi"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				</c:when>
+				<c:when test="${role == 1}">
+					<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				</c:when>
+				<c:otherwise>
+					<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+				</c:otherwise>
+			</c:choose>
+
 		</div>
 	</div>
 
