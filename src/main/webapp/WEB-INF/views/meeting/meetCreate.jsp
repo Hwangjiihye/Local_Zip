@@ -71,7 +71,7 @@
 		
 		.meetingDetail {
 			margin: auto;
-		    width: 56.5%;
+		    width: 1060px;
 		    border-radius: 10px;
 		    background-color: #fbe5c0;
 		    padding: 35px;
@@ -109,7 +109,7 @@
 		.descTextDetail{
 			padding-top: 10px;
 			border: none;
-			width: 70%;
+			width: 100%;
 			padding-left: 2px;
 		}
 		
@@ -168,7 +168,7 @@
 			transition: all 0.2s ease;
 		}
 		.clubName{
-			width: 970px;
+			width: 100%;
 			height: 35px;
 			top: 30px;
 		    left: 0;
@@ -184,7 +184,7 @@
 		}
 		
 		.detailContent{
-			width: 970px;
+			width: 100%;
 			height: 300px;
 			top: 30px;
 		    left: 0;
