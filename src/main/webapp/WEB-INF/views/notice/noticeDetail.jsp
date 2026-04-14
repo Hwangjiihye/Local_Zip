@@ -178,6 +178,8 @@ button, body {
 	line-height: 1.6;
 	word-break: break-all;
 	white-space: pre-wrap;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 }
 
 .afterHeart {
@@ -316,13 +318,12 @@ hr {
 .noticeDiv{
 	margin: 0 auto;
 	width: 90%;
-	font-size: 16px;
 	background-color: #f0d8af;
 	border-radius: 5px;
-	padding: 0 10px;
-	line-height: 1.6;
-	word-break: break-all;
-	white-space: pre-wrap;
+	line-height: 1.6; 
+	padding: 20px 20px 25px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 }
 </style>
 
