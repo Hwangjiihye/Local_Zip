@@ -46,6 +46,11 @@
 	body, html {
 		margin: 0;
 		padding: 0;
+		min-width: 1000px; 
+	}
+	body{
+		margin: 0 auto;
+		overflow-x: auto;
 	}
 	
 	/* 폰트 지정 */
@@ -56,6 +61,7 @@
 	.container {
 		width: 100%;
 		min-height: 100vh;
+		min-width: 1000px; 
 		/* 최소 높이 지정 : 브라우저 */
 		background-color: #fbe5c0;
 	}
@@ -91,7 +97,7 @@
 	}
 	
 	.writeDetail {
-		margin: auto;
+		margin: 50px auto;
 		min-width: 900px;
 		width: 900px;
 		height: auto;
