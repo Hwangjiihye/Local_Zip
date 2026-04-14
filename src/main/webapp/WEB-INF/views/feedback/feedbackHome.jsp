@@ -1119,16 +1119,52 @@ a {
 				processData: false,
 		        contentType: false,
 				type: "post"
-			}).done(function(){
-				Swal.fire({
-					icon: "success",
-					title: "Success  !",
-					text: "수정되었습니다.",
-					iconColor: "#FFB300",
-					confirmButtonColor: "#FFB300"
-				}).then(() => {
-					location.reload();
-				});
+			}).done(function(resp){
+				if(resp == "adminFail"){
+					Swal.fire({
+						icon: "error",
+                        title: "Fail !",
+                        text: "신고된 게시물은 수정할 수 없습니다.",
+                        iconColor: "#EB0000",
+                        confirmButtonColor: "#FFB300"
+                    }).then(() => {
+                    	
+                    	box.find(".postTitle").html(box.data("original-title"));
+                    	box.find(".postContent").html(box.data("original-contents"));
+                    	
+                    	$(".file-item").removeClass("delete-target").show();
+                    	 
+                    	box.find(".postTitle").attr("contenteditable", "false");
+                        box.find(".postContent").attr("contenteditable", "false");
+                        
+            			$(".postTitle").css({
+            				"border":"none",
+            				"padding-top":"0px",
+            				"margin-top":"0px"
+            			});
+            			$(".postContent").css({
+            				"border":"none",
+            			    "border-top-left-radius": "0px",
+            			    "border-top-right-radius": "0px",
+            			    "padding": "10px 0 5px 12px"
+            			});
+                        
+                    	box.find(".newFileDiv").hide();
+                    	box.find(".fileDownload").hide();
+                    	box.find(".okBtn, .cancleBtn").hide();
+                    	box.find(".delBtn, .editBtn").show();
+                    })
+				}else if(resp == "success"){
+					Swal.fire({
+						icon: "success",
+						title: "Success  !",
+						text: "수정되었습니다.",
+						iconColor: "#FFB300",
+						confirmButtonColor: "#FFB300"
+					}).then(() => {
+						location.reload();
+					});
+				}
 			});
         });
         
@@ -1157,7 +1193,16 @@ a {
         			data: { suggestion_seq: seq },
         			
         			success: function(resp) {
-        				if(resp === "successDel") {
+        			if(resp == "adminFail"){
+        				Swal.fire({
+        					icon: "error",
+                            title: "Error !",
+                            text: "신고된 게시물은 삭제할 수 없습니다.",
+                            iconColor: "#EB0000",
+                            confirmButtonColor: "#FFB300"
+                        });
+                     return;
+        			}else if(resp === "successDel") {
         					
         					// 삭제 성공 알림
         					Swal.fire({
