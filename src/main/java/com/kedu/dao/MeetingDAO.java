@@ -48,18 +48,23 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
-	public List<MeetingDTO> selectAllByPage(int start, int end) { // + 게이지바 포함
+	public List<MeetingDTO> selectAllByPage(int start, int end) { // + 게이지바 포함 전체 리스트 출력
 		String sql = "select * from (select row_number() over(order by m.meet_seq desc) rn, "
 				+ "m.mem_id, m.meet_seq, m.mem_nickname, m.meet_title, m.meet_category, "
-				+ "m.meet_introcontents, m.meet_maxpeople, m.meet_currentpeople, m.mem_address1 "
-				+ "from meeting m where m.meet_status in (0,1)) where rn between ? and ?";
+				+ "m.meet_introcontents, m.meet_maxpeople, m.mem_address1, "
+				+ "(select count(*) from meeting_member mm where mm.meet_seq = m.meet_seq) as meet_currentpeople "
+				+ "from meeting m "
+				+ "where m.meet_status in (0,1)) where rn between ? and ?";
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), start, end);
 	}
 	
-	public List<MeetingDTO> selectByPage(String category, int start, int end){
-		String sql = "select * from (select row_number() "
-				+ "over(order by m.meet_seq desc) rn, "
-				+ "m.* from meeting m where m.meet_category =? and m.meet_status in (0,1)) where rn between ? and ? ";
+	public List<MeetingDTO> selectByPage(String category, int start, int end){ // + 게이지바 포함 카테고리별 리스트 출력
+		String sql = "select * from (select row_number() over(order by m.meet_seq desc) rn, "
+				+ "m.mem_id, m.meet_seq, m.mem_nickname, m.meet_title, m.meet_category, "
+				+ "m.meet_introcontents, m.meet_maxpeople, m.mem_address1, "
+				+ "(select count(*) from meeting_member mm where mm.meet_seq = m.meet_seq) as meet_currentpeople "
+				+ "from meeting m "
+				+ "where m.meet_category =? and m.meet_status in (0,1)) where rn between ? and ? ";
 		return jdbc.query(sql, new BeanPropertyRowMapper<MeetingDTO>(MeetingDTO.class), category, start, end);
 	}
 	

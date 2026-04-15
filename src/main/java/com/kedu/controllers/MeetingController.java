@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kedu.dao.MeetingDAO;
 import com.kedu.dao.MeetingMemberDAO;
@@ -56,32 +57,34 @@ public class MeetingController {
 			list = dao.selectByPage(category, start, end);
 		}
 		
-		List<Map<String, Object>> vlist = dao.isApplied(loginId);
+		List<Map<String, Object>> vlist = dao.isApplied(loginId); // 0, 승인 대기 상태
 		Set<Integer> appliedSet = new HashSet<>();
 
 		for(Map<String,Object> m : vlist){
 			appliedSet.add(((Number)m.get("meet_seq")).intValue());
 		}
 		
-		List<Map<String, Object>> jlist = dao.joinMeet(loginId);
+		List<Map<String, Object>> jlist = dao.joinMeet(loginId); // 1, 승인 상태
 		Set<Integer> joinedSet = new HashSet<>();
 
 		for(Map<String,Object> m : jlist){
 			joinedSet.add(((Number)m.get("meet_seq")).intValue());
 		}
 		
-		List<Map<String, Object>> clist = dao.companionMeet(loginId);
+		List<Map<String, Object>> clist = dao.companionMeet(loginId); // 2, 거절 상태
 		Set<Integer> companionSet = new HashSet<>();
 
 		for(Map<String,Object> m : clist){
 			companionSet.add(((Number)m.get("meet_seq")).intValue());
 		}
 		
-		Map<String, Object> navi = this.getPageNaviAll(category, cpage);
+		Map<String, Object> navi = this.getPageNaviAll(category, cpage); // cpage
+		
 		
 		session.setAttribute("admin", mdao.adminCheck(loginId));
 		int admin = (Integer)session.getAttribute("admin");
 		model.addAttribute("admin", admin);
+		
 		
 	    model.addAttribute("navi", navi);
 		model.addAttribute("list", list);
@@ -240,17 +243,23 @@ public class MeetingController {
 	}
 	
 	// 참여중인 모임 탭 > 자세히 보기 > 수정 완료 버튼 클릭 시
-	@RequestMapping("/update")
-	public String update(int seq, String meet_detailcontents, String meet_kakaolink, String meet_kakaopw) throws Exception{
-		
+//	@RequestMapping("/update")
+//	public String update(int seq, String meet_detailcontents, String meet_kakaolink, String meet_kakaopw) throws Exception{
+//		dao.updateMeeting(seq, meet_detailcontents, meet_kakaolink, meet_kakaopw);
+//		return "redirect:/meeting/myMeetingDetail?seq=" + seq;
+//	}
+	
+	@ResponseBody
+	@RequestMapping("/updateReportCheck")
+	public String updateReportCheck(int seq, String meet_detailcontents, String meet_kakaolink) {
 		// 신고된 모임 수정 불가 로직
 		int count = rdao.reportUpdateBlock(seq);
 		if(count > 0) {
-			
+			return "fail";
 		}
-		dao.updateMeeting(seq, meet_detailcontents, meet_kakaolink, meet_kakaopw);
 		
-		return "redirect:/meeting/myMeetingDetail?seq=" + seq;
+		dao.updateMeeting(seq, meet_detailcontents, meet_kakaolink, meet_kakaolink);
+		return "success";
 	}
 	
 	// 참여중인 모임 탭 > 모임 삭제 버튼 클릭 시

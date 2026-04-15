@@ -219,7 +219,7 @@
 </style>
 </head>
 <body>
-	<form action="/meeting/update" method="post" class="frm">
+	<form method="post" class="frm">
 		<div class="container">
 			<div class="top-section">
 				<div class="mainTitle">
@@ -278,7 +278,7 @@
 				<c:choose>
 					<c:when test="${i.mem_id == loginId }">
 						<button class="updateBtn" type="button">수정하기</button>
-						<button class="completeBtn">수정완료</button>
+						<button class="completeBtn" type="submit">수정완료</button>
 						<button class="cancelBtn" type="button">수정취소</button>
 						<button class="backBtn" type="button">뒤로가기</button>
 					</c:when>
@@ -329,111 +329,246 @@
 			$(".updateDiv").removeAttr("contenteditable");
 		});
 		
-		$(".frm").on("submit",function(e){
+// 		$(".frm").on("submit",function(e){
+// 			e.preventDefault();
+			
+// 			// 신고된 모임 수정 불가
+// 			let msg = "${msg}";
+			
+// 			if(msg == "fail"){
+// 	            Swal.fire({
+// 	               icon: "error",
+//                  title: "Fail !",
+//                  text: "신고된 모임은 수정할 수 없습니다.",
+//                  iconColor: "#EB0000",
+//                  confirmButtonColor: "#FFB300"
+// 	         	});
+// 	          return false;
+// 			}
+			
+// 			$(".update_contents").val($(".descTextDetail").html());
+// 			$(".update_kakaolink").val($(".inputLink").html());
+// 			$(".update_kakaopw").val($(".inputPw").html());
+			
+// 			// 1. 데이터 추출
+// 	   	    let contents = $(".descTextDetail").html();
+// 	   	    let kakaolink = $(".inputLink").html();
+// 	   	 	let kakaopw = $(".inputPw").html();
+	   	    
+// 	   	    // 엔터(\n)를 포함한 실제 텍스트 추출
+// 	   	    let contentText = document.querySelector(".descTextDetail").innerText; 
+// 	   	    let linkText = document.querySelector(".inputLink").innerText; 
+// 	   	 	let pwText = document.querySelector(".inputPw").innerText;
+	   	 	
+// 	   	    let contentLimit = 500;
+// 	   	    let linkLimit = 100;
+// 			let pwLimit = 30;
+				
+//           if(contents == ""){
+//              Swal.fire({
+//                icon: "info",
+//                title: "Wait  !",
+//                text: "내용을 입력해주세요.",
+//                iconColor: "#FFB300",
+//                confirmButtonColor: "#FFB300"
+//             });
+//               return;
+//           }
+//           if(kakaolink == ""){
+//               Swal.fire({
+//                 icon: "info",
+//                 title: "Wait  !",
+//                 text: "카카오톡 링크를 입력해주세요.",
+//                 iconColor: "#FFB300",
+//                 confirmButtonColor: "#FFB300"
+//              });
+//                return;
+//            }
+//           if(kakaopw == ""){
+//               Swal.fire({
+//                 icon: "info",
+//                 title: "Wait  !",
+//                 text: "패스워드를 입력해주세요.",
+//                 iconColor: "#FFB300",
+//                 confirmButtonColor: "#FFB300"
+//              });
+//                return;
+//            }
+          
+//           if (contentText.length > contentLimit) {
+//               let currentContentLen = contentText.length;
+//               let overContent = contentText.substring(contentLimit, contentLimit + 100);
+              
+//               Swal.fire({
+//                   icon: "warning",
+//                   title: "내용 글자수 초과!",
+//                   html: "현재 내용은 <b>" + currentContentLen + "자</b>입니다. (제한: 500자)<br><br>" +
+//                         "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:13px; border:1px solid #ffcccc; word-break: break-all;'>" +
+//                         "<b>내용 뒷부분을 삭제해주세요:</b><br><br>" +
+//                         "<span style='color:#555;'>... " + overContent + "</span></div>",
+//                   iconColor: "#EB0000",
+//                   confirmButtonColor: "#FFB300"
+//               });
+//               return;
+//           }
+//           if (linkText.length > linkLimit) {
+//               let currentLinkLen = linkText.length;
+//               let overLink = linkText.substring(linkLimit, linkLimit + 50); 
+
+//               Swal.fire({
+//                   icon: "warning",
+//                   title: "링크 글자수 초과!",
+//                   html: "현재 링크가 <b>" + currentLinkLen + "자</b>입니다. (제한: 100자)<br><br>" +
+//                         "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+//                         "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+//                         "<span style='color:#555;'>... " + overLink + "</span></div>",
+//                   iconColor: "#EB0000",
+//                   confirmButtonColor: "#FFB300"
+//               });
+//               return;
+//           }
+//           if (pwText.length > pwLimit) {
+//               let currentPwLen = pwText.length;
+//               let overPw = pwText.substring(pwLimit, pwLimit + 30); 
+
+//               Swal.fire({
+//                   icon: "warning",
+//                   title: "패스워드 글자수 초과!",
+//                   html: "현재 패스워드가 <b>" + currentPwLen + "자</b>입니다. (제한: 30자)<br><br>" +
+//                         "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+//                         "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+//                         "<span style='color:#555;'>... " + overPw + "</span></div>",
+//                   iconColor: "#EB0000",
+//                   confirmButtonColor: "#FFB300"
+//               });
+//               return;
+//           }
+          
+//           let seq = $(".meetingDetail").data("seq");
+//           $(".seqInput").val(seq);
+          
+//           this.submit();
+// 		});
+
+		$(document).on("click", ".completeBtn", function(e){
 			e.preventDefault();
-			
-			$(".update_contents").val($(".descTextDetail").html());
-			$(".update_kakaolink").val($(".inputLink").html());
-			$(".update_kakaopw").val($(".inputPw").html());
-			
 			// 1. 데이터 추출
 	   	    let contents = $(".descTextDetail").html();
 	   	    let kakaolink = $(".inputLink").html();
 	   	 	let kakaopw = $(".inputPw").html();
-	   	    
-	   	    // 엔터(\n)를 포함한 실제 텍스트 추출
-	   	    let contentText = document.querySelector(".descTextDetail").innerText; 
+			let seq = $(".meetingDetail").data("seq");
+			let frm = $(".frm");
+			
+			let contentText = document.querySelector(".descTextDetail").innerText; 
 	   	    let linkText = document.querySelector(".inputLink").innerText; 
 	   	 	let pwText = document.querySelector(".inputPw").innerText;
 	   	 	
 	   	    let contentLimit = 500;
 	   	    let linkLimit = 100;
 			let pwLimit = 30;
-         
-          if(contents == ""){
-             Swal.fire({
-               icon: "info",
-               title: "Wait  !",
-               text: "내용을 입력해주세요.",
-               iconColor: "#FFB300",
-               confirmButtonColor: "#FFB300"
-            });
-              return;
-          }
-          if(kakaolink == ""){
-              Swal.fire({
-                icon: "info",
-                title: "Wait  !",
-                text: "카카오톡 링크를 입력해주세요.",
-                iconColor: "#FFB300",
-                confirmButtonColor: "#FFB300"
-             });
-               return;
-           }
-          if(kakaopw == ""){
-              Swal.fire({
-                icon: "info",
-                title: "Wait  !",
-                text: "패스워드를 입력해주세요.",
-                iconColor: "#FFB300",
-                confirmButtonColor: "#FFB300"
-             });
-               return;
-           }
-          
-          if (contentText.length > contentLimit) {
-              let currentContentLen = contentText.length;
-              let overContent = contentText.substring(contentLimit, contentLimit + 100);
-              
-              Swal.fire({
-                  icon: "warning",
-                  title: "내용 글자수 초과!",
-                  html: "현재 내용은 <b>" + currentContentLen + "자</b>입니다. (제한: 500자)<br><br>" +
-                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:13px; border:1px solid #ffcccc; word-break: break-all;'>" +
-                        "<b>내용 뒷부분을 삭제해주세요:</b><br><br>" +
-                        "<span style='color:#555;'>... " + overContent + "</span></div>",
-                  iconColor: "#EB0000",
-                  confirmButtonColor: "#FFB300"
-              });
-              return;
-          }
-          if (linkText.length > linkLimit) {
-              let currentLinkLen = linkText.length;
-              let overLink = linkText.substring(linkLimit, linkLimit + 50); 
+			
+			if(contents == ""){
+	             Swal.fire({
+	               icon: "info",
+	               title: "Wait  !",
+	               text: "내용을 입력해주세요.",
+	               iconColor: "#FFB300",
+	               confirmButtonColor: "#FFB300"
+	            });
+	              return;
+	          }
+	          if(kakaolink == ""){
+	              Swal.fire({
+	                icon: "info",
+	                title: "Wait  !",
+	                text: "카카오톡 링크를 입력해주세요.",
+	                iconColor: "#FFB300",
+	                confirmButtonColor: "#FFB300"
+	             });
+	               return;
+	           }
+	          if(kakaopw == ""){
+	              Swal.fire({
+	                icon: "info",
+	                title: "Wait  !",
+	                text: "패스워드를 입력해주세요.",
+	                iconColor: "#FFB300",
+	                confirmButtonColor: "#FFB300"
+	             });
+	               return;
+	           }
+	          
+	          if (contentText.length > contentLimit) {
+	              let currentContentLen = contentText.length;
+	              let overContent = contentText.substring(contentLimit, contentLimit + 100);
+	              
+	              Swal.fire({
+	                  icon: "warning",
+	                  title: "내용 글자수 초과!",
+	                  html: "현재 내용은 <b>" + currentContentLen + "자</b>입니다. (제한: 500자)<br><br>" +
+	                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:13px; border:1px solid #ffcccc; word-break: break-all;'>" +
+	                        "<b>내용 뒷부분을 삭제해주세요:</b><br><br>" +
+	                        "<span style='color:#555;'>... " + overContent + "</span></div>",
+	                  iconColor: "#EB0000",
+	                  confirmButtonColor: "#FFB300"
+	              });
+	              return;
+	          }
+	          if (linkText.length > linkLimit) {
+	              let currentLinkLen = linkText.length;
+	              let overLink = linkText.substring(linkLimit, linkLimit + 50); 
 
-              Swal.fire({
-                  icon: "warning",
-                  title: "링크 글자수 초과!",
-                  html: "현재 링크가 <b>" + currentLinkLen + "자</b>입니다. (제한: 100자)<br><br>" +
-                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
-                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
-                        "<span style='color:#555;'>... " + overLink + "</span></div>",
-                  iconColor: "#EB0000",
-                  confirmButtonColor: "#FFB300"
-              });
-              return;
-          }
-          if (pwText.length > pwLimit) {
-              let currentPwLen = pwText.length;
-              let overPw = pwText.substring(pwLimit, pwLimit + 30); 
+	              Swal.fire({
+	                  icon: "warning",
+	                  title: "링크 글자수 초과!",
+	                  html: "현재 링크가 <b>" + currentLinkLen + "자</b>입니다. (제한: 100자)<br><br>" +
+	                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+	                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+	                        "<span style='color:#555;'>... " + overLink + "</span></div>",
+	                  iconColor: "#EB0000",
+	                  confirmButtonColor: "#FFB300"
+	              });
+	              return;
+	          }
+	          if (pwText.length > pwLimit) {
+	              let currentPwLen = pwText.length;
+	              let overPw = pwText.substring(pwLimit, pwLimit + 30); 
 
-              Swal.fire({
-                  icon: "warning",
-                  title: "패스워드 글자수 초과!",
-                  html: "현재 패스워드가 <b>" + currentPwLen + "자</b>입니다. (제한: 30자)<br><br>" +
-                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
-                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
-                        "<span style='color:#555;'>... " + overPw + "</span></div>",
-                  iconColor: "#EB0000",
-                  confirmButtonColor: "#FFB300"
-              });
-              return;
-          }
-          
-          let seq = $(".meetingDetail").data("seq");
-          $(".seqInput").val(seq);
-          
-          this.submit();
+	              Swal.fire({
+	                  icon: "warning",
+	                  title: "패스워드 글자수 초과!",
+	                  html: "현재 패스워드가 <b>" + currentPwLen + "자</b>입니다. (제한: 30자)<br><br>" +
+	                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+	                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+	                        "<span style='color:#555;'>... " + overPw + "</span></div>",
+	                  iconColor: "#EB0000",
+	                  confirmButtonColor: "#FFB300"
+	              });
+	              return;
+	          }
+			$.ajax({
+				url : "/meeting/updateReportCheck",
+				type : "post",
+				data : {target_seq : seq},
+				success : function(resp){
+					if(resp == "fail"){
+					Swal.fire({
+			             icon: "error",
+		                 title: "Fail !",
+		                 text: "신고된 모임은 수정할 수 없습니다.",
+		                 iconColor: "#EB0000",
+		                 confirmButtonColor: "#FFB300"
+		        		});
+						return;
+					}else if(resp == "success"){
+						$(".seqInput").val(seq);
+			          	$(".update_contents").val($(".descTextDetail").html());
+						$(".update_kakaolink").val($(".inputLink").html());
+						$(".update_kakaopw").val($(".inputPw").html());
+			          	frm.submit();
+					}
+				 }
+			});
 		});
 		
 		$(document).on("keydown", ".descTextDetail[contenteditable='true']", function(e){
