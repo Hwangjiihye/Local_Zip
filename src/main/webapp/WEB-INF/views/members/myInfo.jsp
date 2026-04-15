@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 <style>
 @font-face {
 	font-family: 'GMarketSans';
@@ -48,26 +49,34 @@ body {
 }
 
 .container {
+position : relative;
+	z-index: 2;
 	width: 100%;
 	min-height: 100vh;
 	background-color: #fbe5c0;
 }
-
-.topBar {
-	font-weight: bold;
+.mainTitle{
+	min-width:500px;
 	font-size: 50px;
+}
+.topBar {
+	display: flex;
+	padding-left: 20px;
+	font-weight: bold;
 	color: #A66A3F;
 	border-bottom: 2px solid #A66A3F;
 	height: 100px;
 	line-height: 100px;
 	background-color: #F2D3A2;
-	padding-left: 20px;
-	display: flex;
+	justify-content: space-between; 
+    align-items: center;
+    padding: 0 20px;
 }
 
-.backBtnDiv {
-	margin-left: 1500px;
-	margin-top: 10px;
+.backBtnDiv{
+position: relative;
+    top: 20px; /* 아래로 이동 */
+    right : 20px;
 }
 
 .divTotal {
@@ -185,7 +194,8 @@ hr {
 	position: absolute;
 	width: 400px;
 	height: 155px;
-	z-index: 10;
+	z-index: -1;
+	pointer-events: none;
 	bottom: 0;
 }
 
@@ -242,8 +252,7 @@ hr {
 		<div class="topBar">
 			<div class="mainTitle">내 정보.zip</div>
 			<div class="backBtnDiv">
-				<a href="/members/mypage"> <input class="backBtn" type="button" value="내.zip으로 가기">
-				</a>
+				<a href="/members/mypage"><input class="backBtn" type="button" value="내.zip으로 가기"></a>
 			</div>
 		</div>
 		<form action="/members/update" method="post" class="frm">

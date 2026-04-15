@@ -14,6 +14,7 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 <style>
 		@font-face {
 			font-family: 'GMarketSans';
@@ -81,14 +82,17 @@
 		}
 		
 		.titleSection{
-			width: 100%;
-			border-bottom: 2px solid #A66A3F;
-			background-color: #F2D3A2;
-			height: 100px;
-			line-height: 100px;
-			padding: 0 20px;
 			display: flex;
-/* 			box-sizing: border-box; */
+	padding-left: 20px;
+	font-weight: bold;
+	color: #A66A3F;
+	border-bottom: 2px solid #A66A3F;
+	height: 100px;
+	line-height: 100px;
+	background-color: #F2D3A2;
+	justify-content: space-between; 
+    align-items: center;
+    padding: 0 20px;
 		}
 		.mainTitle {
 			font-weight: bold;
@@ -97,8 +101,8 @@
 		}
         .backBtnDiv{
         	position: relative;
-			left: 1484px;
-			top: 18px;
+			 top: 20px; /* 아래로 이동 */
+    right : 20px;
         }
         .bottomBar{
             border: 2px solid #A66A3F;
