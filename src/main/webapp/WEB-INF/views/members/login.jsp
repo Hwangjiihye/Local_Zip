@@ -48,6 +48,8 @@ body {
 }
 
 .container {
+position : relative;
+	z-index: 2;
 	width: 100%;
 	min-height: 100vh;
 	background-color: #fbe5c0;
@@ -190,11 +192,12 @@ input{
 }
 
 .leftImg, .rightImg{
-	position: absolute;
+	position: absolute;   /* 🔥 fixed ❌ */
+	bottom: 0;
 	width: 450px;
 	height: 170px;
-	z-index: 10;
-	bottom: 0;
+	z-index: -1;
+	pointer-events: none;
 }
 .leftImg{
     left: 0;

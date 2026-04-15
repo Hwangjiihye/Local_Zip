@@ -59,6 +59,8 @@
 	}
 	
 	.container {
+	position : relative;
+	z-index: 2;
 		width: 100%;
 		min-height: 100vh;
 		min-width: 1000px; 
@@ -252,7 +254,8 @@
 	position: absolute;
 	width: 450px;
 	height: 170px;
-	z-index: 10;
+	z-index: -1;
+	pointer-events: none;
 	bottom: 0;
 	}
 	.leftImg{
