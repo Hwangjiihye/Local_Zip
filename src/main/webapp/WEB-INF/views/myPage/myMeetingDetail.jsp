@@ -183,7 +183,7 @@
 	}
 	
 	.backBtn:active, .updateBtn:active,
-	.completeBtn:active, .cancelBtn:active{
+	.completeBtn:active, .cancelBtn:active {
 		transform: translateY(2px);
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
@@ -193,11 +193,10 @@
 	}
 	
 	.leftImg, .rightImg{
-		position: absolute;
 		width: 450px;
 		height: 170px;
 		z-index: 10;
-		bottom: 0;
+		position: absolute;
 	}
 	.leftImg{
 	    left: 0;
@@ -269,20 +268,30 @@
 						</div>
 					</div>
 				</c:forEach>
-				<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
-	    		<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 		</div>
 		<input type="hidden" class="seqInput" name="seq">
 		<input type="hidden" class="update_contents" name="meet_detailcontents">
 		<input type="hidden" class="update_kakaolink" name="meet_kakaolink">
 		<input type="hidden" class="update_kakaopw" name="meet_kakaopw">
 		<div class="bottomBtn">
-				<button class="updateBtn" type="button">수정하기</button>
-				<button class="backBtn" type="button">뒤로가기</button>
-				<button class="completeBtn">수정완료</button>
-				<button class="cancelBtn" type="button">수정취소</button>
+			<c:forEach var="i" items="${list}">
+				<c:choose>
+					<c:when test="${i.mem_id == loginId }">
+						<button class="updateBtn" type="button">수정하기</button>
+						<button class="completeBtn">수정완료</button>
+						<button class="cancelBtn" type="button">수정취소</button>
+						<button class="backBtn" type="button">뒤로가기</button>
+					</c:when>
+					<c:otherwise>
+						<button class="backBtn" type="button" style="margin-left:180px">뒤로가기</button>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			
 		</div>
 	</form>
+	<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">	
 	<script>
 		let meet_detailcontents = $(".descTextDetail");
 		let meet_kakaolink = $(".inputLink");
@@ -435,17 +444,15 @@
 		    }
 		});
 		
-		$(document).ready(function(){
-		    let msg = new URLSearchParams(window.location.search).get("msg");
-
-		    if(msg == "success"){
-		        Swal.fire({
-		            icon: "success",
-		            title: "Success  !",
-	                text: "수정되었습니다.",
-	                iconColor: "#FFB300",
-		            confirmButtonColor: "#FFB300"
-		        });
+		$(document).on("keydown", ".inputLink[contenteditable='true']", function(e) {
+		    if (e.key === "Enter") {
+		        e.preventDefault();
+		    }
+		});
+		
+		$(document).on("keydown", ".inputPw[contenteditable='true']", function(e) {
+		    if (e.key === "Enter") {
+		        e.preventDefault();
 		    }
 		});
 		
