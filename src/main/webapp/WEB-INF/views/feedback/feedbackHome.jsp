@@ -648,9 +648,131 @@ a {
 	</div>
 
 	<script>
-	
+	// 좋아요
+	$(".postLikeBox").on("click", function () {
 
-        // 좋아요 버튼
+	    let btn = $(this);
+	    let postDownBox = btn.closest(".postDownBox");
+	    let suggestion_seq = postDownBox.attr("data-seq");
+
+	    let likeCountSpan = btn.find(".agreeCount");
+	    let unlikeBtn = postDownBox.find(".postCommentBox");
+	    let unlikeCountSpan = unlikeBtn.find(".noCount");
+
+	    $.ajax({
+	        url: "/feedback/selectReaction",
+	        type: "post",
+	        data: { suggestion_seq: suggestion_seq }
+	    }).done(function(check){
+
+	        if(check === "login"){
+	            Swal.fire({
+	                icon: "warning",
+	                title: "Wait !",
+	                text: "로그인 후 이용 가능합니다.",
+	                iconColor: "#FFB300",
+	                confirmButtonColor: "#FFB300"
+	            });
+	            return;
+	        }
+
+	        $.ajax({
+	            url: "/feedback/like",
+	            type: "post",
+	            data: { suggestion_seq: suggestion_seq }
+	        }).done(function(like){
+
+	            if(like === "alreadyLike"){
+	                return;
+	            }
+
+	            $.ajax({
+	                url: "/feedback/likeCount",
+	                type: "post",
+	                data: { suggestion_seq: suggestion_seq }
+	            }).done(function(likeCount){
+	                likeCountSpan.text(likeCount);
+	            });
+	            
+	            $.ajax({
+	                url: "/feedback/unlikeCount",
+	                type: "post",
+	                data: { suggestion_seq: suggestion_seq }
+	            }).done(function(unlikeCount){
+	                unlikeCountSpan.text(unlikeCount);
+	            });
+
+	            if(like === "insertLike" || like === "updateLike"){
+	                btn.find("i").removeClass("fa-regular").addClass("fa-solid");
+	                unlikeBtn.find("i").removeClass("fa-solid").addClass("fa-regular");
+	            }
+	        });
+	    });
+	});
+	
+	// 싫어요
+	$(".postCommentBox").on("click", function () {
+
+    let btn = $(this);
+    let postDownBox = btn.closest(".postDownBox");
+    let suggestion_seq = postDownBox.attr("data-seq");
+
+    let unlikeCountSpan = btn.find(".noCount");
+    let likeBtn = postDownBox.find(".postLikeBox");
+    let likeCountSpan = likeBtn.find(".agreeCount");
+
+    $.ajax({
+        url: "/feedback/selectReaction",
+        type: "post",
+        data: { suggestion_seq: suggestion_seq }
+    }).done(function(check){
+
+        if(check === "login"){
+            Swal.fire({
+                icon: "warning",
+                title: "Wait !",
+                text: "로그인 후 이용 가능합니다.",
+                iconColor: "#FFB300",
+                confirmButtonColor: "#FFB300"
+            });
+            return;
+        }
+
+        $.ajax({
+            url: "/feedback/unlike",
+            type: "post",
+            data: { suggestion_seq: suggestion_seq }
+        }).done(function(unlike){
+
+            if(unlike === "alreadyUnlike"){
+                return;
+            }
+
+            $.ajax({
+                url: "/feedback/likeCount",
+                type: "post",
+                data: { suggestion_seq: suggestion_seq }
+            }).done(function(likeCount){
+                likeCountSpan.text(likeCount);
+            });
+
+            $.ajax({
+                url: "/feedback/unlikeCount",
+                type: "post",
+                data: { suggestion_seq: suggestion_seq }
+            }).done(function(unlikeCount){
+                unlikeCountSpan.text(unlikeCount);
+            });
+
+            if(unlike === "insertUnlike" || unlike === "updateUnlike"){
+                btn.find("i").removeClass("fa-regular").addClass("fa-solid");
+                likeBtn.find("i").removeClass("fa-solid").addClass("fa-regular");
+            }
+        });
+    });
+});
+
+        /* /* // 좋아요 버튼
         // container가 감시하고 있다가 postLikeBox가 눌리면 함수를 실행
         $(".postLikeBox").on("click", function () {
         	
@@ -732,10 +854,10 @@ a {
 				});
              }
         });	
-    });
+    }); */
     
     		// 싫어요 버튼
-        	$(".postCommentBox").on("click", function(){
+        	/* $(".postCommentBox").on("click", function(){
         		let btn = $(this);
         		let postDownBox = $(this).closest(".postDownBox");
         		let suggestion_seq = postDownBox.attr("data-seq");
@@ -810,7 +932,7 @@ a {
      					});
         			}
         		});
-        	});
+        	}); */
     		
         // 신고버튼을 눌렀을 때, 내가 누른 게시글 신고버튼만 눌림
         $(".reportIcon").on("click", function (e) {

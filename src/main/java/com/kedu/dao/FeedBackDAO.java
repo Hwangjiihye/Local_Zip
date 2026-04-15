@@ -19,10 +19,9 @@ public class FeedBackDAO {
 	// 건의사항 게시글 db에 넣기
 	public int insert(FeedBackDTO dto) throws Exception {
 		
-		String sql = "insert into suggestion values(?, ?, ?, ?, ?, ?, sysdate, ?, ?)";
+		String sql = "insert into suggestion values(?, ?, ?, ?, ?, ?, sysdate)";
 		
-		return jdbc.update(sql,dto.getSuggestion_seq() ,dto.getMem_id(), dto.getMem_nickname(), dto.getMem_dong(), dto.getSuggestion_title(), dto.getSuggestion_contents(),
-				dto.getSuggestion_like(), dto.getSuggestion_unlike());
+		return jdbc.update(sql,dto.getSuggestion_seq() ,dto.getMem_id(), dto.getMem_nickname(), dto.getMem_dong(), dto.getSuggestion_title(), dto.getSuggestion_contents());
 	}
 	
 	//-------------------file--------------------------------
@@ -33,30 +32,25 @@ public class FeedBackDAO {
 		return jdbc.queryForObject(sql, Integer.class);
 	}
 	
-	// 좋아요 db에 넣기
-	public int plusLike(int suggestion_seq) {
-	    String sql = "update suggestion set suggestion_like = suggestion_like + 1 where suggestion_seq = ?";
-	    
-	    return jdbc.update(sql, suggestion_seq);
-	}
-	
-	// 싫어요 db에 넣기
-	public int plusUnLike(int suggestion_seq) {
-		String sql = "update suggestion set suggestion_unlike = suggestion_unlike + 1 where suggestion_seq = ?";
-		return jdbc.update(sql, suggestion_seq);
-	}
-	
-	// 좋아요 취소
-	public int minusLike(int suggestion_seq) {
-		String sql = "update suggestion set suggestion_like = suggestion_like -1 where suggestion_seq = ? and suggestion_like > 0";
-		return jdbc.update(sql, suggestion_seq);
-	}
-	
-	// 싫어요 취소
-	public int minusUnlike(int suggestion_seq) {
-		String sql = "update suggestion set suggestion_unlike = suggestion_unlike -1 where suggestion_seq = ? and suggestion_unlike > 0";
-		return jdbc.update(sql, suggestion_seq);
-	}
+	/*
+	 * // 좋아요 db에 넣기 public int plusLike(int suggestion_seq) { String sql =
+	 * "update suggestion set suggestion_like = suggestion_like + 1 where suggestion_seq = ?"
+	 * ;
+	 * 
+	 * return jdbc.update(sql, suggestion_seq); }
+	 * 
+	 * // 싫어요 db에 넣기 public int plusUnLike(int suggestion_seq) { String sql =
+	 * "update suggestion set suggestion_unlike = suggestion_unlike + 1 where suggestion_seq = ?"
+	 * ; return jdbc.update(sql, suggestion_seq); }
+	 * 
+	 * // 좋아요 취소 public int minusLike(int suggestion_seq) { String sql =
+	 * "update suggestion set suggestion_like = suggestion_like -1 where suggestion_seq = ? and suggestion_like > 0"
+	 * ; return jdbc.update(sql, suggestion_seq); }
+	 * 
+	 * // 싫어요 취소 public int minusUnlike(int suggestion_seq) { String sql =
+	 * "update suggestion set suggestion_unlike = suggestion_unlike -1 where suggestion_seq = ? and suggestion_unlike > 0"
+	 * ; return jdbc.update(sql, suggestion_seq); }
+	 */
 	
 	
 	// 신고
@@ -100,16 +94,16 @@ public class FeedBackDAO {
 	public List<FeedBackDTO> list(String loginId, int start, int end) throws Exception {
 		
 		String sql = "select * from ("
-	            + " select row_number() over(order by s.suggestion_seq desc) rn, "
-	            + "s.suggestion_seq, s.mem_id, "
-				+ "m.mem_nickname, m.mem_dong, m.mem_role, "
-				+ "s.suggestion_title, s.suggestion_contents, s.suggestion_writedate, "
-				+ "s.suggestion_like, s.suggestion_unlike, r.reaction_type "
-				+ "from suggestion s "
-				+ "left join members m on s.mem_id = m.mem_id "
-				+ "left join suggestion_reaction r "
-				+ "on s.suggestion_seq = r.suggestion_seq and r.mem_id = ? "
-	            + ") where rn between ? and ?";
+	               + " select row_number() over(order by s.suggestion_seq desc) rn, "
+	               + "s.suggestion_seq, s.mem_id, "
+	            + "m.mem_nickname, m.mem_dong, m.mem_role, "
+	            + "s.suggestion_title, s.suggestion_contents, s.suggestion_writedate, "
+	            + "r.reaction_type "
+	            + "from suggestion s "
+	            + "left join members m on s.mem_id = m.mem_id "
+	            + "left join suggestion_reaction r "
+	            + "on s.suggestion_seq = r.suggestion_seq and r.mem_id = ? "
+	               + ") where rn between ? and ?";
 		
 		return jdbc.query(sql, new BeanPropertyRowMapper<FeedBackDTO>(FeedBackDTO.class), loginId, start, end);
 	}
