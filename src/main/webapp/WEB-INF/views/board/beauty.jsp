@@ -864,7 +864,7 @@ hr {
         	endNavi = pageTotalCount;
         }
         
-        for(let i = startNavi; i < endNavi; i++) {
+        for(let i = startNavi; i <= endNavi; i++) {
         	let navi = $("<a>");
         	navi.attr("href", "/board/beauty?sort=" + sort + "&cPage=" + i);
         	navi.html(i + " ");

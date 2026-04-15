@@ -445,6 +445,7 @@ img {
 	font-size: 15px;
 	padding: 13px 0 10px 10px;
 	white-space: pre-wrap;
+	word-break: break-all;
 }
 
 hr {

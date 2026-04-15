@@ -166,6 +166,8 @@ button, body {
 	font-size: 24px;
 	font-weight: bold;
 	margin: 0;
+	white-space: pre-line;
+    word-break: break-all;
 }
 
 .postContents {
