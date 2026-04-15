@@ -306,6 +306,8 @@ button, body {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 	padding: 10px 0 5px 13px;
+	white-space: pre-line;
+    word-break: break-all;
 }
 
 #summernote {
@@ -817,7 +819,7 @@ hr {
             });
               return;
           }
-          if(post_text == ""){
+          if(post_contents == "" || post_contents == "<br>"){
              Swal.fire({
                icon: "info",
                title: "Wait  !",
