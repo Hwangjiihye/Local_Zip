@@ -336,12 +336,17 @@ hr {
 			<div class="backBtnDiv">
 				<!-- 			게시글을 누르기 전에 보고있었던 목록의 페이지를 기억해서, 누르면 전으로 돌아가는 기능 : onclick="history.back();" -->
 				<c:choose>
-				<c:when test="${role==0}">
-				<a href="/admin/toAdminNotice?cPage=${cPage}"><input class="backBtn" type="button" value="목록으로"></a>
-				</c:when>
-				<c:otherwise>
-				<a href="/notice/toNotice?cPage=${cPage}"><input class="backBtn" type="button" value="목록으로"></a>
-				</c:otherwise>
+					<c:when test="${role==0}">
+					<a href="/admin/toAdminNotice?cPage=${cPage}"><input class="backBtn" type="button" value="목록으로"></a>
+					</c:when>
+					
+					<c:when test="${empty role}"> <!-- 비회원 role이 없는 경우 empty role -->
+					<a href="/"><input class="backBtn" type="button" value="목록으로"></a>
+					</c:when>
+					
+					<c:otherwise>
+					<a href="/notice/toNotice?cPage=${cPage}"><input class="backBtn" type="button" value="목록으로"></a>
+					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
@@ -370,16 +375,16 @@ hr {
 					<div class="noticeDiv">
 					<c:choose>
 				        <c:when test="${dto.notice_title == '📢 「따스한 봄 따라가요」 행사 안내'}">
-				            <img src="${pageContext.request.contextPath}/resources/images/SpringNotice.png" class="noticeImg">
+				            <img src="${pageContext.request.contextPath}/resources/images/NoticeBanner01.png" class="noticeImg">
 				        </c:when>
 				        <c:when test="${dto.notice_title == '📢 「우리 동네 봄맞이 플리마켓」 행사 안내'}">
-				            <img src="${pageContext.request.contextPath}/resources/images/flaMarketNotice.png" class="noticeImg">
+				            <img src="${pageContext.request.contextPath}/resources/images/NoticeBanner02.png" class="noticeImg">
 				        </c:when>
 				        <c:when test="${dto.notice_title == '📢 「별빛 아래, 토요 영화 상영회」 안내'}">
-				            <img src="${pageContext.request.contextPath}/resources/images/movieNotice.png" class="noticeImg">
+				            <img src="${pageContext.request.contextPath}/resources/images/NoticeBanner03.png" class="noticeImg">
 				        </c:when>
 				        <c:when test="${dto.notice_title == '📢 「커피 향 가득한 쉼, 담온재 오픈」'}">
-				            <img src="${pageContext.request.contextPath}/resources/images/cafeNotice.png" class="noticeImg">
+				            <img src="${pageContext.request.contextPath}/resources/images/NoticeBanner04.png" class="noticeImg">
 				        </c:when>
 				    </c:choose>
 				    </div>
