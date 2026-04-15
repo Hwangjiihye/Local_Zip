@@ -155,6 +155,9 @@ public class MembersController {
 			int role = dao.getRole(mem_id);
 			session.setAttribute("role", role);
 			
+			String dong = dao.address(mem_id); 
+			session.setAttribute("dong", dong);
+			
 			return "redirect:/admin/adminPage";
 		}else if(result == 3) {
 			rttr.addFlashAttribute("msg", "fail");
