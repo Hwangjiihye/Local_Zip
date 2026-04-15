@@ -245,9 +245,11 @@ button, body, div, input {
 	position: fixed;
 	width: 450px;
 	height: 170px;
-	z-index: -1;
+	
 	bottom: 0;
+	
 }
+
 
 .leftImg {
 	left: 0;
