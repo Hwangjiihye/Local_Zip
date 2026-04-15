@@ -57,13 +57,14 @@ public class FeedBackController {
 		String loginId = (String) session.getAttribute("loginId");
 
 		if (loginId == null) {
+			
 			return "redirect:/members/loginUi";
 		}
 
 		if (cPage == null) {
 			cPage = 1;
 		}
-
+		
 		List<FeedBackDTO> list = feedbackdao.list(loginId, cPage * 10 - 9, cPage * 10);
 	
 		Map<Integer, List<AttachmentDTO>> imageMap = new HashMap<>();
@@ -146,73 +147,120 @@ public class FeedBackController {
 		return "redirect:/feedback/feedbackHome";
 	}
 
+	// 현재 반응 확인 메서드
 	@ResponseBody
-	@RequestMapping("/like") // 좋아요
-	public String like(@RequestParam("suggestion_seq") Integer suggestion_seq, HttpSession session) throws Exception {
-
+	@RequestMapping("/selectReaction")
+	public String selectReaction(HttpSession session, Integer suggestion_seq) throws Exception {
+		
 		String loginId = (String) session.getAttribute("loginId");
 
 		if (loginId == null) {
-			return "login";
+			return "redirect:/loginUi";
 		}
-
+				
 		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
-
-		// 처음 누름
-		if (reaction == null) {
-			reactiondao.insert(loginId, suggestion_seq, "LIKE");
-			feedbackdao.plusLike(suggestion_seq);
-			return "liked";
+		
+		if(reaction == null) {
+			return "none";
 		}
+		
+		return reaction;
+		
+	}
+	
 
+	
+	
+	
+	
+	
+//	@ResponseBody
+//	@RequestMapping("/like") // 좋아요
+//	public String like(Integer suggestion_seq, HttpSession session) throws Exception {
+//
+//		String loginId = (String) session.getAttribute("loginId");
+//
+////		if (loginId == null) {
+////			return "redirect:/loginUi";
+////		}
+//		
+//		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
+//		 
+//		 //처음 누름
+//		if (reaction == null) {
+//			reactiondao.insert(loginId, suggestion_seq, "LIKE");
+//			
+//			int like = reactiondao.like(suggestion_seq); // feedbackReactionDAO의 like
+//			
+//		}else if(reaction.equals("UNLIKE")) {
+//			reactiondao.update(loginId, suggestion_seq, "LIKE");
+//			
+//			int like = reactiondao.like(suggestion_seq); // feedbackReactionDAO의 like
+//		}
+//		return "liked";
+//	}
 		// 좋아요 누름 -> 취소
-		else if ("LIKE".equals(reaction)) {
-			return "alreadyLiked";
-		}
+//		else if ("LIKE".equals(reaction)) {
+//			return "alreadyLiked";
+//		}
 
 		// 싫어요 -> 좋아요 변경
-		else if ("UNLIKE".equals(reaction)) {
-			reactiondao.update(loginId, suggestion_seq, "LIKE");
-			feedbackdao.minusUnlike(suggestion_seq);
-			feedbackdao.plusLike(suggestion_seq);
-			return "change";
-		}
-		return "fail";
-	}
+//		else if ("UNLIKE".equals(reaction)) {
+//			reactiondao.update(loginId, suggestion_seq, "LIKE");
+////			feedbackdao.minusUnlike(suggestion_seq);
+////			feedbackdao.plusLike(suggestion_seq);
+//			return "change";
+//		}
+//		return "fail";
 
-	@ResponseBody
-	@RequestMapping("/unlike")
-	public String unlike(@RequestParam("suggestion_seq") Integer suggestion_seq, HttpSession session) throws Exception {
+	
+	
+	
+//	@ResponseBody
+//	@RequestMapping("/unlike")
+//	public String unlike(Integer suggestion_seq, HttpSession session) throws Exception {
+//
+//		String loginId = (String) session.getAttribute("loginId");
+//
+////		if (loginId == null) {
+////			return "login";
+////		}
+//		
+//		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
+//		
+//		// 처음 누름
+//		if (reaction == null) {
+//			reactiondao.insert(loginId, suggestion_seq, "UNLIKE");
+//			
+//			int unlike = reactiondao.unlike(suggestion_seq); // feedbackReactionDAO의 unlike
+//		}else if(reaction.equals("LIKE")) {
+//			reactiondao.update(loginId, suggestion_seq, "UNLIKE");
+//			
+//			int unlike = reactiondao.unlike(suggestion_seq); // feedbackReactionDAO의 unlike
+//		}
+//		return "unliked";
+//		
+//		};
+		
+		
+		
 
-		String loginId = (String) session.getAttribute("loginId");
-
-		if (loginId == null) {
-			return "login";
-		}
-
-		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
-
-		// 처음 누름
-		if (reaction == null) {
-			reactiondao.insert(loginId, suggestion_seq, "UNLIKE");
-			feedbackdao.plusUnLike(suggestion_seq);
-			return "unliked";
-		}
+		
 
 		// 싫어요 누름 -> 취소
-		else if ("UNLIKE".equals(reaction)) {
-			return "alreadyLiked";
-		}
+//		else if ("UNLIKE".equals(reaction)) {
+//			return "alreadyLiked";
+//		}
 
 		// 좋아요 -> 싫어요 변경
-		else if ("LIKE".equals(reaction)) {
-			reactiondao.update(loginId, suggestion_seq, "UNLIKE");
-			feedbackdao.minusLike(suggestion_seq);
-			feedbackdao.plusUnLike(suggestion_seq);
-			return "change";
-		}
-		return "fail";
-	}
+//		else if ("LIKE".equals(reaction)) {
+//			reactiondao.update(loginId, suggestion_seq, "UNLIKE");
+////			feedbackdao.minusLike(suggestion_seq);
+////			feedbackdao.plusUnLike(suggestion_seq);
+//			return "change";
+//		}
+//		return "fail";
+//
 
 	// 신고
 	@ResponseBody

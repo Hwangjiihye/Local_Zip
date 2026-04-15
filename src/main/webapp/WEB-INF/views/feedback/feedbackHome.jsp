@@ -623,15 +623,14 @@ a {
 					</c:forEach>
 
 					<div class="postLikeBox">
-						<i
-							class="navicon2 ${myType eq 'LIKE' ? 'fa-solid' : 'fa-regular'} fa-thumbs-up fa-2xl agreeIcon"></i>
-						동의해요 <span class="agreeCount">${i.suggestion_like}</span>
+						<i class="navicon2 ${myType eq 'LIKE' ? 'fa-solid' : 'fa-regular'} fa-thumbs-up fa-2xl agreeIcon"></i>
+						동의해요 <span class="agreeCount">${likeCount}</span>
 					</div>
 
 					<div class="postCommentBox">
 						<i
 							class="navicon2 ${myType eq 'UNLIKE' ? 'fa-solid' : 'fa-regular'} fa-thumbs-down fa-2xl noIcon"
-							style="color: #5e361a;"></i> 잘 모르겠어요 <span class="noCount">${i.suggestion_unlike}</span>
+							style="color: #5e361a;"></i> 잘 모르겠어요 <span class="noCount">${unlikeCount}</span>
 					</div>
 				</div>
 			</div>
@@ -649,10 +648,66 @@ a {
 
 	<script>
 	
+		// 현재 반응 확인 메서드
+		$(".postLikeBox").on("click", function () {
+        	
+        	let btn = $(this);
+        	let postDownBox = $(this).closest(".postDownBox");
+			
+			let suggestion_seq = postDownBox.attr("data-seq");
+			
+            let likeCountSpan = btn.find(".agreeCount");
+            let unlikeBtn = postDownBox.find(".postCommentBox");
+            let unlikeCountSpan = unlikeBtn.find(".noCount");
+        	
+        	$.ajax({
+        		url: "/feedback/selectReaction",  // 좋아요 버튼을 누르면 /feedback/like로 요청을 보냄
+        		type: "post",
+        		data: {suggestion_seq: suggestion_seq}
+        	}).done(function(check){ // 1. 동의해요 비동의해요를 누른적이 있는지 없는지 체크
+        		
+                if(resp === "login"){
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Wait !",
+                        text: "로그인 후 이용 가능합니다.",
+                        iconColor: "#FFB300",
+                        confirmButtonColor: "#FFB300"
+                    });
+                    return;
+                }
+                $.ajax({
+            		url: "/feedback/like",  // 좋아요 버튼을 누르면 /feedback/like로 요청을 보냄
+            		type: "post",
+            		data: {suggestion_seq: suggestion_seq}
+		        	}).done(function(like){
+		        		
+		        		if(like === "alreadyLike") {
+		        			return;
+		        		}
+		        		
+		        		$.ajax({
+		        			url: "/feedback/likeCount",
+		        			type: "post",
+		        			data: {suggestion_seq: suggestion_seq} 
+		        		}).done(function(likeCount){
+		        			likeCountSpan.text(likeCountSpan);
+		        		});
+		        		
+		        		
+		        		
+		        	});
+		        }
+		     }
+	
+	
+	
+	
+	
 
         // 좋아요 버튼
         // container가 감시하고 있다가 postLikeBox가 눌리면 함수를 실행
-        $(".postLikeBox").on("click", function () {
+       /*  $(".postLikeBox").on("click", function () {
         	
         	let btn = $(this);
         	// this : .postLikeBox 자기 자신
@@ -662,6 +717,7 @@ a {
 			
 			// suggestion_seq : 지금 클릭한 게시글 번호 들어감
 			let suggestion_seq = postDownBox.attr("data-seq");
+			
             let likeCountSpan = btn.find(".agreeCount");
             let unlikeBtn = postDownBox.find(".postCommentBox");
             let unlikeCountSpan = unlikeBtn.find(".noCount");
@@ -676,7 +732,13 @@ a {
         		},
         		success: function(resp) { // 서버가 성공적으로 응답했을때, resp: 서버가 돌려준 결과값
         			
-        			if(resp == "login") {
+        			console.log(resp); // 카운트 수가 1개 나와야 함
+        			
+        			let likeCount = "${likeCount}";
+        			likeCountSpan.text(likeCount);
+        			console.log(likeCount); */
+        			
+/*         			if(resp == "login") {
         				Swal.fire({
     				        icon: "warning",
     				        title: "Wait !",
@@ -689,10 +751,10 @@ a {
     				    	}
     				    });
         			    return;
-        			}
+        			} */
         			
         			// ⭐ 숫자 증감
-        			if(resp == "liked") {
+        			/* if(resp == "liked") {
         				let current = Number(likeCountSpan.text());
         				likeCountSpan.text(current + 1);
         				
@@ -704,7 +766,7 @@ a {
         			else if(resp == "alreadyLiked") { // 
         				return;
         			}
-        			else if(resp == "change") {
+        			else if(resp == change) {
         				let likeCurrent = Number(likeCountSpan.text());
         				likeCountSpan.text(likeCurrent + 1);
         				
@@ -720,8 +782,8 @@ a {
                         .removeClass("fa-solid")
                         .addClass("fa-regular")
                         .css("color", "#5e361a");
-        			}
-               	},
+        			}  */
+               	/* },
             error: function() {
             	Swal.fire({
 					icon: "error",
@@ -732,14 +794,14 @@ a {
 				});
              }
         });	
-    });
+    }); */
     
     		// 싫어요 버튼
-        	$(".postCommentBox").on("click", function(){
+        	/* $(".postCommentBox").on("click", function(){
         		let btn = $(this);
         		let postDownBox = $(this).closest(".postDownBox");
-        		let suggestion_seq = postDownBox.attr("data-seq");
         		
+        		let suggestion_seq = postDownBox.attr("data-seq");
         		let unlikeCountSpan = btn.find(".noCount");
         		let likeBtn = postDownBox.find(".postLikeBox");
         		let	likeCountSpan = likeBtn.find(".agreeCount");
@@ -752,7 +814,11 @@ a {
         			},
         			success: function(resp) {
         				
-        				if(resp == "login") {
+        				console.log(resp);
+        				
+        				unlikeCountSpan.text(resp); */
+        				
+        				/* if(resp == "login") {
         					Swal.fire({
         				        icon: "warning",
         				        title: "Wait !",
@@ -765,10 +831,10 @@ a {
         				    	}
         				    });
         				    return;
-        				}
+        				} */
         				
         				// ⭐ 숫자 증감
-        				if(resp == "unliked") {
+        				/* if(resp == "unliked") {
         					let current = Number(unlikeCountSpan.text());
         					unlikeCountSpan.text(current + 1);
         					
@@ -778,11 +844,11 @@ a {
                            .css("color", "#5e361a");
         				}
                         
-        				else if(resp == "alreadyLiked") {
+        				else if(resp == "alreadyLiked") { 
         					return;
         				}
         				
-        				else if(resp == "change") {
+        				else if(resp == change) {
         					let unlikeCurrent = Number(unlikeCountSpan.text());
         					unlikeCountSpan.text(unlikeCurrent + 1);
         					
@@ -798,8 +864,8 @@ a {
                             .removeClass("fa-solid")
                             .addClass("fa-regular")
                             .css("color", "#5e361a");
-        				}
-        			},
+        				}  */
+        			/* },
         			error: function(){
         				 Swal.fire({
      						icon: "error",
@@ -810,7 +876,7 @@ a {
      					});
         			}
         		});
-        	});
+        	});  */
     		
         // 신고버튼을 눌렀을 때, 내가 누른 게시글 신고버튼만 눌림
         $(".reportIcon").on("click", function (e) {
@@ -1260,6 +1326,8 @@ a {
         
        	let startNavi = Math.floor(((currentPage - 1)/naviCountPerPage)) * naviCountPerPage + 1;
         let endNavi = startNavi + naviCountPerPage - 1;
+        
+        
         
         if(endNavi > pageTotalCount) {
         	endNavi = pageTotalCount;

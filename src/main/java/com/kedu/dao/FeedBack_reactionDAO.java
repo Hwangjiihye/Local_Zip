@@ -21,10 +21,27 @@ public class FeedBack_reactionDAO {
 		String sql = "select reaction_type from suggestion_reaction where mem_id = ? and suggestion_seq = ?";
 		
 		try {
-			return jdbc.queryForObject(sql, String.class, mem_id, suggestion_seq);
+			return jdbc.queryForObject(sql, String.class, mem_id, suggestion_seq); //  like / unlike
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	// 좋아요 갯수
+	public int like(int suggestion_seq) throws Exception {
+		
+		String sql = "select count(*) from suggestion_reaction where suggestion_seq = ? and reaction_type = 'LIKE'";
+		
+		return jdbc.queryForObject(sql, Integer.class, suggestion_seq);
+	}
+	
+	
+	// 싫어요 갯수
+	public int unlike(int suggestion_seq) throws Exception {
+		
+		String sql = "select count(*) from suggestion_reaction where suggestion_seq = ? and reaction_type = 'UNLIKE'";
+		
+		return jdbc.queryForObject(sql, Integer.class, suggestion_seq);
 	}
 	
 	// 처음 반응 insert
