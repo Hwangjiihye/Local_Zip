@@ -1097,18 +1097,6 @@ a {
 		            sessionStorage.setItem("popupViewed", "true");
 		        }
 		    };
-		
-			$(".loginBtn").on("click", function() {
-				$(".loginBtn").css({"display" : "none"});
-				$(".joinBtn").css({"display" : "none"});
-				$(".logoutArea").css({"display" : "flex"});
-			})
-
-			$(".logoutArea").on("click", function() {
-				$(".loginBtn").css({"display" : "inline"});
-				$(".joinBtn").css({"display" : "inline"});
-				$(".logoutArea").css({"display" : "none"});
-			})
 			
 		    // 1. 게시글 상세 페이지 이동 (통합 제어)
 		    // .postBox를 클릭했을 때, 클릭된 요소가 신고/좋아요 관련 요소가 아닐 때만 이동

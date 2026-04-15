@@ -11,6 +11,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
+
 <style>
 /* 기존 폰트 및 기본 스타일 유지 */
 @font-face {
@@ -101,11 +103,11 @@ body, html {
 
 /* 상단 사용자 정보 섹션 */
 .userInfoSection {
-	display: flex;
-	align-items: center;
+margin: 20px auto;
+	width : 1000px;
 	padding: 20px;
-	margin-top: 10px;
-	margin-left: 430px;
+	position: relative;
+	
 }
 
 .userIcon {
@@ -120,11 +122,13 @@ body, html {
 	font-size: 24px;
 	font-weight: bold;
 	color: #333;
+	position: relative;
+	top: -30px;
 }
 
 /* 게시글 박스 (와이어프레임 구조) */
 .postBox {
-	width: 95%;
+	width: 1000px;
 	max-width: 1000px;
 	margin: 20px auto;
 	background-color: #fbe5c0; /* 와이어프레임의 흰색 배경 느낌 */
@@ -400,8 +404,8 @@ body, html {
 		
 		
 		<div class="userInfoSection">
-			<img class="userIcon" src="/resources/images/birdprofile.png" style="width: 80px;"> <span
-				class="userName">${nickname}</span>
+			<img class="userIcon" src="/resources/images/birdprofile.png" style="width: 80px;"> 
+			<span class="userName">${nickname}</span>
 		</div>
 
 		<c:choose>

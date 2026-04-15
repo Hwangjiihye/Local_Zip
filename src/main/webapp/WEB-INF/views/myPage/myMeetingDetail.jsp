@@ -8,6 +8,8 @@
 <title>우리동네.zip</title>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
+
 <style>
 	@font-face {
 		font-family: 'GMarketSans';

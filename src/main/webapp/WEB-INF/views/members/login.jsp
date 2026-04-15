@@ -8,6 +8,7 @@
 <title>우리동네.zip</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 
 <style>
 @font-face {
@@ -48,6 +49,8 @@ body {
 }
 
 .container {
+position : relative;
+	z-index: 2;
 	width: 100%;
 	min-height: 100vh;
 	background-color: #fbe5c0;
@@ -190,11 +193,12 @@ input{
 }
 
 .leftImg, .rightImg{
-	position: absolute;
+	position: absolute;   /* 🔥 fixed ❌ */
+	bottom: 0;
 	width: 450px;
 	height: 170px;
-	z-index: 10;
-	bottom: 0;
+	z-index: -1;
+	pointer-events: none;
 }
 .leftImg{
     left: 0;

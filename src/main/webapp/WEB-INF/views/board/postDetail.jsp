@@ -14,7 +14,7 @@
 <script src="/resources/summernote/summernote-lite.js"></script>
 <script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 <style>
 /* 폰트 */
 @font-face {

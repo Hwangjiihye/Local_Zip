@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 <style>
 /* 폰트 */
 @font-face {
@@ -54,6 +54,8 @@ button, body, div, input {
 }
 
 .container {
+	position : relative;
+	z-index: 2;
 	width: 100%;
 	min-height: 100vh;
 	/* 최소 높이 지정 : 브라우저 */
@@ -190,6 +192,7 @@ button, body, div, input {
 	color: #5e361a;
 	font-size: 17px;
 	font-weight: bold;
+	flex-shrink: 0;
 }
 
 .requestBtn:hover, .backBtn:hover {
@@ -242,11 +245,12 @@ button, body, div, input {
 	outline: none;
 }
 .leftImg, .rightImg {
-	position: fixed;
+	position: absolute;   /* 🔥 fixed ❌ */
+	bottom: 0;
 	width: 450px;
 	height: 170px;
-	
-	bottom: 0;
+	z-index: -1;
+	pointer-events: none;
 	
 }
 

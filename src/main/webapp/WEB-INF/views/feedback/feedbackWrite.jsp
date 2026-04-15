@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 
 	<style>
 	/* 폰트 */
@@ -59,6 +60,8 @@
 	}
 	
 	.container {
+	position : relative;
+	z-index: 2;
 		width: 100%;
 		min-height: 100vh;
 		min-width: 1000px; 
@@ -200,8 +203,11 @@
 		color: #5e361a;
 		font-size: 17px;
 		font-weight: bold;
+		
 	}
-	
+	.bottomBtn a {
+	display: block;
+}
 	.requestBtn:hover, .backBtn:hover {
 	   background-color: #fecc56;
    		color: #A66A3F;
@@ -252,7 +258,8 @@
 	position: absolute;
 	width: 450px;
 	height: 170px;
-	z-index: 10;
+	z-index: -1;
+	pointer-events: none;
 	bottom: 0;
 	}
 	.leftImg{
