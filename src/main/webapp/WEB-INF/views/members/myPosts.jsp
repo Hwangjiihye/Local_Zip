@@ -354,6 +354,12 @@ button, body {
 .pageBox a:hover {
 	background-color: #F2D3A2;
 }
+
+.nowNavicon{
+   transform: translateY(-3px); /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   color: #e6a83e;
+}
 </style>
 
 </head>
@@ -444,10 +450,10 @@ button, body {
 					<a href="/members/loginUi"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 				</c:when>
 				<c:when test="${role == 1}">
-					<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+					<a href="/members/mypage"><i class="nowNavicon fa-solid fa-user fa-2xl"></i></a>
 				</c:when>
 				<c:otherwise>
-					<a href="/admin/adminPage"><i class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
+					<a href="/admin/adminPage"><i class="nowNavicon fa-solid fa-user fa-2xl"></i></a>
 				</c:otherwise>
 			</c:choose>
 
