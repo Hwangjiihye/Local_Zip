@@ -346,7 +346,7 @@
 	   	 	
 	   	    let contentLimit = 500;
 	   	    let linkLimit = 100;
-			let pwLimit = 30;
+			let pwLimit = 8;
 			
 			if(contents == "" || contents == "<br>"){
 	             Swal.fire({
@@ -413,12 +413,12 @@
 	          }
 	          if (pwText.length > pwLimit) {
 	              let currentPwLen = pwText.length;
-	              let overPw = pwText.substring(pwLimit, pwLimit + 30); 
+	              let overPw = pwText.substring(pwLimit, pwLimit + 10); 
 
 	              Swal.fire({
 	                  icon: "warning",
 	                  title: "패스워드 글자수 초과!",
-	                  html: "현재 패스워드가 <b>" + currentPwLen + "자</b>입니다. (제한: 30자)<br><br>" +
+	                  html: "현재 패스워드가 <b>" + currentPwLen + "자</b>입니다. (제한: 8자)<br><br>" +
 	                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
 	                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
 	                        "<span style='color:#555;'>... " + overPw + "</span></div>",

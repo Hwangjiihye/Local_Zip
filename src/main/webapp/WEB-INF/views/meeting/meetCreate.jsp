@@ -348,7 +348,7 @@
 					
 					<div class="descTextDiv">
 						<div class="descText">자세한 소개글</div>
-						<div class="descTextDetail"><textarea id="detail" name="meet_detailcontents" class="detailContent" maxlength="1000" style="border: #fbe5c0" type="text" placeholder="모임을 소개해 주세요"></textarea></div>
+						<div class="descTextDetail"><textarea id="detail" name="meet_detailcontents" class="detailContent" maxlength="500" style="border: #fbe5c0" type="text" placeholder="모임을 소개해 주세요"></textarea></div>
 					</div>
 					
 					<div class="locationDiv">	
