@@ -185,7 +185,7 @@ input, button, body {
 
 .postBox {
 	/* 수정: 고정 1500px 제거 */
-	width: 95%;
+	width: 1500px;
 	max-width: 1500px;
 	/* 적당히 보기 좋은 최대 너비 설정 */
 	min-height: 200px;
@@ -502,6 +502,15 @@ a {
 	transform: translateY(5px);
 	line-height: 70px; /* 세로 위치 (핵심🔥) */
 }
+.nowNavicon{
+   transform: translateY(-3px); /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   color: #e6a83e;
+}
+.headBox a {
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit;        /* 부모 요소의 글자색 상속 (파란색 제거) */
+}
 </style>
 
 </head>
@@ -509,7 +518,7 @@ a {
 
     <div class="container">
 	
-        <div class="headBox">우리 동네.zip</div>
+        <div class="headBox"><a href="/">우리 동네.zip</a></div>
         
         <div class="categoryBtnBox">
             <div class="categoryBtns">
@@ -610,7 +619,7 @@ a {
         
 
         <div class="bottomBox">
-            <a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
+            <a href="/"><i class="nowNavicon fa-solid fa-house fa-2xl"></i></a>
             <a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
             <a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>

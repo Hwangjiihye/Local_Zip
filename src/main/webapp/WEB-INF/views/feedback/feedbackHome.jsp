@@ -99,30 +99,7 @@ button, body {
 	gap: 200px;
 }
 
-.writeBtn {
-	cursor: pointer;
-	transition: all 0.2s ease;
-	
-	width: 1730px;
-	height: 100px;
-	margin-left: 80px;
-	cursor: pointer;
-	margin-top: 1%;
-	margin-bottom: 1%;
-	border: #fbe5c0;
-	color: #5e361a;
-	font-size: 30px;
-	font-weight: bold;
-	background-color: #FFB300;
-	border-radius: 5px;
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	/* 그림자 효과 */
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-	/* 애니메이션 부드럽게 */
-	transition: all 0.2s ease;
-}
+
 
 .writeBtn:hover, .editBtn:hover, .delBtn:hover,
  .cancleBtn:hover, .okBtn:hover, .fileDelBtn:hover
@@ -162,10 +139,31 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
-
+.writeBtn {
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display:block;
+	width: 1500px;
+	height: 100px;
+	margin: auto;
+	cursor: pointer;
+	margin-top:1%;
+	margin-bottom:1%;
+	border: #fbe5c0;
+	color: #5e361a;
+	font-size: 30px;
+	font-weight: bold;
+	background-color: #FFB300;
+	border-radius: 5px;
+	
+	/* 그림자 효과 */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	/* 애니메이션 부드럽게 */
+	transition: all 0.2s ease;
+}
 .postBox {
 	/* 수정: 고정 1500px 제거 */
-	width: 95%;
+	width: 1500px;
 	max-width: 1500px;
 	/* 적당히 보기 좋은 최대 너비 설정 */
 	min-height: 200px;

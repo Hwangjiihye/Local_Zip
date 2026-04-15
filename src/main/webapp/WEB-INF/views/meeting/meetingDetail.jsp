@@ -76,7 +76,7 @@ body {
 
 .meetingDetail {
 	margin: auto;
-	width: 70%;
+	width: 1400px;
 	border-radius: 10px;
 	background-color: #fbe5c0;
 	padding: 35px;
@@ -222,11 +222,12 @@ p {
 }
 
 .leftImg, .rightImg {
-	position: absolute;
+	position: fixed;
 	width: 450px;
 	height: 170px;
-	z-index: 10;
+	z-index: -1;
 	bottom: 0;
+	pointer-events: none;
 }
 
 .leftImg {

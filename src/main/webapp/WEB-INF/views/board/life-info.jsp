@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -7,7 +8,8 @@
 <title>우리동네.zip</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -173,15 +175,15 @@ input, button, body {
 }
 
 .orderBtn {
-   border: none;
-   background-color: transparent;
-   border-radius: 30%;
-   font-size: 15px;
-   color: #A66A3F;
-   font-size: 15px;
-   margin: 10px 0 10px 0;
-   transition: all 0.2s ease;
-   cursor: pointer;
+	border: none;
+	background-color: transparent;
+	border-radius: 30%;
+	font-size: 15px;
+	color: #A66A3F;
+	font-size: 15px;
+	margin: 10px 0 10px 0;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
 
 .orderBtn:hover {
@@ -190,7 +192,7 @@ input, button, body {
 
 .postBox {
 	/* 수정: 고정 1500px 제거 */
-	width: 95%;
+	width: 1500px;
 	max-width: 1500px;
 	/* 적당히 보기 좋은 최대 너비 설정 */
 	min-height: 200px;
@@ -316,9 +318,9 @@ input, button, body {
 	margin-top: 5px;
 	line-height: 40px;
 	white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
-    display: block;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+	display: block;
 }
 
 .postContent {
@@ -358,8 +360,8 @@ input, button, body {
 }
 
 /* 기본 상태 : 빨간하트는 숨겨놓고, 빈 하트는 보여주기 */
-.beforeHeart{
-	display : inline;
+.beforeHeart {
+	display: inline;
 }
 
 .afterHeart {
@@ -457,48 +459,58 @@ hr {
 	text-align: center;
 }
 
-		.pageBox{
-		    text-align: center;
-		    padding: 20px;
-		    font-size: 18px;
-		    color: #A66A3F;
-		    margin-bottom: 55px;
-		}
-		
-		.pageBox a{
-		    display: inline-block;
-		    min-width:35px;
-		    padding:6px 10px;
-		    margin: 0 8px;
-		    text-decoration: none;
-		    color: #A66A3F;
-		    border-radius:6px;
-		    transition:0.2s;
-		    font-weight: normal;
-		    cursor: pointer;
-		}
-		
-		.pageBox a.active{
-			background-color:#fecc56;
-		    font-weight: bold;
-		    color: #5e361a;
-		}
-		
-		.pageBox a:hover{
-		    background-color:#F2D3A2;
-		}
-		
-		.swal2-icon.swal2-info .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
-		
-		.swal2-icon.swal2-warning .swal2-icon-content {
-		    font-size: 50px;     /* i 크기 */
-		    transform: translateY(5px);
-		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
+.pageBox {
+	text-align: center;
+	padding: 20px;
+	font-size: 18px;
+	color: #A66A3F;
+	margin-bottom: 55px;
+}
+
+.pageBox a {
+	display: inline-block;
+	min-width: 35px;
+	padding: 6px 10px;
+	margin: 0 8px;
+	text-decoration: none;
+	color: #A66A3F;
+	border-radius: 6px;
+	transition: 0.2s;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.pageBox a.active {
+	background-color: #fecc56;
+	font-weight: bold;
+	color: #5e361a;
+}
+
+.pageBox a:hover {
+	background-color: #F2D3A2;
+}
+
+.swal2-icon.swal2-info .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.swal2-icon.swal2-warning .swal2-icon-content {
+	font-size: 50px; /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px; /* 세로 위치 (핵심🔥) */
+}
+
+.nowNavicon {
+	transform: translateY(-3px); /* 살짝 위로 뜸 */
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+	color: #e6a83e;
+}
+.headBox a {
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit;        /* 부모 요소의 글자색 상속 (파란색 제거) */
+}
 </style>
 
 </head>
@@ -506,24 +518,25 @@ hr {
 
 	<div class="container">
 
-		<div class="headBox">우리 동네.zip</div>
+		<div class="headBox"><a href="/">우리 동네.zip</a></div>
 
 		<div class="categoryBtnBox">
 			<div class="categoryBtns">
 				<a href="/"><button class="categoryBtn topBtn" type="button">
 						<i class="fa-solid fa-house fa-lg"></i> 전체
-					</button></a> <a href="/board/lifeInfo"><button class="categoryBtn nowBtn" type="button">
+					</button></a> <a href="/board/lifeInfo"><button class="categoryBtn nowBtn"
+						type="button">
 						<i class="fa-regular fa-lightbulb fa-lg"></i> 생활정보
-					</button></a>
-				<a href="/board/food"><button class="categoryBtn topBtn" type="button">
-					<i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페
-				</button></a>
-				<a href="/board/talk"><button class="categoryBtn topBtn" type="button">
+					</button></a> <a href="/board/food"><button class="categoryBtn topBtn"
+						type="button">
+						<i class="fa-solid fa-utensils fa-lg"></i> 맛집/카페
+					</button></a> <a href="/board/talk"><button class="categoryBtn topBtn"
+						type="button">
 						<i class="fa-regular fa-comment-dots fa-lg"></i> 고민/이야기
+					</button></a> <a href="/board/beauty"><button class="categoryBtn topBtn"
+						type="button">
+						<i class="fa-solid fa-shirt fa-lg"></i> 미용/패션
 					</button></a>
-				<a href="/board/beauty"><button class="categoryBtn topBtn" type="button">
-					<i class="fa-solid fa-shirt fa-lg"></i> 미용/패션
-				</button></a>
 			</div>
 		</div>
 
@@ -545,12 +558,14 @@ hr {
 					</div>
 
 					<c:forEach var="i" items="${lifeInfo}">
-						<div class="postBox" data-seq="${i.post_seq}" data-writer="${i.mem_id}">
+						<div class="postBox" data-seq="${i.post_seq}"
+							data-writer="${i.mem_id}">
 
 							<div class="postUpBox">
 
 								<div class="postProfile">
-									<img class="contentProfile" src="/resources/images/Profile.png" width="60px">
+									<img class="contentProfile" src="/resources/images/Profile.png"
+										width="60px">
 								</div>
 
 								<div class="postInfoBox">
@@ -566,17 +581,19 @@ hr {
 										<div class="profileTime profileInfo" style="color: #5e361a;">${i.post_date}</div>
 									</div>
 								</div>
-								<c:if test="${loginId != null && loginId != i.mem_id && i.mem_role != 0}">
+								<c:if
+									test="${loginId != null && loginId != i.mem_id && i.mem_role != 0}">
 									<div class="reportArea">
-										<img src="/resources/images/free-icon-siren1.png" class="reportIcon"
-											style="width: 25px; height: 25px; margin-bottom: 5px"></img> 
-											<select class="reportSelect" name="reports_reason">
-												<option value="" disabled selected>신고 사유</option>
-												<option value="badContents" class="reportOption">부적절한 콘텐츠</option>
-												<option value="badWord" class="reportOption">욕설/비방</option>
-												<option value="AD" class="reportOption">광고/스팸</option>
-											</select> 
-										<input class="reportBtn" type="submit" value="신고하기">
+										<img src="/resources/images/free-icon-siren1.png"
+											class="reportIcon"
+											style="width: 25px; height: 25px; margin-bottom: 5px"></img>
+										<select class="reportSelect" name="reports_reason">
+											<option value="" disabled selected>신고 사유</option>
+											<option value="badContents" class="reportOption">부적절한
+												콘텐츠</option>
+											<option value="badWord" class="reportOption">욕설/비방</option>
+											<option value="AD" class="reportOption">광고/스팸</option>
+										</select> <input class="reportBtn" type="submit" value="신고하기">
 									</div>
 								</c:if>
 
@@ -592,10 +609,10 @@ hr {
 							<c:if test="${loginId != null}">
 								<div class="postDownBox">
 
-									<div class="postLikeBox ${i.post_like_check == 1 ? 'active' : ''}">
-										<i class="fa-regular fa-heart fa-xl beforeHeart"></i>
-										
-										<i class="fa-solid fa-heart fa-xl afterHeart"></i>
+									<div
+										class="postLikeBox ${i.post_like_check == 1 ? 'active' : ''}">
+										<i class="fa-regular fa-heart fa-xl beforeHeart"></i> <i
+											class="fa-solid fa-heart fa-xl afterHeart"></i>
 
 										<div class="likeCount infoCount">${i.post_like}</div>
 									</div>
@@ -625,10 +642,14 @@ hr {
 
 
 		<div class="bottomBox">
-			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a> <a href="/map/test"><i
-				class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
-				class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
-				class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a> <a href="/members/mypage"><i
+			<a href="/"><i class="nowNavicon fa-solid fa-house fa-2xl"
+				></i></a> <a href="/map/test"><i
+				class="navicon fa-solid fa-map-location-dot fa-2xl"
+				style="color: #A66A3F"></i></a> <a href="/meeting/list?category=all"><i
+				class="navicon fa-solid fa-people-group fa-2xl"
+				style="color: #A66A3F"></i></a> <a href="/feedback/feedbackHome"><i
+				class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/members/mypage"><i
 				class="navicon fa-solid fa-user fa-2xl" style="color: #A66A3F"></i></a>
 
 		</div>
