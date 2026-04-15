@@ -53,6 +53,8 @@
 		}
 		
 		.container {
+		position : relative;
+		z-index: 2;
 			width: 100%;
 		}
 		
@@ -144,16 +146,18 @@
 		}
 		
 		.requestBtn, .backBtn{
-			width: 350px;
-		    height: 40px;
-		    background-color: #FFB300;
-		    border:none;
-		    border-radius: 10px;
-		    color: #5e361a;
-		    font-size: 17px;
-		    font-weight: bold;
+			cursor: pointer;
+		transition: all 0.2s ease;
+		width: 350px;
+		height: 40px;
+		background-color: #FFB300;
+		border: none;
+		border-radius: 10px;
+		color: #5e361a;
+		font-size: 17px;
+		font-weight: bold;
+		 flex-shrink: 0;
 		}
-		
 		.requestBtn:hover, .backBtn:hover {
 			transform: translateY(-3px);
 			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
@@ -272,7 +276,8 @@
 			position: absolute;
 			width: 450px;
 			height: 170px;
-			z-index: 10;
+			z-index: -1;
+	pointer-events: none;
 			bottom: -300px;
 		}
 		.leftImg{

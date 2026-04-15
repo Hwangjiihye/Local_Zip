@@ -57,6 +57,8 @@ button, body, div, input {
 }
 
 .container {
+position : relative;
+	z-index: 2;
 	width: 100%;
 	min-height: 100vh;
 	/* 최소 높이 지정 : 브라우저 */
@@ -164,14 +166,17 @@ button, body, div, input {
 }
 
 .requestBtn, .backBtn {
-	width: 350px;
-	height: 40px;
-	background-color: #FFB300;
-	border: none;
-	border-radius: 10px;
-	color: #5e361a;
-	font-size: 17px;
-	font-weight: bold;
+	cursor: pointer;
+		transition: all 0.2s ease;
+		width: 350px;
+		height: 40px;
+		background-color: #FFB300;
+		border: none;
+		border-radius: 10px;
+		color: #5e361a;
+		font-size: 17px;
+		font-weight: bold;
+		flex-shrink: 0;
 }
 
 .requestBtn:hover, .backBtn:hover {
@@ -230,7 +235,8 @@ button, body, div, input {
 	position: absolute;
 	width: 450px;
 	height: 170px;
-	z-index: 10;
+	z-index: -1;
+	pointer-events: none;
 	bottom: 0;
 }
 .leftImg{
