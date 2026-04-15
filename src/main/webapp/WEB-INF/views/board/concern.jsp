@@ -829,7 +829,7 @@ a {
         	endNavi = pageTotalCount;
         }
         
-        for(let i = startNavi; i < endNavi; i++) {
+        for(let i = startNavi; i <= endNavi; i++) {
         	let navi = $("<a>");
         	let sort = "${sort}";
         	navi.attr("href", "/board/talk?sort=" + sort + "&cPage=" + i);

@@ -861,7 +861,7 @@ hr {
            endNavi = pageTotalCount;
         }
         
-        for(let i = startNavi; i < endNavi; i++) {
+        for(let i = startNavi; i <= endNavi; i++) {
            let navi = $("<a>");
            let sort = "${sort}";
            navi.attr("href", "/board/food?sort=" + sort + "&cPage=" + i);
