@@ -304,6 +304,9 @@ a:visited {
 	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 	color: #e6a83e;
 }
+.FAQDiv a {
+	height: 60px;
+}
 </style>
 </head>
 <body>
@@ -366,8 +369,8 @@ a:visited {
 
 		<div class="FAQTitle">· 고객센터</div>
 		<div class="FAQDiv">
-			<div class="CS"><a href="/qa/toQa?cPage=1">고객지원 ></a></div> 
-			<div class="notice"><a href="/notice/toNotice?cPage=1">공지사항 ></a></div>
+			<a href="/qa/toQa?cPage=1"><div class="CS">고객지원 ></div> </a>
+			<a href="/notice/toNotice?cPage=1"><div class="notice">공지사항 ></div></a>
 		</div>
 
 	</div>
