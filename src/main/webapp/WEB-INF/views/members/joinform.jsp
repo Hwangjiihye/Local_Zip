@@ -10,6 +10,7 @@
 <script
 	src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 <style>
 @font-face {
 	font-family: 'GMarketSans';
@@ -290,7 +291,7 @@ a {
 						class="nickname" type="text" placeholder="닉네임을 입력해주세요. [필수]">
 				</div>
 				<div class="insertNickname">닉네임을 입력해주세요.</div>
-				<div class="x_nickname">공백 없는 2~30글자의 닉네임만 등록 가능합니다.(한/영)</div>
+				<div class="x_nickname">공백 없는 2~10글자의 닉네임만 등록 가능합니다.(한/영)</div>
 				
 				<div class="form-row">
 					<label>· PHONE : </label> <input name="mem_phone" class="phone"
@@ -342,7 +343,7 @@ a {
 				
 				<div class="form-row">
 					<label>· DETAIL :</label> <input name="mem_address2"
-						class="address2" type="text" placeholder="상세 주소를 입력해주세요.(선택사항)">
+						class="address2" type="text" placeholder="상세 주소(최대15자)를 입력해주세요.(선택사항)" maxlength="15">
 				</div>
 				
 				<input type="hidden" name="mem_dong" class="dong">
@@ -675,7 +676,7 @@ a {
 				name.focus();
 				return false;
 			} else {
-				let regex = /^[가-힣]{2,30}$|^[a-z]{2,30}$/;
+				let regex = /^[가-힣]{2,10}$|^[a-z]{2,10}$/;
 				nicknameResult = regex.test(nickname.value);
 				if (!nicknameResult) {
 					$(".insertNickname").hide();
@@ -786,6 +787,10 @@ a {
 				address1.value = "";
 				return false;
 			}
+			
+			// address2
+			/* let address2 = document.getElementsByClassName("address2")[0];
+			let regex = /^[가-힣a-zA-Z0-9\s]{2,15}$/; */
 			
 			// agreeBtn
 			let agreeBtn = document.getElementsByClassName("agreeBtn")[0];
