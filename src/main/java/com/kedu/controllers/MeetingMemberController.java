@@ -63,11 +63,6 @@ public class MeetingMemberController {
 	public int updateStatus(int seq, int meet_seq, int status) {
 		
 		int result = dao.updateStatus(seq, status);
-		
-		if(status == 1) {
-			mdao.currentUpdate(meet_seq);
-		}
-		
 	    return result;
 	}
 	

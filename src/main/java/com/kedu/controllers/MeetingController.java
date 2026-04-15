@@ -243,22 +243,22 @@ public class MeetingController {
 	}
 	
 	// 참여중인 모임 탭 > 자세히 보기 > 수정 완료 버튼 클릭 시
-//	@RequestMapping("/update")
-//	public String update(int seq, String meet_detailcontents, String meet_kakaolink, String meet_kakaopw) throws Exception{
-//		dao.updateMeeting(seq, meet_detailcontents, meet_kakaolink, meet_kakaopw);
-//		return "redirect:/meeting/myMeetingDetail?seq=" + seq;
-//	}
+	@RequestMapping("/update")
+	public String update(int seq, String meet_detailcontents, String meet_kakaolink, String meet_kakaopw) throws Exception{
+		dao.updateMeeting(seq, meet_detailcontents, meet_kakaolink, meet_kakaopw);
+		return "redirect:/meeting/myMeetingDetail?seq=" + seq;
+	}
 	
 	@ResponseBody
 	@RequestMapping("/updateReportCheck")
-	public String updateReportCheck(int seq, String meet_detailcontents, String meet_kakaolink) {
+	public String updateReportCheck(int target_seq) {
 		// 신고된 모임 수정 불가 로직
-		int count = rdao.reportUpdateBlock(seq);
+		int count = rdao.reportUpdateBlock(target_seq);
 		if(count > 0) {
 			return "fail";
 		}
-		
-		dao.updateMeeting(seq, meet_detailcontents, meet_kakaolink, meet_kakaolink);
+//		
+//		dao.updateMeeting(meet_seq, meet_detailcontents, meet_kakaolink, meet_kakaolink);
 		return "success";
 	}
 	
