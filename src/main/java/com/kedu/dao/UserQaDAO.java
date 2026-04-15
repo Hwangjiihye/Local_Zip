@@ -26,14 +26,14 @@ public class UserQaDAO {
 	}
 	
 	// qa게시글 리스트 뽑기
-	public List<QaDTO> getPostList(int start,int end){	
-		String sql = "SELECT * FROM (SELECT qa.*, ROW_NUMBER() OVER (ORDER BY qa_create_date DESC) a FROM qa) WHERE a BETWEEN ? AND ?";
-		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class),start,end);
+	public List<QaDTO> getPostList(String mem_id,int start,int end){	
+		String sql = "SELECT * FROM (SELECT qa.*, ROW_NUMBER() OVER (ORDER BY qa_create_date DESC) a FROM qa where mem_id = ?) WHERE a BETWEEN ? AND ?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<QaDTO>(QaDTO.class),mem_id,start,end);
 	}
 	
-	public int getTotalCount(){
-		String sql = "select count(*) from qa";
-		return jdbc.queryForObject(sql,Integer.class);
+	public int getTotalCount(String mem_id){
+		String sql = "select count(*) from qa where mem_id = ?";
+		return jdbc.queryForObject(sql,Integer.class,mem_id);
 	}
 	
 	// qa 수정
