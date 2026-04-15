@@ -768,6 +768,12 @@ a {
   text-decoration: none; /* 밑줄 제거 */
   color: inherit;        /* 부모 요소의 글자색 상속 (파란색 제거) */
 }
+
+.nowNavicon{
+   transform: translateY(-3px); /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   color: #e6a83e;
+}
 </style>
 </head>
 
@@ -972,11 +978,11 @@ a {
 				<div class="rightBox">
 					<a href="/notice/toNoticeDetail?notice_seq=116&cPage=1"><img src="/resources/images/localCafe2.jpg" style="border-radius: 10px;" width="100%" height="100%"></a>
 					<div class="weather-wrapper">
-					<a class="weatherwidget-io" href="https://forecast7.com/en/35d91127d77/south-korea/" data-label_1="SOUTH KOREA" data-label_2="WEATHER" data-font="Open Sans" data-icons="Climacons Animated" data-theme="pure" data-basecolor="#fbe5c0" data-shadow="rgba(1, 1, 1, 0.02)" data-accent="" data-textcolor="#5e361a" data-highcolor="#5e361a" data-lowcolor="#5e361a" data-suncolor="#FFB300" data-mooncolor="#ffffff" data-cloudcolor="#7BB8C9" data-cloudfill="#7BB8C9" data-raincolor="#7BB8C9" data-snowcolor="#ffffff" >SOUTH KOREA WEATHER</a>
-<script> // 날씨 배너
+					<a class="weatherwidget-io" href="https://forecast7.com/en/37d57126d98/seoul/" data-label_1="SEOUL" data-label_2="WEATHER" data-font="Open Sans" data-icons="Climacons Animated" data-theme="original" data-basecolor="#fbe5c0" data-accent="" data-textcolor="#5e361a" data-highcolor="#5e361a" data-lowcolor="#5e361a" data-suncolor="#FFB300" data-cloudcolor="#7BB8C9" data-cloudfill="#7BB8C9" data-raincolor="#7BB8C9" data-snowcolor="#ffffff" >SEOUL WEATHER</a>
+<script>
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
 </script>
-</div>				
+					</div>
 				</div>
 
 				<a href="/board/write">
@@ -994,7 +1000,7 @@ a {
 		</div>
 
 		<div class="bottomBar">
-			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/"><i class="nowNavicon fa-solid fa-house fa-2xl"></i></a>
 			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
 			<a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
