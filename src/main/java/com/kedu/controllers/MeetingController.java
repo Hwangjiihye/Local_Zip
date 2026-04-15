@@ -14,12 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kedu.dao.MeetingDAO;
 import com.kedu.dao.MeetingMemberDAO;
 import com.kedu.dao.ReportDAO;
 import com.kedu.dto.MeetingDTO;
+import com.kedu.dto.MeetingMemberDTO;
 
 @Controller
 @RequestMapping("/meeting")
@@ -57,25 +57,25 @@ public class MeetingController {
 			list = dao.selectByPage(category, start, end);  // + 게이지바 포함 카테고리별 리스트 출력
 		}
 		
-		List<Map<String, Object>> vlist = dao.isApplied(loginId); // 0, 승인 대기 상태 ( 승인대기중 버튼 출력 )
+		List<MeetingMemberDTO> vlist = dao.isApplied(loginId); // 0, 승인 대기 상태 ( 승인대기중 버튼 출력 )
 		Set<Integer> appliedSet = new HashSet<>();
 
-		for(Map<String,Object> m : vlist){
-			appliedSet.add(((Number)m.get("meet_seq")).intValue());
+		for(MeetingMemberDTO dto : vlist){
+			appliedSet.add(dto.getMeet_seq());
 		}
 		
-		List<Map<String, Object>> jlist = dao.joinMeet(loginId); // 1, 승인 상태 ( 참여중 버튼 출력 )
+		List<MeetingMemberDTO> jlist = dao.joinMeet(loginId); // 1, 승인 상태 ( 내 모임으로 이동 버튼 출력 )
 		Set<Integer> joinedSet = new HashSet<>();
 
-		for(Map<String,Object> m : jlist){
-			joinedSet.add(((Number)m.get("meet_seq")).intValue());
+		for(MeetingMemberDTO dto : jlist){
+			joinedSet.add(dto.getMeet_seq());
 		}
 		
-		List<Map<String, Object>> clist = dao.companionMeet(loginId); // 2, 거절 상태 ( 참여 신청 버튼 출력 )
+		List<MeetingMemberDTO> clist = dao.companionMeet(loginId); // 2, 거절 상태 ( 참여 신청 버튼 출력 )
 		Set<Integer> companionSet = new HashSet<>();
 
-		for(Map<String,Object> m : clist){
-			companionSet.add(((Number)m.get("meet_seq")).intValue());
+		for(MeetingMemberDTO dto : clist){
+			companionSet.add(dto.getMeet_seq());
 		}
 		
 		Map<String, Object> navi = this.getPageNaviAll(category, cpage); // cpage
@@ -113,18 +113,18 @@ public class MeetingController {
 		session.setAttribute("host", mdao.hostCheck(seq, loginId)); // 주최자인지 확인
 		
 		
-		List<Map<String, Object>> vlist = dao.isApplied(loginId); // 0, 승인 대기 상태 ( 승인대기중 버튼 출력 )
+		List<MeetingMemberDTO> vlist = dao.isApplied(loginId); // 0, 승인 대기 상태 ( 승인대기중 버튼 출력 )
 		Set<Integer> appliedSet = new HashSet<>();
 
-		for(Map<String,Object> m : vlist){
-			appliedSet.add(((Number)m.get("meet_seq")).intValue());
+		for(MeetingMemberDTO dto : vlist){
+			appliedSet.add(dto.getMeet_seq());
 		}
 		
-		List<Map<String, Object>> jlist = dao.joinMeet(loginId); // 1, 승인 상태 ( 내 모임으로 이동 버튼 출력 )
+		List<MeetingMemberDTO> jlist = dao.joinMeet(loginId); // 1, 승인 상태 ( 내 모임으로 이동 버튼 출력 )
 		Set<Integer> joinedSet = new HashSet<>();
 
-		for(Map<String,Object> m : jlist){
-			joinedSet.add(((Number)m.get("meet_seq")).intValue());
+		for(MeetingMemberDTO dto : jlist){
+			joinedSet.add(dto.getMeet_seq());
 		}
 		
 		String category = (String)session.getAttribute("category");

@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kedu.dto.MeetingDTO;
+import com.kedu.dto.MeetingMemberDTO;
 
 @Repository
 public class MeetingDAO {
@@ -80,19 +81,19 @@ public class MeetingDAO {
 		return jdbc.queryForObject(sql, Integer.class, loginId, status);
 	}
 	
-	public List<Map<String, Object>> isApplied(String loginId) { // 0, 승인 대기 상태
+	public List<MeetingMemberDTO> isApplied(String loginId) { // 0, 승인 대기 상태
 		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 0";
-		return jdbc.queryForList(sql, loginId);
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(MeetingMemberDTO.class), loginId);
 	}
 	
-	public List<Map<String, Object>> joinMeet(String loginId){ // 1, 승인 상태
+	public List<MeetingMemberDTO> joinMeet(String loginId){ // 1, 승인 상태
 		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 1";
-		return jdbc.queryForList(sql, loginId);
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(MeetingMemberDTO.class), loginId);
 	}
 	
-	public List<Map<String, Object>> companionMeet(String loginId){ // 2, 거절 상태
+	public List<MeetingMemberDTO> companionMeet(String loginId){ // 2, 거절 상태
 		String sql = "select meet_seq from meeting_member where mem_id = ? and meetmem_status = 2";
-		return jdbc.queryForList(sql, loginId);
+		return jdbc.query(sql, new BeanPropertyRowMapper<>(MeetingMemberDTO.class), loginId);
 	}
 	
 	public int deleteMeeting(int meet_seq) {
