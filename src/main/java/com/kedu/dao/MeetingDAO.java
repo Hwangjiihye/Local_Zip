@@ -96,6 +96,7 @@ public class MeetingDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<>(MeetingMemberDTO.class), loginId);
 	}
 	
+	// 참여중인 모임 탭에서 모임 삭제 클릭 시
 	public int deleteMeeting(int meet_seq) {
 		String sql = "delete from meeting where meet_seq = ?";
 		return jdbc.update(sql, meet_seq);
@@ -130,11 +131,11 @@ public class MeetingDAO {
 		return jdbc.update(sql, meet_detailcontents, meet_kakaolink, meet_kakaopw, seq);
 	}
 	
-	// 참여중인 모임 탭에서 모임 삭제 버튼 클릭 시
-	public int deleteMeeting(int meet_seq, int status) {
-
-	    String sql = "update meeting set meet_status = ? where meet_seq = ?";
-
-	    return jdbc.update(sql, status, meet_seq);
-	}
+//	// 참여중인 모임 탭에서 모임 삭제 버튼 클릭 시
+//	public int deleteMeeting(int meet_seq, int status) {
+//
+//	    String sql = "update meeting set meet_status = ? where meet_seq = ?";
+//
+//	    return jdbc.update(sql, status, meet_seq);
+//	}
 }

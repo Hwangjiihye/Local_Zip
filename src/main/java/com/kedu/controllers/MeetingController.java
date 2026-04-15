@@ -265,7 +265,7 @@ public class MeetingController {
 	// 참여중인 모임 탭 > 모임 삭제 버튼 클릭 시
 	@ResponseBody
 	@RequestMapping("/deleteMeeting")
-	public int deleteMeeting(int seq, int status) {
+	public int deleteMeeting(int seq) {
 		
 		// 신고된 모임 삭제 불가 로직
 		int count = rdao.reportDeleteBlock(seq);
@@ -273,7 +273,7 @@ public class MeetingController {
 		if(count > 0) {
 			return -1;
 		}
-		return dao.deleteMeeting(seq, status);
+		return dao.deleteMeeting(seq);
 	}
 	
 	@ExceptionHandler(Exception.class)

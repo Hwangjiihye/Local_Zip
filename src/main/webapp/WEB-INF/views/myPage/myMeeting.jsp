@@ -433,8 +433,7 @@
 			        	$.ajax({
 							url:"/meeting/deleteMeeting",
 							data:{
-								seq: seq,
-								status: 2
+								seq: seq
 							}
 						}).done(function(resp){
 							if(Number(resp) == -1){
