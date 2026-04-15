@@ -324,6 +324,11 @@ body {
 	color: #5e361a;
 }
 
+.titleContent, .textContent{
+	word-break: keep-all;
+	overflow-wrap: break-word;
+}
+
 /* 답변 영역 (와이어프레임의 하단 칸) */
 .answerBox {
 	background-color: #F2D3A2;
@@ -520,10 +525,15 @@ img {
 			        </div>
 			
 			        <div class="postBody">
-			            <div>${i.qa_title}</div>
-			            <div>${i.qa_contents}</div>
+				        <div class="rowItem1">
+				        	<span class="labelName">제목</span>
+				        	<div class="titleContent">${i.qa_title}</div>
+			        	</div>
+				        <div class="rowItem2">   	
+				            <span class="labelName">내용</span>
+				            <div class="textContent">${i.qa_contents}</div>
+		            	</div>
 			        </div>
-			        
 		<div class="qaReply">
 	    	<div class="qaReplyRow">
 		        <div class="adminProfileDiv">
@@ -639,6 +649,13 @@ img {
 				let textarea = $(this).find(".inputQaReply");
 				let value = textarea.val().trim();
 				
+				// 데이터추출
+				 let reply_contents = $(".answerDiv").html();
+	             // 엔터(\n)를 포함한 실제 텍스트 추출 (innerText 사용)
+	             let replyContents = document.querySelector(".answerDiv").innerText; 
+	  			 // 내용 제한
+	             let limit = 1000;     
+	  			 
 				if(value == ""){
 					e.preventDefault();
 					Swal.fire({
@@ -650,6 +667,25 @@ img {
 					});
 					return false;
 					}
+					
+				// 글자수 초과 체크
+		          if (replyContents.length > limit) {
+		              let currentLen = replyContents.length;
+		              let overText = replyContents.substring(limit, limit + 100); 
+
+		              Swal.fire({
+		                  icon: "warning",
+		                  title: "답변 글자수 초과!",
+		                  html: "현재 답변이 <b>" + currentLen + "자</b>입니다. (제한: 1000자)<br><br>" +
+		                        "<div style='color:red; background:#fff1f1; padding:15px; border-radius:5px; text-align:left; font-size:14px; border:1px solid #ffcccc; white-space: pre-wrap; word-break: break-all;'>" +
+		                        "<b>이 부분부터 삭제해주세요:</b><br><br>" +
+		                        "<span style='color:#555;'>... " + overText + "</span></div>",
+		                  iconColor: "#EB0000",
+		                  confirmButtonColor: "#FFB300"
+		              });
+		              return;
+		          }
+					
 				})
 			
 				
@@ -690,10 +726,12 @@ img {
 					let seq = btn.data("seq");
 					let updateContents = $("#inputUpdate_" + seq).val();
 		             
+					 // 데이터추출
+					 let reply_contents = $(".answerDiv").html();
 		             // 엔터(\n)를 포함한 실제 텍스트 추출 (innerText 사용)
-		             let update_text = document.querySelector("#inputUpdate_" + seq).innerText;
-		             
-		             let limit = 1000;     // 내용 글자수 제한
+		             let replyContents = document.querySelector(".answerDiv").innerText; 
+		  			 // 내용 제한
+		             let limit = 1000;     
 		             
 					if(updateContents.trim() == ""){
 						Swal.fire({
@@ -707,9 +745,9 @@ img {
 					}
 
 			          // 글자수 초과 체크
-			          if (update_text.length > limit) {
-			              let currentLen = update_text.length;
-			              let overText = update_text.substring(limit, limit + 100); 
+			          if (replyContents.length > limit) {
+			              let currentLen = replyContents.length;
+			              let overText = replyContents.substring(limit, limit + 100); 
 
 			              Swal.fire({
 			                  icon: "warning",
