@@ -378,6 +378,13 @@ body, html {
 	word-break: keep-all;
 	overflow-wrap: break-word;
 }
+
+.nowNavicon{
+   transform: translateY(-3px); /* 살짝 위로 뜸 */
+   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+   color: #e6a83e;
+}
+
 </style>
 </head>
 <body>
@@ -446,11 +453,11 @@ body, html {
 			<i class="fa-solid fa-pencil"></i>
 		</button>
 		<div class="bottomBox">
-			<a href="/"><i class="navicon fa-solid fa-house fa-2xl"></i></a>
-			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl"></i></a>
-			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl"></i></a>
-			<a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl"></i> </a>
-			<a href="/members/mypage"><i class="navicon fa-solid fa-user fa-2xl"></i></a>
+			<a href="/"><i class="navicon fa-solid fa-house fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/map/test"><i class="navicon fa-solid fa-map-location-dot fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/meeting/list?category=all"><i class="navicon fa-solid fa-people-group fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/feedback/feedbackHome"><i class="navicon fa-solid fa-bullhorn fa-2xl" style="color: #A66A3F"></i></a>
+			<a href="/members/mypage"><i class="nowNavicon fa-solid fa-user fa-2xl" style="color: #e6a83e"></i></a>
 		</div>
 	</div>
 	<script>
