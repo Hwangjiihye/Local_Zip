@@ -61,18 +61,25 @@
 		}
 		
 		.mainTitle {
-			width: 100%;
 			font-weight: bold;
 			font-size: 50px;
 			color: #A66A3F;
+/* 			box-sizing: border-box; */
+		}
+		.titleSection{
+			display:flex;
+			width: 100%;
 			border-bottom: 2px solid #A66A3F;
 			background-color: #F2D3A2;
 			height: 100px;
 			line-height: 100px;
 			padding: 0 20px;
-			box-sizing: border-box;
 		}
-        
+        .backBtnDiv{
+        	position: relative;
+			left: 1484px;
+			top: 18px;
+        }
         .bottomBar{
             border: 2px solid #A66A3F;
             background-color: #F2D3A2;
@@ -118,9 +125,6 @@
 			border-radius: 10px;
 			font-weight: bold;
 			height: 30px;
-			position: relative;
-			left: 1470px;
-			top: 10px;
 			cursor: pointer;
 			transition: all 0.3s ease;
 		}
@@ -274,8 +278,11 @@
 <body>
 	<div class="container">
 		<div class="top-section">
-			<div class="mainTitle">내 모임.zip
-				<a href="/members/mypage"><input class="backBtn" type="button" value="내.zip으로 가기"></a>
+			<div class="titleSection">
+				<div class="mainTitle">내 모임.zip</div>
+				<div class="backBtnDiv">
+					<a href="/members/mypage"><input class="backBtn" type="button" value="내.zip으로 가기"></a>
+				</div>
 			</div>
 			<div class="manageMeeting">
 				<input class="myMeetingBtn" type="button" value="참여 중인 모임">

@@ -52,18 +52,25 @@
             position: relative;
         }
 
-        .topBar{ /* 상단바 고정 */
+        .topBar{
             width: 100%;
             padding-left: 20px;
-            font-weight: bold;
-            font-size: 50px;
-            color: #A66A3F;
             border-bottom: 2px solid #A66A3F;
             background-color: #F2D3A2;
             height: 100px;
             line-height: 100px;
+            display: flex;
         }
-        
+        .mainTitle{
+        	font-weight: bold;
+            font-size: 50px;
+            color: #A66A3F;
+        }
+        .logoutBtnDiv{
+        	position: relative;
+			left: 1645px;
+			top: 20px;
+        }
         .bottomBar{
             border: 2px solid #A66A3F;
             background-color: #F2D3A2;
@@ -126,9 +133,9 @@
         	background-color: #FFB300;
 			color: #5e361a;
 			border: none;
-			position: relative;
-			left: 1610px;
-			top: 10px;
+/* 			position: relative; */
+/* 			left: 1610px; */
+/* 			top: 10px; */
 			height: 30px;
 			width: 80px;
 			border-radius: 5px;
@@ -284,8 +291,11 @@
 </style>
 </head>
 <body>
-	<div class="topBar">내.zip
-		<a href="/members/logout"><input class="logoutBtn" type="button" value="로그아웃"></a>
+	<div class="topBar">
+		<div class="mainTitle">내.zip</div>
+		<div class="logoutBtnDiv">
+			<a href="/members/logout"><input class="logoutBtn" type="button" value="로그아웃"></a>
+		</div>
 	</div>
 	<div class="userBarDiv">
 		<div class="userBarContents">${nickname}님, 반가워요!</div>
