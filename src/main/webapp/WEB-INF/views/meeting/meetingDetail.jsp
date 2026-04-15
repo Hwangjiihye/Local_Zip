@@ -222,11 +222,10 @@ p {
 }
 
 .leftImg, .rightImg {
-	position: fixed;
+	position: absolute;
 	width: 450px;
 	height: 170px;
 	z-index: -1;
-	bottom: 0;
 	pointer-events: none;
 }
 
@@ -318,10 +317,10 @@ p {
 						<a href="/meeting/list?category=${category}&cpage=${cPage}"><button class="backBtn" type="button">뒤로가기</button></a>
 				</div>
 			</c:forEach>
-			<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
-    		<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
+			
 		</div>
-		
+		<img class="leftImg" src="/resources/images/왼쪽 모서리 풀.png">
+    	<img class="rightImg" src="/resources/images/오른쪽 모서리 풀.png">
 		
 		<script>
 			$(".requestBtn").on("click", function(){
