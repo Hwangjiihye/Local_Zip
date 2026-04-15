@@ -16,6 +16,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script
 	src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
 </head>
 
 	<style>
@@ -349,7 +350,7 @@
 						<div class="searchDiv">
 							<div class="location">활동지역</div><input type="button" value="찾기" class="searchBtn">
 						</div>
-						<div class="locationDetail"><input id="address" name="mem_address1" class="clubName" maxlength="33" type="text" style="border: #fbe5c0" placeholder="활동지역을 입력해 주세요" readonly></div>
+						<div class="locationDetail"><input id="address" name="mem_address1" class="clubName" maxlength="33" type="text" style="border: #fbe5c0" placeholder="활동지역을 검색해 주세요" readonly></div>
 					</div>
 					
 					<div class="openChatWrapper">
