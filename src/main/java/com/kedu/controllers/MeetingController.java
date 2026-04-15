@@ -52,26 +52,26 @@ public class MeetingController {
 	    
 	    List<MeetingDTO> list;
 		if(category.equals("all")) {
-			list = dao.selectAllByPage(start, end);
+			list = dao.selectAllByPage(start, end);  // + 게이지바 포함 전체 리스트 출력
 		}else {
-			list = dao.selectByPage(category, start, end);
+			list = dao.selectByPage(category, start, end);  // + 게이지바 포함 카테고리별 리스트 출력
 		}
 		
-		List<Map<String, Object>> vlist = dao.isApplied(loginId); // 0, 승인 대기 상태
+		List<Map<String, Object>> vlist = dao.isApplied(loginId); // 0, 승인 대기 상태 ( 승인대기중 버튼 출력 )
 		Set<Integer> appliedSet = new HashSet<>();
 
 		for(Map<String,Object> m : vlist){
 			appliedSet.add(((Number)m.get("meet_seq")).intValue());
 		}
 		
-		List<Map<String, Object>> jlist = dao.joinMeet(loginId); // 1, 승인 상태
+		List<Map<String, Object>> jlist = dao.joinMeet(loginId); // 1, 승인 상태 ( 참여중 버튼 출력 )
 		Set<Integer> joinedSet = new HashSet<>();
 
 		for(Map<String,Object> m : jlist){
 			joinedSet.add(((Number)m.get("meet_seq")).intValue());
 		}
 		
-		List<Map<String, Object>> clist = dao.companionMeet(loginId); // 2, 거절 상태
+		List<Map<String, Object>> clist = dao.companionMeet(loginId); // 2, 거절 상태 ( 참여 신청 버튼 출력 )
 		Set<Integer> companionSet = new HashSet<>();
 
 		for(Map<String,Object> m : clist){
@@ -101,26 +101,26 @@ public class MeetingController {
 	
 	@RequestMapping("/meetingDetail") // meeting 디테일 jsp로 이동
 	public String meetingCreateForm(@RequestParam int seq, String mem_id, Model model, HttpSession session) throws Exception{
-		List<MeetingDTO> list = dao.selectBySeq(seq);
+		List<MeetingDTO> list = dao.selectBySeq(seq); // currentpeople = meetingMember 참여인원수 포함해서 리스트 출력
 		model.addAttribute("meet_seq", seq);
 		
 		String loginId = (String)session.getAttribute("loginId");
 		model.addAttribute("list", list);
 			
 		mdao.selectByStatus(seq, loginId);
-		session.setAttribute("count", mdao.selectByStatus(seq, loginId));
-		session.setAttribute("admin", mdao.adminCheck(loginId));
-		session.setAttribute("host", mdao.hostCheck(seq, loginId));
+		session.setAttribute("count", mdao.selectByStatus(seq, loginId));  // 내가 신청한 모임
+		session.setAttribute("admin", mdao.adminCheck(loginId)); // 관리자 여부 확인
+		session.setAttribute("host", mdao.hostCheck(seq, loginId)); // 주최자인지 확인
 		
 		
-		List<Map<String, Object>> vlist = dao.isApplied(loginId);
+		List<Map<String, Object>> vlist = dao.isApplied(loginId); // 0, 승인 대기 상태 ( 승인대기중 버튼 출력 )
 		Set<Integer> appliedSet = new HashSet<>();
 
 		for(Map<String,Object> m : vlist){
 			appliedSet.add(((Number)m.get("meet_seq")).intValue());
 		}
 		
-		List<Map<String, Object>> jlist = dao.joinMeet(loginId);
+		List<Map<String, Object>> jlist = dao.joinMeet(loginId); // 1, 승인 상태 ( 내 모임으로 이동 버튼 출력 )
 		Set<Integer> joinedSet = new HashSet<>();
 
 		for(Map<String,Object> m : jlist){
@@ -170,9 +170,9 @@ public class MeetingController {
 	    int recordTotalCount;
 	    
 	    if(category == null || category.equals("all")) {
-	        recordTotalCount = dao.getAllCount();
+	        recordTotalCount = dao.getAllCount(); // 
 	    } else {
-	    	recordTotalCount = dao.getCategoryCount(category);
+	    	recordTotalCount = dao.getCategoryCount(category); // 승인대기, 참여중 카테고리 카운트 체크
 	    }
 	    
 	    int pageTotalCount =
@@ -257,8 +257,7 @@ public class MeetingController {
 		if(count > 0) {
 			return "fail";
 		}
-//		
-//		dao.updateMeeting(meet_seq, meet_detailcontents, meet_kakaolink, meet_kakaolink);
+		
 		return "success";
 	}
 	
