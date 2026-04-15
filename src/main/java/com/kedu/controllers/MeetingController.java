@@ -229,7 +229,8 @@ public class MeetingController {
 	
 	// 참여중인 모임 탭 > 자세히 보기 클릭 시
 	@RequestMapping("/myMeetingDetail")
-	public String myMeetingDetail(int seq, Model model) throws Exception{
+	public String myMeetingDetail(HttpSession session, int seq, Model model) throws Exception{
+		String loginId = (String)session.getAttribute("loginId");
 		
 		List<MeetingDTO> list = dao.selectBySeq(seq);
 		
@@ -242,9 +243,14 @@ public class MeetingController {
 	@RequestMapping("/update")
 	public String update(int seq, String meet_detailcontents, String meet_kakaolink, String meet_kakaopw) throws Exception{
 		
+		// 신고된 모임 수정 불가 로직
+		int count = rdao.reportUpdateBlock(seq);
+		if(count > 0) {
+			
+		}
 		dao.updateMeeting(seq, meet_detailcontents, meet_kakaolink, meet_kakaopw);
 		
-		return "redirect:/meeting/myMeetingDetail?seq=" + seq + "&msg=success";
+		return "redirect:/meeting/myMeetingDetail?seq=" + seq;
 	}
 	
 	// 참여중인 모임 탭 > 모임 삭제 버튼 클릭 시
