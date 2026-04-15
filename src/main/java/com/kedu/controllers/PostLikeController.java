@@ -65,5 +65,4 @@ public class PostLikeController {
 		
 		return count;
 	}
-
 }

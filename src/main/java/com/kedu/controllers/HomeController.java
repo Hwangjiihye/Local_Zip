@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -69,7 +70,7 @@ public class HomeController {
 	// ajax용 댓글 수 count
 	@ResponseBody // ★중요: JSP 페이지가 아니라 "데이터(숫자)"만 보낸다는 뜻
 	@RequestMapping("/board/getCommentCount")
-	public int getCommentCount(int post_seq) throws Exception {
+	public int getCommentCount(int post_seq) {
 		// DB에서 이 게시글의 진짜 댓글 개수를 가져오기
 		int count = ReplyDao.commentCount(post_seq);
 
@@ -80,7 +81,7 @@ public class HomeController {
 	}
 	
 	// board에 list를 출력 시,로그인 한 아이디를 기준으로 하트를 눌러놨는지 체크하는 메서드
-	private void LikeStatus(List<BoardDTO> list, String loginId) {
+	private void LikeStatus(List<BoardDTO> list, String loginId) throws Exception{
 			
 		if(loginId != null && list != null) { // 로그인 아이디랑 리스트가 null이 아니면 
 			for(BoardDTO dto : list) { // for문 돌면서 list에서 
@@ -153,13 +154,17 @@ public class HomeController {
 	}
 	
 	// postDetail 페이지,로그인 한 아이디를 기준으로 하트를 눌러놨는지 체크하는 메서드
-	private void LikeStatus(BoardDTO dto, String loginId) {
+	private void LikeStatus(BoardDTO dto, String loginId) throws Exception{
 			
 		if(loginId != null && dto != null) { // 로그인 아이디랑 리스트가 null이 아니면 
 			int check = likeDao.likeCheck(dto.getPost_seq(), loginId); // 로그인 아이디를 기준으로 하트를 눌렀는지 체크하고,
 			dto.setPost_like_check(check); // check의 값이 1 또는 0으로 나온 값을 dto에 set으로 기록.
 		}
 	};
-		
-
+	
+	@ExceptionHandler(Exception.class)
+	   public String exceptionHandler(Exception e) {
+	      e.printStackTrace();
+	      return "error";
+	   }
 }

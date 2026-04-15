@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -139,7 +140,7 @@ public class AuthController {
 	// 새 비밀번호 생성
 	@RequestMapping(value = "/updateMyPw", method = RequestMethod.POST)
 	public String updateMyPw(@RequestParam("mem_id") String id, @RequestParam("pw") String pw,
-			@RequestParam("email") String email, RedirectAttributes rttr) {
+			@RequestParam("email") String email, RedirectAttributes rttr) throws Exception{
 		// 인증상태확인
 		if (dao.isVerified(email) <= 0 || dao.updatePwById(id, pw) <= 0) {
 			rttr.addFlashAttribute("pwMsg", "인증 정보가 만료되었거나 변경에 실패했습니다.");
@@ -148,4 +149,10 @@ public class AuthController {
 		rttr.addFlashAttribute("pwMsg", "비밀번호 변경에 성공하셨습니다.");
 		return "redirect:/members/loginUi";
 	}
+	
+	@ExceptionHandler(Exception.class)
+	   public String exceptionHandler(Exception e) {
+	      e.printStackTrace();
+	      return "error";
+	   }
 }

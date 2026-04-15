@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -137,7 +138,7 @@ public class MeetingController {
 	
 	// 모임 생성 폼 작성
 	@RequestMapping("/meetCreate")
-	public String meetCreateFrom() {
+	public String meetCreateFrom() throws Exception{
 		return "meeting/meetCreate";
 	}
 	
@@ -162,7 +163,7 @@ public class MeetingController {
 	}
 	
 	// 페이지네비게이터
-	public Map<String, Object> getPageNaviAll(String category, int cpage){
+	public Map<String, Object> getPageNaviAll(String category, int cpage) throws Exception{
 
 		int recordCountPerPage = 8;
 	    int naviCountPerPage = 10;
@@ -216,14 +217,14 @@ public class MeetingController {
 	
 	// 마이페이지 모임 탭 (참여중인 모임)
 	@RequestMapping("/myMeeting")
-	public String myMeeting() {
+	public String myMeeting() throws Exception{
 	    return "myPage/myMeeting";
 	}
 	
 	// 참여중인 모임 리스트 출력
 	@ResponseBody
 	@RequestMapping("/myMeetingList")
-	public List<MeetingDTO> myMeetingList(HttpSession session, Model model) throws Exception{
+	public List<MeetingDTO> myMeetingList(HttpSession session, Model model) {
 
 	    String loginId = (String)session.getAttribute("loginId");
 
@@ -264,7 +265,7 @@ public class MeetingController {
 	// 참여중인 모임 탭 > 모임 삭제 버튼 클릭 시
 	@ResponseBody
 	@RequestMapping("/deleteMeeting")
-	public int deleteMeeting(int seq, int status) throws Exception{
+	public int deleteMeeting(int seq, int status) {
 		
 		// 신고된 모임 삭제 불가 로직
 		int count = rdao.reportDeleteBlock(seq);
@@ -274,4 +275,10 @@ public class MeetingController {
 		}
 		return dao.deleteMeeting(seq, status);
 	}
+	
+	@ExceptionHandler(Exception.class)
+	   public String exceptionHandler(Exception e) {
+	      e.printStackTrace();
+	      return "error";
+	   }
 }
