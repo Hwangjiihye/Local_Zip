@@ -9,6 +9,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="icon" type="image/png" sizes="512x512" href="/resources/images/pavicon.png">
+
 <style>
 * {
 	box-sizing: border-box;
