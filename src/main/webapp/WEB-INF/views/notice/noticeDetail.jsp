@@ -178,6 +178,8 @@ button, body {
 	line-height: 1.6;
 	word-break: break-all;
 	white-space: pre-wrap;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 }
 
 .afterHeart {
@@ -298,13 +300,31 @@ hr {
 		    font-size: 50px;     /* i 크기 */
 		    transform: translateY(5px);
 		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
+}
 		
-		.swal2-icon.swal2-question .swal2-icon-content {
+.swal2-icon.swal2-question .swal2-icon-content {
 		    font-size: 50px;     /* i 크기 */
 		    transform: translateY(5px);
 		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
-		}
+}
+.noticeImg {
+    display: block;
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+    border-radius: 10px;
+}
+
+.noticeDiv{
+	margin: 0 auto;
+	width: 90%;
+	background-color: #f0d8af;
+	border-radius: 5px;
+	line-height: 1.6; 
+	padding: 20px 20px 25px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
 </style>
 
 </head>
@@ -346,6 +366,23 @@ hr {
 
 				<div class="postMidBox">
 					<div class="postContents">${dto.notice_content}</div>
+					
+					<div class="noticeDiv">
+					<c:choose>
+				        <c:when test="${dto.notice_title == '📢 「따스한 봄 따라가요」 행사 안내'}">
+				            <img src="${pageContext.request.contextPath}/resources/images/SpringNotice.png" class="noticeImg">
+				        </c:when>
+				        <c:when test="${dto.notice_title == '📢 「우리 동네 봄맞이 플리마켓」 행사 안내'}">
+				            <img src="${pageContext.request.contextPath}/resources/images/flaMarketNotice.png" class="noticeImg">
+				        </c:when>
+				        <c:when test="${dto.notice_title == '📢 「별빛 아래, 토요 영화 상영회」 안내'}">
+				            <img src="${pageContext.request.contextPath}/resources/images/movieNotice.png" class="noticeImg">
+				        </c:when>
+				        <c:when test="${dto.notice_title == '📢 「커피 향 가득한 쉼, 담온재 오픈」'}">
+				            <img src="${pageContext.request.contextPath}/resources/images/cafeNotice.png" class="noticeImg">
+				        </c:when>
+				    </c:choose>
+				    </div>
 				</div>
 			</form>
 			</div>

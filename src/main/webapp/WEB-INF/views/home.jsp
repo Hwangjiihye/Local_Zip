@@ -54,7 +54,7 @@ body, html {
 
 .container {
 	width: 100%;
-	min-height: 140vh;
+	min-height: 150vh;
 	padding-bottom: 60px;
 }
 
@@ -284,12 +284,12 @@ body, html {
 	height: 100%;
 	opacity: 0;
 	transition: 0.5s;
-	/* display: none; */
+	pointer-events: none;
 }
 
 .slideBanner.active {
 	opacity: 1;
-	/* display: block; */
+	pointer-events: auto; 
 }
 
 .loginBtn, .logoutBtn, .joinBtn {
@@ -852,9 +852,9 @@ a {
 				<div class="leftBox">
 					<div class="localBanner">
 						<div class="notice">
-							<img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;" height="100%;">
-							<img class="slideBanner" src="/resources/images/fleaMarket.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
-							<img class="slideBanner" src="/resources/images/movie.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy">
+							<a href="/notice/toNoticeDetail?notice_seq=110&cPage=1"><img class="slideBanner active" src="/resources/images/spring.jpg" style="border-radius: 10px;" width="100%;" height="100%;"></a>
+							<a href="/notice/toNoticeDetail?notice_seq=113&cPage=1"><img class="slideBanner" src="/resources/images/fleaMarket.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy"></a>
+							<a href="/notice/toNoticeDetail?notice_seq=115&cPage=1"><img class="slideBanner" src="/resources/images/movie.jpg" style="border-radius: 10px;" width="100%;" height="100%;" loading="lazy"></a>
 						</div>
 					</div>
 
@@ -970,7 +970,7 @@ a {
 				</div>
 
 				<div class="rightBox">
-					<img src="/resources/images/localCafe2.jpg" style="border-radius: 10px;" width="100%" height="100%">
+					<a href="/notice/toNoticeDetail?notice_seq=116&cPage=1"><img src="/resources/images/localCafe2.jpg" style="border-radius: 10px;" width="100%" height="100%"></a>
 					<div class="weather-wrapper">
 					<a class="weatherwidget-io" href="https://forecast7.com/en/35d91127d77/south-korea/" data-label_1="SOUTH KOREA" data-label_2="WEATHER" data-font="Open Sans" data-icons="Climacons Animated" data-theme="pure" data-basecolor="#fbe5c0" data-shadow="rgba(1, 1, 1, 0.02)" data-accent="" data-textcolor="#5e361a" data-highcolor="#5e361a" data-lowcolor="#5e361a" data-suncolor="#FFB300" data-mooncolor="#ffffff" data-cloudcolor="#7BB8C9" data-cloudfill="#7BB8C9" data-raincolor="#7BB8C9" data-snowcolor="#ffffff" >SOUTH KOREA WEATHER</a>
 <script> // 날씨 배너
