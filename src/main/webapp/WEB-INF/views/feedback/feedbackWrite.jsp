@@ -203,8 +203,11 @@
 		color: #5e361a;
 		font-size: 17px;
 		font-weight: bold;
+		
 	}
-	
+	.bottomBtn a {
+	display: block;
+}
 	.requestBtn:hover, .backBtn:hover {
 	   background-color: #fecc56;
    		color: #A66A3F;
