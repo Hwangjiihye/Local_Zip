@@ -59,7 +59,46 @@ public class BoardController {
 		return "board/write";
 	}
 
-	
+		// 모든 글쓰기
+	   @RequestMapping("/insert")
+	   public String insert(BoardDTO dto, MultipartFile[] files, HttpSession session) throws Exception {
+
+	      int nextval = dao.getNextval();
+	      dto.setPost_seq(nextval);
+	      String post_category = dto.getPost_category();
+	      String savePath = "c:/files";
+	      File savePathFile = new File(savePath);
+
+	      if (!savePathFile.exists()) {
+	         savePathFile.mkdir();
+	      }
+
+	      for (MultipartFile file : files) {
+	         if (!file.isEmpty()) {
+	            String oriName = file.getOriginalFilename();
+	            String sysName = UUID.randomUUID() + "_" + oriName;
+	            file.transferTo(new File(savePath + "/" + sysName));
+	            aDao.insert(new AttachmentDTO(0, post_category, nextval, oriName, sysName));
+	         }
+	      }
+
+	      String mem_id = (String) session.getAttribute("loginId");
+	      String mem_nickname = (String) session.getAttribute("nickname");
+	      String mem_dong = (String) session.getAttribute("dong");
+	      dao.insert(dto, mem_id, mem_nickname, mem_dong);
+	      if ("lifeInfo".equals(post_category)) {
+	         return "redirect:/board/lifeInfo";
+	      } else if ("talk".equals(post_category)) {
+	         return "redirect:/board/talk";
+	      } else if ("food".equals(post_category)) {
+	         return "redirect:/board/food";
+	      } else if ("beauty".equals(post_category)) {
+	         return "redirect:/board/beauty";
+	      }
+
+	      return "redirect:/";
+	   }
+
 
 	// 고민/이야기 게시판 리스트 출력
 	@RequestMapping("/talk")
