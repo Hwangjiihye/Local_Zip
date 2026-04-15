@@ -14,6 +14,8 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ad57018f836bb74c10d919e862f189a&libraries=clusterer"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script
+	src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 	<style>
@@ -283,6 +285,21 @@
 		    transform: translateY(5px);
 		    line-height: 70px;   /* 세로 위치 (핵심🔥) */
 		}
+		.searchDiv{
+			display: flex;
+			gap: 5px;
+		}
+		.searchBtn{
+			width: 40px;
+		    height: 20px;
+		    background-color: #FFB300;
+		    border:none;
+		    border-radius: 10px;
+		    color: #5e361a;
+		    font-size: 13px;
+		    font-weight: bold;
+		    cursor: pointer;
+		}
 	</style>
 <body><!-- /meeting/test -->
 <form action="/meeting/meetGenerate" class="frm" method="post" onsubmit="return checkForm();">
@@ -329,8 +346,10 @@
 					</div>
 					
 					<div class="locationDiv">	
-						<div class="location">활동지역</div>	
-						<div class="locationDetail"><input id="address" name="mem_address1" class="clubName" maxlength="33" type="text" style="border: #fbe5c0" placeholder="활동지역을 입력해 주세요"></div>
+						<div class="searchDiv">
+							<div class="location">활동지역</div><input type="button" value="찾기" class="searchBtn">
+						</div>
+						<div class="locationDetail"><input id="address" name="mem_address1" class="clubName" maxlength="33" type="text" style="border: #fbe5c0" placeholder="활동지역을 입력해 주세요" readonly></div>
 					</div>
 					
 					<div class="openChatWrapper">
@@ -358,6 +377,36 @@
 </form>
 		
 		<script>
+		// 활동 지역 주소 설정
+		let searchBtn = document.getElementsByClassName("searchBtn")[0];
+		
+		searchBtn.onclick = function() {
+			
+			new kakao.Postcode({
+					oncomplete : function(data) {
+						
+						// 주소 정규표현식 - 서울시만 생성 가능
+						let address = document.getElementById("address");
+						let regex = /^(서울|서울시|서울특별|서울특별시)/;
+						let addressResult = regex.test(data.roadAddress);
+						
+						if (!addressResult) {
+							Swal.fire({
+								icon: "info",
+								title: "Sorry  !",
+								text: "현재는 서울시를 기준으로 한 서비스만 제공 중입니다.",
+								iconColor: "#FFB300",
+								confirmButtonColor: "#FFB300"
+							});
+							address.value = "";
+							return;
+						}
+						document.getElementById("address").value = data.roadAddress;
+					}
+				}).open();
+			}
+		
+		
 		$(".icon").on("click", function (e) {
 		    $(".report").css({"display" : "inline"});
 		});
@@ -421,7 +470,7 @@
 				Swal.fire({
 					icon: "info",
 					title: "Wait  !",
-					text: "활동 지역을 작성해주세요.",
+					text: "활동 지역을 선택해주세요.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
