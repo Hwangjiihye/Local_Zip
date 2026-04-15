@@ -146,16 +146,18 @@
 		}
 		
 		.requestBtn, .backBtn{
-			width: 350px;
-		    height: 40px;
-		    background-color: #FFB300;
-		    border:none;
-		    border-radius: 10px;
-		    color: #5e361a;
-		    font-size: 17px;
-		    font-weight: bold;
+			cursor: pointer;
+		transition: all 0.2s ease;
+		width: 350px;
+		height: 40px;
+		background-color: #FFB300;
+		border: none;
+		border-radius: 10px;
+		color: #5e361a;
+		font-size: 17px;
+		font-weight: bold;
+		 flex-shrink: 0;
 		}
-		
 		.requestBtn:hover, .backBtn:hover {
 			transform: translateY(-3px);
 			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
