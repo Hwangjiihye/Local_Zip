@@ -175,7 +175,7 @@ hr {
 
 .use, .notUse, .correct, .incorrect, .ok, .no, .insertId, .x_id, .doDuplCheck,
 .insertPw, .x_pw, .insertName, .x_name, .insertNickname, .x_nickname, .insertPhone, .x_phone,
-.insertSsn, .x_ssn, .insertZonecode, .insertEmail, .x_email, .applyCode, .usedEmail,
+.insertSsn, .x_ssn, .x_date, .insertZonecode, .insertEmail, .x_email, .applyCode, .usedEmail,
 .noApplyCode, .retryEmail {
 	display: none;
 	font-size: small;
@@ -189,7 +189,7 @@ hr {
 .notUse, .incorrect, .no, .insertId, .x_id, .doDuplCheck, .insertPw, .x_pw,
 .insertName, .x_name, .insertNickname, .x_nickname, .insertPhone, .x_phone,
 .insertSsn, .x_ssn, .insertZonecode, .insertCheckBox, .insertEmail, .x_email, .usedEmail,
-.noApplyCode, .retryEmail, .insertCode, .codeNo {
+.noApplyCode, .retryEmail, .insertCode, .codeNo, .x_date {
 	color: #de4f28;
 }
 
@@ -242,6 +242,11 @@ input{
 }
 a {
     color:#FF8200;
+}
+.swal2-icon.swal2-info .swal2-icon-content {
+	font-size: 50px;     /* i 크기 */
+	transform: translateY(5px);
+	line-height: 70px;   /* 세로 위치 (핵심🔥) */
 }
 </style>
 </head>
@@ -306,6 +311,7 @@ a {
 				</div>
 				<div class="insertSsn">주민등록번호를 입력해주세요.</div>
 				<div class="x_ssn">주민등록번호 형식이 맞지 않습니다.</div>
+				<div class="x_date">존재하지 않는 날짜입니다. 다시 입력해주세요.</div>
 				
 				<div class="form-row">
 					<label>· EMAIL : </label> <input name="mem_email" class="email"
@@ -316,7 +322,7 @@ a {
 				<div class="insertEmail">이메일 주소를 입력해주세요.</div>
 				<div class="x_email">잘못된 이메일 형식입니다.</div>
 				<div class="applyCode">이메일로 인증번호를 발송했습니다.</div>
-				<div class="usedEmail">이미 사용되고 있는 이메일입니다. 다른 이메일을 입력해주십시오.</div>
+				<div class="usedEmail">이미 사용되고 있는 이메일입니다. 다른 이메일을 입력해주세요.</div>
 				<div class="noApplyCode">인증번호 발송 실패했습니다.</div>
 				<div class="retryEmail">이메일 인증이 완료되지 않았거나 만료되었습니다. 다시 인증해주세요.</div>
 				
@@ -326,7 +332,7 @@ a {
 				</div>
 				<div class="insertCode">인증코드를 입력해주세요.</div>
 				<div class="codeOk">인증되었습니다.</div>
-				<div class="codeNo">인증에 실패하셨습니다. 다시 시도 부탁드립니다.</div>
+				<div class="codeNo">인증에 실패했습니다. 다시 시도해주세요.</div>
 				
 				<div class="form-row">
 					<label class="zonecodeLabel">·ZONECODE:</label> <input
@@ -453,6 +459,7 @@ a {
 		$(".id_num").on("input", function() {
 			$(".insertSsn").hide();
 			$(".x_ssn").hide();
+			$(".x_date").hide();
 		});
 		
 		$(".email").on("input", function() {
@@ -708,9 +715,35 @@ a {
 
 			// ssn
 			let ssn = document.getElementsByClassName("id_num")[0];
+			
+			function isValidBirthDate(ssn) {
+			    const birth = ssn.substring(0, 6);
+
+			    let year = parseInt(birth.substring(0, 2));
+			    let month = parseInt(birth.substring(2, 4));
+			    let day = parseInt(birth.substring(4, 6));
+
+			    const genderCode = ssn.charAt(7);
+
+			    if (genderCode === "1" || genderCode === "2") {
+			        year += 1900;
+			    } else if (genderCode === "3" || genderCode === "4") {
+			        year += 2000;
+			    }
+
+			    const date = new Date(year, month - 1, day);
+
+			    return (
+			        date.getFullYear() === year &&
+			        date.getMonth() === month - 1 &&
+			        date.getDate() === day
+			    );
+			}
+			
 			if (ssn.value == "") {
 				$(".insertSsn").show();
 				$(".x_ssn").hide();
+				$(".x_date").hide();
 				ssn.focus();
 				return false;
 			} else {
@@ -719,10 +752,19 @@ a {
 				if (!ssnResult) {
 					$(".insertSsn").hide();
 					$(".x_ssn").show();
+					$(".x_date").hide();
 					ssn.value = "";
 					ssn.focus();
 					return false;
 				}
+				if (!isValidBirthDate(ssn.value)) {
+			        $(".insertSsn").hide();
+			        $(".x_ssn").hide();
+			        $(".x_date").show();
+			        ssn.value = "";
+			        ssn.focus();
+			        return false;
+			    }
 			}
 
 			// email
@@ -779,7 +821,7 @@ a {
 				Swal.fire({
 					icon: "info",
 					title: "Sorry  !",
-					text: "현재는 서울시를 기준으로 한 서비스만 제공 중입니다.",
+					text: "현재는 서울시 기준으로만 서비스를 제공 중입니다.",
 					iconColor: "#FFB300",
 					confirmButtonColor: "#FFB300"
 				});
