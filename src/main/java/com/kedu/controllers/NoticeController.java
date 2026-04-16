@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,7 +20,7 @@ public class NoticeController {
 	private NoticeDAO ndao;
 	
 	@RequestMapping("/toNotice")
-	public String toNotice(int cPage,Model model) {
+	public String toNotice(int cPage,Model model) throws Exception{
 		//list 뽑기
 		int start = (cPage-1)*10+1;
 		int end = cPage*10;
@@ -35,7 +36,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/toNoticeDetail")
-	public String toNoticeDetail(@RequestParam("notice_seq") int seq,Model model,int cPage) {
+	public String toNoticeDetail(@RequestParam("notice_seq") int seq,Model model,int cPage) throws Exception{
 		
 		//공지사항 내용 불러오기
 		NoticeDTO dto = ndao.getContents(seq);
@@ -44,4 +45,10 @@ public class NoticeController {
 		
 		return "/notice/noticeDetail";
 	}
+	
+	@ExceptionHandler(Exception.class)
+	   public String exceptionHandler(Exception e) {
+	      e.printStackTrace();
+	      return "error";
+	   }
 }

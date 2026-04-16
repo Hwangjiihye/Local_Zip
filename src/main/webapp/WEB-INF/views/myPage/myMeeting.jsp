@@ -432,10 +432,7 @@
 			        if(result.isConfirmed){
 			        	$.ajax({
 							url:"/meeting/deleteMeeting",
-							data:{
-								seq: seq,
-								status: 2
-							}
+							data:{seq: seq}
 						}).done(function(resp){
 							if(Number(resp) == -1){
 								Swal.fire({

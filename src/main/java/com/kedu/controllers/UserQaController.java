@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ public class UserQaController {
 	UserQaDAO uDAO;
 
 	@RequestMapping("/toQa")
-	public String toQa(Model model,int cPage, HttpSession session) {
+	public String toQa(Model model,int cPage, HttpSession session) throws Exception{
 		
 		String mem_id = (String)session.getAttribute("loginId");
 		
@@ -40,7 +41,7 @@ public class UserQaController {
 	}
 	
 	@RequestMapping("/toWrite")
-	public String toWrite(int cPage,Model model) {
+	public String toWrite(int cPage,Model model) throws Exception{
 		model.addAttribute("cPage",cPage);
 		return "/qa/qaWrite";
 	}
@@ -48,7 +49,7 @@ public class UserQaController {
 	//DB에 게시글 저장
 	@PostMapping("/insert")
 	public String insert(@RequestParam("post_title")String title,@RequestParam("post_category")int category
-						,@RequestParam("post_contents")String contents,HttpSession session) {
+						,@RequestParam("post_contents")String contents,HttpSession session) throws Exception{
 		String id = (String)session.getAttribute("loginId");
 		if (id == null) {
 	        return "redirect:/members/login"; // 로그인 페이지로 튕기기
@@ -77,4 +78,10 @@ public class UserQaController {
 		}
 		return "fail";
 	}
+	
+	@ExceptionHandler(Exception.class)
+	   public String exceptionHandler(Exception e) {
+	      e.printStackTrace();
+	      return "error";
+	   }
 }

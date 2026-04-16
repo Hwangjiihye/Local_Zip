@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,7 +47,7 @@ public class AdminController {
 	
 	
 	@RequestMapping("/adminPage")
-	public String test(HttpSession session, Model model) {
+	public String test(HttpSession session, Model model) throws Exception{
 		int qaCount = dao.qaCount();
 		int memberCount = dao.activityMemberCount();
 		
@@ -63,7 +64,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/adminQA") // 고객지원 페이지 진입
-	public String adminQA(String status, int cpage, Model model, HttpSession session) {
+	public String adminQA(String status, int cpage, Model model, HttpSession session) throws Exception{
 		
 		int recordCountPerPage = 10;
 	    int start = cpage * recordCountPerPage - (recordCountPerPage - 1);
@@ -109,7 +110,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/answer")
-	public String answer(QaDTO dto, int qa_seq, HttpSession session,int cpage,String status) {
+	public String answer(QaDTO dto, int qa_seq, HttpSession session,int cpage,String status) throws Exception{
 		
 		String adminId = (String) session.getAttribute("loginId");
 	    
@@ -141,13 +142,13 @@ public class AdminController {
 	//공지사항 글쓰기로 가기
 	
 	@RequestMapping("/toNoticeWrite")
-	public String toWrite() {
+	public String toWrite() throws Exception{
 		return "/notice/noticeWrite";
 	}
 	
 	//공지사항(관리자 버전)으로 가기
 	@RequestMapping("/toAdminNotice")
-	public String toAdminNotice(Model model,int cPage) {
+	public String toAdminNotice(Model model,int cPage) throws Exception{
 		
 		//list 가져오기
 		int start = (cPage-1)*10+1;
@@ -170,7 +171,7 @@ public class AdminController {
 	//공지사항 글쓰기 DB에 저장
 	@PostMapping("/insertNotice")
 	public String insertNotice(HttpSession session,@RequestParam("post_title")String title,
-								@RequestParam("post_contents")String contents) {
+								@RequestParam("post_contents")String contents) throws Exception{
 		String id =(String)session.getAttribute("loginId");
 		int role = (Integer)session.getAttribute("role");
 		nDao.insertNotice(new NoticeDTO(0,id,role,title,contents,"0"));
@@ -205,7 +206,7 @@ public class AdminController {
 	
 	// 신고관리 페이지로 이동
 	@RequestMapping("/adminBlackList")
-	public String adminBlackList(String status, Model model, int cpage, HttpSession session) {
+	public String adminBlackList(String status, Model model, int cpage, HttpSession session) throws Exception{
 		model.addAttribute("menu", "report");
 		List<ReportDTO> list = dao.selectGetPage(cpage * 10 - 9, cpage * 10);
 		// 전체 신고목록 개수 카운트
@@ -306,4 +307,9 @@ public class AdminController {
 		return "success";
 	}
 	
+	@ExceptionHandler(Exception.class)
+	public String exceptionHandler(Exception e) {
+		e.printStackTrace();
+		return "error";
+	}
 }

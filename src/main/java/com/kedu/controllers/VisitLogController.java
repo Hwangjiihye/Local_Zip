@@ -19,6 +19,4 @@ public class VisitLogController {
 	public int todayCount() {
 		return dao.getTodayVisitCount();
 	}
-	
-
 }

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -229,7 +229,7 @@ public class MembersController {
 	@RequestMapping("/delete")
 	public String delete(HttpSession session) {
 		String id = (String)session.getAttribute("loginId");
-		dao.deleteById(id); // 회원탈퇴 mem_status => 1로 업데이트.
+		dao.deleteById(id); // 회원탈퇴 mem_status => 1로 업데이트. XX 아예 삭제로 변경함.
 		session.invalidate();
 		return "redirect:/";
 	}
@@ -277,5 +277,9 @@ public class MembersController {
 		return "members/myLikes";
 	}
 	
-	
+	@ExceptionHandler(Exception.class)
+	   public String exceptionHandler(Exception e) {
+	      e.printStackTrace();
+	      return "error";
+	   }
 }

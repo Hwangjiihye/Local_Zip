@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.kedu.dao.AttachmentDAO;
-import com.kedu.dao.BoardDAO;
 import com.kedu.dao.FeedBackDAO;
 import com.kedu.dao.FeedBack_reactionDAO;
 import com.kedu.dao.ReportDAO;
@@ -99,7 +99,7 @@ public class FeedBackController {
 	}
 
 	@RequestMapping("/feedbackWrite")
-	public String feedbackWrite() {
+	public String feedbackWrite() throws Exception{
 		return "feedback/feedbackWrite";
 	}
 
@@ -240,78 +240,6 @@ public class FeedBackController {
 
 	    return "fail";
 	}
-	
-	
-	
-	
-
-//	@ResponseBody
-//	@RequestMapping("/like") // 좋아요
-//	public String like(@RequestParam("suggestion_seq") Integer suggestion_seq, HttpSession session) throws Exception {
-//
-//		String loginId = (String) session.getAttribute("loginId");
-//
-//		if (loginId == null) {
-//			return "login";
-//		}
-//
-//		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
-//
-//		// 처음 누름
-//		if (reaction == null) {
-//			reactiondao.insert(loginId, suggestion_seq, "LIKE");
-//			feedbackdao.plusLike(suggestion_seq);
-//			return "liked";
-//		}
-//
-//		// 좋아요 누름 -> 취소
-//		else if ("LIKE".equals(reaction)) {
-//			return "alreadyLiked";
-//		}
-//
-//		// 싫어요 -> 좋아요 변경
-//		else if ("UNLIKE".equals(reaction)) {
-//			reactiondao.update(loginId, suggestion_seq, "LIKE");
-//			feedbackdao.minusUnlike(suggestion_seq);
-//			feedbackdao.plusLike(suggestion_seq);
-//			return "change";
-//		}
-//		return "fail";
-//	}
-//
-//	@ResponseBody
-//	@RequestMapping("/unlike")
-//	public String unlike(@RequestParam("suggestion_seq") Integer suggestion_seq, HttpSession session) throws Exception {
-//
-//		String loginId = (String) session.getAttribute("loginId");
-//
-//		if (loginId == null) {
-//			return "login";
-//		}
-//
-//		String reaction = reactiondao.selectReaction(loginId, suggestion_seq);
-//
-//		// 처음 누름
-//		if (reaction == null) {
-//			reactiondao.insert(loginId, suggestion_seq, "UNLIKE");
-//			feedbackdao.plusUnLike(suggestion_seq);
-//			return "unliked";
-//		}
-//
-//		// 싫어요 누름 -> 취소
-//		else if ("UNLIKE".equals(reaction)) {
-//			return "alreadyLiked";
-//		}
-//
-//		// 좋아요 -> 싫어요 변경
-//		else if ("LIKE".equals(reaction)) {
-//			reactiondao.update(loginId, suggestion_seq, "UNLIKE");
-//			feedbackdao.minusLike(suggestion_seq);
-//			feedbackdao.plusUnLike(suggestion_seq);
-//			return "change";
-//		}
-//		return "fail";
-//	}
 
 	// 신고
 	@ResponseBody
@@ -409,4 +337,10 @@ public class FeedBackController {
 		
 		return "success";
 	}
+	
+	@ExceptionHandler(Exception.class)
+	   public String exceptionHandler(Exception e) {
+	      e.printStackTrace();
+	      return "error";
+	   }
 }

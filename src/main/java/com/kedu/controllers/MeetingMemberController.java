@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,7 +27,7 @@ public class MeetingMemberController {
 	public MeetingMemberDAO dao;
 	
 	@RequestMapping("/applyForm")
-	public String applyform(int meet_seq, Model model, HttpSession session) {
+	public String applyform(int meet_seq, Model model, HttpSession session) throws Exception{
 		session.setAttribute("meet_seq", meet_seq);
 		model.addAttribute("meet_seq", meet_seq);
 		return "meeting/applyForm";
@@ -85,4 +86,10 @@ public class MeetingMemberController {
 	    String loginId = (String)session.getAttribute("loginId");
 	    return dao.selectCompleteList(loginId);
 	}
+	
+	@ExceptionHandler(Exception.class)
+	   public String exceptionHandler(Exception e) {
+	      e.printStackTrace();
+	      return "error";
+	   }
 }
